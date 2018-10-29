@@ -26,6 +26,8 @@
 #' the different gene regions.
 #' @param methods programs used to aligned the sequences, the function used Mafft-FFTNS1 anyway,
 #' but other programs can be used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").
+#' @param Mafft.path for Windows plateform, a character string which provides the path
+#' to the mafft executable. For Linux the mafft software must be in the $PATH.
 #' @details The 'output', 'input' and 'nthread' objects need
 #' to be present in the R environment before running the function because the
 #' function runs in parallel using the R package 'parallel', see example below the
@@ -88,11 +90,18 @@
 #'
 #' @export First.Align.All
 
-First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods = NULL) {
+First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods = NULL , Mafft.path = NULL) {
     AlignSelect = list.files(input)
     AlignSelect = AlignSelect[grep(".fas", AlignSelect)]
     AlignSelect2 = paste("revc_", AlignSelect, sep = "")
     dir.create(output)  # Create the ouput folder
+
+    mafft = "mafft"
+    os <- .Platform$OS
+    if(os == "windows"){
+      mafft = Mafft.path
+    }
+
 
     # Run the job in parallel through a certain number of threads.
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
@@ -102,7 +111,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
     # alignment for all other algorithms
     mafftfftns1.align = function(x) {
-        a = paste("mafft --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
+        a = paste(mafft, " --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
             x, " > ", input, "/", "revc_", x, sep = "")
         system(a)
     }
@@ -124,13 +133,22 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     }
     parallel::stopCluster(cl)  # Stop Cluster.
 
+
+
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
     parallel::clusterExport(cl, varlist = c("output", "input", "nthread"))
     if(length(which(methods=="mafftfftnsi"))==1){
+      mafft = "fftnsi "
+      os <- .Platform$OS
+      if(os == "windows"){
+        mafft = psate(Mafft.path, " ", sep = "")
+      }
+
+
     # Mafft alignment using fftnsi algorithm.
     mafftfftnsi.align = function(x) {
-        a = paste("fftnsi ", input, "/", x, " > ", output, "/", "Mafftfftnsi_", x,
+        a = paste(mafft, input, "/", x, " > ", output, "/", "Mafftfftnsi_", x,
             sep = "")
         system(a)
     }

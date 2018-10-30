@@ -44,10 +44,9 @@
 #' @param nthread number of thread used by PartitionFinder2 to run.
 #' @param rcluster_percent See description for rcluster-max, below.
 #' @param rcluster_max rcluster-max and rcluster-percent control
-# the thoroughness of the relaxed clustering algorithm together. Setting either
-# of them higher will tend to make the search more thorough and slower. Setting
-# them lower will tend to make the search quicker but less thorough.
-
+#' the thoroughness of the relaxed clustering algorithm together. Setting either
+#' of them higher will tend to make the search more thorough and slower. Setting
+#' them lower will tend to make the search quicker but less thorough.
 
 #' @details The rcluster
 #' algorithm works by finding the rcluster-max most similar pairs of data blocks,
@@ -187,13 +186,36 @@ PartiFinder2 = function(input = NULL, Partition = NULL, codon = NULL, nexus.file
 
 
     if (is.null(rcluster_percent)) {
-        rcluster_percent = 10
+        rcluster_percent = 10 # default value
     }
     if (is.null(rcluster_max)) {
-        rcluster_max = 1000
+        rcluster_max = 1000 # default value
     }
 
+    os <- .Platform$OS
+    #if os== "windows"
+    if(os == "windows"){
+      if(missing(Path.PartiF2)){
+        stop("The path to the PartitionFinder.py file must be provided in Path.PartiF2")
+      }
 
+      # Run PartitionFinder2 partitioning with RAxML
+      # (quicker but has only three possible substitution models, GTR, GTR+G, GTR+G+I).
+      if (Raxml == "TRUE") {
+      a = paste("python ", Path.PartiF2, " ", getwd(), " -p ", nthread,
+                " --raxml --rcluster-percent ", rcluster_percent, " --rcluster-max ",
+                rcluster_max, sep = "")
+      system(a)
+      } else {
+        # Run PartitionFinder2 with Phyml, a lot of more substitution models, but runs
+        # slowly.
+        a = paste("python ", Path.PartiF2, " ", getwd(), " -p ", nthread,
+                " --rcluster-percent ", rcluster_percent, " --rcluster-max ",
+                rcluster_max, sep = "")
+        system(a)
+      }
+      # Else run on Linux
+    } else {
     # Run PartitionFinder2. We create a temporary bash script to run partitionfinder2
     # from the root of the computer.  Run PartitionFinder2 partitioning with RAxML
     # (quicker but has only three possible substitution models, GTR, GTR+G, GTR+G+I).
@@ -205,13 +227,15 @@ PartiFinder2 = function(input = NULL, Partition = NULL, codon = NULL, nexus.file
         # Run PartitionFinder2 with Phyml, a lot of more substitution models, but runs
         # slowly.
         cat(file = "Test.sh", "#!/bin/bash", "\n", "\n", "cd ", "\n", "python ",
-            Path.PartiF2, " ", getwd(), " -p ", nthread, "\n", sep = "")
+            Path.PartiF2, " ", getwd(), " -p ", nthread, " --rcluster-percent ",
+            rcluster_percent, " --rcluster-max ", rcluster_max, "\n", sep = "")
     }
     a = "chmod u+x Test.sh"  # Attribute the rights to execute the bash script.
     system(a)
     a = "./Test.sh"  # Run the bash script.
     system(a)
     file.remove("Test.sh")  # Remove the temporary bash script used to call PartitionFinder2.
+}
 
     # Extract the output
     parti = readLines("analysis/best_scheme.txt")
@@ -224,8 +248,9 @@ PartiFinder2 = function(input = NULL, Partition = NULL, codon = NULL, nexus.file
 
     options(warn=-1)
     # Prepare a nexus file ready for BEAST2.
-    parti2_b = parti[c(grep("^Nexus formatted character sets", parti, perl = TRUE):grep("^Nexus formatted character sets for IQtree",
-        parti, perl = TRUE))]
+    parti2_b = parti[c(grep("^Nexus formatted character sets", parti, perl = TRUE):
+                         grep("^Nexus formatted character sets for IQtree",
+                              parti, perl = TRUE))]
     parti3_b = parti2_b[-c(1, length(parti2_b))]
     nexusf = readLines(nexus.file)
     cat(file = paste(gsub(".nex", "", nexus.file, fixed = T), "_PF2.nex", sep = ""),

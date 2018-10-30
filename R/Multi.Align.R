@@ -36,6 +36,11 @@
 #' @param Mafft.path for Windows plateform, a character string which provides the path
 #' to the mafft executable. For Linux the mafft software must be in the $PATH.
 
+#' @param Muscle.path for Windows plateform, a character string which provides the path
+#' to the muscle executable (eg. "C:/Users/deme/Documents/Programs/Muscle/muscle3.8.31_i86win32.exe").
+#' For Linux the muscle software must be in the $PATH.
+#'
+#'
 #' @examples # Load in the R environment the object used by the function.
 #' # Here the toy example consist of four alignment (co1, 12srrna, cytb, rag1)
 #' # for a subset of 16 species.
@@ -85,7 +90,8 @@
 #' @references Mirarab et al. 2015, DOI: 10.1089/cmb.1014.0156
 
 
-Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NULL, Mafft.path = NULL) {
+Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NULL, Mafft.path = NULL,
+                       Muscle.path = NULL) {
     AlignSelect = list.files(input)
     AlignSelect = AlignSelect[grep(".fas", AlignSelect)]
     AlignSelect2 = paste("revc_", AlignSelect, sep = "")
@@ -136,9 +142,18 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
     parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
     if(length(which(methods=="muscle"))==1){
 
+      muscle = "muscle"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Muscle.path)){
+          stop("The path to the muscle executable must be provided in Muscle.path")
+        }
+        muscle = Muscle.path
+      }
+
     # Muscle alignment:
     muscle.align = function(x) {
-        a = paste("muscle -in ", input, "/", x, " -out ", output, "/", "Muscle_",
+        a = paste(muscle, " -in ", input, "/", x, " -out ", output, "/", "Muscle_",
             x, sep = "")
         system(a)
     }

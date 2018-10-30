@@ -298,12 +298,15 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
 
     # Order the sequences alphabetically in each alignment (using the sequence name).
     x = Unigene
-    listgeneb = vector()
+    # listgeneb = vector()
     listRevComp = matrix(NA, ncol = 2)[-1, ]
+
+    # Loop over multiple genes.
     i = 1
     for (i in 1:length(x)) {
-        # Loop over multiple genes.
-      listgeneb = c(listgeneb, a[which(Nbgene == x[i])])
+
+      #listgeneb = c(listgeneb, a[which(Nbgene == x[i])])
+      listgeneb = a[which(Nbgene == x[i])]
       j = 1
       # Loop over multiple alignments of the same gene.
       for (j in 1:length(listgeneb)) {

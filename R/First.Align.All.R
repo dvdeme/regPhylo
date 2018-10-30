@@ -74,10 +74,10 @@
 #' input = "TempDir.FirstToAlign"
 #' output = "TempDir.FirstToAlign/FirstAligned"
 #' nthread = 2
-#' methods = "mafftfftnsi"
+#' methods = c("mafftfftnsi", "pasta")
 #' First.Align.All(input = input, output =
 #' "TempDir.FirstToAlign/FirstAligned", nthread = 2,
-#' methods = c("mafftfftnsi"))
+#' methods = c("mafftfftnsi", "pasta"))
 #'
 #'
 #' # To clean the file created while running the example do the following:
@@ -109,7 +109,8 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
 
     # Run the job in parallel through a certain number of threads.
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
-    parallel::clusterExport(cl, varlist = c("output", "input", "nthread"))  # Designate the functions and variables that need to be exported for the parallel version.
+    # Designate the functions and variables that need to be exported for the parallel version.
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
 
     # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
     # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
@@ -141,7 +142,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
 
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
-    parallel::clusterExport(cl, varlist = c("output", "input", "nthread"))
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
     if(length(which(methods=="mafftfftnsi"))==1){
       mafft = "fftnsi "
       os <- .Platform$OS
@@ -224,13 +225,14 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     # Re-order the sequences in each alignment in the same alphabetical order (using
     # the sequence name).
     x = Unigene
-    listgeneb = vector()
+    # listgeneb = vector()
     listRevComp = matrix(NA, ncol = 2)[-1, ]
     i = 1
     for (i in 1:length(x)) {
         # Loop over multiple genes.
         #listgeneb = c(listgeneb, a[grep(x[i], a)])
-        listgeneb = c(listgeneb, a[which(Nbgene == x[i])])
+        #listgeneb = c(listgeneb, a[which(Nbgene == x[i])])
+        listgeneb = a[which(Nbgene == x[i])]
         j = 1
         # Loop over multiple alignments of the same gene.
         for (j in 1:length(listgeneb)) {
@@ -242,7 +244,12 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
             k = 1
             for (k in 1:length(listAlig)) SeqT = c(SeqT, listAlig[[k]][1])
             DFtemp = cbind(SeqName, SeqT)
-            DFtempord = DFtemp[order(DFtemp[, 1]), ]  # Re-order the sequences in alphabetical order.
+            if(length(listAlig) == 1){
+              DFtempord = t(as.matrix(DFtemp[order(DFtemp[, 1]), ]))
+              } else {
+              DFtempord = DFtemp[order(DFtemp[, 1]), ]
+            }
+            #DFtempord = DFtemp[order(DFtemp[, 1]), ]  # Re-order the sequences in alphabetical order.
             # Re-build and export the ordered alignments.
             Seq_Name = paste(">", paste(DFtempord[, 1], DFtempord[, 2], sep = "|_|"),
                              sep = "")

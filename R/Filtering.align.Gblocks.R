@@ -19,6 +19,8 @@
 #' @param output path to the folder storing the trimmed alignments.
 #' The output folder is created automatically.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
+#' @param Gblocks.path for Windows plateform, a character string which provides the path
+#' to the Gblocks executable. For Linux the Gblocks software must be in the $PATH.
 #'
 #' @details The function requires, Gblocks to be installed and set up in the PATH.
 
@@ -63,9 +65,9 @@
 
 Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
                                    Type = NULL, output = NULL,
-                                   remove.empty.align = NULL) {
+                                   remove.empty.align = NULL, Gblocks.path = NULL) {
     b = list.files(input)
-    bb = b[grep(".fas", b, fixed = T)]
+    bb = b[grep(".fas", b, fixed = TRUE)]
 
     # Detect the empty alignments
     # Check for empty alignment checking the disk space for each file.
@@ -81,9 +83,12 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
         bb = bb[-which(Filespace == 0)]
       }
     } else {
+      # Check if some file are empty, if not the function carries on.
+      if(length(pbfile) > 0){
       warning(paste(pbfile, collapse = "\n"))
       stop(paste("Some alignments might be empty; empty alignments must be remove from the folder before running the function", "\n",
                  "Look at in priority the files targeted by the warning message", "\n",  sep = ""))
+      }
     }
 
 
@@ -95,8 +100,68 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
       dir.create(output)
     }
 
+    # Check the os plateform
+    os <- .Platform$OS
+
+    if(os == "windows"){
+      if(missing(Gblocks.path)){
+        stop("The path to the Gblocks executable must be provided in Gblocks.path")
+      } else {
+        src.dir = paste(getwd(), "/", input, sep = "")
+        file.names = list.files(src.dir)
+
+        oldwd = getwd()
+        i = 1
+        for(i in 1:length(file.names)){
+          # copy the file into the directory wher Gblocks executable is found
+          file.copy(from = paste(src.dir, "/", file.names[i], sep = ""),
+                    to = paste(Gblocks.path, "/", file.names[i], sep = ""))
+          # Change
+          setwd(Gblocks.path)
+          Align = seqinr::read.fasta(file.names[i], as.string = TRUE)
+          MinNbSeqFlankPos = (length(labels(Align))/2) + 1  # We follow the approach of the Gblocks server
+          # also used by Seaview (Gouy et al. 2010, DOI: 10.1093/molbev/msp259) to set up the
+          # Minimum Number Of Sequences For A Flank Position (50% of the overall seqeunce +1 sequence).
+          if(LessStringent == TRUE){
+            a = paste("./Gblocks ", file.names[i], " -t=", Type, " -b2=", MinNbSeqFlankPos,
+                    " -b4=5 -b5=h -e=-gbls", sep = "")
+          system(a)
+          out = list.files(Gblocks.path)
+          file.remove(out[grep(".htm", out, fixed = TRUE)])
+          out2 = list.files(Gblocks.path)
+          outOri = out2[grep(".fas-gbls", out2, fixed = TRUE)]
+          outRena = paste("Gblocksls_", gsub("-gbls",
+                                             "", outOri, fixed = TRUE), sep = "")
+          # Rename and move to output folder
+          file.rename(paste(Gblocks.path, "/", outOri,
+                            sep = ""), paste(oldwd, "/", output, "/", outRena, sep = ""))
+
+          #outOri = out2[grep(".fas-gbls", out2, fixed = T)]
+          #outRena = paste("Gblocksls_", gsub("-gbls", "", outOri, fixed = TRUE), sep = "")
+          #file.rename(paste(Gblocks.path, "/", outOri, sep = ""), paste(output, "/", outRena,
+          #                                                    sep = ""))
+          } else {
+            a = paste("./Gblocks ", file.names[i], " -t=", Type, " -e=-gbms", sep = "")
+          system(a)
+          out = list.files(Gblocks.path)
+          file.remove(out[grep(".htm", out, fixed = TRUE)])
+          out2 = list.files(Gblocks.path)
+          outOri = out2[grep(".fas-gbms", out2, fixed = TRUE)]
+          outRena = paste("Gblocksms_", gsub("-gbms", "", outOri, fixed = TRUE), sep = "")
+          # Rename and move to output folder
+          file.rename(paste(Gblocks.path, "/", outOri, sep = ""),
+                      paste(oldwd, "/", output, "/", outRena, sep = ""))
+          }
+          # Change the working directory to come back to the current R working directory
+          setwd(oldwd)
+        }
+
+      }
+      # End the  if(os == "windows"){
+    } else {
+
     if (LessStringent == TRUE) {
-        # Gblocks runs using the less stringent selection approach.
+      # Gblocks runs using the less stringent selection approach.
         Gblocks.lessStr = function(x) {
             Align = seqinr::read.fasta(paste(input, "/", x, sep = ""), as.string = TRUE)
             MinNbSeqFlankPos = (length(labels(Align))/2) + 1  # We follow the approach of the Gblocks server
@@ -114,6 +179,7 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
         outRena = paste("Gblocksls_", gsub("-gbls", "", outOri, fixed = TRUE), sep = "")
         file.rename(paste(input, "/", outOri, sep = ""), paste(output, "/", outRena,
             sep = "")) # Rename and move to output folder
+
     } else {
         Gblocks.def = function(x) {
             # Gblocks runs using default parameter (the more stringent selection approach).
@@ -129,6 +195,5 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
         file.rename(paste(input, "/", outOri, sep = ""), paste(output, "/", outRena,
             sep = "")) # Rename and move to output folder
     }
-
-
+}
 }  # End of the function.

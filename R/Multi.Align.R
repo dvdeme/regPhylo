@@ -32,13 +32,18 @@
 #' but other programs can be used simultaneously, such as Mafft-fftns2, Mafft-fftnsi,
 #' Muscle, Prank and PASTA, c("mafftfftns2", "mafftfftnsi", "muscle", "prank", "pasta").
 #' @param nthread number of threads used to run the alignment software in
-#'parallel for the different gene regions.
+#' parallel for the different gene regions.
 #' @param Mafft.path for Windows plateform, a character string which provides the path
 #' to the mafft executable. For Linux the mafft software must be in the $PATH.
 
 #' @param Muscle.path for Windows plateform, a character string which provides the path
 #' to the muscle executable (eg. "C:/Users/deme/Documents/Programs/Muscle/muscle3.8.31_i86win32.exe").
 #' For Linux the muscle software must be in the $PATH.
+#'
+#' @param Prank.path for Windows plateform, a character string which provides the path
+#' to the prank executable
+#' (eg. "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe)")
+#' For Linux the prank software must be in the $PATH.
 #'
 #'
 #' @examples # Load in the R environment the object used by the function.
@@ -207,8 +212,19 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
     # PRANK alignment (Phylogeny aware alignment approach distinguishing the
     # insertion and deletion evolutionary event [especially good for distantly
     # related species]).
+
+      prank = "prank"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Prank.path)){
+          stop("The path to the prank executable must be provided in Prank.path")
+        }
+        prank = Prank.path
+      }
+
+
     prank.align = function(x) {
-        a = paste("prank -d=", input, "/", x, " -o=", output, "/", "Prank_", x, sep = "")
+        a = paste(prank, " -d=", input, "/", x, " -o=", output, "/", "Prank_", x, sep = "")
         system(a)
     }
     parallel::parLapply(cl, AlignSelect2, prank.align)

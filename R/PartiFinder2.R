@@ -48,6 +48,7 @@
 # of them higher will tend to make the search more thorough and slower. Setting
 # them lower will tend to make the search quicker but less thorough.
 
+
 #' @details The rcluster
 #' algorithm works by finding the rcluster-max most similar pairs of data blocks,
 #' OR the top rcluster-percent of similar datablocks, whichever is smaller. It

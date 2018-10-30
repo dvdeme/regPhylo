@@ -161,21 +161,43 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
     }
 
     if(length(which(methods=="mafftfftns2"))==1){
+
+      mafft = "mafft"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Mafft.path)){
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = Mafft.path
+      }
+
     # Mafft alignment using FFT-NS-2 algorithm:
     mafftfftns2.align = function(x) {
-        a = paste("fftns ", input, "/", x, " > ", output, "/", "Mafftfftns2_", x,
-            sep = "")
+        a = paste(mafft, " --retree 2 --maxiterate 0 ",
+                  input, "/", x, " > ", output, "/",
+                  "Mafftfftns2_", x, sep = "")
         system(a)
     }
     parallel::parLapply(cl, AlignSelect2, mafftfftns2.align)
     }
 
     if(length(which(methods=="mafftfftnsi"))==1){
+
+      mafft = "mafft"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Mafft.path)){
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = Mafft.path
+      }
+
     # Mafft alignment using fftnsi algorithm (increase in alignment accuracy for
     # distantly related sequences)
     mafftfftnsi.align = function(x) {
-        a = paste("fftnsi ", input, "/", x, " > ", output, "/", "Mafftfftnsi_", x,
-            sep = "")
+        a = paste(mafft, " --retree 2 --maxiterate 2 ",
+                  input, "/", x, " > ", output, "/",
+                  "Mafftfftnsi_", x, sep = "")
         system(a)
     }
     parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)

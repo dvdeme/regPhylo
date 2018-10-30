@@ -54,6 +54,8 @@
 #' to = paste(dest.dir, x, sep = "/"),
 #' overwrite = FALSE) })
 #'
+#'
+#'
 #' output = "multi.alignedTest"
 #' nthread = 3
 #' methods = c("mafftfftnsi", "pasta")

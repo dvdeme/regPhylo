@@ -55,6 +55,7 @@
 #'
 #' @export Filtering.align.Trimal
 #'
+#'
 #' @references Capella-Gutierrez et al. 2009, DOI:
 #' 10.1093/bioinformatics/btp348
 

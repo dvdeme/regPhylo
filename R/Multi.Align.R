@@ -96,7 +96,7 @@
 
 
 Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NULL, Mafft.path = NULL,
-                       Muscle.path = NULL) {
+                       Muscle.path = NULL, Prank.path = NULL) {
     AlignSelect = list.files(input)
     AlignSelect = AlignSelect[grep(".fas", AlignSelect)]
     AlignSelect2 = paste("revc_", AlignSelect, sep = "")

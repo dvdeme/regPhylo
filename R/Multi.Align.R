@@ -32,7 +32,9 @@
 #' but other programs can be used simultaneously, such as Mafft-fftns2, Mafft-fftnsi,
 #' Muscle, Prank and PASTA, c("mafftfftns2", "mafftfftnsi", "muscle", "prank", "pasta").
 #' @param nthread number of threads used to run the alignment software in
-# parallel for the different gene regions.
+#'parallel for the different gene regions.
+#' @param Mafft.path for Windows plateform, a character string which provides the path
+#' to the mafft executable. For Linux the mafft software must be in the $PATH.
 
 #' @examples # Load in the R environment the object used by the function.
 #' # Here the toy example consist of four alignment (co1, 12srrna, cytb, rag1)
@@ -54,8 +56,6 @@
 #' to = paste(dest.dir, x, sep = "/"),
 #' overwrite = FALSE) })
 #'
-#'
-#'
 #' output = "multi.alignedTest"
 #' nthread = 3
 #' methods = c("mafftfftnsi", "pasta")
@@ -71,7 +71,6 @@
 #' # Remove the folder with Gblocks outputs
 #' unlink("multi.alignedTest", recursive = TRUE)
 #'
-#'
 #' # The output files are also present as an external data in the regPhylo package
 #' # and can be accessed by the following code:
 #' # a = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
@@ -86,22 +85,31 @@
 #' @references Mirarab et al. 2015, DOI: 10.1089/cmb.1014.0156
 
 
-Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NULL) {
+Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NULL, Mafft.path = NULL) {
     AlignSelect = list.files(input)
     AlignSelect = AlignSelect[grep(".fas", AlignSelect)]
     AlignSelect2 = paste("revc_", AlignSelect, sep = "")
     dir.create(output)  # Create the ouput folder.
 
+    mafft = "mafft"
+    os <- .Platform$OS
+    if(os == "windows"){
+      if(missing(Mafft.path)){
+        stop("The path to the mafft executable must be provided in Mafft.path")
+      }
+      mafft = Mafft.path
+    }
+
     # Run the job in parallel through a certain number of threads.
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
-    parallel::clusterExport(cl, varlist = c("output", "input"))
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
 
     # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
     # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
     # alignment for all other algorithms
     mafftfftns1.align = function(x) {
-        a = paste("mafft --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
+        a = paste(mafft, " --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
             x, " > ", input, "/", "revc_", x, sep = "")
         system(a)
     }
@@ -125,8 +133,9 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
 
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
-    parallel::clusterExport(cl, varlist = c("output", "input"))
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
     if(length(which(methods=="muscle"))==1){
+
     # Muscle alignment:
     muscle.align = function(x) {
         a = paste("muscle -in ", input, "/", x, " -out ", output, "/", "Muscle_",

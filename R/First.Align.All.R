@@ -47,7 +47,7 @@
 #' # the R global environment before to run the function.
 #' \dontrun{
 #' # We used small alignments examples provided in the
-#' # inst/extdata/FirstToAlign folder availble with the package.
+#' # inst/extdata/FirstToAlign folder available with the package.
 #' # Those alignments are the export of Seq.DF5 dataset, for
 #' # the co1 and 16s regions. Notice that the 16s has only 1
 #' # sequences and explained the warnings messages.
@@ -74,9 +74,10 @@
 #' input = "TempDir.FirstToAlign"
 #' output = "TempDir.FirstToAlign/FirstAligned"
 #' nthread = 2
+#' methods = "mafftfftnsi"
 #' First.Align.All(input = input, output =
 #' "TempDir.FirstToAlign/FirstAligned", nthread = 2,
-#' methods = c("mafftfftnsi", "pasta"))
+#' methods = c("mafftfftnsi"))
 #'
 #'
 #' # To clean the file created while running the example do the following:
@@ -99,6 +100,9 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     mafft = "mafft"
     os <- .Platform$OS
     if(os == "windows"){
+      if(missing(Mafft.path)){
+        stop("The path to the mafft executable must be provided in Mafft.path")
+      }
       mafft = Mafft.path
     }
 
@@ -142,7 +146,10 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
       mafft = "fftnsi "
       os <- .Platform$OS
       if(os == "windows"){
-        mafft = psate(Mafft.path, " ", sep = "")
+        if(missing(Mafft.path)){
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = paste(Mafft.path, " ", sep = "")
       }
 
 

@@ -57,7 +57,7 @@
 #' # current working directory.
 #' src.dir = system.file("extdata/FirstToAlign", package = "regPhylo")
 #' dir.create("TempDir.FirstToAlign")
-#' # Set up the path of the TempDir folder.
+#' # Set up the path to the TempDir folder.
 #' dest.dir = paste(getwd(), "/TempDir.FirstToAlign", sep="")
 #' file.names <- dir(src.dir)
 #' # Copy all the files stored in regPhylo/extdata/FirstToAlign"
@@ -144,7 +144,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     # Designate the functions and variables that need to be exported for the parallel version.
     parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
     if(length(which(methods=="mafftfftnsi"))==1){
-      mafft = "fftnsi "
+      mafft = "mafft"
       os <- .Platform$OS
       if(os == "windows"){
         if(missing(Mafft.path)){
@@ -156,8 +156,9 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
 
     # Mafft alignment using fftnsi algorithm.
     mafftfftnsi.align = function(x) {
-        a = paste(mafft, input, "/", x, " > ", output, "/", "Mafftfftnsi_", x,
-            sep = "")
+        a = paste(mafft, " --retree 2 --maxiterate 2 ",
+                  input, "/", x, " > ", output, "/",
+                  "Mafftfftnsi_", x, sep = "")
         system(a)
     }
     parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)

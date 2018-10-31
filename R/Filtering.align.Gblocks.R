@@ -36,7 +36,7 @@
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 #' dir.create("TempDir")
-#' # Set up the path of the TempDir folder.
+#' # Set up the path to the TempDir folder.
 #' dest.dir = paste(getwd(), "/TempDir", sep="")
 #' file.names <- dir(src.dir)
 #' # Copy all the files stored in regPhylo/extdata/multi.align/multi.aligned"
@@ -50,6 +50,7 @@
 #' # Gblocks in the "Trimmed-Gblocks" folder.
 #' Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 #' output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
+#'
 #'
 #' # To clean the file created while running the example do the following:
 #' # Remove the temporary folder

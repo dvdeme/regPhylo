@@ -4,21 +4,22 @@
 #' @description This function selects and exports the sequences for a list of selected gene
 #' regions for all the species present in the input data table. The selection of
 #' the sequence is optimised considering the most geographically proximate
-#' sequence to the RefPoint (in our case, the New Zealand centroid) for a given
+#' sequence to the RefPoint (for instance the New Zealand centroid in our case study) for a given
 #' species and gene region, as the first priority. If any geographic information
 #' is available or if multiple sequences are equally distants from the RefPoint,
-#' the function then also consider the length of the sequence.
+#' the function then also consider the length of the sequence. The selection based
+#' on geographic proximity can also be disabled.
 #'
 #' @details The choice based on the sequence length can be made using the longest sequence (option
 #' SeqChoice='Longest') or a sequence with a length closest to the median length
 #' of the sequence length distribution for a given species and a given gene region
-#' (option SeqChoice='Median') (See Antonelli et al. 2016, Systematic Biology DOI:
+#' (option SeqChoice='Median') (See Antonelli et al. 2017, Systematic Biology DOI:
 #' 10.1093/sysbio/syw066 for a similar approach).  The sequence length is computed
 #' after discarding the potential indels ('-') and the ambiguous nucleotides.
 #' @return The function returns a table with all the information about the selected sequences
-#' including 3 additional columns ('SeqLengthNoIndelsNoAmbig'=Sequence length
-#' after removing the indels and ambiguous nucleotides, 'Dist2NZ'= Great circle
-#' distance in kilometers from the RefPoints, 'dist2med'= distance to the median
+#' including 3 additional columns ('SeqLengthNoIndelsNoAmbig' = Sequence length
+#' after removing the indels and ambiguous nucleotides, 'Dist2NZ' = Great circle
+#' distance in kilometers from the RefPoint, 'dist2med' = distance to the median
 #' of the sequence length distribution), and the alignment of the gene region in
 #' fasta format.
 
@@ -28,8 +29,10 @@
 #' but the folder must be created first).
 #' @param RefPoint a vector with geographic coordinates with
 #' longitude and latitude in decimal degrees WGS84 of the geographic reference
-# point of the focal area. The reference point for New Zealand, is 174.7976
-# degrees longitude, and -41.3355 degrees latitude.
+#' point of the focal area. (e.g. the reference point for New Zealand, is 174.7976
+#' degrees longitude, and -41.3355 degrees latitude). If RefPoint is NULL then the selection
+#' based on geographic proximity is disabled, and only the selection based on the length
+#' of the sequence is performed.
 #' @param perReposit if the name of the repository is provided (should be the same name as used in the function
 #' 'Congr.NCBI.BOLD.perReposit.R' option 'perReposit') it implies that several
 #' sequences are coming from a personal repository and the function will use the
@@ -63,24 +66,30 @@
 #' SeqChoice = "Median")
 #'
 #' # Run the function and export the best (the most proximal to the focal
-#' area e.i. NZ) sequences in the alignment for each species and gene region,
-#' using the sequence the with a median sequence length for each gene region and species.
+#' # area e.i. NZ) sequences in the alignment for each species and gene region,
+#' # using the sequence the with a median sequence length for each gene region and species.
 #' Seq.DF7=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
 #' RefPoint = cbind(174.7976, -41.3355), perReposit = "My.Rep",
 #' Alignment = T, MaxSeq =1, gene.list = c("co1", "16srrna"),
 #' SeqChoice = "Median")
 #'
 #' # Run the function and export the two most proximal sequences of the focal area (e.i. NZ)
-#' in the alignment for each species and gene region, using the longuest sequence per
+#' # in the alignment for each species and gene region, using the longuest sequence per
 #' # gene region and species.
 #' Seq.DF8=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
 #' RefPoint = cbind(174.7976, -41.3355), perReposit = "My.Rep",
 #' Alignment = T, MaxSeq =2, gene.list = c("co1", "16srrna"),
 #' SeqChoice = "Longest")
 #'
+#' # Run the function while the selection based on the geographic proximity is disabled,
+#' # the longuest sequence per gene region and species is retained
+#' Seq.DF8=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
+#' perReposit = "My.Rep", Alignment = T, MaxSeq =2,
+#' gene.list = c("co1", "16srrna"), SeqChoice = "Longest")
+#'
 #' }
 #'
-#' @references Antonelli et al. 2016, DOI: 10.1093/sysbio/syw066
+#' @references Antonelli et al. 2017, DOI: 10.1093/sysbio/syw066
 #'
 #'
 #' @export SelBestSeq
@@ -138,15 +147,21 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
                   4]))))
             }  # End for i.
 
+            # Allowing the possibility to disable the selection based on geographic criterion.
+            if(is.null(RefPoint)){
+              Dist2NZ = rep(NA, dim(DFtemp)[1])
+            } else {
             Dist2NZ = t(fields::rdist.earth(RefPoint, cbind(as.numeric(as.character(DFtemp[,
                 24])), as.numeric(as.character(DFtemp[, 23]))), miles = FALSE))  # Great circle distance between the RefPoint and the sampling site of the sequence.
+            }
+
             DFtemp[, 5] = SeqLengthNoIndels  # Sequence length excluding the indels.
             dist2med = abs(SeqLengthNoIndelsNoAmbig - stats::median(SeqLengthNoIndelsNoAmbig))  # Distance expressed as an absolute number of nucleotide differences between each sequence and the median sequence length.
             DFtemp1 = cbind(DFtemp, SeqLengthNoIndelsNoAmbig, Dist2NZ, dist2med)
 
 
             # Define the order of priorities to select the best sequence.  If none of the
-            # sequences have geographic coordinates, just base the selection on SeqChoice
+            # sequence has geographic coordinates, just base the selection on SeqChoice
             # criteria, which can be the longest sequence or the one with a length closest to
             # the median length after excluding indels and ambiguous positions.  If the
             # sequence also has the geographic coordinates, then the sequence sampled from a

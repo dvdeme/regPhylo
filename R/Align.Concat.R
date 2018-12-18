@@ -1,9 +1,9 @@
 #' @title Concatenate alignments from different gene regions into a supermatrix at the species level
 
-#' @description This function concatenates the alignments from different gene regions in a
+#' @description This function concatenates the alignments from different gene regions into a
 #' single supermatrix in nexus and fasta formats, at the species level.  The function also allows the
-#' inclusion of species without DNA, if necessary (using BEAST to resolve
-#' polytomies for instance).
+#' inclusion of species without DNA sequence, if necessary (for instance, to then use BEAST to resolve
+#' polytomies).
 
 #' @return The function returns 1) the differents alignments
 #' separately in nexus format .nex, including taxa that do not have DNA sequence
@@ -50,8 +50,10 @@
 #' # Create another temporary file to build a supermatrix including species without DNA.
 #' dir.create("TempDir.ForConcat2")
 #' file.names <- dir("TempDir.ForConcat")
-#' file.names <- file.names[grep(".fas", file.names)] # select only the .fas alignment
-#' file.names <- file.names[-grep("Concat.fas", file.names)] # remove the Concat.fas alignment just created above.
+#' # select only the .fas alignment
+#' file.names <- file.names[grep(".fas", file.names)]
+#' # remove the Concat.fas alignment just created above.
+#' file.names <- file.names[-grep("Concat.fas", file.names)]
 #' sapply(file.names, function(x) {
 #' file.copy(from = paste("TempDir.ForConcat", x, sep = "/"),
 #' to = paste("TempDir.ForConcat2", x, sep = "/"),
@@ -64,7 +66,8 @@
 #' outputConcat = "TempDir.ForConcat2/Concat_2spNoDNA")
 #'
 #' # Import the supermatrix in R
-#' Supermatrix2SpNoDNA = read.dna("TempDir.ForConcat2/Concat_2spNoDNA.fas", format = "fasta")
+#' Supermatrix2SpNoDNA = read.dna("TempDir.ForConcat2/Concat_2spNoDNA.fas",
+#' format = "fasta")
 #'
 #'
 #' # To clean the files created while running the example do the following:

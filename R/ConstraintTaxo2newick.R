@@ -1,4 +1,4 @@
-#' @title Build a multifurcating topologically constraining tree for RAxML
+#' @title Build a multifurcating topological constraining tree for RAxML
 #'
 #' @description The function builds a multifurcating phylogenetic tree
 #' from a classification table and a table of phylogenetic constraints ready to be
@@ -72,6 +72,9 @@
 #' # are present on the guiding tree, the unconstrained taxa will
 #' # be positioned on the tree based on their molecular affinities.
 #' plot(BackBoneTreeFamilySeries[[2]], cex=0.8)
+#'
+#' # To clean the files created while running the example do the following:
+#' unlink("TempDir.TopoConstraints", recursive = TRUE)
 #' }
 
 #' @export ConstraintTaxo2newick
@@ -211,5 +214,8 @@ ConstraintTaxo2newick = function(inputTaxo = NULL, inputConst = NULL, outputNewi
     treeA2 = ape::collapse.singles(treeA1)  # Collapse single node.
     ape::write.tree(treeA2, file = paste(outputNewick, ".txt", sep = ""))  # Export the tree in newick format.
     treeA3 = ape::read.tree(paste(outputNewick, ".txt", sep = ""))
-    return(list(TaxonomicTable = taxo1, NewickConstraintTree = treeA3))  # Export a list of two objects 1)= the modified classification table taking into account the topological constraints, 2)= a final newick tree.
+    # Export a list of two objects
+    # 1)= the modified classification table taking into account the topological constraints,
+    # 2)= a final newick tree.
+    return(list(TaxonomicTable = taxo1, NewickConstraintTree = treeA3))
 }

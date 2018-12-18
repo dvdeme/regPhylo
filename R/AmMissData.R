@@ -1,4 +1,4 @@
-#' @title Estimate the percentage of missing gene region within a species-by-gene matrix
+#' @title Estimate the percentage of missing gene regions within a species-by-gene matrix
 #'
 #' @description This function extracts the percentage of missing data in the species-by-gene
 #' matrix according to a list of selected gene regions.

@@ -27,7 +27,7 @@
 #' @param output the name of the output table (including th path if necessary,
 #' but the folder must be created first).
 #' @param RefPoint a vector with geographic coordinates with
-# longitude and latitude in decimal degrees WGS84 of the geographic reference
+#' longitude and latitude in decimal degrees WGS84 of the geographic reference
 # point of the focal area. The reference point for New Zealand, is 174.7976
 # degrees longitude, and -41.3355 degrees latitude.
 #' @param perReposit if the name of the repository is provided (should be the same name as used in the function

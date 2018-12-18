@@ -1,5 +1,5 @@
-#' @title Include CladeAge blocks into an xml file formated by Beauti for BEAST2
-#' to calibrate the tree in an absolute time frame
+#' @title Include CladeAge blocks into an xml file formated by BEAUTi
+#' to calibrate the tree in an absolute time frame using BEAST2
 
 #' @description This function edits an .xml file following CLADEAGE requirements to
 #' calibrate the tree, based on the age estimate of the first fossil occurrence of

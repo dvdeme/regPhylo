@@ -1,26 +1,27 @@
-#' @title Merge outputs from GenBank, BOLD and optionaly from a personal repository
-#' into a single table while removing potential duplicate sequences
+#' @title Merge outputs from GenBank, BOLD and a personal repository
+#' (if available) into a single table and remove potential duplicate
+#' sequences.
 
 #' @description This function assembles a large common dataframe for all the data retrieved
-#' from NCBI and BOLD, an optionally can also include the data from a personal
-#' repository.  The function checks for the presence of duplicated sequences and
-#' selects the most relevant information (select the longest sequence, and
+#' from GenBank and BOLD, and also from a personal repository, if available.
+#' The function checks for the presence of duplicated sequences and
+#' selects the most relevant information (i.e. selects the longest sequence, and
 #' maximise the metadata information across the different sources for the
 #' location, geographic coordinates, and collection date).
 
-#' @return The information contained in the output file are:
+#' @return The information contained in the output file includes:
 #' 'TaxaName' (Binomial species name included in the second column of the NCBI
 #' and BOLD species list),
 #' 'AccessBold' (BOLD recordID which is also identical to
 #' sequenceID in BOLD),
-#' 'AccessNCBI' (NCBI accession number),
-#' 'Sequence' (The sequence itself, or 'Too_Long' if more than 5000bp),
+#' 'AccessNCBI' (NCBI sequence accession number),
+#' 'Sequence' (The nucleotide sequence itself, or 'Too_Long' if more than 5000bp),
 #' 'SeqLength' (Sequence length), '
-#' Definition' (NCBI definition field, or for BOLD a combination of
+#' 'Definition' (NCBI definition field, or for BOLD a combination of
 #' 'TaxaName', the string 'BOLD' and the BOLD 'processid'),
-#' OrganismClassif' (Classification of the organism),
+#' 'OrganismClassif' (Classification of the organism),
 #' 'Source' (NCBI source or for BOLD combination of 'TaxaName' and 'sequenceID'),
-#' Title' (Title provided by NCBI),
+#' 'Title' (Title provided by NCBI),
 #' 'Authors' (Authors provided by NCBI, or for BOLD 'collectors'),
 #' 'Journal' (Journal provided by NCBI),
 #' 'Pubmed' (Pubmed references provided by NCBI),

@@ -5,7 +5,8 @@
 \title{Remove poorly aligned nucleotides position using Gblocks software.}
 \usage{
 Filtering.align.Gblocks(input = NULL, LessStringent = NULL,
-  Type = NULL, output = NULL, remove.empty.align = NULL)
+  Type = NULL, output = NULL, remove.empty.align = NULL,
+  Gblocks.path = NULL)
 }
 \arguments{
 \item{input}{name of the folder storing the alignments in fasta format (with the
@@ -24,6 +25,11 @@ otherwise uses the default parameters in Gblocks for a stringent selection
 The output folder is created automatically.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
+
+\item{Gblocks.path}{for Windows plateform, a character string which provides the path
+to the Gblocks executable but without the name of the executable
+(e.g. ""C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
+For Linux the Gblocks software must be in the $PATH.}
 }
 \value{
 The function exported the trimmed alignement directly in the same folder
@@ -50,7 +56,7 @@ The function requires, Gblocks to be installed and set up in the PATH.
 # current working directory.
 src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 dir.create("TempDir")
-# Set up the path of the TempDir folder.
+# Set up the path to the TempDir folder.
 dest.dir = paste(getwd(), "/TempDir", sep="")
 file.names <- dir(src.dir)
 # Copy all the files stored in regPhylo/extdata/multi.align/multi.aligned"
@@ -64,6 +70,7 @@ overwrite = FALSE) })
 # Gblocks in the "Trimmed-Gblocks" folder.
 Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
+
 
 # To clean the file created while running the example do the following:
 # Remove the temporary folder

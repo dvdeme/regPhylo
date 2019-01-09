@@ -20,7 +20,9 @@
 #' The output folder is created automatically.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
 #' @param Gblocks.path for Windows plateform, a character string which provides the path
-#' to the Gblocks executable. For Linux the Gblocks software must be in the $PATH.
+#' to the Gblocks executable but without the name of the executable
+#' (e.g. ""C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
+#' For Linux the Gblocks software must be in the $PATH.
 #'
 #' @details The function requires, Gblocks to be installed and set up in the PATH.
 

@@ -39,7 +39,7 @@ options)
 }
 \description{
 The function helps to relatively quickly detect some outlier sequences (miss
-aligned sequences, which can be caused by different problems such as gene or
+aligned sequences, which might be caused by different problems such as gene or
 species annotation problems, presence of paralogs sequences...) that should be
 potentially removed from the pool of sequences per species and gene regions
 before selecting the best sequence.  The function is far from being accurate
@@ -52,10 +52,10 @@ checking must always be carry on to ensure a satisfaying results.
 The function follows the following general strategy to detect outlier
 sequences.  First a distance matrix is computed among all sequences (See
 different strategies available below), second a BIONJs tree (i.e. an improved
-Neighbhor joining allowing missing values, Criscuolo & Gascuel (2008, DOI:
-10.1186/1471-21.5-9-166) using the disance matrix is build, and the root to tip
-distance is computed. All the sequence above a certain distance threshold (we
-use 50-60%, see Cheng et al. 2015 for similar thresholds) of the maximun root
+Neighbhor joining allowing missing values, Criscuolo & Gascuel (2008)
+using the disance matrix is build, and the root to tip distance is computed.
+All the sequence above a certain distance threshold (we
+use 50-60%, see Chen et al. 2015 for similar thresholds) of the maximun root
 to tip distances are extracted as potential 'primary' outlier sequences.  In
 option, we can blast the primary outlier sequences on a local blast database to
 look for secondary outlier sequences that might be similar to the primary
@@ -71,13 +71,12 @@ The first otpion 'MisAli' uses the number of indelblocks to compute the
 distance matrix in order to preferentially detect misaligned sequences
 generating gaps in the alignment.  The second option 'DivSeq' uses the TN93
 substitution model to compute the distance matrix in order to detect very
-divergent sequences.  The third option 'Comb' combined the two previous
+divergent sequences. The third option 'Comb' combined the two previous
 distance matrices to detect both misaligned and very divergent sequence. The
 two distance matrix are first re-scaled as percentage of the their highest
 distances respectively and then summed.
 
-The function requires BLAST installed and in the PATH, and ape and seqinr R
-packages.
+The function requires BLAST installed and in the PATH.
 }
 \examples{
 # Load the alignment file (class "alignment"), this is the first
@@ -117,4 +116,10 @@ and can be accessed by the following code:
 file.remove("16S_example_RMoutliers.fas")
 
 }
+
+}
+\references{
+Criscuolo & Gascuel 2008, DOI: 10.1186/1471-21.5-9-166
+
+Chen et al. 2015, DOI: 10.1093/sysbio/syv059
 }

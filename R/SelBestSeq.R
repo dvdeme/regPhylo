@@ -1,31 +1,29 @@
-#' @title Select the sequences based on the geographic proximity with a focal area
-#' and sequence length, and export sequences (fasta format) and metadata for the selected gene regions
+#' @title Select the sequences based on geographic proximity
+#' and/or sequence length, and export sequences (fasta format) and metadata for the selected gene regions
 #'
-#' @description This function selects and exports the sequences for a list of selected gene
+#' @description This function selects and exports the sequences for a list of gene
 #' regions for all the species present in the input data table. The selection of
-#' the sequence is optimised considering the most geographically proximate
-#' sequence to the RefPoint (for instance the New Zealand centroid in our case study) for a given
-#' species and gene region, as the first priority. If any geographic information
-#' is available or if multiple sequences are equally distants from the RefPoint,
-#' the function then also consider the length of the sequence. The selection based
-#' on geographic proximity can also be disabled.
+#' the sequence for a given species and gene region can be optimised considering the most geographically proximate
+#' sequence to the RefPoint. It can additionally, or alternatively, select a
+#' sequence according to the length of the seqeunce.
 #'
 #' @details The choice based on the sequence length can be made using the longest sequence (option
-#' SeqChoice='Longest') or a sequence with a length closest to the median length
+#' SeqChoice = 'Longest') or the sequence with a length closest to the median
 #' of the sequence length distribution for a given species and a given gene region
-#' (option SeqChoice='Median') (See Antonelli et al. 2017, Systematic Biology DOI:
+#' (option SeqChoice = 'Median') (See Antonelli et al. 2017, Systematic Biology DOI:
 #' 10.1093/sysbio/syw066 for a similar approach).  The sequence length is computed
 #' after discarding the potential indels ('-') and the ambiguous nucleotides.
+#'
 #' @return The function returns a table with all the information about the selected sequences
-#' including 3 additional columns ('SeqLengthNoIndelsNoAmbig' = Sequence length
-#' after removing the indels and ambiguous nucleotides, 'Dist2NZ' = Great circle
-#' distance in kilometers from the RefPoint, 'dist2med' = distance to the median
-#' of the sequence length distribution), and the alignment of the gene region in
+#' including 3 additional columns: 'SeqLengthNoIndelsNoAmbig' = Sequence length
+#' after removing the indels and ambiguous nucleotides; 'Dist2RefPoint' = Great circle
+#' distance in kilometers from the RefPoint; 'dist2med' = distance to the median
+#' of the sequence length distribution. The alignment of the gene region are exported in
 #' fasta format.
 
-#' @param input a data table coming from the function Select.DNA() or
-#' SpeciesGeneMat.Bl.R (the data table should have 29 columns).
-#' @param output the name of the output table (including th path if necessary,
+#' @param input a data table coming from the function \code{\link{Select.DNA}} or
+#' \code{\link{SpeciesGeneMat.Bl}} (the data table should have 29 columns).
+#' @param output the name of the output table (including the path if necessary,
 #' but the folder must be created first).
 #' @param RefPoint a vector with geographic coordinates with
 #' longitude and latitude in decimal degrees WGS84 of the geographic reference
@@ -33,27 +31,28 @@
 #' degrees longitude, and -41.3355 degrees latitude). If RefPoint is NULL then the selection
 #' based on geographic proximity is disabled, and only the selection based on the length
 #' of the sequence is performed.
-#' @param perReposit if the name of the repository is provided (should be the same name as used in the function
+#' @param perReposit if the name of the repository is provided (i.e. the same name as used in the function
 #' 'Congr.NCBI.BOLD.perReposit.R' option 'perReposit') it implies that several
 #' sequences are coming from a personal repository and the function will use the
-#' ID of the sequence provided by the field 'Db_xref' as a unique id for the
-#' sequence (the function uses the first element (using ';' as separator) present
-#' in the column 'Db_xref'), and otherwise leave it blank.
-#' @param Alignment if Alignment='T' then fasta files of the sequence of the selected gene regions are
+#' ID of the sequence provided by the field 'Db_xref' as a unique ID for the
+#' sequence. The function uses the first element (using ';' as separator) present
+#' in the column 'Db_xref'.
+#' @param Alignment if Alignment = 'T' then fasta files of the sequences for the selected gene regions are
 #' exported (requiring the seqinr R package).
-#' @param MaxSeq Maximum number of best sequences to be exported for a species
-#' when multiple sequences are available for a gene region, if 'ALL' all the
-#' sequences available for that gene region are exported.
+#' @param MaxSeq Maximum number of sequences to be exported for a species
+#' when multiple sequences are available for a gene region
+#' (sequences maximising the spatial optimisation and/or length criteria are exported first).
+#' If MaxSeq = 'ALL', then all the sequences available for that gene region are exported.
 #' @param gene.list a vector of selected gene regions (gene names have to
 #' be consistent with the header of the table with the suffix '_SpDNA_Mat.txt'
-#' exported by the function SpeciesGeneMat_Bl.R).  For example Cytochrome c
+#' exported by the function \code{\link{SpeciesGeneMat_Bl}}).  For example Cytochrome c
 #' oxydase subunit 1, should have to be written 'co1' and not 'COI' or 'COX1'.
 #' @param SeqChoice select the longest sequence after removing ambiguous nucleotides
-#' (option SeqChoice='Longest') or the sequence with the length closest to the
-#' median sequence length (option SeqChoice='Median').
+#' (option SeqChoice = 'Longest') or the sequence with the length closest to the
+#' median sequence length (option SeqChoice = 'Median').
 
 #' @examples # Load the data table exported by the function Select.DNA
-#' data(Seq.DF4) # the table is called "Seq.DF5" and constitute the
+#' data(Seq.DF4) # The table is called "Seq.DF5" and constitutes the
 #' # sixth object of the list "Seq.DF4".
 #' Seq.DF5 = Seq.DF4$Seq.DF5
 #'
@@ -65,28 +64,39 @@
 #' Alignment = T, MaxSeq = "ALL", gene.list = c("co1", "16srrna"),
 #' SeqChoice = "Median")
 #'
+#' dim(Seq.DF6) # 10 sequences are reported.
+#'
+#'
 #' # Run the function and export the best (the most proximal to the focal
-#' # area e.i. NZ) sequences in the alignment for each species and gene region,
-#' # using the sequence the with a median sequence length for each gene region and species.
+#' # area i.e. NZ) sequences in the alignment for each species and gene region,
+#' # selecting the sequence with a median sequence length.
 #' Seq.DF7=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
 #' RefPoint = cbind(174.7976, -41.3355), perReposit = "My.Rep",
 #' Alignment = T, MaxSeq =1, gene.list = c("co1", "16srrna"),
 #' SeqChoice = "Median")
 #'
-#' # Run the function and export the two most proximal sequences of the focal area (e.i. NZ)
-#' # in the alignment for each species and gene region, using the longuest sequence per
-#' # gene region and species.
+#' dim(Seq.DF7) # 2 sequences are reported.
+#'
+#'
+#' # Run the function and export the two most proximal sequences of the focal area (i.e. NZ)
+#' # in the alignment for each species and gene region, selecting the longest sequence.
 #' Seq.DF8=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
 #' RefPoint = cbind(174.7976, -41.3355), perReposit = "My.Rep",
 #' Alignment = T, MaxSeq =2, gene.list = c("co1", "16srrna"),
 #' SeqChoice = "Longest")
 #'
-#' # Run the function while the selection based on the geographic proximity is disabled,
-#' # the longuest sequence per gene region and species is retained
-#' Seq.DF8=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
-#' perReposit = "My.Rep", Alignment = T, MaxSeq =2,
+#' dim(Seq.DF8) # 3 sequences are reported: 2 CO1 sequences, and the only 16srrna
+#' # sequence available.
+#'
+#'
+#' # Run the function to select the two longest sequences per gene region and species,
+#' # regardless of geographic proximity.
+#' Seq.DF9=SelBestSeq(input = Seq.DF5, output = "Alig_Seq.DF5.Best",
+#' perReposit = "My.Rep", Alignment = T, MaxSeq = 2,
 #' gene.list = c("co1", "16srrna"), SeqChoice = "Longest")
 #'
+#' dim(Seq.DF9) # 3 sequences are reported: 2 CO1 sequences and the only 16srrna
+#' # sequence available.
 #' }
 #'
 #' @references Antonelli et al. 2017, DOI: 10.1093/sysbio/syw066
@@ -157,7 +167,7 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
 
             DFtemp[, 5] = SeqLengthNoIndels  # Sequence length excluding the indels.
             dist2med = abs(SeqLengthNoIndelsNoAmbig - stats::median(SeqLengthNoIndelsNoAmbig))  # Distance expressed as an absolute number of nucleotide differences between each sequence and the median sequence length.
-            DFtemp1 = cbind(DFtemp, SeqLengthNoIndelsNoAmbig, Dist2NZ, dist2med)
+            DFtemp1 = cbind(DFtemp, SeqLengthNoIndelsNoAmbig, Dist2RefPoint, dist2med)
 
 
             # Define the order of priorities to select the best sequence.  If none of the

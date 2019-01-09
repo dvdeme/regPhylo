@@ -4,7 +4,8 @@
 \alias{Filtering.align.Trimal}
 \title{Remove poorly aligned nucleotides position using trimAl software.}
 \usage{
-Filtering.align.Trimal(input = NULL, output = NULL)
+Filtering.align.Trimal(input = NULL, output = NULL,
+  TrimAl.path = NULL)
 }
 \arguments{
 \item{input}{path to the folder storing the alignments in fasta format (with the}
@@ -13,6 +14,11 @@ Filtering.align.Trimal(input = NULL, output = NULL)
 The output folder is created automatically. The suffix 'trimAuto_' or
 'trimGapy_' are added to the alignment file name according to the chosen
 heuristic.}
+
+\item{TrimAl.path}{for Windows plateform, a character string which provides the path
+to the trimAl executable
+(eg "C:/Users/deme/Documents/Programs/TrimAl/trimal.v1.2rev59/trimAl/bin/trimal.exe").
+For Linux the trimAl software must be in the $PATH.}
 }
 \value{
 An ouptut folder is created with the trimmed alignments. In the R environment
@@ -32,7 +38,7 @@ The option "-automated1" automatically adjusts between -strict -strictplus and -
 stringent selection potentially than the -gappyout option (see Capella-Gutierrez et al. 2009, DOI:
 10.1093/bioinformatics/btp348, for more information)
 
-The function requires trimAl to be installed and set up in the PATH.
+The function requires trimAl to be installed and set up in the PATH for Linux plateform.
 }
 \examples{
 # Run the function
@@ -42,7 +48,7 @@ The function requires trimAl to be installed and set up in the PATH.
 # current working directory.
 src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 dir.create("TempDir.ToTrim")
-# Set up the path of the TempDir folder.
+# Set up the path to the TempDir folder.
 dest.dir = paste(getwd(), "/TempDir.ToTrim", sep="")
 file.names <- dir(src.dir)
 # Copy all the files stored in regPhylo/extdata/multi.align"

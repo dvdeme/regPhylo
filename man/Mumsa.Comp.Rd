@@ -4,7 +4,8 @@
 \alias{Mumsa.Comp}
 \title{Compare congruence among multiple alignments: a wrapper for MUMSA software}
 \usage{
-Mumsa.Comp(input = NULL, output = NULL, remove.empty.align = NULL)
+Mumsa.Comp(input = NULL, output = NULL, remove.empty.align = NULL,
+  Mumsa.path = NULL)
 }
 \arguments{
 \item{input}{path to the folder storing the alignments. The names of the alignments
@@ -15,6 +16,9 @@ results of MUMSA analysis. The output table reports the AOS for each gene
 region and the MOS for each alignment and each gene region.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
+
+\item{Mumsa.path}{for Windows plateform, a character string which provides the path
+to the mumsa executable. For Linux the mumsa software must be in the $PATH.}
 }
 \value{
 A tables with the MOS for each alignement and programs and the AOS for each
@@ -47,7 +51,7 @@ input = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 Mumsa.Comp(input = input, output = "Mumsa_output",
 remove.empty.align = FALSE)
 # The function report an error message if some alignment are empty.
-# Run the function without removing empty alignments
+# Run the function removing empty alignments
 input = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 Mumsa.Comp(input = input, output = "Mumsa_output",
 remove.empty.align = TRUE)

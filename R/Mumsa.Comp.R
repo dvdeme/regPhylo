@@ -23,7 +23,10 @@
 #' region and the MOS for each alignment and each gene region.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
 #'
+#'
 #' @details The function requires that the MUMSA software is installed and in the PATH.
+#' This function is currently not available on Windows platform (Windows user can use
+#' the online web server available at: http://msa.cgb.ki.se/cgi-bin/msa.cgi).
 #'
 #' @return A tables with the MOS for each alignement and programs and the AOS for each
 #' alignment exported as output txt document.
@@ -40,7 +43,7 @@
 #' Mumsa.Comp(input = input, output = "Mumsa_output",
 #' remove.empty.align = FALSE)
 #' # The function report an error message if some alignment are empty.
-#' # Run the function without removing empty alignments
+#' # Run the function removing empty alignments
 #' input = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 #' Mumsa.Comp(input = input, output = "Mumsa_output",
 #' remove.empty.align = TRUE)
@@ -59,7 +62,7 @@
 #'
 #'
 
-Mumsa.Comp = function(input = NULL, output = NULL, remove.empty.align = NULL) {
+Mumsa.Comp = function(input = NULL, output = NULL, remove.empty.align = NULL, Mumsa.path = NULL) {
     # Automatically detect the number of alignment programs used and the number of
     # gene regions introduced.
     a = list.files(input)
@@ -104,10 +107,13 @@ Mumsa.Comp = function(input = NULL, output = NULL, remove.empty.align = NULL) {
             collapse = " "))
     }
 
+
+    mumsa= "mumsa"
+
     # Run the MUMSA software
     i = 1
     for (i in 1:length(listgene)) {
-        b = paste("mumsa -s ", listgene[i], " >> ", paste(output, ".txt", sep = ""),
+        b = paste(mumsa, " -s ", listgene[i], " >> ", paste(output, ".txt", sep = ""),
             sep = "")
         system(b)
     }

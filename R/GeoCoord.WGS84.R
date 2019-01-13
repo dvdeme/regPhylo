@@ -1,4 +1,4 @@
-#' @title Extract longitude and latitude coordinates in separate fields and conversion in WGS84 using +- North, and +- East
+#' @title Extract longitude and latitude coordinates in separate fields and conversion in WGS84 decimal degrees.
 
 #' @description This function splits the field 'Lat_Lon' in two distinct fields for 'Latitude'
 #' and 'Longitude' and transform them to WGS84 geographic coordinates using +- North, and +- East (i.e. -45.10

@@ -1,4 +1,5 @@
 #' @title Extract DNA sequences and metadata from BOLD (Barcode Of Life Database)
+#'
 
 #' @description This function extracts sequences and associated information from the Barcode Of
 #' Life Database (BOLD) for all the species in the species list

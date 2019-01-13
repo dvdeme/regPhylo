@@ -8,6 +8,7 @@
 #' regions, the proportion is computed as a percentage of the richest gene region
 #' (i.e. the gene region that is represented in the greatest number of species).
 
+
 #' @param input the species-by-gene matrix which is provided as the first object in the
 # list returned by the function SpeciesGeneMat.Bl.R.
 #' @param gene.Sel a vector of a selected gene region

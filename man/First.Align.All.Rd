@@ -33,7 +33,7 @@ The function returns the alignment in the output folder using the
 name of the program as prefix of the alignment (e.i. "mafftfftnsi_Alig_co1.fas").
 The function also returns a table called "ListSeq_RevCompl_FirstAlignAll.txt"
 in the output folder listing the seqeunces names that have been reverse
-complemented by mafft.
+complemented by Mafft.
 }
 \description{
 First, for each distinct gene region, this function aligns all the sequences
@@ -50,7 +50,7 @@ divergent sequences and at dealing with saturated phylogenetic signal because
 it splits the alignment into small chuncks of similar sequences and performs
 profile alignments among those smaller chunk of sequences (Roquet et al. 2013).
 
-The 'output', 'input' and 'nthread' objects need
+The 'output', 'input', and 'nthread' objects need
 to be present in the R environment before running the function because the
 function runs in parallel using the R package 'parallel', see example below the
 function.
@@ -73,7 +73,7 @@ The function also requires the seqinr and parallel R packages.
 # current working directory.
 src.dir = system.file("extdata/FirstToAlign", package = "regPhylo")
 dir.create("TempDir.FirstToAlign")
-# Set up the path of the TempDir folder.
+# Set up the path to the TempDir folder.
 dest.dir = paste(getwd(), "/TempDir.FirstToAlign", sep="")
 file.names <- dir(src.dir)
 # Copy all the files stored in regPhylo/extdata/FirstToAlign"
@@ -90,10 +90,11 @@ file.remove("TempDir.FirstToAlign/FirstAligned")
 input = "TempDir.FirstToAlign"
 output = "TempDir.FirstToAlign/FirstAligned"
 nthread = 2
-methods = "mafftfftnsi"
+methods = c("mafftfftnsi", "pasta")
+
 First.Align.All(input = input, output =
 "TempDir.FirstToAlign/FirstAligned", nthread = 2,
-methods = c("mafftfftnsi"))
+methods = c("mafftfftnsi", "pasta"))
 
 
 # To clean the file created while running the example do the following:
@@ -103,6 +104,8 @@ unlink("TempDir.FirstToAlign", recursive = TRUE)
 }
 \references{
 Katoh et al. 2005, DOI: 10.1093/nar/gki198
+
 Mirarab et al. 2015 DOI: 10.1089/cmb.1014.0156
+
 Roquet et al. 2013 DOI: 10.1111/j.1600-0587.2012.07773.x
 }

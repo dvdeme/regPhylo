@@ -1,4 +1,4 @@
-#' @title Estimate the minimal number of gene region to maximise species coverage
+#' @title Estimate the minimal number of gene regions to maximise species coverage
 
 #' @description This function returns additional information including the number of genes
 #' required to have 100% species coverage, the list of those genes, and a species

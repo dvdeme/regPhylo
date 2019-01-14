@@ -62,7 +62,7 @@
 #'
 #'
 
-Mumsa.Comp = function(input = NULL, output = NULL, remove.empty.align = NULL, Mumsa.path = NULL) {
+Mumsa.Comp = function(input = NULL, output = NULL, remove.empty.align = NULL) {
     # Automatically detect the number of alignment programs used and the number of
     # gene regions introduced.
     a = list.files(input)

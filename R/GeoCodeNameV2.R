@@ -3,22 +3,31 @@
 #' @description This function uses the nominatim openstreetmap API
 #' (https://nominatim.openstreetmap.org) to retrieve
 #' geographic coordinates for the sequences without geographic coordinates but
-#' carrying information about their sampling location
+#' carrying information about their sampling location.
 #'
 #' @details Since the RGoogleMap API required a paying key (changed policy the July 16 2018)
 #' we used the nominatim openstreetmap API.
 #'
-#' @param input a table coming from the function GeoCoord.WGS84() or from
-#'  Query.GeOMe.XY.R()
-#' @param output name of the output table exported in the working directory.
+#' @param input a table coming from the function \code{\link{GeoCoord.WGS84}} or from
+#'  \code{\link{Query.GeOMe.XY}}.
+#' @param output name of the output table exported into the working directory.
+#'
+#' @param CorrTab an optional two column table providing a correction for the location names.
+#' The first column provides the original location name, the second column provides a
+#' corrected name fitting the purpose of the study.
+#'
+#' @param AutoCorrNZ if 'TRUE' then the correction of the place name will be applied
+#' based on New Zealand (i.e. relevant for the phylogenetic tree of New Zealand marine
+#' ray-finned fishes, Eme et al. Submitted). However other corrections will be more
+#' suitable in other contexts.
 #'
 #' @return Two identical tables are exported, one in the R environment and one in the working directory.
 #' These tables includes additional fields: Location_used= name
 #' of the location used to infer the geographic coordinates,
-#' Geo_accuracy= precision of the coordinates, with
-#' 'Inferred'= imprecised geographic coordinates inferred from the Location name,
-#' 'From_DB'= accurate geographic coordinates (provided by the databases), and
-#' 'NoLocationFound'= the geographic coordinates cannot be inferred from the place
+#' Geo_accuracy = precision of the coordinates, with
+#' 'Inferred' = imprecised geographic coordinates inferred from the Location name,
+#' 'From_DB' = accurate geographic coordinates (provided by the databases), and
+#' 'NoLocationFound' = the geographic coordinates cannot be inferred from the place
 #' name.
 
 #' @examples ## Import the example data coming from GeoCoord.WGS84 function.
@@ -27,13 +36,33 @@
 #' Seq.DF1 = Seq.Diastocapen$Seq.DF1
 #'
 #' # Run the function to retrieve geographic coordinates for sequences without coordinates.
-#' Seq.DF3=GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt")
+#' Seq.DF3 = GeoCodeNameV2(input = Seq.DF1, output = "Seq.DF3.txt",
+#' AutoCorrNZ = TRUE)
+#'
+#' # To see the modifications
+#' Seq.DF3[, c(20,21, 23, 24, 25)]
+#'
+#' # Run the function including a correction table
+#' # Build a dummy correction table, including the following correction.
+#' correctionTab = matrix(c("Tasman Sea: , , NA, South Norfolk Ridge, off the Three Kings Islands",
+#' "New Zealand: Three Kings Islands"), ncol=2)
+#' colnames(correctionTab) = c("OriginalLocationName", "CorrectedLocationName")
+#' head(correctionTab)
+#'
+#' # Run the function using the correction table built above, but without the automatic
+#' # corrections set-up for the study of New Zealand marine fishes (i.e. AutoCorrNZ = FALSE)
+#' Seq.DF3_test = GeoCodeNameV2(input = Seq.DF1, output = "Seq.DF3.txt",
+#' CorrTab = correctionTab, AutoCorrNZ = FALSE)
+#'
+#' # To see the modifications
+#' Seq.DF3_test[, c(20,21, 23, 24, 25)]
+#'
 #' }
 #'
-#' @export GeoCodeName
+#' @export GeoCodeNameV2
 
 
-GeoCodeName = function(input = NULL, output = NULL) {
+GeoCodeNameV2 = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ = NULL) {
 
   # the geocodeOpenStreetMap function allowing to query nominatim openstreetmap API.
   geocodeOpenStreetMap = function(input) {
@@ -60,8 +89,26 @@ GeoCodeName = function(input = NULL, output = NULL) {
     LocatCl = gsub("(,  ,[ ]?[ ]?[,]?$)", "", LocatCl, perl = TRUE)
     LocatCl = gsub(" :  ,  ,  ,[ ]+", NA, LocatCl, perl = TRUE)
     LocatCl = gsub("(,  ,)", ", ", LocatCl, perl = TRUE)
+
+    # Keep track of the Original location name
+    OrigLocatName = input[,20]
+
+    # If a Correction table is proposed
+    if(is.null(CorrTab) == FALSE){
+      ### remove all the NA in the first column
+      if(length(which(is.na(CorrTab[,1]) ==TRUE)) >0){
+      CorrTab2 = CorrTab[-which(is.na(CorrTab[,1]) ==TRUE),]
+      } else {
+        CorrTab2 = CorrTab
+      }
+      i=1
+      for(i in 1:dim(CorrTab2)[1]){
+        LocatCl[which(LocatCl == CorrTab2[i,1])] = CorrTab2[i,2]
+      }
+    }
+
     input = cbind(input[, c(1:19)], Location = LocatCl, input[, c(21:26)], Oriorder = seq(1,
-        dim(input)[1], by = 1))
+                                                                                          dim(input)[1], by = 1))
 
     # Select only the cells with information in the field Location but without the
     # precise geographic coordinates already recorded.
@@ -84,9 +131,10 @@ GeoCodeName = function(input = NULL, output = NULL) {
     # Clean the unnecessary NAs.
     Locat = gsub(", NA", "", Locat, fixed = TRUE)
 
+
+    # Perform correction of the place names for the study focussing on the New Zealand marine ray-finned fishes.
+    if(AutoCorrNZ == TRUE) {
     # Fastidious cleaning of the description of the locations tailored for our study.
-    # Users may want to tailor this script to the specific location names of their
-    # regions study.
     Locat = gsub("misc_structure [ ]?<1..>224", "", Locat, perl = TRUE)
     Locat = gsub("misc_feature", "", Locat, fixed = TRUE)
     Locat = gsub("([ ]+rRNA$)", "", Locat, perl = TRUE)
@@ -374,7 +422,7 @@ GeoCodeName = function(input = NULL, output = NULL) {
     Locat = gsub("Taiwan: Taiwan,  NA", "Taiwan", Locat, fixed = TRUE)
     Locat = gsub(" :  ,  ,  ", NA, Locat, fixed = TRUE)
     Locat = gsub(" :  ", NA, Locat, fixed = TRUE)
-    Locat = gsub(" :  ,  [,]?[ ]?[ ]?", NA, Locat, fixed = TRUE)
+    Locat = gsub(" :  ,  [,]?[ ]?[ ]?", NA, Locat, perl = TRUE)
     Locat = gsub("(,  ,[ ]?[ ]?[,]?$)", "", Locat, perl = TRUE)
     Locat = gsub(" :  ,  ,  ,[ ]+", NA, Locat, perl = TRUE)
     Locat = gsub("(,  ,)", ", ", Locat, perl = TRUE)
@@ -544,8 +592,41 @@ GeoCodeName = function(input = NULL, output = NULL) {
     Locat = gsub("Pacific Ocean:the coast of New Caledonia", "New Caledonia", Locat,
         fixed = TRUE)
     Locat = gsub("commercially purchased caviar eggs", NA, Locat, fixed = TRUE)
+    Locat = gsub("Rib Reef, GBR", "Great Barrier Reef", Locat, fixed = TRUE)
+    Locat = gsub("South Atlantic Ridge hydrothermal vents", "South Atlantic", Locat, fixed = TRUE)
+    Locat = gsub("Antarctic region: near New Zealand", "New Zealand: Campbell Island", Locat, fixed = TRUE)
+    Locat = gsub("Zanzibar, Indian Ocean", "Zanzibar", Locat, fixed = TRUE)
+    Locat = gsub("Tropical North Pacific", "USA: Hawaii", Locat, fixed = TRUE)
+    Locat = gsub("western North Atlantic Ocean", "North Atlantic Ocean", Locat, fixed = TRUE)
+
+    # Perfomed generic correction when the AutoCorrNZ is disabled.
+    } else {
+      Locat = gsub("misc_structure[ ]?[ ]?<1..>224", "", Locat, perl = TRUE)
+      Locat = gsub("misc_feature", "", Locat, fixed = TRUE)
+      Locat = gsub("([ ]+rRNA$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+tRNA$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+tRNA$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+CDS$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+mRNA$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+gene$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+D-loop$)", "", Locat, perl = TRUE)
+      Locat = gsub("([ ]+misc_RNA$)", "", Locat, perl = TRUE)
+      Locat = gsub("repeat_region", "", Locat, fixed = TRUE)
+      Locat = gsub(" :  ,  ,  ", "", Locat, fixed = TRUE)
+      Locat = gsub(" :  ,  [,]?[ ]?[ ]?", "", Locat, perl = TRUE)
+      Locat = gsub("(,  ,[ ]?[ ]?[,]?$)", "", Locat, perl = TRUE)
+      Locat = gsub(" :  ,  ,  ,[ ]+", "", Locat, perl = TRUE)
+      Locat = gsub("(,  ,)", ", ", Locat, perl = TRUE)
+      Locat = gsub("^: $", "", Locat, perl = TRUE)
+      Locat = gsub(" ,", "", Locat, fixed = TRUE)
+      Locat = gsub(", $", "", Locat, perl = TRUE)
+      Locat = gsub(": [no locality data]", "", Locat, fixed = TRUE)
+      Locat = gsub(" $", "", Locat, perl = TRUE)
+      Locat = gsub(": NA$", "", Locat, perl = TRUE)
+    }
 
     LocatTab = cbind(Locat, orderLocat = seq(1, length(Locat), by = 1))
+
     LocatUniq = unique(Locat)
 
     Latitude = vector()
@@ -588,7 +669,7 @@ GeoCodeName = function(input = NULL, output = NULL) {
         Geo_accuracy)]) == TRUE)]] = "NoLocationFound"
 
     # The output Table
-    outputDF = cbind(input[, c(1:20)], Location_used, isolation_source = input[,
+    outputDF = cbind(input[, c(1:19)], Location = OrigLocatName, Location_used, isolation_source = input[,
         21], Latitude_Y, Longitude_X, Geo_accuracy, input[, c(24:26)])
     utils::write.table(outputDF, file = output, sep = "\t", row.names = FALSE)
     return(outputDF)

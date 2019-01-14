@@ -1,13 +1,13 @@
-#' @title Estimate the best number of partition and substitution model for each partition: wrapper for PartitionFinder2
+#' @title Estimate the best number of partitions and substitution model for each partition: wrapper for PartitionFinder2
 
 #' @description This function is a wrapper running PartitionFinder2 (Lanfear et al. 2017)
 #' for a supermatrix (or concatenated alignment) to estimate the best
 #' number of partitions and their best associated substitution models.
 #'
 #' @details From a fasta alignment and partition file following the
-#' RAxML requirements (as exported by Align.Concat.R function) the function
+#' RAxML requirements (as exported by \code{\link{Align.Concat}} function) the function
 #' prepares an alignment in phylip format ('.phy'), it builds a .cfg input file
-# describing the settings for PartitionFinder2 and calls the program.
+#' describing the settings for PartitionFinder2 and calls the program.
 
 #' @return The function returns 1) a new partition file in RAxML format according to the best
 #' partition scheme proposed by PartitionFinder2 (=output file with a suffix
@@ -48,14 +48,13 @@
 #' of them higher will tend to make the search more thorough and slower. Setting
 #' them lower will tend to make the search quicker but less thorough.
 
-#' @details The rcluster
-#' algorithm works by finding the rcluster-max most similar pairs of data blocks,
-#' OR the top rcluster-percent of similar datablocks, whichever is smaller. It
-#' then calculates the information score (e.g. AICc) of all of these data blocks
-#' and keeps the best one. Setting --rcluster-max to 1000 and --rcluster-percent
+#' @details "The rcluster algorithm works by finding the rcluster-max most similar
+#' pairs of data blocks, OR the top rcluster-percent of similar datablocks, whichever
+#' is smaller. It then calculates the information score (e.g. AICc) of all of these data
+#' blocks and keeps the best one. Setting --rcluster-max to 1000 and --rcluster-percent
 #' to 10 (i.e. the default values) is usually sufficient to ensure that PF2 will
 #' estimate a robust partitioning scheme, even on very large datasets in which
-#' there may be millions of possible pairs of data blocks.' See Partitionfinder2
+#' there may be millions of possible pairs of data blocks." See Partitionfinder2
 #' manual (http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf)
 
 #' @details For detailled descriptions about Partitionfinder2 options, see
@@ -64,7 +63,8 @@
 #' @details The function requires that PartitionFinder2 is installed and
 #' the path of the python script "PartitionFinder.py" must be provided
 #' for the Path.PartiF2 parameter.
-#' Currently the function uses a temporary bash script to run Partitionfinder2.
+#' Currently the function uses a temporary bash script to run Partitionfinder2
+#' on Linux plateforms.
 #'
 #' @references Lanfear et al. 2017, DOI: 10.1093/molbev/msw260
 #'
@@ -76,7 +76,7 @@
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/ForPartiFinder2", package = "regPhylo")
 #' dir.create("TempDir.ForPartiFinder2")
-#' # Set up the path of the TempDir folder.
+#' # Set up the path to the TempDir folder.
 #' dest.dir = paste(getwd(), "/TempDir.ForPartiFinder2", sep="")
 #' file.names <- dir(src.dir)
 #' # Copy all the files stored in regPhylo/extdata/multi.align/ForPartiFinder2"
@@ -86,10 +86,10 @@
 #' to = paste(dest.dir, x, sep = "/"),
 #' overwrite = FALSE) })
 #'
-#' input = "TempDir.PartiFinder2/Concat.fas"
-#' Partition = "TempDir.PartiFinder2/Partitions_Concat.txt"
-#' # Open the convtab.txt document to know which gene need
-#' # to be partitioned for the first , second, third codon position.
+#' input = "TempDir.ForPartiFinder2/Concat.fas"
+#' Partition = "TempDir.ForPartiFinder2/Partitions_Concat.txt"
+#' # Open the convtab.txt document to know which genes need
+#' # to be partitioned for the first , second, and third codon position.
 #' read.delim("TempDir.ForPartiFinder2/convtab.txt", sep = "\t", header = TRUE)
 #'
 #' # Run the function using RAxML software, BIC criteria,
@@ -105,7 +105,7 @@
 #' # The nexus file of the concatenated alignment (supermatrix) including the best
 #' # partitioning scheme provided by PartitionFinder2 is called "Concat_PF2.nex",
 #' # and the partition file compatible for RAxML is
-#' # called "Partitions_Concat.txt_PF2_all.txt", and both of them are
+#' # called "Partitions_Concat.txt_PF2_all.txt", and both are
 #' # stored in the temporary directory "TempDir.ForPartiFinder2".
 #'
 #' # To clean the files created while running the example do the following:

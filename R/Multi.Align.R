@@ -1,20 +1,21 @@
 #' @title Align sequences using multiple alignment programs
 
-#' @description This function runs several alignment softwares, Muscle v3.8.31 (Edgar 2004),
+#' @description This function enables to run several alignment softwares in parallel, including Muscle v3.8.31 (Edgar 2004),
 #' Mafft v7.222 fftns1, fftns2, fftnsi (Katoh et al. 2005), Prank v.140603 (Loytymoja & Goldman 2008)
-#' and PASTA (Mirarab et al. 2015) in parallel.
+#' and PASTA (Mirarab et al. 2015).
 
 #' @details First, for each distinct gene region, the function aligns all the sequences
 #' using Mafft v7.222 fftns1 (Katoh et al. 2005)
-#' with the option --adjustdirection to automatically detect the direction of the
+#' with the option *--adjustdirection* to automatically detect the direction of the
 #' sequences and reverse complement the sequences if necessary (the function adds
-#' a '_R_' as prefix on the sequence name). Second, the function runs Mafft
-#' fftns2, fftnsi, Prank and PASTA, and alphabetically orders the sequences within
-#' each of all the alignments for the same gene.
+#' an '_R_' as a prefix on the sequence name if it has been reverse complemented).
+#' Second, the function runs Mafft fftns2, fftnsi, Prank and PASTA, and
+#' alphabetically orders the sequences within each of the gene region alignment.
+#'
 #' @details The function requires that Muscle, Mafft, Prank and Pasta are installed and in
 #' the PATH.
-#' @details The 'output', 'input' and 'nthread' objects need to be present in
-#' the R environment before running the function
+#' @details The 'output', 'input' and 'nthread' objects  the need
+#' to be present in the R environment before running the function
 #' because the function runs in parallel using the R package 'parallel', see
 #' example.
 
@@ -56,7 +57,7 @@
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align", package = "regPhylo")
 #' dir.create("TempDir.Multi.aligned")
-#' # Set up the path of the TempDir folder.
+#' # Set up the path to the TempDir folder.
 #' dest.dir = paste(getwd(), "/TempDir.Multi.aligned", sep="")
 #' file.names <- dir(src.dir)
 #' # Copy all the files stored in regPhylo/extdata/multi.align"
@@ -70,10 +71,10 @@
 #' nthread = 3
 #' methods = c("mafftfftnsi", "pasta")
 #' input = "TempDir.Multi.aligned"
-#' # run the function using two additional alignmenet program "mafftfftnsi" and "pasta"
+#' # run the function using two additional alignment program "mafftfftnsi" and "pasta"
 #' Multi.Align(input = input, output = "multi.alignedTest", nthread = 3,
 #' methods = c("mafftfftnsi", "pasta"))
-#' list.file("multi.alignedTest")
+#' list.files("multi.alignedTest")
 #'
 #' # To clean the file created while running the example do the following:
 #' # Remove the temporary folder
@@ -81,7 +82,7 @@
 #' # Remove the folder with Gblocks outputs
 #' unlink("multi.alignedTest", recursive = TRUE)
 #'
-#' # The output files are also present as an external data in the regPhylo package
+#' # The output files are also present as external data in the regPhylo package
 #' # and can be accessed by the following code:
 #' # a = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 #' # list.files(a)
@@ -318,7 +319,12 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
           k = 1
           for (k in 1:length(listAlig)) SeqT = c(SeqT, listAlig[[k]][1])
           DFtemp = cbind(SeqName, SeqT)
-          DFtempord = DFtemp[order(DFtemp[, 1]), ]  # Re-order the sequences in alphabetical order.
+          if(length(listAlig) == 1){
+            DFtempord = t(as.matrix(DFtemp[order(DFtemp[, 1]), ]))
+          } else {
+            DFtempord = DFtemp[order(DFtemp[, 1]), ]
+          }
+          # DFtempord = DFtemp[order(DFtemp[, 1]), ]  # Re-order the sequences in alphabetical order.
           # Re-build and export the ordered alignments.
           Seq_Name = paste(">", paste(DFtempord[, 1], DFtempord[, 2], sep = "|_|"),
                            sep = "")

@@ -1,10 +1,11 @@
 #' @title Extract all the seqeunces and metadata from the data table for a list of selected gene regions
 
-#' @description This function selects the sequences and the associated information for a list
+#' @description This function selects the sequences and associated information for a list
 #' of selected gene regions for all the species present in the data table. For
 #' full mitochondrial genomes, or all sequences with a sequence length > 5000 bp
-#' listed as 'TooLong', the function extracts the sequences of interest listed in
-#' the gene.list through NCBI using the query function of the seqinr R package.
+#' listed as 'TooLong', the function extracts the sequences regions of interest
+#'  using the query function of the seqinr R package.
+#'
 
 #' @param input The clean table coming from the function SpeciesGeneMat_Bl.R. which is
 #' the output with the suffix '_CleanDataset.txt'.

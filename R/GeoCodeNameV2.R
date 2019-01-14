@@ -21,6 +21,7 @@
 #' ray-finned fishes, Eme et al. Submitted). However other corrections will be more
 #' suitable in other contexts.
 #'
+#'
 #' @return Two identical tables are exported, one in the R environment and one in the working directory.
 #' These tables includes additional fields: Location_used= name
 #' of the location used to infer the geographic coordinates,

@@ -1,0 +1,4 @@
+"Name.PartitionFinder2"	"Common.Gene.Name"
+"gene1"	"rag1"
+"gene2"	"co1"
+"gene3"	"16srrna"

@@ -1,6 +1,6 @@
 #' @title Clean gene nomenclature and build a species-by-gene matrix
 
-#' @description This function cleans the gene names with a special focus on 37 DNA
+#' @description This function cleans the gene names with a special focus on 36 DNA
 #' markers commonly used in if fish molecular phylogenies
 #' and then build a species-by-gene matrix, and export a summary tables from a DNA
 #' and species perspectives reporting the species or the gene coverage respectively.
@@ -9,11 +9,11 @@
 #' addition the 'blacklisted' sequences, the microsatellites, and unassigned DNA
 #' are also removed from this table.
 #'
-#' @details The 37 gene regions targeted in priority are: 12S, 16S, COI,
+#' @details The 36 gene regions targeted in priority are: 12S, 16S, COI,
 #' CytB, ENC1, Glyt (=gtdc2), myh6, plagl2, Ptr (=ptchd1), rag1, SH3PX3 (=snx33),
 #' sreb2 (=gpr85), tbr1 (=tbr1b), zic1, rhodopsin (=rh), tmo4c4, bmp4, rag2, irbp,
 #' egr1, mll, ficd, hoxc6a, Kiaa1239, panx2, ripk4, sidkey, vcpip, RNF213,
-#' SLC10A3, ube3A-like, ZNF503, ZNF536, EHHADH, GCS1, GPR61, ube3A, that are
+#' SLC10A3, ZNF503, ZNF536, EHHADH, GCS1, GPR61, ube3A, that are
 #' commonly used in fish molecular phylogenies (Li et al. 2007; Santini et al.
 #' 2009, 2013; Near et al. 2012, 2013; Betancur et al. 2013, 2015; Rabosky et al.
 #' 2013, 2018).
@@ -35,13 +35,14 @@
 #' in the R environment, the table 1, 2, and 3 and the last object is a list of
 #' species that have been removed after cleaning the dataset.
 
-#' @param input a table which is an output of the GeoCodeName() function
+#' @param input a table which is an output of the *GeoCodeName* function
 #' @param output a list of 4 tables exported in the working directory 1) the species-by-gene
 #' matrix (file name suffix = '_Mat.txt'), 2) the table from the gene perspective
 #' (file name suffix = '_DNApers.txt'), 3) the table from the species perspective
-#' (file name suffix = '_SPECIESpers.txt', 4) a table with clean gene names or
-# discarding the blacklisted sequences and any microsatellites and unassigned DNA
-# (file name suffix = 'CleanDataset.txt').
+#' (file name suffix = '_SPECIESpers.txt', 4) a clean table of the dataset reporting
+#' the clean name for the gene, and also the original gene name (file name
+#' suffix = 'CleanDataset.txt'). In addition the blacklisted sequences,
+#' the microsatellites, and the unassigned DNA are also removed from this table.
 #' @param NCBI.Trash a vector of the NCBI accession numbers that are
 #' blacklisted and need to be removed from the dataset.
 #' @param BOLD.Trash a vector of the BOLD 'sequenceID' (or 'recordID') that are

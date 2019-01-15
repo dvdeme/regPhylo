@@ -1,62 +1,67 @@
 #' @title Extract DNA sequences and metadata from GenBank
 
 #' @description This function extracts all the sequences, accession numbers, and related
-#' information for all the genes or a given gene from a list of species using
-#' their NCBI taxid
+#' information for all the gene regions or a given gene region, from a list of species using
+#' their NCBI taxid.
 #' @details This function extracts data from an external server and can be very slow.
 #' @return This function returns a table with the species names and the number of
-#' occurrences retrieved from GenBank in the R environment, and the output table
-#' with the DNA sequences and the metadata exported in the working directory.
+#' occurrences retrieved from GenBank in the R environment, and exports a table
+#' with the DNA sequences and the metadata into the working directory.
 #'
-#' @return The latter table exported in the working directory has the following
-#' following header
-#' 'TaxaName' (Binomial species name included in the second column of the NCBI
+#' @return The table exported in the working directory has the following
+#'  headers:
+#' \itemize{
+#' \item 'TaxaName' (Binomial species name included in the second column of the NCBI
 #' species list),
-#' 'AccessNb' (NCBI accession number),
-#' 'Sequence' (The sequence itself, or 'Too_Long' if more than 5000bp),
-#' 'SeqLength' (Sequence length),
-#' 'Definition' (NCBI definition field),
-#' 'OrganismClassif' (Classification of the
+#' \item 'AccessNb' (NCBI accession number),
+#' \item 'Sequence' (The sequence itself, or 'Too_Long' if more than 5000bp),
+#' \item 'SeqLength' (Sequence length),
+#' \item 'Definition' (NCBI definition field),
+#' \item 'OrganismClassif' (Classification of the
 #' organism),
-#' 'Source' (NCBI source),
-#' 'Title' (Title provided by NCBI),
-#' 'Authors' (Authors provided by NCBI),
-#' 'Journal' (Journal provided by NCBI),
-#' 'Pubmed' (Pubmed references provided by NCBI),
-#' 'Year' (Year provided by NCBI),
-#' 'Organism' (Organism provided by NCBI),
-#' 'Organelle' (Organelle provided by NCBI),
-#' 'Mol_type' (Mol_type provided by NCBI),
-#' 'Db_xref' (Db_xref for NCBI),
-#' 'Product' (Product provided by NCBI),
-#' 'Genes' (Gene provided by NCBI),
-#' 'Location' (Field Country in NCBI),
-#' 'isolation_source' (isolation_source provided by NCBI),
-#' 'Lat_lon' (Lat_lon provided by NCBI),
-#' 'Collection_date' (Collection_date provided by NCBI),
-#' 'Date_Extract' (Date of the extraction of the data)
+#' \item 'Source' (NCBI source),
+#' \item 'Title' (Title provided by NCBI),
+#' \item 'Authors' (Authors provided by NCBI),
+#' \item 'Journal' (Journal provided by NCBI),
+#' \item 'Pubmed' (Pubmed references provided by NCBI),
+#' \item 'Year' (Year provided by NCBI),
+#' \item 'Organism' (Organism provided by NCBI),
+#' \item 'Organelle' (Organelle provided by NCBI),
+#' \item 'Mol_type' (Mol_type provided by NCBI),
+#' \item 'Db_xref' (Db_xref for NCBI),
+#' \item 'Product' (Product provided by NCBI),
+#' \item 'Genes' (Gene provided by NCBI),
+#' \item 'Location' (Field Country in NCBI),
+#' \item 'isolation_source' (isolation_source provided by NCBI),
+#' \item 'Lat_lon' (Lat_lon provided by NCBI),
+#' \item 'Collection_date' (Collection_date provided by NCBI),
+#' \item 'Date_Extract' (Date of the extraction for the data)
+#' }
 
 
 #' @param splist a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
 #' the first column and the accepted binomial species name in the second column
 #' which will be retained as 'TaxaName' in the output file.
 #' @param gene can be a
-#' particular gene or 'ALL' if all the DNA sequences regardless the DNA type are
+#' particular gene region or 'ALL' if all gene regions are
 #' sought.
 #' @param filename name of the output table (also needs to include the
 #' extension, e.g. ".txt")
 
-#' @examples # a table with two species and their unique NCBI taxa ID
+#' @examples # A table with two species and their unique NCBI taxa ID
 #' Splist=cbind(TaxID=c(443778,189923),
 #' Species.Name=c("Diastobranchus capensis", "Synaphobranchus affinis"))
-#' # Run the function considering extracting all DNA sequences and associated metadata
+#' # Run the function to extract all DNA sequences and associated metadata
 #' \dontrun{
 #' NCBI.output = GetSeqInfo_NCBI_taxid(splist = Splist, gene = "ALL",
 #' filename = "output.NCBI.txt")
 #'
-#' # The output can be loaded doing the following
+#' # The output can be loaded by doing the following
 #' data(Seq.Diastocapen)
 #' NCBI.output = Seq.Diastocapen$Seq.NCBI
+#'
+#' # To remove the file created while running the example do the following:
+#' file.remove("output.NCBI.txt")
 #'
 #' }
 

@@ -1,0 +1,1 @@
+((Asterorhombus_filifer,Arnoglossus_scapha),((Aplodactylus_etheridgii,Aplodactylus_arctidens),(Epigonus_robustus,Epigonus_denticulatus),(Epinephelus_lanceolatus,Epinephelus_rivulatus),Scorpaena_papillosa,Dendrochirus_zebra),(Aldrovandia_affinis,Halosauropsis_macrochir));

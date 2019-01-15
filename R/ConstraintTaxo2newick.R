@@ -1,79 +1,80 @@
-#' @title Build a multifurcating topological constraining tree for RAxML
+#' @title Build a multifurcating topological constraint tree for RAxML
 #'
-#' @description The function builds a multifurcating phylogenetic tree
+#' @description This function builds a multifurcating phylogenetic tree
 #' from a classification table and a table of phylogenetic constraints ready to be
-#' used by RAxML as constraint tree (option -g in RAxML) to guide the
+#' used by RAxML as a constraint tree (option -g in RAxML) to guide the
 #' reconstruction of the molecular phylogenetic tree.
 
-#' @param inputTaxo a classification table, the first column is the species names (or
-#' the name used as tip.label by the phylogenetic tree), then the following
-#' columns are the different hierarchical levels of the Linnean classification.
-#' @param inputConst is a two column table, the first column refers to the hierarchical
-#' level of the topological constraints (e.g.= 'Family', or 'Order', or
-#' 'Subdivision'...), the name of the hierarchical level have to be the same as
-#' the headers of the classification table, the second column refers to the name
-#' of the taxa with a constraint of monophyly (e.g. 'Aplodactylidae',
+#' @param inputTaxo a classification table, the first column is the species name (or
+#' the name used as tip.label by the phylogenetic tree), then followed by the
+#' columns are the different hierarchical levels of the Linnean classification
+#' in the subsequent columns.
+#' @param inputConst is a two column table; the first column refers to the hierarchical
+#' level of the topological constraints (e.g. 'Family', or 'Order', or
+#' 'Subdivision', note that the names of the hierarchical levels must be the same as
+#' the headers of the classification table); the second column contains the name
+#' of the taxa to be constrained as of monophyletic (e.g. 'Aplodactylidae',
 #' Aulopiformes', 'Percomorphaceae'....).
 #' @param outputNewick name of the output multifurcating newick tree that will
-#' be exported in a .txt file, (can also include the path to the folder).
+#' be exported in a .txt file (can also include the path to the folder).
 
-#' @return This function exports into the R environment a list of 2 objects; the first
+#' @return This function exports into the R environment a list of two objects; the first
 #' object is the taxonomic table modified to include the constraints, and the
-#' second object is the multifurcating tree converted in a 'phylo' object.
+#' second object is the multifurcating tree converted into a 'phylo' object.
 #' The function also exports a newick tree in a txt document that can be used to constrain
 #' the topology in RAxML.
 #'
-#' @details Warnings: branch lengths of the multifurcating tree are misleading, only the
+#' @details Warning: branch lengths of the multifurcating tree are misleading, only the
 #' topology matters.
 #'
 #' @examples # Load a tables listing the topological constraints (first object of the list)
 #' # and the classification table (second object of the list).
 #' \dontrun{
 #' data(TopoConstraints)
-#' # The table storing the constraints include 22 topological constraints overall
+#' # The table details 22 topological constraints overall,
 #' # including constraints at the Family, Order, Series, Subdivision, Division,
-#' # Subsection, Subcohort, Cohort, Supercohort, Infraclass, Subclass.
+#' # Subsection, Subcohort, Cohort, Supercohort, Infraclass, and Subclass.
 #' #
-#' # The Classification table include 16 species from the New Zealand marine
+#' # The classification table includes 16 species from the New Zealand marine
 #' # ray-finned fish species list.
 #'
-#' # Create a Temporary folder to store the outputs of the function.
+#' # Create a temporary folder to store the outputs of the function.
 #' dir.create("TempDir.TopoConstraints")
-#' # Run the function considering all the constraints
+#' # Run the function considering all the constraints.
 #' BackBoneTreeAll = ConstraintTaxo2newick(inputTaxo = TopoConstraints[[2]],
 #' inputConst = TopoConstraints[[1]], outputNewick = "TempDir.TopoConstraints/BackboneTreeAll")
 #'
-#' # plot the constraining tree (the branch length does not matter, only the topology matters).
+#' # Plot the constraining tree (the branch length does not matter, only the topology matters).
 #' plot(BackBoneTreeAll[[2]], cex=0.8)
 #'
-#' # Use only the constraint at the Family level
+#' # Use only the constraints at the Family level.
 #' FamilyConst=TopoConstraints[[1]][TopoConstraints[[1]][,1]=="Family",]
 #'
 #' # Run the function considering only the constraints at the family level.
 #' BackBoneTreeFamily = ConstraintTaxo2newick(inputTaxo = TopoConstraints[[2]],
 #' inputConst = FamilyConst, outputNewick = "TempDir.TopoConstraints/BackboneTreeFamily")
 #'
-#' # plot the constraining tree (the branch length does not matter,
+#' # Plot the constraining tree (the branch length does not matter,
 #' # only the topology matters), notice that only constrained taxa
-#' # are present on the guiding tree, the unconstrained taxa will
+#' # are present on the guiding tree, the other (unconstrained) taxa will
 #' # be positioned on the tree based on their molecular affinities.
 #' plot(BackBoneTreeFamily[[2]], cex=0.8)
 #'
-#' # Use only the constraint at the Family and Series levels.
+#' # Use only the constraints at the Family and Series levels.
 #' FamilySeriesConst=TopoConstraints[[1]][c(which(TopoConstraints[[1]][,1] == "Family"),
 #' which(TopoConstraints[[1]][,1] == "Series")),]
 #'
-#' # Run the function considering only the constraints at the family and order levels.
+#' # Run the function considering only the constraints at the Family and Order levels.
 #' BackBoneTreeFamilySeries = ConstraintTaxo2newick(inputTaxo = TopoConstraints[[2]],
 #' inputConst = FamilySeriesConst, outputNewick = "TempDir.TopoConstraints/BackboneTreeFamilySeries")
 #'
-#' # plot the constraining tree (the branch length does not matter,
-#' # only the topology matters). notice that only constrained taxa
-#' # are present on the guiding tree, the unconstrained taxa will
+#' # Plot the constraining tree (the branch length does not matter,
+#' # only the topology matters). Notice that only constrained taxa
+#' # are present on the guiding tree, the other (unconstrained) taxa will
 #' # be positioned on the tree based on their molecular affinities.
 #' plot(BackBoneTreeFamilySeries[[2]], cex=0.8)
 #'
-#' # To clean the files created while running the example do the following:
+#' # To remove the files created while running the example do the following:
 #' unlink("TempDir.TopoConstraints", recursive = TRUE)
 #' }
 

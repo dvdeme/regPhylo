@@ -3,13 +3,18 @@
 \docType{data}
 \name{TopoConstraints}
 \alias{TopoConstraints}
-\title{A list of two tables: a table listing the topological constraints to build a multifurcating tree, and a classification table, for the example of 16 species of NZ fish.}
-\format{A list of 2 tables: the first table has 22 rows and 2 columns, the second table has 16 rows and 23 columns.}
+\title{A list of two tables: a table of the topological constraints to build a multifurcating tree, and a classification table, for 16 species of NZ fish.}
+\format{A list of two tables: the first table has 22 rows and 2 columns; the second table has 16 rows and 23 columns.}
 \usage{
 TopoConstraints
 }
 \description{
-This list contains two tables: the first table, the constraint table, is a two column table, the first column refers to the hierarchical
-level of the topological constraints (e.g.= 'Family', or 'Order', or 'Subdivision'...), and the second column refers to the name of the hierarchy (i.e. Aplodactylidae, Anguilliformes), the second table, the classification table, is a multicolumns table, the first column provides the species names (or the name used as tip.label by the phylogenetic tree), then the following columns are the different hierarchical levels of the Linnean classification.
+This list contains two tables for use in the function examples. The first table
+contains information regarding topological constraints: the first column refers to the hierarchical
+level of the topological constraints (e.g.= 'Family', or 'Order', or 'Subdivision'...),
+and the second column refers to the name of the hierarchy (i.e. Aplodactylidae, Anguilliformes).
+The second table contains classification information: the first column provides the species names
+(or the name used as tip.label by the phylogenetic tree), then the following columns are the different
+hierarchical levels of the Linnean classification.
 }
 \keyword{datasets}

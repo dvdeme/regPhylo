@@ -2,32 +2,33 @@
 % Please edit documentation in R/Matrix.Overlap.R
 \name{Matrix.Overlap}
 \alias{Matrix.Overlap}
-\title{Estimate the species overlap between each per of selected gene region}
+\title{Estimate the species overlap for each gene region}
 \usage{
 Matrix.Overlap(input = NULL, gene.Sel = NULL)
 }
 \arguments{
-\item{input}{the species-by-gene matrix which is provided as the first object in the}
+\item{input}{the species-by-gene matrix which is provided as the first object in the
+list returned by the function \code{\link{SpeciesGeneMat.Bl}}.}
 
-\item{gene.Sel}{a vector of a selected gene region
+\item{gene.Sel}{a vector of the selected gene region(s)
 (gene names have to be consistent with the header of the
 table with the suffix '_CleanDataset.txt' exported by the function
-SpeciesGeneMat_Bl.R).  Example (Cytochrome c oxydase subunit 1, should be
+\code{\link{SpeciesGeneMat.Bl}}).  Example (Cytochrome c oxidase subunit 1, should be
 written 'co1' and not 'COI' or 'COX1').}
 }
 \value{
-The function returns a first matrix providing the raw
-number of species overlapping between pairs of gene regions, and a second
-matrix that provides the proportion of species overlap between pairs of gene
-regions, the proportion is computed as a percentage of the richest gene region
-(i.e. the gene region that is represented in the greatest number of species).
+The function returns a matrix providing the raw
+number of species overlapping for gene region, and a second
+matrix that provides the proportion of species overlapping for each gene
+region (the proportion is computed as a percentage of the most widely shared gene region,
+i.e. the gene region that is represented in the greatest number of species).
 }
 \description{
-This function estimates the number of species overlapping between each pair of
-selected gene regions.
+This function estimates the number of species overlapping for each of the selected
+gene regions.
 }
 \examples{
-# Load a species-by-gene matrix for instance exported by SpeciesGeneMat.Bl function.
+# Load a species-by-gene matrix, for instance, exported by SpeciesGeneMat.Bl function.
 data(Seq.DF4) ## the first object of the list is the Species-by-gene matrix
 
 # Run the function.

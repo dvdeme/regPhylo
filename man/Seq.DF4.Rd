@@ -4,14 +4,42 @@
 \name{Seq.DF4}
 \alias{Seq.DF4}
 \title{Output of the function SpeciesGeneMat.Bl and Select.DNA for the species "Diastobranchus capensis"}
-\format{A list of 5 data frames and one string, 
-1) The first table provides the species-by-gene matrix}
+\format{A list of five data frames and one string:
+\itemize{
+\item 1) The first table provides the species-by-gene matrix
+a data frame with 1 row and 4 columns.
+\item 2) The second table provides a summary table from a gene region perspective (i.e. number of species and sequences for each gene region).
+a data frame with 3 rows and 3 columns
+\item 3) The third table provides a summary tables from the species perspective (i.e. number of gene regions and sequences for each species).
+a data frame with 1 row and 3 columns
+\item 4) The fourth object provides an empty string listing the species lost when removing microsatellites, unassigned DNA, or blacklisted sequences
+an empty string.
+\item 5) The fifth object is the fourth table (i.e. "CleanDataTable"), it provides all the sequences and the metadata exported by the function \code{\link{SpeciesGeneMat.Bl}} after removing microsatellites, unassigned DNA and potentially blacklisted sequences.
+a data frame with 1 rows and 30 columns
+\item 6) This data frame including all the sequences and metadata for selected gene regions.
+a data frame with 11 rows and 29 columns (the columns with the entry order of the sequences has been removed).
+}}
 \usage{
 Seq.DF4
 }
 \description{
-This output is a list of 6 objects: the first five element are the output of the SpeciesGeneMat.Bl function, the sixth object is the table output of the Select.DNA function.
-The first table provides the species-by-gene matrix, the second table provides a summary table from a gene perspective (number of species and sequences for each gene region), and the third table provides a summary tables from the species perspective (number of gene regions and sequences for each species), the fourth object provides an empty string listing the species lost when removing microsatellites, unassigned DNA, or blacklisted sequences, the fifth element is a table including all the sequences and the metadata exported by the function SpeciesGeneMat.Bl after removing microsatellites, unassigned DNA and potentially blacklisted sequences. This table also includes two additional columns, one reporting the entry order of the sequences, and the other the name of the gene region used for the species-by-gene matrix.
-Finally the last table (i.e. "Seq.DF5") ouptut of the
+A data file for use in function examples. It contains a list of 6 objects:
+the first five elements are the output of the \code{\link{SpeciesGeneMat.Bl}} function,
+the sixth object is the table output of the \code{\link{Select.DNA}} function.
+\itemize{
+\item The first table provides the species-by-gene matrix.
+\item The second table provides a summary table from a gene region perspective
+(i.e. number of species and sequences for each gene region).
+\item The third table provides a summary table from the
+species perspective (i.e. number of gene regions and sequences for each species).
+\item The fourth object provides an empty
+string listing the species lost when removing microsatellites, unassigned DNA,
+or blacklisted sequences.
+\item The fifth element is a table including all the sequences and the metadata exported by the function
+\code{\link{SpeciesGeneMat.Bl}} after removing microsatellites, unassigned DNA and potentially blacklisted sequences.
+This table also includes two additional columns, one reporting the entry order of the sequences,
+and the other reporting the name of the gene region used for the species-by-gene matrix.
+\item The last object is a table exported by the function \code{\link{Select.DNA}}.
+}
 }
 \keyword{datasets}

@@ -7,37 +7,39 @@
 Align.Concat(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL)
 }
 \arguments{
-\item{input}{the path to the folder storing the alignments (alignments have to be in}
+\item{input}{the path to the folder storing the alignments (alignments have to be in
+fasta format with the '.fas' extension)}
 
-\item{Sp.List.NoDNA}{a vector of the species without DNA that should be included
-in the alignment, or the option can be NULL (or left blank),
-in which case the function automatically creates a complete
+\item{Sp.List.NoDNA}{an optional  vector of the species without DNA sequences that should be included
+in the alignment, or the option can be NULL, in which case the function automatically creates a complete
  species list of all the species present in the different alignments.}
 
 \item{outputConcat}{Name of the supermatrix (can include the path as well).}
 }
 \value{
-The function returns 1) the differents alignments
-separately in nexus format .nex, including taxa that do not have DNA sequence
-information (replace by '----') (all these files can be loaded separetely in
-BEAST for instance), 2) a concatenation (a supermatrix) of all the sequences of
-the different gene regions in nexus and fasta format, 3) a partition file in
-txt format including the partitions of the different gene regions in the
-concatenated file, this file is designed to be RAxML compatible (RAxML manual
-v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf).
+This function returns: 1) the alignments from different gene regions
+in nexus format '.nex', including taxa that do not have DNA sequence
+information (nucleotides replace by '-') (all these files can be loaded separately
+into BEAST); 2) a concatenation (a supermatrix) of all the sequences of
+the different gene regions in nexus and fasta format; 3) a partition file in
+txt format 'Partitions_Concat.txt' including the partitions of the different gene regions in the
+concatenated file (this file is designed to be RAxML compatible, see RAxML manual
+v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf);
+4) a conversion table 'convtab.txt' betwen the gene region names used in the partition file and the
+true name of the gene region.
 }
 \description{
-This function concatenates the alignments from different gene regions in a
+This function concatenates the alignments from different gene regions into a
 single supermatrix in nexus and fasta formats, at the species level.  The function also allows the
-inclusion of species without DNA, if necessary (using BEAST to resolve
-polytomies for instance).
+inclusion of species without DNA sequences, if necessary (for instance, to then use BEAST to resolve
+polytomies).
 }
 \examples{
 # Run the function to build a supermatrix
 \dontrun{
 
-# To run the example it might be better to copy the input alignment files
-# provided by the package to a temporary directory created into the
+# To run the example, copy the input alignment files
+# provided by the package to a temporary directory created in the
 # current working directory.
 src.dir = system.file("extdata/multi.align/ForConcat", package = "regPhylo")
 dir.create("TempDir.ForConcat")
@@ -61,8 +63,10 @@ Supermatrix = read.dna("TempDir.ForConcat/Concat.fas", format = "fasta")
 # Create another temporary file to build a supermatrix including species without DNA.
 dir.create("TempDir.ForConcat2")
 file.names <- dir("TempDir.ForConcat")
-file.names <- file.names[grep(".fas", file.names)] # select only the .fas alignment
-file.names <- file.names[-grep("Concat.fas", file.names)] # remove the Concat.fas alignment just created above.
+# select only the .fas alignment
+file.names <- file.names[grep(".fas", file.names)]
+# remove the Concat.fas alignment just created above.
+file.names <- file.names[-grep("Concat.fas", file.names)]
 sapply(file.names, function(x) {
 file.copy(from = paste("TempDir.ForConcat", x, sep = "/"),
 to = paste("TempDir.ForConcat2", x, sep = "/"),
@@ -74,11 +78,12 @@ Align.Concat(input = "TempDir.ForConcat2",
 Sp.List = c("Titi_titi", "Toto_toto"),
 outputConcat = "TempDir.ForConcat2/Concat_2spNoDNA")
 
-# Import the supermatrix in R
-Supermatrix2SpNoDNA = read.dna("TempDir.ForConcat2/Concat_2spNoDNA.fas", format = "fasta")
+# Import the supermatrix into R.
+Supermatrix2SpNoDNA = read.dna("TempDir.ForConcat2/Concat_2spNoDNA.fas",
+format = "fasta")
 
 
-# To clean the files created while running the example do the following:
+# To remove the files created while running the example do the following:
 unlink("TempDir.ForConcat", recursive = TRUE)
 unlink("TempDir.ForConcat2", recursive = TRUE)
 

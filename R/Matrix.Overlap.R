@@ -1,23 +1,25 @@
-#' @title Estimate the species overlap between each per of selected gene region
+#' @title Estimate the species overlap for each gene region
 #'
-#' @description This function estimates the number of species overlapping between each pair of
-#' selected gene regions.
-#' @return The function returns a first matrix providing the raw
-#' number of species overlapping between pairs of gene regions, and a second
-#' matrix that provides the proportion of species overlap between pairs of gene
-#' regions, the proportion is computed as a percentage of the richest gene region
-#' (i.e. the gene region that is represented in the greatest number of species).
+#' @description This function estimates the number of species overlapping for each of the selected
+#' gene regions.
+#'
+#' @return The function returns a matrix providing the raw
+#' number of species overlapping for gene region, and a second
+#' matrix that provides the proportion of species overlapping for each gene
+#' region (the proportion is computed as a percentage of the most widely shared gene region,
+#' i.e. the gene region that is represented in the greatest number of species).
 
 
 #' @param input the species-by-gene matrix which is provided as the first object in the
-# list returned by the function SpeciesGeneMat.Bl.R.
-#' @param gene.Sel a vector of a selected gene region
+#' list returned by the function \code{\link{SpeciesGeneMat.Bl}}.
+#'
+#' @param gene.Sel a vector of the selected gene region(s)
 #' (gene names have to be consistent with the header of the
 #' table with the suffix '_CleanDataset.txt' exported by the function
-#' SpeciesGeneMat_Bl.R).  Example (Cytochrome c oxydase subunit 1, should be
+#' \code{\link{SpeciesGeneMat.Bl}}).  Example (Cytochrome c oxidase subunit 1, should be
 #' written 'co1' and not 'COI' or 'COX1').
 
-#' @examples # Load a species-by-gene matrix for instance exported by SpeciesGeneMat.Bl function.
+#' @examples # Load a species-by-gene matrix, for instance, exported by SpeciesGeneMat.Bl function.
 #' data(Seq.DF4) ## the first object of the list is the Species-by-gene matrix
 #'
 #' # Run the function.

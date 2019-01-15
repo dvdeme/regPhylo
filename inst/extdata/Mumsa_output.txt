@@ -1,0 +1,5 @@
+"Gene"	"AOS"	"Mafftfftns1_MOS"	"Mafftfftnsi_MOS"	"PASTA_MOS"	"Most.Consensual.Align"	"Most.Divergent.Align"
+"12srrna.fas"	0.666667	1	1	1	"Mafftfftns1"	"Mafftfftns1"
+"co1.fas"	0.666667	1	1	1	"Mafftfftns1"	"Mafftfftns1"
+"cytb.fas"	0.666383	0.999681	0.999362	0.999681	"Mafftfftns1"	"Mafftfftnsi"
+"rag1.fas"	0.666667	1	1	1	"Mafftfftns1"	"Mafftfftns1"

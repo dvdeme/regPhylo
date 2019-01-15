@@ -1,37 +1,38 @@
 #' @title Retrieve accurrate geographic coordinates from GeOMe database.
 #'
-#' @description  This function queries the GeOMe database https://www.geome-db.org/ (Deck et al.
-# 2017, Plos Biology DOI: 10.1371/journal.pbio.2002925), to retrieve geographic
-# coordinates for sequences without geographic coordinates directly provided by
-# the NCBI database.
+#' @description  This function queries the GeOMe database to retrieve location
+#' metadata (i.e. geographic coordinates) for sequences lacking geographic coordinates
+#' (\url{https://www.geome-db.org/} (Deck et al. 2017).
 
-#' @param input is a table coming from the function 'GeoCoord.WGS84.R'.
+#' @param input is a table coming from the function \code{\link{GeoCoord.WGS84}}.
 #' @param Phylum is the name of the phylum
 # (e.g. 'Chordata') that should be queried in GeOMe.
 #' @param output name of the output table exported in the working directory.
 #'
 #' @details The function checks for species name synonymies using Worms
-#' (http://www.marinespecies.org/plateform) through the worrms R package
-#' (Chamberlain 2017).
-#' @details The names of the accepted phylums in GeoMe are available when
-#' downloading a GeOMe database template at the following web page
-#' (https://www.geome-db.org/template, and the list of all the phyla
-#'  accessible in the tab 'List').
+#' (\url{http://www.marinespecies.org}) through the worrms R package
+#' (Chamberlain 2018, \url{https://CRAN.R-project.org/package=worrms}).
+#' @details The names of the accepted phyla names in GeOMe are available
+#' at the following web page: (\url{https://www.geome-db.org/template}).
+#' Select any project, and refer to 'DEF' next to 'Phylum'.
 
 #' @return Two identical tables are exported, one in the R environment
 #' and one in the working directory with the output name.
 #' The output is similar to the input table except that the fields
-#' Lat Long have been updated with proper geographic coordinates if sequences
-#' have been found in GeOMe, finally the field 'OriginDatabase' is amended by
-#' '_XY-GeOMe' for the corresponding sequences.
+#' Lat Long have been updated with proper geographic coordinates if they are
+#'  found in GeOMe, finally the field 'OriginDatabase' is amended by
+#' '_XY-GeOMe' for the relevant sequences.
+#'
+#' @references Deck et al. 2017, DOI: 10.1371/journal.pbio.2002925
 
 #' @examples # Import Seq.DF1
 #' #' data(Seq.Diastocapen)
 #' Seq.DF1 = Seq.Diastocapen$Seq.DF1
-#'
+#' \dontrun{
 #' # Run the function
-#' # Seq.DF2 = Query.GeOMe.XY.R(input = Seq.DF1, Phylum = "Chordata", output = "Seq.DF2.txt")
-
+#' Seq.DF2 = Query.GeOMe.XY.R(input = Seq.DF1, Phylum = "Chordata", output = "Seq.DF2.txt")
+#' }
+#'
 #' @export Query.GeOMe.XY.R
 
 Query.GeOMe.XY.R = function(input = NULL, Phylum = NULL, output=NULL) {

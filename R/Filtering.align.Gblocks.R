@@ -1,40 +1,40 @@
-#' @title Remove poorly aligned nucleotides position using Gblocks software.
+#' @title Remove poorly aligned nucleotide positions using Gblocks software
 
 #' @description This function uses the software Gblocks V 0.91b (Castresana 2000)
 #' to filter out poorly aligned positions and divergent regions in an alignment.
-#' It allows to specify if the sequences are proteins, DNA non coding or DNA coding regions.
+#' It allows the user to specify if the sequences are proteins, DNA-non coding, or DNA coding regions.
 #' The function offers the possibility to use the default parameter (more stringent selection)
-#' or the less stringent selection approach (parameter equivalent that on the Gblocks server,
+#' or the less stringent selection approach (parameters equivalent to that on the Gblocks server,
 #' http://molevol.cmima.csic.es/castresana/Gblocks_server.html).
 
 #' @param input name of the folder storing the alignments in fasta format (with the
 #' extension '.fas').
-#' @param LessStringent if 'TRUE' allows an option for a less
-#' stringent selection (equivalent of ticking the three options in Gblocks server,
+#' @param LessStringent if 'TRUE' opts for the less
+#' stringent selection (equivalent to ticking the following three options in Gblocks server,
 #' 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
 #' 'Allow less strict flanking positions', the output has the extension -gbls),
-#' otherwise uses the default parameters in Gblocks for a stringent selection
+#' otherwise the default parameters of Gblocks will be used rpoviding a more stringent selection
 #' (output with the extension -gbms).
-#' @param Type Type of Sequence can be Protein (p), DNA (d), or Codons (c).
+#' @param Type Type of sequences can be Protein (p), DNA (d), or Codons (c).
 #' @param output path to the folder storing the trimmed alignments.
 #' The output folder is created automatically.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
-#' @param Gblocks.path for Windows plateform, a character string which provides the path
+#' @param Gblocks.path for the Windows plateform, a character string which provides the path
 #' to the Gblocks executable but without the name of the executable
-#' (e.g. ""C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
+#' (e.g. "C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
 #' For Linux the Gblocks software must be in the $PATH.
 #'
-#' @details The function requires, Gblocks to be installed and set up in the PATH.
+#' @details This function requires Gblocks to be installed and set up in the PATH.
 
-#' @return The function exported the trimmed alignement directly in the same folder
-#' as the input alignments. In the R environment the function returns a table with
-#' the length of the different alignments for each gene region and alignment program.
+#' @return An ouptut folder is created with the trimmed alignments. In the R environment
+#' the function returns a table with the length of the different alignments for
+#' each gene region and the alignment programs.
 #'
 #' @examples # Run the function for DNA, using the less stringent
-#' # selection heuristic, and removing the potential empty alignments.
+#' # selection heuristic, and remove potentially empty alignments.
 #' \dontrun{
-#' # To run the example we have to copy the input alignment files
-#' # provided by the package to a temporary directory created into the
+#' # To run the example copy the input alignment files
+#' # provided by the package to a temporary directory created in the
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 #' dir.create("TempDir")
@@ -49,15 +49,16 @@
 #' overwrite = FALSE) })
 #'
 #' # Run the function from the TempDir folder and store the outputs from
-#' # Gblocks in the "Trimmed-Gblocks" folder.
+#' # Gblocks in the "Trimmed-Gblocks" folder. For Windows users, remember
+#' # to additionally specify the Gblocks.path.
 #' Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 #' output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 #'
 #'
-#' # To clean the file created while running the example do the following:
+#' # To remove the file created while running the example do the following:
 #' # Remove the temporary folder
 #' unlink("TempDir", recursive = TRUE)
-#' # Remove the folder with Gblocks outputs
+#' # Remove the folder with the Gblocks outputs
 #' unlink("TrimmedGblocks", recursive = TRUE)
 #' }
 #'
@@ -198,5 +199,45 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
         file.rename(paste(input, "/", outOri, sep = ""), paste(output, "/", outRena,
             sep = "")) # Rename and move to output folder
     }
-}
+    }
+
+    # To report the length of each alignment in a table, as in the Filtering.align.Trimal function.
+    a0 = list.files(output)
+    a1 = strsplit(a0, "_")
+
+    Nbprog = vector()
+    Nbgene = vector()
+    Nbtrim = vector()
+    i = 1
+    for (i in 1:length(a1)) {
+      Nbtrim = c(Nbtrim, a1[[i]][1])
+      Nbprog = c(Nbprog, a1[[i]][2])
+      Nbgene = c(Nbgene, a1[[i]][length(a1[[i]])])
+    }
+    Uniprog = unique(Nbprog)
+    Unigene = unique(Nbgene)
+    Unitrim = unique(Nbtrim)
+
+    # Estimate the length of each alignment.
+    resDF = matrix(NA, ncol = 5)[-1, ]
+    k = 1
+    for (k in 1:length(Unitrim)) {
+      Atemp = a0[grep(Unitrim[k], a0)]
+      j = 1
+      for (j in 1:length(Unigene)) {
+        Atemp1 = Atemp[grep(Unigene[j], Atemp)]
+        i = 1
+        for (i in 1:length(Uniprog)) {
+          Align = seqinr::read.fasta(paste(output, "/", Atemp1[grep(Uniprog[i],
+                                                                    Atemp1)], sep = ""), as.string = T)
+          resDF = rbind(resDF, c(Atemp1[grep(Uniprog[i], Atemp1)], Unitrim[k],
+                                 Unigene[j], Uniprog[i], nchar(Align[1])))
+        }  ## End for i
+      }  # End for j
+    }  # End for k
+    colnames(resDF) = c("Align.Name", "Trim.Method", "Gene.Name", "Program", "SeqLength")
+    # Order the table according to the gene name.
+    resDFord = resDF[order(resDF[, 3]), ]
+    resDFord = as.data.frame(resDFord)
+    return(resDFord)
 }  # End of the function.

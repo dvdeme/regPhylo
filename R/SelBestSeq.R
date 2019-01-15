@@ -5,7 +5,7 @@
 #' regions for all the species present in the input data table. The selection of
 #' the sequence for a given species and gene region can be optimised considering the most geographically proximate
 #' sequence to the RefPoint. It can additionally, or alternatively, select a
-#' sequence according to the length of the seqeunce.
+#' sequence according to the length of the sequence.
 #'
 #' @details The choice based on the sequence length can be made using the longest sequence (option
 #' SeqChoice = 'Longest') or the sequence with a length closest to the median
@@ -32,20 +32,20 @@
 #' based on geographic proximity is disabled, and only the selection based on the length
 #' of the sequence is performed.
 #' @param perReposit if the name of the repository is provided (i.e. the same name as used in the function
-#' 'Congr.NCBI.BOLD.perReposit.R' option 'perReposit') it implies that several
+#' \code{\link{Congr.NCBI.BOLD.perReposit}} option 'perReposit') it implies that several
 #' sequences are coming from a personal repository and the function will use the
 #' ID of the sequence provided by the field 'Db_xref' as a unique ID for the
 #' sequence. The function uses the first element (using ';' as separator) present
 #' in the column 'Db_xref'.
 #' @param Alignment if Alignment = 'T' then fasta files of the sequences for the selected gene regions are
-#' exported (requiring the seqinr R package).
-#' @param MaxSeq Maximum number of sequences to be exported for a species
+#' exported.
+#' @param MaxSeq maximum number of sequences to be exported for a species
 #' when multiple sequences are available for a gene region
 #' (sequences maximising the spatial optimisation and/or length criteria are exported first).
 #' If MaxSeq = 'ALL', then all the sequences available for that gene region are exported.
 #' @param gene.list a vector of selected gene regions (gene names have to
 #' be consistent with the header of the table with the suffix '_SpDNA_Mat.txt'
-#' exported by the function \code{\link{SpeciesGeneMat_Bl}}).  For example Cytochrome c
+#' exported by the function \code{\link{SpeciesGeneMat.Bl}}).  For example Cytochrome c
 #' oxydase subunit 1, should have to be written 'co1' and not 'COI' or 'COX1'.
 #' @param SeqChoice select the longest sequence after removing ambiguous nucleotides
 #' (option SeqChoice = 'Longest') or the sequence with the length closest to the
@@ -159,9 +159,9 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
 
             # Allowing the possibility to disable the selection based on geographic criterion.
             if(is.null(RefPoint)){
-              Dist2NZ = rep(NA, dim(DFtemp)[1])
+              Dist2RefPoint = rep(NA, dim(DFtemp)[1])
             } else {
-            Dist2NZ = t(fields::rdist.earth(RefPoint, cbind(as.numeric(as.character(DFtemp[,
+            Dist2RefPoint = t(fields::rdist.earth(RefPoint, cbind(as.numeric(as.character(DFtemp[,
                 24])), as.numeric(as.character(DFtemp[, 23]))), miles = FALSE))  # Great circle distance between the RefPoint and the sampling site of the sequence.
             }
 

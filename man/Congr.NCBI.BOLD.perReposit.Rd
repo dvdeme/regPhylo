@@ -2,16 +2,17 @@
 % Please edit documentation in R/Congr.NCBI.BOLD.perReposit.R
 \name{Congr.NCBI.BOLD.perReposit}
 \alias{Congr.NCBI.BOLD.perReposit}
-\title{Merge outputs from GenBank, BOLD and optionaly from a personal repository
-into a single table while removing potential duplicate sequences}
+\title{Merge outputs from GenBank, BOLD and a personal repository
+(if available) into a single table and remove potential duplicate
+sequences.}
 \usage{
 Congr.NCBI.BOLD.perReposit(input.NCBI = NULL, input.BOLD = NULL,
   output = NULL, input.perReposit = NULL, perReposit = NULL)
 }
 \arguments{
-\item{input.NCBI}{table coming from the function GetSeqInfo_NCBI_taxid().}
+\item{input.NCBI}{table coming from the function \code{\link{GetSeqInfo_NCBI_taxid}}.}
 
-\item{input.BOLD}{table coming from the function GetSeq_BOLD().}
+\item{input.BOLD}{table coming from the function \code{\link{GetSeq_BOLD}}.}
 
 \item{output}{name of the output table in txt format.}
 
@@ -31,42 +32,46 @@ information contained in the personal repository, in case some sequences in the
 personal repository have been already deposited in NCBI or BOLD.}
 }
 \value{
-The information contained in the output file are:
-'TaxaName' (Binomial species name included in the second column of the NCBI
+The information contained in the output file includes:
+\itemize{
+\item 'TaxaName' (Binomial species name included in the second column of the NCBI
 and BOLD species list),
-'AccessBold' (BOLD recordID which is also identical to
+\item 'AccessBold' (BOLD recordID which is also identical to
 sequenceID in BOLD),
-'AccessNCBI' (NCBI accession number),
-'Sequence' (The sequence itself, or 'Too_Long' if more than 5000bp),
-'SeqLength' (Sequence length), '
-Definition' (NCBI definition field, or for BOLD a combination of
+\item 'AccessNCBI' (NCBI sequence accession number),
+\item 'Sequence' (The nucleotide sequence itself, or 'Too_Long' if more than 5000bp),
+\item 'SeqLength' (Sequence length),
+\item 'Definition' (NCBI definition field, or for BOLD a combination of
 'TaxaName', the string 'BOLD' and the BOLD 'processid'),
-OrganismClassif' (Classification of the organism),
-'Source' (NCBI source or for BOLD combination of 'TaxaName' and 'sequenceID'),
-Title' (Title provided by NCBI),
-'Authors' (Authors provided by NCBI, or for BOLD 'collectors'),
-'Journal' (Journal provided by NCBI),
-'Pubmed' (Pubmed references provided by NCBI),
-'Year' (Year provided by NCBI, or for BOLD year of the 'collectiondate_start'),
-'Organism' (Organism provided by NCBI or for BOLD 'TaxaName'),
-'Organelle' (Organelle provided by NCBI),
-'Mol_type' (Mol_type provided by NCBI or 'genomic DNA' for BOLD),
-'Db_xref' (Db_xref for NCBI, or for BOLD combination of 'processid',
+\item 'OrganismClassif' (Classification of the organism),
+\item 'Source' (NCBI source or for BOLD combination of 'TaxaName' and 'sequenceID'),
+\item 'Title' (Title provided by NCBI),
+\item 'Authors' (Authors provided by NCBI, or for BOLD 'collectors'),
+\item 'Journal' (Journal provided by NCBI),
+\item 'Pubmed' (Pubmed references provided by NCBI),
+\item 'Year' (Year provided by NCBI, or for BOLD year of the 'collectiondate_start'),
+\item 'Organism' (Organism provided by NCBI or for BOLD 'TaxaName'),
+\item 'Organelle' (Organelle provided by NCBI),
+\item 'Mol_type' (Mol_type provided by NCBI or 'genomic DNA' for BOLD),
+\item 'Db_xref' (Db_xref for NCBI, or for BOLD combination of 'processid',
 'sampleid', 'recordID', 'catalognum', 'fieldnum', 'institution_storing',
 'collection_code', separated by '; '),
-Product' (Product provided by NCBI),
-'Location' (Field Country in NCBI, or for BOLD combination of 'country', 'province_state',
-'isolation_source' (isolation_source provided by NCBI),
-'Lat_lon' (Lat_lon provided by NCBI or for BOLD combination of 'lat' and 'lon'),
-'Collection_date' (Collection_date provided by NCBI, or for BOLD 'collectiondate_start'),
-'Date_Extract' (Date of the extraction of the data),
-'OriginDatabase' (Name of the Original database).
+\item 'Product' (Product provided by NCBI),
+\item 'Genes' (Gene provided by NCBI or, for BOLD 'markercode'),
+\item 'Location' (Field Country in NCBI, or for BOLD combination of 'country', 'province_state',
+'region', 'sector', 'exactsite'),
+\item 'isolation_source' (isolation_source provided by NCBI),
+\item 'Lat_lon' (Lat_lon provided by NCBI or for BOLD combination of 'lat' and 'lon'),
+\item 'Collection_date' (Collection_date provided by NCBI, or for BOLD 'collectiondate_start'),
+\item 'Date_Extract' (Date of the extraction of the data),
+\item 'OriginDatabase' (Name of the Original database).
+}
 }
 \description{
 This function assembles a large common dataframe for all the data retrieved
-from NCBI and BOLD, an optionally can also include the data from a personal
-repository.  The function checks for the presence of duplicated sequences and
-selects the most relevant information (select the longest sequence, and
+from GenBank (through the NCBI) and BOLD, and also from a personal repository, if available.
+The function checks for the presence of duplicated sequences and
+selects the most relevant information (i.e. selects the longest sequence, and
 maximise the metadata information across the different sources for the
 location, geographic coordinates, and collection date).
 }

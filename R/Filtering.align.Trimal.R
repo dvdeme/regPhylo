@@ -1,38 +1,38 @@
-#' @title Remove poorly aligned nucleotides position using trimAl software.
+#' @title Remove poorly aligned nucleotide positions using trimAl software
 
 #' @description This function uses the software trimAl (Capella-Gutierrez et al. 2009, DOI:
 #' 10.1093/bioinformatics/btp348) and in particular two approaches to filter out
-#' the data using the option -gappyout or -automated1 see (Capella-Gutierrez et
+#' poorly aligned nucleotide positions using the option -gappyout or -automated1 (see Capella-Gutierrez et
 #' al.  2009).
 
 #' @param input path to the folder storing the alignments in fasta format (with the
-# extension '.fas').
+#' extension '.fas').
 
 #' @param output path to the folder storing the trimmed alignments.
 #' The output folder is created automatically. The suffix 'trimAuto_' or
-#' 'trimGapy_' are added to the alignment file name according to the chosen
+#' 'trimGapy_' is added to the alignment file name according to the chosen
 #' heuristic.
 #'
-#' @param TrimAl.path for Windows plateform, a character string which provides the path
+#' @param TrimAl.path for the Windows platform, a character string which provides the path
 #' to the trimAl executable
-#' (eg "C:/Users/deme/Documents/Programs/TrimAl/trimal.v1.2rev59/trimAl/bin/trimal.exe").
+#' (e.g. "C:/Users/deme/Documents/Programs/TrimAl/trimal.v1.2rev59/trimAl/bin/trimal.exe").
 #' For Linux the trimAl software must be in the $PATH.
 
-#' @return An ouptut folder is created with the trimmed alignments. In the R environment
+#' @return An output folder is created with the trimmed alignments. In the R environment
 #' the function returns a table with the length of the different alignments for
 #' each gene region and alignment programs.
 
-#' @details The option "-gappyout" is very conservative method, it keeps the maximum nucleotide information and remove
+#' @details The option "-gappyout" is a very conservative method, it keeps the maximum nucleotide information and remove
 #' the most gappy positions). This option is one of the best according Tan et al.  2015, DOI: 10.1093/sysbio/syv033).
-#' The option "-automated1" automatically adjusts between -strict -strictplus and -gappyout heuristics which all provide a more
-#' stringent selection potentially than the -gappyout option (see Capella-Gutierrez et al. 2009, DOI:
-#' 10.1093/bioinformatics/btp348, for more information)
+#' The option "-automated1" automatically adjusts between the '-strict', '-strictplus' and '-gappyout' heuristics which all provide a more
+#' stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009, DOI:
+#' 10.1093/bioinformatics/btp348)
 
-#' @details The function requires trimAl to be installed and set up in the PATH for Linux plateform.
+#' @details The function requires trimAl to be installed and set up in the PATH for Linux platform.
 
 #' @examples # Run the function
 #' \dontrun{
-#' # To run the example it might be better to copy the input alignment files
+#' # To run the example copy the input alignment files
 #' # provided by the package to a temporary directory created into the
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
@@ -49,12 +49,15 @@
 #'
 #' input = "TempDir.ToTrim"
 #' output = "Trimmed"
+#'
+#' # Run the function. For windows users, remember to
+#' # additionally specify the TrimAl.path.
 #' Filtering.align.Trimal(input = input, output = "Trimmed")
 #'
-#' # To clean the file created while running the example do the following:
+#' # To remove the file created while running the example do the following:
 #' # Remove the temporary folder
 #' unlink("TempDir.ToTrim", recursive = TRUE)
-#' # Remove the folder with Gblocks outputs
+#' # Remove the folder with TrimAl outputs
 #' unlink("Trimmed", recursive = TRUE)
 #' }
 #'

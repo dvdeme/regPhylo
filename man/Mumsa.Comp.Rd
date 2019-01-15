@@ -4,30 +4,31 @@
 \alias{Mumsa.Comp}
 \title{Compare congruence among multiple alignments: a wrapper for MUMSA software}
 \usage{
-Mumsa.Comp(input = NULL, output = NULL, remove.empty.align = NULL,
-  Mumsa.path = NULL)
+Mumsa.Comp(input = NULL, output = NULL, remove.empty.align = NULL)
 }
 \arguments{
 \item{input}{path to the folder storing the alignments. The names of the alignments
-must follow the following template: name of the alignment program, the name of}
+must follow the following template: name of the alignment program, the name of
+interest, and the name of the gene region just before the extension, and using
+'_' as a separator.  The alignments have to be in fasta format (extension
+'.fas').}
 
 \item{output}{path and name of the file where you want to store the
 results of MUMSA analysis. The output table reports the AOS for each gene
 region and the MOS for each alignment and each gene region.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
-
-\item{Mumsa.path}{for Windows plateform, a character string which provides the path
-to the mumsa executable. For Linux the mumsa software must be in the $PATH.}
 }
 \value{
-A tables with the MOS for each alignement and programs and the AOS for each
-alignment exported as output txt document.
+A tables with the MOS for each alignment and programs and AOS for each
+alignment are exported as a txt file.
 }
 \description{
 This function compares multiple alignments using the MUMSA software (Lassmann &
 Sonnhammer 2005) and reports the MOS (Multiple
 Overlap Score) and the AOS (Average Overlap Score) statistics.
+\strong{Note:} This function is currently not available on Windows platform (Windows user can use
+the online web server available at: http://msa.cgb.ki.se/cgi-bin/msa.cgi).
 }
 \details{
 The MOS is provided for each alignment enabling us to check the support (more exactly the
@@ -42,8 +43,8 @@ The function requires that the MUMSA software is installed and in the PATH.
 }
 \examples{
 # Run the function without removing empty alignments
-# Here the toy example consist of the alignment of four gene regions
-# (co1, 12srrna, cytb, rag1) for a subset of 16 species.
+# Here the example consists of the alignment of four gene regions
+# (co1, 12srrna, cytb, rag1) for 16 species.
 # Each gene region was aligned using three programs mafftfftns1,
 # mafftfftnsi, and pasta.
 \dontrun{
@@ -57,11 +58,11 @@ Mumsa.Comp(input = input, output = "Mumsa_output",
 remove.empty.align = TRUE)
 
 # The output file is also present as an external data table in the regPhylo package
-# and can be access by the following code:
+# and can be accessed by the following code:
 # a = system.file("extdata", "Mumsa_output.txt", package = "regPhylo")
 # a = read.delim(a, sep="\\t", header = TRUE)
 
-# To clean the file created while running the example do the following:
+# To remove the file created while running the example do the following:
 file.remove("Mumsa_output.txt")
 
 }

@@ -4,33 +4,47 @@
 \alias{GeoCodeName}
 \title{Retrieve geographic coordinates from place names using nominatim openstreetmap API}
 \usage{
-GeoCodeName(input = NULL, output = NULL)
+GeoCodeName(input = NULL, output = NULL, CorrTab = NULL,
+  AutoCorrNZ = NULL)
 }
 \arguments{
-\item{input}{a table coming from the function GeoCoord.WGS84() or from
-Query.GeOMe.XY.R()}
+\item{input}{a table coming from the function \code{\link{GeoCoord.WGS84}} or from
+\code{\link{Query.GeOMe.XY}}.}
 
-\item{output}{name of the output table exported in the working directory.}
+\item{output}{name of the output table exported into the working directory.}
+
+\item{CorrTab}{an optional two column table providing a correction for the location names.
+The first column provides the original location name, the second column provides a
+corrected name fitting the purpose of the study.}
+
+\item{AutoCorrNZ}{if 'TRUE' then the correction of the place name will be applied
+based on New Zealand (i.e. relevant for the phylogenetic tree of New Zealand marine
+ray-finned fishes, Eme \emph{et al.} Submitted). However other corrections will be more
+suitable in other contexts.}
 }
 \value{
-Two identical tables are exported, one in the R environment and one in the working directory.
-These tables includes additional fields: Location_used= name
-of the location used to infer the geographic coordinates,
-Geo_accuracy= precision of the coordinates, with
-'Inferred'= imprecised geographic coordinates inferred from the Location name,
-'From_DB'= accurate geographic coordinates (provided by the databases), and
-'NoLocationFound'= the geographic coordinates cannot be inferred from the place
-name.
+Two identical tables are exported, one into the R environment and one into the working directory.
+These tables include additional fields:
+\itemize{
+\item  'Location_used' is the name of the location used to infer the geographic coordinates,
+\item  'Geo_accuracy' is the precision of the coordinates, with
+\itemize{
+\item 'Inferred' corresponds to imprecise geographic coordinates inferred from the Location name,
+\item 'From_DB' corresponds to accurate geographic coordinates provided by the databases, and
+\item 'NoLocationFound' corresponds to the cases where the geographic coordinates
+cannot be inferred from the place name.
+}
+}
 }
 \description{
 This function uses the nominatim openstreetmap API
-(https://nominatim.openstreetmap.org) to retrieve
+\url{(https://nominatim.openstreetmap.org)} to retrieve
 geographic coordinates for the sequences without geographic coordinates but
-carrying information about their sampling location
+carrying information about their sampling location.
 }
 \details{
-Since the RGoogleMap API required a paying key (changed policy the July 16 2018)
-we used the nominatim openstreetmap API.
+Since the RGoogleMap API now requires a paying key (changed policy as of July 16 2018)
+we use the nominatim openstreetmap API in this function.
 }
 \examples{
 ## Import the example data coming from GeoCoord.WGS84 function.
@@ -39,7 +53,31 @@ data(Seq.Diastocapen)
 Seq.DF1 = Seq.Diastocapen$Seq.DF1
 
 # Run the function to retrieve geographic coordinates for sequences without coordinates.
-Seq.DF3=GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt")
+Seq.DF3 = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt",
+AutoCorrNZ = TRUE)
+
+# To see the modifications
+Seq.DF3[, c(20,21, 23, 24, 25)]
+
+# Run the function including a correction table
+# Build a dummy correction table, including the following correction.
+correctionTab = matrix(c("Tasman Sea: , , NA, South Norfolk Ridge, off the Three Kings Islands",
+"New Zealand: Three Kings Islands"), ncol=2)
+colnames(correctionTab) = c("OriginalLocationName", "CorrectedLocationName")
+head(correctionTab)
+
+# Run the function using the correction table built above, but without the
+# automatic corrections set-up for the study of New Zealand
+# marine fishes (i.e. AutoCorrNZ = FALSE).
+Seq.DF3_test = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt",
+CorrTab = correctionTab, AutoCorrNZ = FALSE)
+
+# To see the modifications.
+Seq.DF3_test[, c(20,21, 23, 24, 25)]
+
+# To remove the file created while running the example do the following:
+file.remove("Seq.DF3.txt")
+
 }
 
 }

@@ -1,64 +1,76 @@
 #' @title Help to detect outlier sequences in an alignment
 
-#' @description The function helps to relatively quickly detect some outlier sequences (miss
-#' aligned sequences, which might be caused by different problems such as gene or
-#' species annotation problems, presence of paralogs sequences...) that should be
-#' potentially removed from the pool of sequences per species and gene regions
-#' before selecting the best sequence.  The function is far from being accurate
-#' and is only provided as a tool to help detecting potential outlier sequences.
-#' Great care must be taken to the results that may erroneously include outlier
-#' sequences or on the contrary omit outlier sequences. Eyes inspection and
-#' checking must always be carry on to ensure a satisfaying results.
+#' @description This function helps to detect some potential outlier sequences
+#' (i.e. mis-aligned sequences, which might be caused by different problems such
+#' as gene or species annotation problems, presence of paralogous sequences, etc)
+#' that should be removed from the pool of sequences (per species and gene regions)
+#' before selecting the best sequence.  This function is only provided as a tool
+#' to HELP detect potential outlier sequences, great care must be taken to
+#' ensure sequences are not erroneously omitted as potential outliers,
+#' or remain included undetected outlier sequences. We recommend checking
+#' alignments by eye to ensure your confidence in the retained sequences.
 
 
-#' @details The function follows the following general strategy to detect outlier
-#' sequences.  First a distance matrix is computed among all sequences (See
+#' @details This function uses the following general strategy to detect outlier
+#' sequences.  First, a distance matrix is computed among all sequences (see
 #' different strategies available below), second a BIONJs tree (i.e. an improved
-#' Neighbhor joining allowing missing values, Criscuolo & Gascuel (2008)
-#' using the disance matrix is build, and the root to tip distance is computed.
-#' All the sequence above a certain distance threshold (we
-#' use 50-60%, see Chen et al. 2015 for similar thresholds) of the maximun root
-#' to tip distances are extracted as potential 'primary' outlier sequences.  In
-#' option, we can blast the primary outlier sequences on a local blast database to
-#' look for secondary outlier sequences that might be similar to the primary
-#' sequences but just below the distance threshold. All the sequences with a
-#' bitscore above a bitscore threshold (We usually use 80%) obtained when blasting
-#' the query sequence against itself are considered as potential 'secondary'
-#' outliers. We used the bitscore because it is not influenced by the size of the
-#' local database contrary to the E.value
-#' (https://www.ncbi.nlm.nih.gov/BLAST/tutorial/Altschul-1.html).
+#' Neighbor joining method that allows missing values, Criscuolo & Gascuel 2008)
+#' is built based on the distance matrix, and the tip to root distance is computed.
+#' All the sequences above a certain distance threshold (we
+#' use tip to root distances at least 50-60\%, see Chen et al. 2015 for similar thresholds)
+#' are extracted as potential 'primary' outlier sequences.  In
+#' addition, we can blast these primary outlier sequences back against the original alignment
+#' converted into a local blast database (the alignement is automatically converted
+#' by the function into a local database) to look for secondary outlier sequences that might
+#' be similar to the primary sequences but just below the tip to root distance threshold.
+#' All the sequences above a bitscore threshold (we use 80\%) are considered as potential 'secondary'
+#' outliers. A bitscore threshold of 100\% corresponds to blasting the query sequence against itself.
+#' We used the bitscore because it is not influenced by the size of the local database contrary to the E.value
+#' (\url{https://www.ncbi.nlm.nih.gov/BLAST/tutorial/Altschul-1.html}).
 
 #' @return The function return a table for all the retained sequences with the following headers:
-#' 'Query_SeqName', 'SeqLen_Query', 'Hit_SeqName', 'Hit_SeqLen', 'evalue',
-#' 'pident', 'length', 'mismatch', 'gapopen', 'qstart', 'qend', 'sstart', 'send',
-#' 'bitscore', 'qcovs' Name of the query sequence, length of the query sequence,
-#' name of the hit sequence, length of the hit sequence, E-value, means Percentage
-# 'of identical matches, means Alignment length, means Number of mismatches, means
-#' Number of gap openings, means start of alignment in query, means End of
-#' alignment in query, means Start of alignment in subject, means End of alignment
-#' in subject, means Bit score, means Query Coverage Per Subject (for all HSPs)
-#' (See https://www.ncbi.nlm.nih.gov/books/NBK279675/ for more details and
+#' \itemize{
+#' \item 'Query_SeqName' Name of the query sequence,
+#' \item 'SeqLen_Query' length of the query sequence,
+#' \item 'Hit_SeqName' name of the hit sequence,
+#' \item 'Hit_SeqLen' length of the hit sequence,
+#' \item 'evalue' E-value,
+#' \item 'pident' means percentage of identical matches,
+#' \item 'length' means alignment length,
+#' \item 'mismatch' means number of mismatches,
+#' \item 'gapopen' means number of gap openings,
+#' \item 'qstart' means start of alignment in query,
+#' \item 'qend' means end of alignment in query,
+#' \item 'sstart' means start of alignment in subject,
+#' \item 'send' means end of alignment in subject,
+#' \item 'bitscore' means bitscore,
+#' \item 'qcovs' means query coverage per subject,
+#' }
+#' (See \url{https://www.ncbi.nlm.nih.gov/books/NBK279675/} for more details and
 #' options)
 
 #' @details Three options are available to compute the distance matrix among sequences.
-#' The first otpion 'MisAli' uses the number of indelblocks to compute the
+#' The first option 'MisAli' uses the number of indelblocks to compute the
 #' distance matrix in order to preferentially detect misaligned sequences
 #' generating gaps in the alignment.  The second option 'DivSeq' uses the TN93
 #' substitution model to compute the distance matrix in order to detect very
-#' divergent sequences. The third option 'Comb' combined the two previous
-#' distance matrices to detect both misaligned and very divergent sequence. The
-#' two distance matrix are first re-scaled as percentage of the their highest
+#' divergent sequences. The third option 'Comb' combines the two
+#' distance matrices described above to detect both misaligned and very divergent sequence.
+#' To do this, the two distance matrices are first re-scaled as percentages of the their highest
 #' distances respectively and then summed.
-#' @details The function requires BLAST installed and in the PATH.
+#' @details This function requires BLAST a installed and in the PATH in order to detect 'secondary outliers'.
+#' To download and install BLAST+ software locally go
+#' to \url{https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download}.
 
-#' @param inputal it can be an object of class "alignment" (seqinr R pcakage),
+#' @param inputal an object of class "alignment" (seqinr R package),
 #' or "DNAbin" (ape R package) or the name (including the path if necessary) of the input fasta file.
 #' @param Strat.DistMat can be 'MisAli', 'DivSeq' or 'Comb', see details.
 #' @param Dist.Th distance threshold to detect the primary set of
 #' outlier sequences (between [0-1]).
 #' @param output name of the output table exported in the working directory.
-#' @param Second.Outlier if 'TRUE', blasts the primary outlier seqeunces
-#' against a local database based on the sequencs alignment to detect secondary outliers.
+#' @param Second.Outlier if 'TRUE', blasts the primary outlier sequences
+#' against the local database of retrieved and aligned sequences
+#' (i.e. the alignment provided to 'inputal') in order to detect secondary outliers.
 #' @param Bitsc.Th bitscore similarity threshold to detect 'secondary'
 #' outlier sequences, should be a value between [0-1].
 
@@ -73,11 +85,11 @@
 #' S16_MisAlign0.6_1 = Detect.Outlier.Seq(inputal = Example_16S_outlier_align,
 #' Strat.DistMat = "Comb", Dist.Th = 0.6, output = "Example_16S_outliers_1.txt",
 #' Second.Outlier = "No")
-#' dim(S16_MisAlign0.6_1) ### 36 sequences detected as primary oultier sequences.
+#' dim(S16_MisAlign0.6_1) ### 36 sequences detected as primary outlier sequences.
 #' head(S16_MisAlign0.6_1)
 #'
 #' # The output table is also present as an external data table provided in the regPhylo r package
-#' and can be access by the following code:
+#' and can be accessed by the following code:
 #' # a = system.file("extdata/ExampleOutliers/Example_16S_outliers_1.txt", package = "regPhylo")
 #' # Example_16S_outliers_1 = read.delim(a, sep="\t", header = TRUE)
 #'
@@ -87,7 +99,7 @@
 #' S16_MisAlign0.6_2 = Detect.Outlier.Seq(inputal = Example_16S_outlier_align,
 #' Strat.DistMat = "Comb", Dist.Th = 0.6, output = "Example_16S_outliers_2.txt",
 #' Second.Outlier = "Yes", Bitsc.Th = 0.8)
-#' length(unique(S16_MisAlign0.6_2[,3])) ### 38 primary and secondary outlier seqeunces detected.
+#' length(unique(S16_MisAlign0.6_2[,3])) ### 38 primary and secondary outlier sequences detected.
 #' head(S16_MisAlign0.6_2)
 #'
 #' # The output table is also present as an external data table provided in the regPhylo r package
@@ -95,8 +107,8 @@
 #' # a = system.file("extdata/ExampleOutliers/Example_16S_outliers_2.txt", package = "regPhylo")
 #' # Example_16S_outliers_2 = read.delim(a, sep="\t", header = TRUE)
 #'
-#' # To clean the file created while running the example do the following:
-#' file.remove("16S_example_RMoutliers.fas")
+#' # To remove the file created while running the example do the following:
+#' file.remove(c( "Example_16S_outliers_1.txt", "Example_16S_outliers_2.txt"))
 #'
 #' }
 #'
@@ -223,6 +235,22 @@ Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NU
                 "\n", "Search for secondary outlier sequences aborted.", sep = "")
             return(DF)
         }
+
+        # Test if BLAST+ tools have been installed and setup in the PATH.
+        # Test with makeblastdb tools to build the local blast database.
+        zz = try(system("makeblastdb -version", intern = TRUE))
+        if(class(zz) == "try-error") {
+          stop("BLAST+ software cannot be found in the PATH ('makeblastdb' cannot be found). For secondary outlier detection BLAST+ software have to be installed locally and in the PATH.", "\n",
+                "To download and install BLAST+ software locally go to https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download" )
+        }
+
+        # Test with blastn tools to blast the nucleotide sequences.
+        zz = try(system("blastn -version", intern = TRUE))
+        if(class(zz) == "try-error") {
+          stop("BLAST+ software cannot be found in the PATH ('blastn' cannot be found). For secondary outlier detection BLAST+ software have to be installed locally and in the PATH.", "\n",
+               "To download and install BLAST+ software locally go to https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download" )
+        }
+
 
         # Create a fasta file with only the outlier sequences and performed a local all
         # vs all BLASTN approach to reveal other potential 'secondary' outlier sequences.

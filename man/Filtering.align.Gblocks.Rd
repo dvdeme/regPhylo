@@ -2,7 +2,7 @@
 % Please edit documentation in R/Filtering.align.Gblocks.R
 \name{Filtering.align.Gblocks}
 \alias{Filtering.align.Gblocks}
-\title{Remove poorly aligned nucleotides position using Gblocks software.}
+\title{Remove poorly aligned nucleotide positions using Gblocks software}
 \usage{
 Filtering.align.Gblocks(input = NULL, LessStringent = NULL,
   Type = NULL, output = NULL, remove.empty.align = NULL,
@@ -12,47 +12,47 @@ Filtering.align.Gblocks(input = NULL, LessStringent = NULL,
 \item{input}{name of the folder storing the alignments in fasta format (with the
 extension '.fas').}
 
-\item{LessStringent}{if 'TRUE' allows an option for a less
-stringent selection (equivalent of ticking the three options in Gblocks server,
+\item{LessStringent}{if 'TRUE' opts for the less
+stringent selection (equivalent to ticking the following three options in Gblocks server,
 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
 'Allow less strict flanking positions', the output has the extension -gbls),
-otherwise uses the default parameters in Gblocks for a stringent selection
+otherwise the default parameters of Gblocks will be used rpoviding a more stringent selection
 (output with the extension -gbms).}
 
-\item{Type}{Type of Sequence can be Protein (p), DNA (d), or Codons (c).}
+\item{Type}{Type of sequences can be Protein (p), DNA (d), or Codons (c).}
 
 \item{output}{path to the folder storing the trimmed alignments.
 The output folder is created automatically.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
 
-\item{Gblocks.path}{for Windows plateform, a character string which provides the path
+\item{Gblocks.path}{for the Windows plateform, a character string which provides the path
 to the Gblocks executable but without the name of the executable
-(e.g. ""C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
+(e.g. "C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
 For Linux the Gblocks software must be in the $PATH.}
 }
 \value{
-The function exported the trimmed alignement directly in the same folder
-as the input alignments. In the R environment the function returns a table with
-the length of the different alignments for each gene region and alignment program.
+An ouptut folder is created with the trimmed alignments. In the R environment
+the function returns a table with the length of the different alignments for
+each gene region and the alignment programs.
 }
 \description{
 This function uses the software Gblocks V 0.91b (Castresana 2000)
 to filter out poorly aligned positions and divergent regions in an alignment.
-It allows to specify if the sequences are proteins, DNA non coding or DNA coding regions.
+It allows the user to specify if the sequences are proteins, DNA-non coding, or DNA coding regions.
 The function offers the possibility to use the default parameter (more stringent selection)
-or the less stringent selection approach (parameter equivalent that on the Gblocks server,
+or the less stringent selection approach (parameters equivalent to that on the Gblocks server,
 http://molevol.cmima.csic.es/castresana/Gblocks_server.html).
 }
 \details{
-The function requires, Gblocks to be installed and set up in the PATH.
+This function requires Gblocks to be installed and set up in the PATH.
 }
 \examples{
 # Run the function for DNA, using the less stringent
-# selection heuristic, and removing the potential empty alignments.
+# selection heuristic, and remove potentially empty alignments.
 \dontrun{
-# To run the example we have to copy the input alignment files
-# provided by the package to a temporary directory created into the
+# To run the example copy the input alignment files
+# provided by the package to a temporary directory created in the
 # current working directory.
 src.dir = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 dir.create("TempDir")
@@ -67,15 +67,16 @@ to = paste(dest.dir, x, sep = "/"),
 overwrite = FALSE) })
 
 # Run the function from the TempDir folder and store the outputs from
-# Gblocks in the "Trimmed-Gblocks" folder.
+# Gblocks in the "Trimmed-Gblocks" folder. For Windows users, remember
+# to additionally specify the Gblocks.path.
 Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 
 
-# To clean the file created while running the example do the following:
+# To remove the file created while running the example do the following:
 # Remove the temporary folder
 unlink("TempDir", recursive = TRUE)
-# Remove the folder with Gblocks outputs
+# Remove the folder with the Gblocks outputs
 unlink("TrimmedGblocks", recursive = TRUE)
 }
 

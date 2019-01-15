@@ -4,14 +4,15 @@
 \name{Example_16S_outlier}
 \alias{Example_16S_outlier}
 \title{Example of an alignment including 319 sequences of 16S mitochondrial DNA, and a table of potential outlier sequences detected by the Detect.Outlier.Seq function.}
-\format{A list of two objects 1) an object of class "alignment" including a list of 319 DNA sequences of 16S mitochondrial DNA called "16S_example_outliers.fas",}
+\format{A list of two objects 1) an object of class "alignment" including a list of 319 DNA sequences of 16S mitochondrial DNA called "16S_example_outliers.fas",
+2) A table with 85 rows and 16 columns called "Table.Outlier.Seq.16S".}
 \usage{
 Example_16S_outlier
 }
 \description{
-The aim of this example is to illustrate the use of Detect.Outlier.Seq and Rm.OutSeq.Gap functions. The .Rdata object is a list of two objects, 
-the first is "alignment" of 319 sequences of 16S mitochondrial DNA, the second object is "Table.Outlier.Seq.16S" is a list of primary and secondary 
-potential outlier sequences detected using the Detect.Outlier.Seq function, based on the the following settings:
+The aim of this example is to illustrate the use of the \code{\link{Detect.Outlier.Seq}} and the \code{\link{Rm.OutSeq.Gap}} functions. The .Rdata object is a list of two objects:
+the first is an "alignment" of 319 sequences of 16S mitochondrial DNA; the second object "Table.Outlier.Seq.16S" is a list of primary and secondary
+potential outlier sequences detected using the \code{\link{Detect.Outlier.Seq}} function, based on the the following settings:
 Table.Outlier.Seq.16S = Detect.Outlier.Seq(inputal = Example_16S_outlier, Strat.DistMat = "Comb", Dist.Th = 0.6, output = "Example_16S_outliers_2.txt", Second.Outlier = "Yes", Bitsc.Th = 0.8)
 }
 \keyword{datasets}

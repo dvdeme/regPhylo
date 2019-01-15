@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beast beautitemplate='Standard' beautistatus='' namespace="beast.core:beast.evolution.alignment:beast.evolution.tree.coalescent:beast.core.util:beast.evolution.nuc:beast.evolution.operators:beast.evolution.sitemodel:beast.evolution.substitutionmodel:beast.evolution.likelihood" required="" version="2.4">
+
+
+    <data
+id="Concat_PF2">
+                        <sequence id="seq_Aldrovandia_affinis" taxon="Aldrovandia_affinis" totalcount="4" value="gtgccagccaccgcggttatgctcaaattgcggcgtaaagagtgattaaagaactaaagccgacccttaggccgtcatacgatgaagccccgacgaaagtagctttcttgaactcacgacagctaagaaacaaactgggattagataccccactatgcttagcctcaaactttacccgccaggggactacaagcagcttaaaacccaaaggacttggcggtgcctcaaacccatctagaggagcctgttctacaactgataatcctcgttaaacctcaccaccccttgtccgcctatataccgccgtcgccagctcatgaaagatagtgagcctaaaaacgtcaggtcgaggtgtagcgaatggggtgagaaatgggctacattttctacgaaaagaaggtggatttagcagtaaagagtgttcttgaagctctgaggcgcgtacacaccgcccgtcactctcctttatttagtattcggtgcctgagcagggatggtggggacagccctaagccttttaattcgggcagaactaagccaacccggagcccttttaggagatgaccaaatttataatgttatcgttacagcacacgctttcgtaatgatcttctttatggttatacccgtaataattggaggcttcggaaactgactcgttcccctaatgatcggcgcccccgacatagcattcccgcgaataaacaacataagcttctgactcctacccccgtcatttctccttctactctcttcctcgggggttgaggcaggggcaggaacaggctgaacagtataccccccacttgctagcaacctagcacatgccggggcatccgtcgacctaaccatcttctccctacaccttgcaggtatctcatcaattcttggggctattaacttcattaccacaatcattaacatgaaacccccagcaatctcacagtatcaaacacccctatttgtatgatcagtacttgtcactgcagtcttgctactcctatctctaccagtcctagccgcaggcattaccatgctacttacggatcgaaatcttaatacaacattctttgacccggcaggagggggagacccaattctgtaccaacatct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------gtgggcatcatcgacggcatcgcgggctggacggcgtccgtggacgactcgccggcggacgccatcacccggcgcttccgctacgacgtggcgctggtgtcggcgctgaaggacctggaggaggacatcatggagggtctgcaggagcgcgggctggaggactgcacgtgcacggcgggtttcaccgtggtcatcaaggagtcgtgcgacgggatgggcgacgttagcgagaaacacggcggggggcccgcccagccagagaaggcggtgcgcttctccttcaccgtgatgtcggtgtccgtccgggcggaggactcggacgaggacgtggtggtcttccgggagcccaagcccaactcggagctgagctgcaagccgctgtgcctgatgttcgtcgacgagtcagaccacgagacgctgaccgctatcctcgggcccttggtggccgagcgcgacgccatgaaggagagccggctcatcctgtccgtcggcgggctgccgcggtccttccgcttccacttccggagcacgggctacgacgagaagatggtgcgtgagatggagggcctggaggcgtcgggctccacctacatctgcaccctctgcgactcgacccgcgcgcaggcctcgcgcaacatggtgctgcactccatcacgcggagccacgaggagaacggcgagcgctacgaggtgtggcgcagcaacccgcacggcgagtcggcggacgagctgcgcgaccgcgtcaagggcgtctccgccaagcccttcatggagatgcagcccaccatggacgcgctgcactgcgacatcggcaacgccgccgagttctacaagctgttccaggacgagatcggcgaggtgcacctgaggcacggccccagccgcgaggagcgcagggggtggaggtcggcgctcgacaagcagctgaggaacaagatgaagctgaagccggtgatgaggatgaacgggaactacgcgcggcggctgatgacgcgggaggcggcggaggcggtgtgcgagctggtgtcctgcgaggatcgccgacgggcgctgcgggagctcatggagctctacctgcagatgaag"/>
+                        <sequence id="seq_Aplodactylus_arctidens" taxon="Aplodactylus_arctidens" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatctagtattcggtgcttgagctggaatagtaggcaccgctctaagcctacttattcgagcagaactcagccaaccgggctccctacttggagatgatcagatttataatgttattgttacagcgcatgccttcgtaataattttcttcatggttatgcctattatgatcggagggtttggaaactgacttatcccattaatgattggtgcccctgacatggcattccctcgaatgaataacataagcttctgacttcttccaccatccttccttctactcctagcctcttctggcgtagaagccggggccggaaccggatgaacagtgtacccgcccctggcgggcaacctggcccatgcaggagcatctgtagatttaactattttctcccttcacctagcggggatctcctcaatccttggggccattaactttattactactattattaacataaaaccacccgcaatttcccagtatcagacaccgcttttcgtctgagcagtgctaattactgccgtccttctccttctctccctaccagtccttgccgctggcatcacaatgcttttaacagaccgaaaccttaatacaaccttctttgatcctgcaggagggggagacccgatcctttatcaacacctcgcaaaacccacccactcctaaaaatcgcaaatgacgccctcgtcgatcttccagccccctccaatatttcagtctggtggaatttcggttctctccttggcctttgcttaattatccaaatcctcacaggactatttttggccatacactacacctctgatattacaacagccttctcgtccgtagttcacatctgccgagatgtaaattatggatgacttattcgtaatattcatgctaacggtgcatccttcttttttatctgcatttacatgcatattggccgaggcctttattacggctcatatctctacaaagagacctgaaacgtaggagtcattcttcttctcttagtaataataactgccttcgtaggttacgtcctcccc-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------gttggcatcattaatgggctctctggacgggcttcctcggtggatgacgttgcagctgacaccatcactcggcgatttcgctatgatgtggcactggtgtcagcattaaaggatctggaggaggacatcatggaggggctgagagagagtgggatggaagacagtgcttgcacctcaggcttcagtgtcatgatcaaggaatcctgcgacggcatgggcgacgtcagcgagaagcacggcggaggaccagccgttcctgagaaggctgtacgcttctctttcactgttatgtctgtctctgtccaggcagacgatgaggaggaagaggttaccatcttcaccgagccaaagccaaactcagaactgtcctgtaagcccctttgcctgacgttcgtggatgagtcagaccatgagacactcacagctgtcctgagccctgtagttgcagagcgtaatgcaatgaaagagagcaggctcatcctatccatcggtggactacctcgctccttccgcatccacttcagaggcacgggatacgatgagaagatggtgcgtgacatggagggcctcgaggcctccgggtccacctatatctgcactctttgcgactccactcgggcagaggcctctgaaaacatggtgctacactccatcacccgcagtcatgaagagaacctagaacgttacgaaatatggagaaccaaccccttttctgagtctgcagatgagctgcgagacagagtcaaaggtgtctctgccaagcccttcatggagacccagcccacactggatgcgttgcactgtgacattggaaacgcaactgagttctacaaaatcttccaggacgagatcggggaggtctacgaaaaggtcaaccccagccgggaggaacggcgcagctggagggcagccctagataaacaactgaggaagaagatgaagctcaaaccggtgatgaggatgaatgggaactacgcccgcaggctaatgacccaggagacagtggatgtggtgtgtgagctggtgccctcagaggcgaggagggaggccctgagggagcttatgaggctctacctccagatgaag"/>
+                        <sequence id="seq_Aplodactylus_etheridgii" taxon="Aplodactylus_etheridgii" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatctagtatttggtgcttgagctgggatagtaggcaccgctctaagcctantcatccgagcagaactcagccaaccaggctccctacttggagatgaccagatttataatgttattgttacagcgcatgccttcgtaataatcttctttatggttatgcctattataattggaggatttggaaactgacttatcccactaatgattggcgcccccgatatggcattccctcgaataaataacataagcttctgacttcttccaccgtctttccttctgctcttggcttcttctggggtagaagccggagccggaactggctgaacagtataccctcccctggcgggtaacctggctcatgcaggtgcatctgtggatttaactatcttctctctccacctagcagggatttcctcaatccttggagctattaactttattactaccattattaatataaaaccaccggcaatttcccagtatcaaacaccactcttcgtttgagcagttttaattaccgccgtccttctgcttctttccctaccagtccttgccgctggcatcacaatgcttctaacagaccgaaatctaaatacaaccttttttgaccccgcaggagggggagaccccatcctttatcaacacctcgtaaaatacacccacttctcaaaatcgcaaacgatgctctgcttgatcttcctgccccctctaacatttcggtctgatggaacttcggttctctccttggcctctgcttgattattcaaatcctcacaggactattcctagccatacactacacctctgatattacaacggctttttcatccgtagtacacatttgccgagacgtgaactacggatgacttattcgtaatattcatgctaatggtgcatctttctttttcatctgcatttatatacacattggccgaggcctttattacggctcatacctctacaaagagacctgaaacgtaggggtcattcttctccttttagtaataataactgccttcgtaggctacgtcctcccttgaggacaaatatccttttgaggagccaccgttatcaccaacctgttatctgctgtcccctatgttggggatactcttgtacaatgaatctgaggtggtttctcagtagataatgccaccctcacccgattctttgccttccacttcctattcccattcgttattgctgccgcaacagccatccacctgctctttctacatgaaacagggtctaataaccccctaggattaagctctgatgcagacaaaatctcattccacccctacttctcatacaaagacctactaggttttgcagcactcctcattgcacttacttctttggcactcttttcccccaatctccttggagacccagacaattttactcctgctaactcactagtgacccccgcacacattaaaccagaatgatattttctcttcgcatatgcaatccttcgctcaattccaaataaattaggaggtgttcttgcacttctggcatccattctcgtactcatggttatccccatccttcatacatcaaaacaacgttggcatcattaatgggctctctggacgggcttcctcggtggatgacgttgcagctgacaccatcactcggcgatttcgctatgatgtggcactggtgtcagcattaaaggatctggaggaggacatcatggaggggctgagagagagtgggatggaagacagcgcttgcacctcgggcttcagtgtcatgatcaaggaatcttgcgatggcatgggcgacgtcagcgagaagcacggcggaggaccagctgttcctgagaaggctgtacgtttctctttcactgttatgtctgtctctgtccaggcagacgatgaggaggaagaggttaccatcttcaccgagccaaagccaaactcagaactgtcctgtaagcccctttgcctgacgttcgtggatgagtcagaccatgagacactcacagctgtcctgagccctgtagttgcagagcgtaacgcaatgaaagagagcaggctcatcctatccatgggtggactacctcgstccttccgcatccacttcagaggcacgggatacgatgagaagatggtgcgtgacatggagggcctcgaggcctccgggtccacctatatctgcactctttgtgactccactcgggcagaggcctctgaaaacatggtgctacactccatcacccgcagtcatgaagagaacctagaacgttaygaaatatggagaaccaaccccttttctgagtctgcagatgagctgygagacagagtcaaaggtgtctctgccaagcccttcatggagacccagcccacactggatgcgttgcactgtgacattggaaatgcaactgagttctacaaaatcttccaggacgagatcggggaggtctacgaaaaggtcaaccccagccgggaggaacggcgcagctggagggcagccctagataaacaactgaggaagaagatgaagctcaaaccggtgatgaggatgaatgggaactatgcccgcaggctaatgacccaggaggcagtggatgtggtgtgtgagctggtgccctcagaggcgaggagggaggccctgagggagcttatgaggctctacctccagatgaag"/>
+                        <sequence id="seq_Arnoglossus_scapha" taxon="Arnoglossus_scapha" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatctcgtattcggtgcttgagctggaatagtgggcacagccctaagccttcttatccgggcggaactcagccagcccggagcccttctgggagatgatcagatctataacgtaatcgttacggcgcacgccttcgtaatgatcttctttatggtgatgccaatcatgattgggggctttggtaattgactaatccctctaatggtgggtgccccagacatggcattcccccgaataaacaatataagcttctgactcctccccccctctttcctcctcttactagcctcctctggagtagaagcgggggcaggaaccgggtgaacagtttaccctccgctggctggcaatctggcccacgctggagcatctgttgacttaaccatcttctctcttcaccttgcaggtatttcgtctattctcggggcaattaattttattaccacgatctttaacataaaacccgctgctatgtctatgtaccaagcccccttatttgtgtgggcagtcttaattacggcagtccttctccttctctccctccccgtcctggccgcaggtattaccatgctgttaacagaccgaaatcttaacaccacattctttgaccccgccggtggaggagaccccattctttaccaacacct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Asterorhombus_filifer" taxon="Asterorhombus_filifer" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ttatacctcatttttggcgcttgagcaggcatagtaggaacagctttaagccttctgatccgagctgaactaagccagcccggcgctcttctaggggacgaccaaatttataatgtaatcgtcactgctcatgcatttgtcataattttctttatagtaatacccattctcattggagggttcggaaactgacttattcctttaatgctgggggccccagacatggcctttccacgtataaataatataagcttctggctcctccccccctccttcctgctactcctagcatcttccggggttgaagctggggccgggaccggttggaccgtgtaccccccactttccgggaatttggcacatgcgggggcatccgtagacctcactattttctccttgcacctggcaggtatctcctctattttaggggcaattaacttcatcactaccattttcaatatgaagccaaacgcagtatccatgtaccaggtccccctgttcgtatgagctgtgctaatcacggctgtgcttcttctcctgtctcttcctgttttagctgccggaatcactatgctcctcaaagaccgcaacctaaacactaccttctttgatcctgccggtggaggggatcctatcctataccaacatct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Bassanago_bulbiceps" taxon="Bassanago_bulbiceps" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctatatttagtatttggtgcttgagccggcatagtaggaactgccctcagcctactcatccgagccgaactaagccagcccggagctctccttggagatgaccaaatttacaatgttatcgttacggcgcatgcctttgtaataatcttctttatagtaatgcctgtaataatcggaggatttggtaactgattaatcccactaataattggtgcccccgacatggcattcccacgaataaacaacataagcttctgacttctacccccatctttcctacttctattagcctcctccggggtagaagccggggctggaacaggatgaacggtgtatccccccctcgccggaaatctcgctcacgctggagcatcagtagatttaacaattttctcattacaccttgcaggtgtctcatctatccttggggcaatcaactttattactacaatcattaacatgaagcccccagccatcacacaataccaaaccccactgtttgtgtgagcggttctagtaacagctgtccttctacttctatctctcccagtcctagctgcaggcattacaatactactgacagaccgaaatctaaacacaacattctttgacccagcaggagggggagacccgattctctaccaacacct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Conger_verreauxi" taxon="Conger_verreauxi" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatttagtatttggtgcttgagccggcatagtaggaaccgctttaagtctgctaattcgagctgaattaagtcaacctggagctctccttggagatgaccagatctataatgttatcgtaacagcacatgcctttgtaataattttctttatagtaatgccagttataattggagggtttggcaattgacttgtgccactaataattggagccccagacatagcattcccacgaataaacaacataagcttctgattactaccaccatcatttcttttattattaacttcatccggagttgaagcaggagcaggaacaggatgaactgtttatcccccgttgtcaggaaatctggcccacgctggggcatcagttgacctaacaatcttttctctacacctagcaggtgtttcatccatcctgggggctattaactttattactactattattaatataaaaccaccagccaccacacaataccaaactcccctatttgtatgatcggtcctaatcactgctgttctactactcttatccctccccgtccttgctgccggcattacaatgcttttaacagatcgaaatcttaatactaccttctttgatccagctgggggaggagacccaattctttaccaacacct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Dendrochirus_zebra" taxon="Dendrochirus_zebra" totalcount="4" value="--------caccgcggctatgcccaagttgcggcgtaaagagtggttatggaattaaagccgccttcaaggctgttatacgtagaagcccaaacaaaagtagctttcctgaccccacgaaagctctggca---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctctatctagtatttggtgcctgagccggtatagtaggtacagccttgagcctacttattcgagcagaacttagtcaaccaggcgccctgttaggggacgaccaaatctataatgtaattgttacagctcatgcattcgtaataattttctttatagtaataccaatcatgattggaggttttggaaactgacttatcccattaatgattggagcacccgacatggcatttcctcgtatgaataacataagcttttgacttctcccaccctctttcctgcttcttctagcctcttccggagttgaggctggggctgggacaggttgaacagtttacccgcccttagccggtaatcttgcccacgcaggagcatccgtagacttgacaattttctccttacacttagccggtatctcgtcaattcttggggccatcaactttattacaacgattattaacataaaacccccagcaatctctcagtaccaaactcctctattcgtatgggctgtcttaattacggcagttcttctgcttctttcactacccgtccttgccgctggcattacaatattacttactgatcgaaatctcaataccaccttcttcgacccggcaggaggaggggacccgattctttaccaacacct---------------------------------------------------------------------------------------------------------------------------------------------------------acctccgacatcgctacggccttctcgtctgtggcccacatctgccgagacgtgaactacggatgacttatccggaatttgcacgccaacggcgcatcctttttcttcgtatgtatttatgcgcacatcggacgagggctctattacggatcctacctctataaggagacatgaaacattggcgtcgtattactactgctagttatgataaccgctttcgtaggctacgtactgccttggggacaaatgtccttttgaggagccaccgtcattacaaacctactgtctgccgtaccatacgtaggagatgccttagtacaatgaatttgagggggattctcagtagataatgccaccctcactcggttctttgcattccatttcctgtttccattcgtcattgcaggtgcaaccttgatccaccttctattcttacacgagactggttcaaataaccccctcggattgaactccgacgctgataaaatctcgttccacccatacttctcgtataaggacttactaggcttcgcggccctgctcctagccctgacagccctcgccttattctctcccaatctcctaggggaccccgacaacttcaccccagcgaacccactagtcaccccacctcatattaagcctgagtgatatttcctgttcgcctacgccatcctccgatctatccccaacaagttaggaggggtcctagcgcttttgtcctctatcctaattctgatattagtaccaattctacatacatccaagcaac------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Epigonus_denticulatus" taxon="Epigonus_denticulatus" totalcount="4" value="gtgccagccaccgcggttatacccaagttgcggcgtaaagcgtggttaagagactaaagccgacctcaaagctgttatacgaagaagctcaaacgaaagtggctttcctgaatccacgaaagctatgacacaaactgggattagataccccactatgcctagccctaaacattatccgcccgggtactacgagcagcttgaaacccaaaggacttggcggtgctttagatccacctagaggagcctgttctagaaccgataacccccgttcaacctcacccttccttgtccgcctatataccgccgtcgtcagcttatgaaggatagtaagcaaaaaaacgtcaggtcgaggtgtagcgtatggagggagaaatgggctacattccctacgaatggaaggaggatttagcagtaaggagtgttcctgaagccctgaagcgcgcacacaccgcccgtcactctcctttatctagtatttggtgcttgagccggaatagtaggcacagccttaagcctgctcattcgagcagagctaagccaaccaggcgctctcctcggagacgaccaaatttataacgtaattgttacagcgcatgcgtttgtaataattttctttatagtaataccaattatgatcggggggtttggaaactgactcattcccttaataattggcgcccccgacatggctttcccacgaataaacaacatgagcttttgacttcttcccccttccttcttactactccttgcctcctctggagtagaggcaggtgccggcaccggatgaacagtttacccccctttagctggtaacttagcccacgcaggggcctccgtcgacttaacaatcttttccctacatctagcaggcatctcctcaattctcggagctattaatttcatcacaacaattattaatatgaaaccccctgctatctcccaatatcaaacacccctgtttgtatgagctgttttaattaccgccgtccttcttctcctctctcttcccgttcttgctgcaggcatcacaatactcctaacagaccgtaatttaaacaccaccttctttgaccctgccggagggggagacccaattctttaccaacacct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Epigonus_robustus" taxon="Epigonus_robustus" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctctatctagtatttggtgcttgagccggcatagtaggcacagccttaagcctgctcattcgagcagagcttagccagcccggcgctctccttggagacgaccagatttacaacgtaattgttacggcccatgccttcgtaataattttctttatagtaataccaatcatgattggagggtttggaaactgacttattcccctaataattggtgccccagacatggccttcccccgaataaataatatgagcttttgacttctccccccttccttcctcctactcctcgcttcctctggggtagaagccggggctggtaccgggtgaacagtttacccccctttagccggcaacttagctcacgcaggagcctccgttgatttaacaatcttctccctgcacttagcagggatctcctcaattcttggagctattaattttatcacaacaatcattaacataaaaccccccgctatctcccaataccagacgcctttatttgtgtgagccgtcctaatcaccgccgttcttctccttctctccctccccgttcttgctgccggcatcacaatacttctcacagaccgaaaccttaacaccaccttcttcgacccggcagggggcggggatcccatcctttaccaacacct-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Epinephelus_lanceolatus" taxon="Epinephelus_lanceolatus" totalcount="4" value="gtgccagctaccgcggttatgcccaagttgcggcgtaaagcgtggttaaggcactaaagccgattactagactgttatacgaagaagcacatacgaaggtggctttcctgaacccacgaaagccaaggcacaaactgggattagataccccactatgctttgccctaaacattatccgcccgggaactacgagcagcttaaaacccaaaggacttggcggtgctttagacccacctagaggagcctgttctaaaaccgataacccccgttcaacctcacctttccttgtccgcctatataccgccgtcgtcagcttatgaaggttagtaagcacaaaaacgtcaggtcgaggtgtagcgtatggaaagagaaatgggctacattccctacgaatagaaggaggatttagcagtaaggagcgttcctgaagccctgaagcgcgcacacaccgcccgtcactctcctttatcttgtatttggtgcctgggctgggatagtaggaacagcccttagtttgctaattcgggctgaactaagccagccaggggctctgctaggtgatgaccagatttataatgtaattgttacagcacatgcttttgtaataatcttttttatagtaataccaatcataatcggtggctttggaaattgactcatcccacttataattggtgcccctgacatagcgttccctcggatgaataacatgagtttctgacttctccccccttctttcctgcttcttcttgcctcctctggagtagaagctggtgctggcactggctgaacggtctacccacccctagccggaaatctagcccatgcaggtgcatctgtagacttaactatcttctcactacacttggcagggatttcatcaatcctaggtgcaattaactttattacaaccatcattaacataaaaccccctgccatctctcaataccaaacacctttgttcgtatgggctgtactaatcacagcagtactactactcctctccctccctgtccttgccgccggcatcactatgttgcttactgatcgtaaccttaacactaccttctttgatccagccggaggaggagatccaattctttaccagcacttcgaaaaacacacccccttctaaaaatcgcaaatgatgcactagttgacctcccagccccctccaacatttcagtctgatgaaacttcggctcattactcggactctgcctctttgctcaaatcctcacaggcctatttctagccatacattatacatcagatattgccacagccttctcatctgtcacccatatctgtcgggatgtaagctatggttgacttatccgtaacatacatgccaacggagcctccctctttttcatttgcttatacgcccacattggccgaggactttactacggttcctatctctacaaagaaacctgaaatattggggttattctcctcctcctagtaataataacagctttcgttggttacgtccttccctgaggacaaatatccttctgaggagccacagtcattaccaacctcctctctgccgtcccctatattggcagcaccctcgtccaatgaatttgaggaggattctccgtagacaacgctacccttacccgtttcttcgcattccattttctactccctttcattattgcagctgccaccatactccatcttcttttccttcacgagacaggctcaaataaccccattggtctcaactctaacgcagataaaatttccttccacccatacttttcttacaaagacctactaggatttgcagccctactcttaacacttatatccctagcactattttctcccaaccttctaggagatccggacaacttcacccccgctaaccccctcgtcacccctccccatatcaagcctgagtgatatttcctattcgcttatgccatcctccgatcaatcccaaataaattaggaggagttttagcactactagcctcaatcctagtcctgatactacttccaatcctccacacctctaaacaacgttggcattattaatgggctctctggatgggcttcctcggtggatgacatcccagctgacaccatcactcgacggtttcgctatgatgtggcactggtgtcagcattaaaggatctggaggaggacatcatggacgggctgagagagtgtgggatggaagacagtacttgcacctcaggcttcagtgtcatgatcaaggaatcctgtgatggcatgggcgatgtcagcgagaagcacggtggaggaccagttgttcctgagaaggctgtgcgtttctctttcactgttatgtctgtctctgtcctggcagacgagcaggagaaagaggttaccatcttcactgagtcaaagccaaactcagagatgtcctgtaagcccctttgcctgatgtttgtggatgagtcagaccacgagacactaacagccgtcctggggcctatagttgcagagcgtaatgcaatgaaagagagcaggctcatcctgtctgtgggcggactccctcgcgccttccgctttcacttcagaggcacgggatatgatgagaagatggtgcgcgagatggagggcctcgaggcctcagggtccacctatgtctgcactctttgtgactccactcgggcagaggcctcccaaaacatggtgctccactccatcactcgcagtcatgacgagaacctagaccgttatgaaatatggagaaccaatcctttttctgagtctgcagatgagctgcgagacagagtcaaaggagtctctgccaagcccttcatggagacccagcccacgctggatgcattacactgcgacatcggcaatgcggcagagttctacaaaatcttccaggacgagataggggaggtgtaccaaaaggtcaaccccagccgggaggagcggcgcagctggagggcagccctagataaacagctgaggaagaagctgaagctcaaaccggtgatgaggatgaatgggaactacgcccgcaggctaatgacccaggaggctgtggaggtggtgtgtgagctggtgccctcggaggagaggagggaggccctgagg------------------------------"/>
+                        <sequence id="seq_Epinephelus_rivulatus" taxon="Epinephelus_rivulatus" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatcttgtatttggtgcctgagctgggatagtaggaacagccctaagcctgcttattcgggccgaactcagtcaaccaggggctttactcggcgatgatcagatctataatgtaattgtcaccgcacatgcatttgtaataattttttttatggttataccaattataattggtggttttggaaactggctcattccacttatgattggcgcccctgacatagcattccctcgaatgaataacataagtttctgacttctccctccatccttcctacttcttctagcttcttctggggtagaagcaggggccggcactggctgaacggtttacccgcctttagccggaaatctagcccatgcaggtgcatctgtagatctaactattttctcactacatttagcaggggtttcatcaattctaggagctattaactttattacaactattattaacatgaaacctcccgccatttcacagtatcaaacacctttatttgtatgagccgttctaattacagcggtcctacttcttctttccctccccgttctcgccgccggtattacaatacttttaactgatcgtaatctcaacaccaccttctttgatccagccggagggggagaccccatcctttatcagcattt----------------------------------------------------------------------------ggtgaaattttggctcactacttggactctgccttattgcacaaatccttacaggcctcttcctggctatacattacacatcagatatcgccacagctttttcgtccgtcgcccatatctgccgagacgtaaactacggctgactaatccgaaatatacacgccaacggagcctcattcttttttatttgcatttatgcacatattggacggggactttactacggctcttacctctataaagaaacctgaaatgttggggttattcttcttctcctggtaataataacagccttcgttggctacgttctcccctgaggacaaatgtccttctgaggagctaccgttattaccaacctcttatcggccgttccctacatcggaaacactctagtccaatgaatttgaggcggattttccgtagataatgccactctcacccgcttcttcgcattccacttcctattcccattcgtaattgcagccgccacacttattcacctcctcttcctccacgaatcaggttcaaacaacccactggggcttaactctgacgcagacaaaatctccttccacccatacttctcctacaaagatttactggggttcgcagccttactcatcgcactcacatccttagcactcttctcacccaacctcctaggagacccagataactttaccccagctaacccccttgtcacccctcctcacattaaacctgagtgatacttcttatttgcttacgccattttacgatcaattcctaacaaactaggaggagtccttgcattactagcctcaattctaattctcatgctagtacctattcttcacacctctaaacaac------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Halosauropsis_macrochir" taxon="Halosauropsis_macrochir" totalcount="4" value="gtgccagccaccgcggttatgctcaaattgcggcgtaaagagtgattaaagaactaaagccgacccttaggccgtcatacgatgaagccccaacgaaagtagctttcttgaactcacgacagctaagaaacaaactgggattagataccccactatgcttagcctcaaactttacccgccaggggactacaagcagcttaaaacccaaaggacttggcggtgcctcaaacccatctagaggagcctgttctacaactgataatcctcgttaaacctcaccaccccttgtccgcctatataccgccgtcgccagctcatgaaagatagtgagcctaagaacgtcaggtcgaggtgtagcgaatggggtgagaaatgggctacattttctacgaaaagaaggtggatttagcagtaaagagtgttcttgaagctctgtggcgcgtacacaccgcccgtcaccctcctttattttgtattcggtgcctgagcagggatggtggggacagctctaagccttcttattcgagcagagctaagtcaacccggagcccttctaggagatgaccaaatttataatgttatcgttacagcacacgccttcgtaatgattttcttcatggtaatacccgttataattggaggctttggaaactgactagttcccttaataattggagcccccgatatggcattcccacgaataaataacataagcttttgacttctgcccccatcactcctccttctattatcctcttctggagttgaagcaggagcagggacaggatgaacagtctaccccccacttgctgctaatctagcccatgccggagcatccgtagacctaactatcttctcactccacctagcaggcgtttcatcaattctcggagccattaactttattaccacaattattaacataaaacccccagccatctcacaataccaaaccccacttttcgtgtgatcagtgcttgttactgcagtactgctactattatctctgccagtcttagccgcaggaatcactatactacttacagaccgaaatctaaacacaactttctttgatccagcaggaggaggagacccaatcctttaccaacacct----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------aaggctgtgcgtttctctatcactgtcatgtctgtctctgtccaggcctacggagaggaggaggcggttgtcatcttcagggagccaaaacccaactctgaactgtcctgtaagcccctgtgcctgatgtttgtggatgagtctgaccacgagacactcactgctgtccttgggcctttggtagcagagaggaatgcaatgaagcagagccgactcattctttcagtaggtggcctccctcgctctttccgcttccacttcagaggcacaggctatgatgagaagatggtgcgagagatggaaggcctggaggcctcaggctccacctatatctgcactctttgtgactccactcgggcagaagcctctcacaacatggtgctccactctgtcacccgcagccatgatgagaacctggagcgctacgagatatggaagaccaaccccttctcagagtctgccatggagctgcgagaccgggtcaaaggggtctctgccaaaccatttatggagacccacccgactctggatgcattacactgtgacataggcaacgccactgaattctacaaaatcttccaggatgagattggggaggtgttccggagggccaaccctagccgggaggaacggcgcagctggagggcagctctcgataagcagctgaggaagaagttgaagctgagaccagtgatgcggatgaatgggaactatgcccgaaagctgatgacccaggaggctgtggaagtggtgtgtgaactgattcccactgaagagaggcgggaggccctgagagagctgatggggctctatatccagatgaag"/>
+                        <sequence id="seq_Scorpaena_papillosa" taxon="Scorpaena_papillosa" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatctagtatttggtgcttgagcaggcatggtgggcacggccctcagtctgcttattcgcgctgaattaagtcagcccggggccctgctaggcgatgatcagatttataatgttatcgtcacagcacatgcttttgtaataattttctttatagtaataccaattatgattgggggctttggaaactggctaattccgctaatgattggagcccccgacatagcatttccgcgcataaacaatatgagcttctgactgctccccccctccttcctcctcctgcttgcctcctcgggcgtagaggctggggccggaacgggctgaaccgtctatccccccttgtccggtaatttagcccacgccggagcatctgttgacctaacaatcttctcgttacacttagctggtatctcctcaattctgggggcaattaattttattaccacaatcattaacataaaacctcctgccatttctcaatatcaaacacctttatttgtgtgggcagttttgatcaccgccgttcttctcctcttgtccctccccgttctagcagctggtattacaatgctccttactgatcgtaatctaaacactactttctttgaccctgccggagggggagacccaattctttatcaa------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                        <sequence id="seq_Vinciguerria_nimbaria" taxon="Vinciguerria_nimbaria" totalcount="4" value="--------caccgcggttatacccaagttgcggcgtaaagcgtggttaaggcactaaggctaattccctggttgttatacgatgaaacccttgcgaaagtagccttcctgaacccaccacaattaggaaa---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctctatatggtttttggtgcctgggcaggaatagttggcactgccctgagtcttcttatccgggcagagctgagccagcccggggctctccttggtgatgaccaaatttataatgtaatcgtcactgcgcacgctttcgtgatgattttcttcatagtaatacctctaataatcggaggcttcggcaactggctgatccccctaatgattggggcccccgacatggctttcccccgaatgaacaatatgagtttctgactcctccccccttccttccttctcctcttggcatcatcaggtgttgaggcaggagccggaacagggtgaactgtctacccccctttggcaggcaatctcgcgcatgcgggagcctcagtagacctaaccatcttttcgcttcatttagcgggcatctcatctattctaggggccatcaactttattacgactattatcaatatgaagcctcctgcaatttctcagtaccagacccccctatttgtctgagcagtcttagtcacagcggtcctcctactactctctctccctgttctagctgccggcatcacaatgctacttacagaccgaaacctcaatacaaccttctttgaccctgctgggggaggagaccccattctctaccaacacct----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------aaggcggtgagattctccttcaccgtcatgtccgtctctgtccagatagatggtatggaaaagccagtaactgtgttcagggagtccaaacccaactcagagctctcctgcaaacctctgtctctgatgttcgtagatgagtccgaccacgagacactgacgggcatcctcggacctgtggtggctgagaggaatgccatgaagaacagtcgccttatcctgtctctgggaggcctccctcgatctttccgattccatttcaggggcacgggctatgatgagaagatggtgcgtgagatggagggcttggaggcctcgggctccacctacatctgcactctctgtgactccacccgggtagaggcctcccacaatatggttctgcactctgtcacccgcacacatgaggagaacatggagcgctatgagatctggaggacaaacccttattctgagtcagctgatgagcttcgagatcgggtaaaaggtgtctctgccaagcctttcttggagactcagcccacactggacgcactgcactgtgacatcggcaacgccaccgagttctacaagatcttccaagatgagataggggaggtgcaccagaggcccaatccgagcagggaggagcggcggggctggcgggctgccctggacaagcagttgaggagaaagattaagctgaggccagtgatgaggatgaatggaaactatgccaggcgactgatgacaagtgaggcggtggaggtggtgtgcgagctggttccctctgagccacggcgggaggccctcaggcagctaatggcactttacctccagatgaag"/>
+                        <sequence id="seq_Vinciguerria_poweriae" taxon="Vinciguerria_poweriae" totalcount="4" value="-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ctttatatagtatttggtgcctgagcaggaatagttggtaccgccttaagcttactaatccgagcagaactaagtcaacccggagccttgctaggagatgatcaaatttataatgtcatcgtcactgcacatgcctttgtaataattttctttatagttatacccttaataattggaggatttggcaactgactaatccccttaatgatcggagcccccgacatggccttcccacgaataaataatataagcttctgacttctccctccctctttcctcctactcttagcctcctcaggtgtcgaagcgggtgccggaacagggtgaactgtctatccccctctagcaggcaatcttgcccacgcgggggcctctgtggacctaactattttctccctacaccttgcaggaatttcctcaattctaggagctattaactttattaccacaattattaatatgaaaccccctgcaatctcccaatatcaaacccctttatttgtatgagccgtcctagttacagcagtcctactccttctctccctccctgttcttgctgctggcattacaatgcttctaacggaccgaaatcttaatacaaccttctttgaccccgccggaggcggagacccaatcctttatcaacatct----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------tccgtccaggtcgatggcgaggatgagccggtgactgtgttcagggagtccaagcccaactcagagctctcctgcaagcctctgtctctgatgttcgtggatgagtcagaccacgagacactgacgggcatcctcggacctgtgatggctgagagggatgccatgaaaaacagtcgcctcatcctgccactgggaggcctcccccgatctttccgcttccatttcaggggcacgggctatgatgagaagatggtgcgtgagatggagggcttggaggcctcaggctccacctacatctgcactctctgtgactccacgcggggagaggcctcccacaatatggtgctgcaccctgtcactcgcacacatgaagggaacatggagcgctatgagatctggaggaccaacccctactctgagtcagccgacgagcttcgggatcgggtgaaaggcgtttccgccaaacccttcatggagactcatcccaccctggatgctctgcactgtgacatcagcaacgccacagagttctacaagatcttccaggatgagatcggtgagctgtaccggaggcccaacccgagcagggaggagcggcgaggctggcgagcagcc------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                    </data>
+
+
+    
+
+
+    
+
+
+    
+<map name="Uniform" >beast.math.distributions.Uniform</map>
+<map name="Exponential" >beast.math.distributions.Exponential</map>
+<map name="LogNormal" >beast.math.distributions.LogNormalDistributionModel</map>
+<map name="Normal" >beast.math.distributions.Normal</map>
+<map name="Beta" >beast.math.distributions.Beta</map>
+<map name="Gamma" >beast.math.distributions.Gamma</map>
+<map name="LaplaceDistribution" >beast.math.distributions.LaplaceDistribution</map>
+<map name="prior" >beast.math.distributions.Prior</map>
+<map name="InverseGamma" >beast.math.distributions.InverseGamma</map>
+<map name="OneOnX" >beast.math.distributions.OneOnX</map>
+
+
+     <taxonset id="Set_All" spec="TaxonSet">
+         <taxon id="Vinciguerria_poweriae" spec="Taxon"/>
+         <taxon id="Vinciguerria_nimbaria" spec="Taxon"/>
+         <taxon id="Asterorhombus_filifer" spec="Taxon"/>
+         <taxon id="Arnoglossus_scapha" spec="Taxon"/>
+         <taxon id="Aplodactylus_etheridgii" spec="Taxon"/>
+         <taxon id="Aplodactylus_arctidens" spec="Taxon"/>
+         <taxon id="Epigonus_robustus" spec="Taxon"/>
+         <taxon id="Epigonus_denticulatus" spec="Taxon"/>
+         <taxon id="Dendrochirus_zebra" spec="Taxon"/>
+         <taxon id="Scorpaena_papillosa" spec="Taxon"/>
+         <taxon id="Epinephelus_rivulatus" spec="Taxon"/>
+         <taxon id="Epinephelus_lanceolatus" spec="Taxon"/>
+         <taxon id="Bassanago_bulbiceps" spec="Taxon"/>
+         <taxon id="Conger_verreauxi" spec="Taxon"/>
+         <taxon id="Aldrovandia_affinis" spec="Taxon"/>
+         <taxon id="Halosauropsis_macrochir" spec="Taxon"/>
+     </taxonset>
+
+
+<run id="mcmc" spec="MCMC" chainLength="10000000" storeEvery="1000">
+    <state id="state" storeEvery="5000">
+        <tree id="Tree.t:Subset1" name="stateNode">
+            <taxonset id="TaxonSet.Subset1" spec="TaxonSet">
+                <alignment id="Subset1" spec="FilteredAlignment" filter="464-1113\3,1-463">
+                    <data idref="Concat_PF2"/>
+                </alignment>
+            </taxonset>
+        </tree>
+        <parameter id="birthRate.t:Subset1" name="stateNode">1.0</parameter>
+        <parameter id="gammaShape.s:Subset1" name="stateNode">1.0</parameter>
+        <parameter id="gammaShape.s:Subset2" name="stateNode">1.0</parameter>
+        <parameter id="kappa.s:Subset1" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="kappa.s:Subset2" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="kappa.s:Subset3" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="gammaShape.s:Subset3" name="stateNode">1.0</parameter>
+        <parameter id="gammaShape.s:Subset4" name="stateNode">1.0</parameter>
+        <parameter id="kappa.s:Subset4" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="gammaShape.s:Subset5" name="stateNode">1.0</parameter>
+        <parameter id="kappa.s:Subset5" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="gammaShape.s:Subset6" name="stateNode">1.0</parameter>
+        <parameter id="kappa.s:Subset6" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="kappa.s:Subset7" lower="0.0" name="stateNode">2.0</parameter>
+        <parameter id="gammaShape.s:Subset7" name="stateNode">1.0</parameter>
+        <parameter id="ucldStdev.c:Subset1" lower="0.0" name="stateNode">0.1</parameter>
+        <stateNode id="rateCategories.c:Subset1" spec="parameter.IntegerParameter" dimension="30">1</stateNode>
+        <parameter id="freqParameter.s:Subset5" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset2" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset4" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset1" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset3" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset6" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+        <parameter id="freqParameter.s:Subset7" dimension="4" lower="0.0" name="stateNode" upper="1.0">0.25</parameter>
+    </state>
+
+    <init id="RandomTree.t:Subset7" spec="beast.evolution.tree.RandomTree" estimate="false" initial="@Tree.t:Subset1">
+        <taxa id="Subset7" spec="FilteredAlignment" data="@Concat_PF2" filter="2041-3124\3"/>
+        <populationModel id="ConstantPopulation0.t:Subset7" spec="ConstantPopulation">
+            <parameter id="randomPopSize.t:Subset7" name="popSize">100</parameter>
+        </populationModel>
+    </init>
+
+    <distribution id="posterior" spec="util.CompoundDistribution">
+        <distribution id="prior" spec="util.CompoundDistribution">
+            <distribution id="YuleModel.t:Subset1" spec="beast.evolution.speciation.YuleModel" birthDiffRate="@birthRate.t:Subset1" tree="@Tree.t:Subset1"/>
+            <prior id="YuleBirthRatePrior.t:Subset1" name="distribution" x="@birthRate.t:Subset1">
+                <Uniform id="Uniform.1" name="distr" upper="Infinity"/>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset1" name="distribution" x="@gammaShape.s:Subset1">
+                <Exponential id="Exponential.0" name="distr">
+                    <parameter id="RealParameter.0" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset2" name="distribution" x="@gammaShape.s:Subset2">
+                <Exponential id="Exponential.1" name="distr">
+                    <parameter id="RealParameter.1" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset3" name="distribution" x="@gammaShape.s:Subset3">
+                <Exponential id="Exponential.2" name="distr">
+                    <parameter id="RealParameter.2" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset4" name="distribution" x="@gammaShape.s:Subset4">
+                <Exponential id="Exponential.3" name="distr">
+                    <parameter id="RealParameter.3" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset5" name="distribution" x="@gammaShape.s:Subset5">
+                <Exponential id="Exponential.4" name="distr">
+                    <parameter id="RealParameter.4" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset6" name="distribution" x="@gammaShape.s:Subset6">
+                <Exponential id="Exponential.5" name="distr">
+                    <parameter id="RealParameter.5" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="GammaShapePrior.s:Subset7" name="distribution" x="@gammaShape.s:Subset7">
+                <Exponential id="Exponential.6" name="distr">
+                    <parameter id="RealParameter.6" estimate="false" name="mean">1.0</parameter>
+                </Exponential>
+            </prior>
+            <prior id="KappaPrior.s:Subset1" name="distribution" x="@kappa.s:Subset1">
+                <LogNormal id="LogNormalDistributionModel.0" name="distr">
+                    <parameter id="RealParameter.19" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.20" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset2" name="distribution" x="@kappa.s:Subset2">
+                <LogNormal id="LogNormalDistributionModel.1" name="distr">
+                    <parameter id="RealParameter.21" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.22" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset3" name="distribution" x="@kappa.s:Subset3">
+                <LogNormal id="LogNormalDistributionModel.2" name="distr">
+                    <parameter id="RealParameter.23" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.24" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset4" name="distribution" x="@kappa.s:Subset4">
+                <LogNormal id="LogNormalDistributionModel.3" name="distr">
+                    <parameter id="RealParameter.25" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.26" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset5" name="distribution" x="@kappa.s:Subset5">
+                <LogNormal id="LogNormalDistributionModel.4" name="distr">
+                    <parameter id="RealParameter.27" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.28" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset6" name="distribution" x="@kappa.s:Subset6">
+                <LogNormal id="LogNormalDistributionModel.5" name="distr">
+                    <parameter id="RealParameter.29" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.30" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="KappaPrior.s:Subset7" name="distribution" x="@kappa.s:Subset7">
+                <LogNormal id="LogNormalDistributionModel.6" name="distr">
+                    <parameter id="RealParameter.31" estimate="false" name="M">1.0</parameter>
+                    <parameter id="RealParameter.32" estimate="false" name="S">1.25</parameter>
+                </LogNormal>
+            </prior>
+            <prior id="ucldStdevPrior.c:Subset1" name="distribution" x="@ucldStdev.c:Subset1">
+                <Gamma id="Gamma.6" name="distr">
+                    <parameter id="RealParameter.34" estimate="false" name="alpha">0.5396</parameter>
+                    <parameter id="RealParameter.35" estimate="false" name="beta">0.3819</parameter>
+                </Gamma>
+            </prior>
+        </distribution>
+        <distribution id="likelihood" spec="util.CompoundDistribution" useThreads="true">
+            <distribution id="treeLikelihood.Subset1" spec="ThreadedTreeLikelihood" data="@Subset1" tree="@Tree.t:Subset1">
+                <siteModel id="SiteModel.s:Subset1" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset1">
+                    <parameter id="mutationRate.s:Subset1" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset1" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset1" spec="HKY" kappa="@kappa.s:Subset1">
+                        <frequencies id="estimatedFreqs.s:Subset1" spec="Frequencies" frequencies="@freqParameter.s:Subset1"/>
+                    </substModel>
+                </siteModel>
+                <branchRateModel id="RelaxedClock.c:Subset1" spec="beast.evolution.branchratemodel.UCRelaxedClockModel" rateCategories="@rateCategories.c:Subset1" tree="@Tree.t:Subset1">
+                    <LogNormal id="LogNormalDistributionModel.c:Subset1" S="@ucldStdev.c:Subset1" meanInRealSpace="true" name="distr">
+                        <parameter id="RealParameter.33" estimate="false" lower="0.0" name="M" upper="1.0">1.0</parameter>
+                    </LogNormal>
+                    <parameter id="ucldMean.c:Subset1" estimate="false" name="clock.rate">1.0</parameter>
+                </branchRateModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset2" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1">
+                <data
+id="Subset2"
+spec="FilteredAlignment"
+data="@Concat_PF2"
+filter="2040-3124\3,465-1113\3,1115-2038\3"/>
+                <siteModel id="SiteModel.s:Subset2" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset2">
+                    <parameter id="mutationRate.s:Subset2" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset2" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset2" spec="HKY" kappa="@kappa.s:Subset2">
+                        <frequencies id="estimatedFreqs.s:Subset2" spec="Frequencies" frequencies="@freqParameter.s:Subset2"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset3" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1">
+                <data
+id="Subset3"
+spec="FilteredAlignment"
+data="@Concat_PF2"
+filter="466-1113\3"/>
+                <siteModel id="SiteModel.s:Subset3" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset3">
+                    <parameter id="mutationRate.s:Subset3" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset3" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset3" spec="HKY" kappa="@kappa.s:Subset3">
+                        <frequencies id="estimatedFreqs.s:Subset3" spec="Frequencies" frequencies="@freqParameter.s:Subset3"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset4" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1">
+                <data
+id="Subset4"
+spec="FilteredAlignment"
+data="@Concat_PF2"
+filter="1114-2038\3"/>
+                <siteModel id="SiteModel.s:Subset4" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset4">
+                    <parameter id="mutationRate.s:Subset4" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset4" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset4" spec="HKY" kappa="@kappa.s:Subset4">
+                        <frequencies id="estimatedFreqs.s:Subset4" spec="Frequencies" frequencies="@freqParameter.s:Subset4"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset5" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1">
+                <data
+id="Subset5"
+spec="FilteredAlignment"
+data="@Concat_PF2"
+filter="1116-2038\3"/>
+                <siteModel id="SiteModel.s:Subset5" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset5">
+                    <parameter id="mutationRate.s:Subset5" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset5" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset5" spec="HKY" kappa="@kappa.s:Subset5">
+                        <frequencies id="estimatedFreqs.s:Subset5" spec="Frequencies" frequencies="@freqParameter.s:Subset5"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset6" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1">
+                <data
+id="Subset6"
+spec="FilteredAlignment"
+data="@Concat_PF2"
+filter="2039-3124\3"/>
+                <siteModel id="SiteModel.s:Subset6" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset6">
+                    <parameter id="mutationRate.s:Subset6" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset6" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset6" spec="HKY" kappa="@kappa.s:Subset6">
+                        <frequencies id="estimatedFreqs.s:Subset6" spec="Frequencies" frequencies="@freqParameter.s:Subset6"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+            <distribution id="treeLikelihood.Subset7" spec="ThreadedTreeLikelihood" branchRateModel="@RelaxedClock.c:Subset1" data="@Subset7" tree="@Tree.t:Subset1">
+                <siteModel id="SiteModel.s:Subset7" spec="SiteModel" gammaCategoryCount="4" shape="@gammaShape.s:Subset7">
+                    <parameter id="mutationRate.s:Subset7" estimate="false" name="mutationRate">1.0</parameter>
+                    <parameter id="proportionInvariant.s:Subset7" estimate="false" lower="0.0" name="proportionInvariant" upper="1.0">0.0</parameter>
+                    <substModel id="hky.s:Subset7" spec="HKY" kappa="@kappa.s:Subset7">
+                        <frequencies id="estimatedFreqs.s:Subset7" spec="Frequencies" frequencies="@freqParameter.s:Subset7"/>
+                    </substModel>
+                </siteModel>
+            </distribution>
+        </distribution>
+            <distribution id="Node2.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node2" spec="TaxonSet">
+                    <taxon idref="Vinciguerria_poweriae" spec="Taxon"/>
+                    <taxon idref="Vinciguerria_nimbaria" spec="Taxon"/>
+                    <taxon idref="Asterorhombus_filifer" spec="Taxon"/>
+                    <taxon idref="Arnoglossus_scapha" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_etheridgii" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_arctidens" spec="Taxon"/>
+                    <taxon idref="Epigonus_robustus" spec="Taxon"/>
+                    <taxon idref="Epigonus_denticulatus" spec="Taxon"/>
+                    <taxon idref="Dendrochirus_zebra" spec="Taxon"/>
+                    <taxon idref="Scorpaena_papillosa" spec="Taxon"/>
+                    <taxon idref="Epinephelus_rivulatus" spec="Taxon"/>
+                    <taxon idref="Epinephelus_lanceolatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node4.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node4" spec="TaxonSet">
+                    <taxon idref="Asterorhombus_filifer" spec="Taxon"/>
+                    <taxon idref="Arnoglossus_scapha" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_etheridgii" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_arctidens" spec="Taxon"/>
+                    <taxon idref="Epigonus_robustus" spec="Taxon"/>
+                    <taxon idref="Epigonus_denticulatus" spec="Taxon"/>
+                    <taxon idref="Dendrochirus_zebra" spec="Taxon"/>
+                    <taxon idref="Scorpaena_papillosa" spec="Taxon"/>
+                    <taxon idref="Epinephelus_rivulatus" spec="Taxon"/>
+                    <taxon idref="Epinephelus_lanceolatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node5.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node5" spec="TaxonSet">
+                    <taxon idref="Asterorhombus_filifer" spec="Taxon"/>
+                    <taxon idref="Arnoglossus_scapha" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node6.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node6" spec="TaxonSet">
+                    <taxon idref="Aplodactylus_etheridgii" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_arctidens" spec="Taxon"/>
+                    <taxon idref="Epigonus_robustus" spec="Taxon"/>
+                    <taxon idref="Epigonus_denticulatus" spec="Taxon"/>
+                    <taxon idref="Dendrochirus_zebra" spec="Taxon"/>
+                    <taxon idref="Scorpaena_papillosa" spec="Taxon"/>
+                    <taxon idref="Epinephelus_rivulatus" spec="Taxon"/>
+                    <taxon idref="Epinephelus_lanceolatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node8.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node8" spec="TaxonSet">
+                    <taxon idref="Aplodactylus_etheridgii" spec="Taxon"/>
+                    <taxon idref="Aplodactylus_arctidens" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node9.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node9" spec="TaxonSet">
+                    <taxon idref="Epigonus_robustus" spec="Taxon"/>
+                    <taxon idref="Epigonus_denticulatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node12.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node12" spec="TaxonSet">
+                    <taxon idref="Epinephelus_rivulatus" spec="Taxon"/>
+                    <taxon idref="Epinephelus_lanceolatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+            <distribution id="Node15.prior" spec="beast.math.distributions.MRCAPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                <taxonset id="Node15" spec="TaxonSet">
+                    <taxon idref="Aldrovandia_affinis" spec="Taxon"/>
+                    <taxon idref="Halosauropsis_macrochir" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+
+
+         <distribution id="fossilCalibrations" spec="util.CompoundDistribution">
+             <distribution id="Perciformes_Node10.fossilprior" spec="beast.math.distributions.FossilPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                 <fossilDistr id="FossilCalibration.0" spec="beast.math.distributions.FossilCalibration">
+                     <parameter id="RealParameter.36" name="minOccuranceAge">50.8</parameter>
+                     <parameter id="RealParameter.37" name="maxOccuranceAge">55.2</parameter>
+                     <parameter id="minDivRate" name="minDivRate">0.041</parameter>
+                     <parameter id="maxDivRate" name="maxDivRate">0.081</parameter>
+                     <parameter id="minTurnoverRate" name="minTurnoverRate">0.0011</parameter>
+                     <parameter id="maxTurnoverRate" name="maxTurnoverRate">0.37</parameter>
+                     <parameter id="minSamplingRate" name="minSamplingRate">0.0066</parameter>
+                     <parameter id="maxSamplingRate" name="maxSamplingRate">0.01806</parameter>
+                     <parameter id="RealParameter.38" name="minSamplingGap">0.0</parameter>
+                     <parameter id="RealParameter.39" name="maxSamplingGap">0.0</parameter>
+                 </fossilDistr>
+                 <taxonset id="Perciformes_Node10" spec="TaxonSet">
+                    <taxon idref="Dendrochirus_zebra" spec="Taxon"/>
+                    <taxon idref="Scorpaena_papillosa" spec="Taxon"/>
+                    <taxon idref="Epinephelus_rivulatus" spec="Taxon"/>
+                    <taxon idref="Epinephelus_lanceolatus" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+             <distribution id="Stomiati_Node3.fossilprior" spec="beast.math.distributions.FossilPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                 <fossilDistr id="FossilCalibration.1" spec="beast.math.distributions.FossilCalibration">
+                     <parameter id="RealParameter.40" name="minOccuranceAge">70.6</parameter>
+                     <parameter id="RealParameter.41" name="maxOccuranceAge">83.5</parameter>
+                     <parameter idref="minDivRate" name="minDivRate">0.041</parameter>
+                     <parameter idref="maxDivRate" name="maxDivRate">0.081</parameter>
+                     <parameter idref="minTurnoverRate" name="minTurnoverRate">0.0011</parameter>
+                     <parameter idref="maxTurnoverRate" name="maxTurnoverRate">0.37</parameter>
+                     <parameter idref="minSamplingRate" name="minSamplingRate">0.0066</parameter>
+                     <parameter idref="maxSamplingRate" name="maxSamplingRate">0.01806</parameter>
+                     <parameter id="RealParameter.42" name="minSamplingGap">0.0</parameter>
+                     <parameter id="RealParameter.43" name="maxSamplingGap">0.0</parameter>
+                 </fossilDistr>
+                 <taxonset id="Stomiati_Node3" spec="TaxonSet">
+                    <taxon idref="Vinciguerria_poweriae" spec="Taxon"/>
+                    <taxon idref="Vinciguerria_nimbaria" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+             <distribution id="Elopomorpha_Node13.fossilprior" spec="beast.math.distributions.FossilPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                 <fossilDistr id="FossilCalibration.2" spec="beast.math.distributions.FossilCalibration">
+                     <parameter id="RealParameter.44" name="minOccuranceAge">151</parameter>
+                     <parameter id="RealParameter.45" name="maxOccuranceAge">152</parameter>
+                     <parameter idref="minDivRate" name="minDivRate">0.041</parameter>
+                     <parameter idref="maxDivRate" name="maxDivRate">0.081</parameter>
+                     <parameter idref="minTurnoverRate" name="minTurnoverRate">0.0011</parameter>
+                     <parameter idref="maxTurnoverRate" name="maxTurnoverRate">0.37</parameter>
+                     <parameter idref="minSamplingRate" name="minSamplingRate">0.0066</parameter>
+                     <parameter idref="maxSamplingRate" name="maxSamplingRate">0.01806</parameter>
+                     <parameter id="RealParameter.46" name="minSamplingGap">0.0</parameter>
+                     <parameter id="RealParameter.47" name="maxSamplingGap">0.0</parameter>
+                 </fossilDistr>
+                 <taxonset id="Elopomorpha_Node13" spec="TaxonSet">
+                    <taxon idref="Bassanago_bulbiceps" spec="Taxon"/>
+                    <taxon idref="Conger_verreauxi" spec="Taxon"/>
+                    <taxon idref="Aldrovandia_affinis" spec="Taxon"/>
+                    <taxon idref="Halosauropsis_macrochir" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+             <distribution id="Anguilliformes_Node14.fossilprior" spec="beast.math.distributions.FossilPrior" monophyletic="true" tree="@Tree.t:Subset1">
+                 <fossilDistr id="FossilCalibration.3" spec="beast.math.distributions.FossilCalibration">
+                     <parameter id="RealParameter.48" name="minOccuranceAge">83</parameter>
+                     <parameter id="RealParameter.49" name="maxOccuranceAge">83</parameter>
+                     <parameter idref="minDivRate" name="minDivRate">0.041</parameter>
+                     <parameter idref="maxDivRate" name="maxDivRate">0.081</parameter>
+                     <parameter idref="minTurnoverRate" name="minTurnoverRate">0.0011</parameter>
+                     <parameter idref="maxTurnoverRate" name="maxTurnoverRate">0.37</parameter>
+                     <parameter idref="minSamplingRate" name="minSamplingRate">0.0066</parameter>
+                     <parameter idref="maxSamplingRate" name="maxSamplingRate">0.01806</parameter>
+                     <parameter id="RealParameter.50" name="minSamplingGap">0.0</parameter>
+                     <parameter id="RealParameter.51" name="maxSamplingGap">0.0</parameter>
+                 </fossilDistr>
+                 <taxonset id="Anguilliformes_Node14" spec="TaxonSet">
+                    <taxon idref="Bassanago_bulbiceps" spec="Taxon"/>
+                    <taxon idref="Conger_verreauxi" spec="Taxon"/>
+                </taxonset>
+            </distribution>
+          </distribution>
+    </distribution>
+
+    <operator id="YuleBirthRateScaler.t:Subset1" spec="ScaleOperator" parameter="@birthRate.t:Subset1" scaleFactor="0.75" weight="3.0"/>
+
+    <operator id="YuleModelTreeScaler.t:Subset1" spec="ScaleOperator" scaleFactor="0.5" tree="@Tree.t:Subset1" weight="3.0"/>
+
+    <operator id="YuleModelTreeRootScaler.t:Subset1" spec="ScaleOperator" rootOnly="true" scaleFactor="0.5" tree="@Tree.t:Subset1" weight="3.0"/>
+
+    <operator id="YuleModelUniformOperator.t:Subset1" spec="Uniform" tree="@Tree.t:Subset1" weight="30.0"/>
+
+    <operator id="YuleModelSubtreeSlide.t:Subset1" spec="SubtreeSlide" tree="@Tree.t:Subset1" weight="15.0"/>
+
+    <operator id="YuleModelNarrow.t:Subset1" spec="Exchange" tree="@Tree.t:Subset1" weight="15.0"/>
+
+    <operator id="YuleModelWide.t:Subset1" spec="Exchange" isNarrow="false" tree="@Tree.t:Subset1" weight="3.0"/>
+
+    <operator id="YuleModelWilsonBalding.t:Subset1" spec="WilsonBalding" tree="@Tree.t:Subset1" weight="3.0"/>
+
+    <operator id="gammaShapeScaler.s:Subset1" spec="ScaleOperator" parameter="@gammaShape.s:Subset1" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset2" spec="ScaleOperator" parameter="@gammaShape.s:Subset2" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset1" spec="ScaleOperator" parameter="@kappa.s:Subset1" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset2" spec="ScaleOperator" parameter="@kappa.s:Subset2" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset3" spec="ScaleOperator" parameter="@kappa.s:Subset3" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset3" spec="ScaleOperator" parameter="@gammaShape.s:Subset3" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset4" spec="ScaleOperator" parameter="@gammaShape.s:Subset4" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset4" spec="ScaleOperator" parameter="@kappa.s:Subset4" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset5" spec="ScaleOperator" parameter="@gammaShape.s:Subset5" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset5" spec="ScaleOperator" parameter="@kappa.s:Subset5" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset6" spec="ScaleOperator" parameter="@gammaShape.s:Subset6" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset6" spec="ScaleOperator" parameter="@kappa.s:Subset6" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="KappaScaler.s:Subset7" spec="ScaleOperator" parameter="@kappa.s:Subset7" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="gammaShapeScaler.s:Subset7" spec="ScaleOperator" parameter="@gammaShape.s:Subset7" scaleFactor="0.5" weight="0.1"/>
+
+    <operator id="ucldStdevScaler.c:Subset1" spec="ScaleOperator" parameter="@ucldStdev.c:Subset1" scaleFactor="0.5" weight="3.0"/>
+
+    <operator id="CategoriesRandomWalk.c:Subset1" spec="IntRandomWalkOperator" parameter="@rateCategories.c:Subset1" weight="10.0" windowSize="1"/>
+
+    <operator id="CategoriesSwapOperator.c:Subset1" spec="SwapOperator" intparameter="@rateCategories.c:Subset1" weight="10.0"/>
+
+    <operator id="CategoriesUniform.c:Subset1" spec="UniformOperator" parameter="@rateCategories.c:Subset1" weight="10.0"/>
+
+    <operator id="FrequenciesExchanger.s:Subset5" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset5"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset2" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset2"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset4" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset4"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset1" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset1"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset3" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset3"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset6" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset6"/>
+    </operator>
+
+    <operator id="FrequenciesExchanger.s:Subset7" spec="DeltaExchangeOperator" delta="0.01" weight="0.1">
+        <parameter idref="freqParameter.s:Subset7"/>
+    </operator>
+
+    <logger id="tracelog" fileName="$(filebase).log" logEvery="1000" model="@posterior" sanitiseHeaders="true" sort="smart">
+        <log idref="posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+        <log idref="treeLikelihood.Subset7"/>
+        <log idref="treeLikelihood.Subset2"/>
+        <log idref="treeLikelihood.Subset4"/>
+        <log idref="treeLikelihood.Subset6"/>
+        <log idref="treeLikelihood.Subset1"/>
+        <log id="TreeHeight.t:Subset1" spec="beast.evolution.tree.TreeHeightLogger" tree="@Tree.t:Subset1"/>
+        <log idref="YuleModel.t:Subset1"/>
+        <log idref="birthRate.t:Subset1"/>
+        <log idref="treeLikelihood.Subset3"/>
+        <log idref="treeLikelihood.Subset5"/>
+        <log idref="gammaShape.s:Subset1"/>
+        <log idref="gammaShape.s:Subset2"/>
+        <log idref="kappa.s:Subset1"/>
+        <log idref="kappa.s:Subset2"/>
+        <log idref="kappa.s:Subset3"/>
+        <log idref="gammaShape.s:Subset3"/>
+        <log idref="gammaShape.s:Subset4"/>
+        <log idref="kappa.s:Subset4"/>
+        <log idref="gammaShape.s:Subset5"/>
+        <log idref="kappa.s:Subset5"/>
+        <log idref="gammaShape.s:Subset6"/>
+        <log idref="kappa.s:Subset6"/>
+        <log idref="kappa.s:Subset7"/>
+        <log idref="gammaShape.s:Subset7"/>
+        <log idref="ucldStdev.c:Subset1"/>
+        <log id="rate.c:Subset1" spec="beast.evolution.branchratemodel.RateStatistic" branchratemodel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1"/>
+        <log idref="freqParameter.s:Subset5"/>
+        <log idref="freqParameter.s:Subset2"/>
+        <log idref="freqParameter.s:Subset4"/>
+        <log idref="freqParameter.s:Subset1"/>
+        <log idref="freqParameter.s:Subset3"/>
+        <log idref="freqParameter.s:Subset6"/>
+        <log idref="freqParameter.s:Subset7"/>
+        <log idref="Perciformes_Node10.fossilprior"/>
+        <log idref="Stomiati_Node3.fossilprior"/>
+        <log idref="Elopomorpha_Node13.fossilprior"/>
+        <log idref="Anguilliformes_Node14.fossilprior"/>
+    </logger>
+
+    <logger id="screenlog" logEvery="1000">
+        <log idref="posterior"/>
+        <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
+        <log idref="likelihood"/>
+        <log idref="prior"/>
+    </logger>
+
+    <logger id="treelog.t:Subset1" fileName="$(filebase).trees" logEvery="1000" mode="tree">
+        <log id="TreeWithMetaDataLogger.t:Subset1" spec="beast.evolution.tree.TreeWithMetaDataLogger" branchratemodel="@RelaxedClock.c:Subset1" tree="@Tree.t:Subset1"/>
+    </logger>
+
+</run>
+
+</beast>

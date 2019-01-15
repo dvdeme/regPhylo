@@ -7,29 +7,30 @@
 Select.DNA(input = NULL, gene.list = NULL, output = NULL)
 }
 \arguments{
-\item{input}{The clean table coming from the function SpeciesGeneMat_Bl.R. which is
-the output with the suffix '_CleanDataset.txt'.}
+\item{input}{The table created using the function \code{\link{SpeciesGeneMat.Bl}}
+with the suffix '_CleanDataset.txt'.}
 
 \item{gene.list}{a vector of the selected gene regions (gene names have
 to be consistent with the header of the table with the suffix '_SpDNA_Mat.txt'
-exported by the function SpeciesGeneMat_Bl.R). For example (Cytochrome c oxydase subunit 1, should be
+exported by the function SpeciesGeneMat_Bl.R). For example (Cytochrome c oxidase subunit 1, should be
 written 'co1' and not 'COI' or 'COX1').}
 
-\item{output}{the name of the output table exported in the working directory.}
+\item{output}{the name of the output table exported into the working directory.}
 }
 \description{
-This function selects the sequences and the associated information for a list
+This function selects the sequences and associated information for a list
 of selected gene regions for all the species present in the data table. For
 full mitochondrial genomes, or all sequences with a sequence length > 5000 bp
-listed as 'TooLong', the function extracts the sequences of interest listed in
-the gene.list through NCBI using the query function of the seqinr R package.
+listed as 'TooLong', the function extracts the sequences regions of interest (from GenBank)
+ using the query function of the seqinr R package.
 }
 \examples{
 # Load the data table exported by the SpeciesGeneMat.Bl function
-data(Seq.DF4) # the clean table of sequences and metadata is called "CleanDataTable"
+data(Seq.DF4) # the table of sequences and metadata is called "CleanDataTable"
 # and is the fifth object of the list "Seq.DF4".
 
 # Run the function
 Seq.DF5=Select.DNA(input = Seq.DF4$CleanDataTable, gene.list = c("co1", "16srrna"),
 output = "Seq.DF4.dataTable")
+
 }

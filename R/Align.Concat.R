@@ -2,31 +2,32 @@
 
 #' @description This function concatenates the alignments from different gene regions into a
 #' single supermatrix in nexus and fasta formats, at the species level.  The function also allows the
-#' inclusion of species without DNA sequence, if necessary (for instance, to then use BEAST to resolve
+#' inclusion of species without DNA sequences, if necessary (for instance, to then use BEAST to resolve
 #' polytomies).
 
-#' @return The function returns 1) the differents alignments
-#' separately in nexus format .nex, including taxa that do not have DNA sequence
-#' information (replace by '----') (all these files can be loaded separetely in
-#' BEAST for instance), 2) a concatenation (a supermatrix) of all the sequences of
-#' the different gene regions in nexus and fasta format, 3) a partition file in
-#' txt format including the partitions of the different gene regions in the
-#' concatenated file, this file is designed to be RAxML compatible (RAxML manual
-#' v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf).
+#' @return This function returns: 1) the alignments from different gene regions
+#' in nexus format '.nex', including taxa that do not have DNA sequence
+#' information (nucleotides replace by '-') (all these files can be loaded separately
+#' into BEAST); 2) a concatenation (a supermatrix) of all the sequences of
+#' the different gene regions in nexus and fasta format; 3) a partition file in
+#' txt format 'Partitions_Concat.txt' including the partitions of the different gene regions in the
+#' concatenated file (this file is designed to be RAxML compatible, see RAxML manual
+#' v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf);
+#' 4) a conversion table 'convtab.txt' betwen the gene region names used in the partition file and the
+#' true name of the gene region.
 
 #' @param input the path to the folder storing the alignments (alignments have to be in
-# fasta format with '.fas' extension)
-#' @param Sp.List.NoDNA a vector of the species without DNA that should be included
-#' in the alignment, or the option can be NULL (or left blank),
-#' in which case the function automatically creates a complete
+#' fasta format with the '.fas' extension)
+#' @param Sp.List.NoDNA an optional  vector of the species without DNA sequences that should be included
+#' in the alignment, or the option can be NULL, in which case the function automatically creates a complete
 #'  species list of all the species present in the different alignments.
 #' @param outputConcat Name of the supermatrix (can include the path as well).
 #'
 #' @examples # Run the function to build a supermatrix
 #' \dontrun{
 #'
-#' # To run the example it might be better to copy the input alignment files
-#' # provided by the package to a temporary directory created into the
+#' # To run the example, copy the input alignment files
+#' # provided by the package to a temporary directory created in the
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/ForConcat", package = "regPhylo")
 #' dir.create("TempDir.ForConcat")
@@ -65,12 +66,12 @@
 #' Sp.List = c("Titi_titi", "Toto_toto"),
 #' outputConcat = "TempDir.ForConcat2/Concat_2spNoDNA")
 #'
-#' # Import the supermatrix in R
+#' # Import the supermatrix into R.
 #' Supermatrix2SpNoDNA = read.dna("TempDir.ForConcat2/Concat_2spNoDNA.fas",
 #' format = "fasta")
 #'
 #'
-#' # To clean the files created while running the example do the following:
+#' # To remove the files created while running the example do the following:
 #' unlink("TempDir.ForConcat", recursive = TRUE)
 #' unlink("TempDir.ForConcat2", recursive = TRUE)
 #'
@@ -82,8 +83,8 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL)
     listAli = paste(input, list.files(input), sep = "/")
     listAl = listAli[grep(".fas", listAli)]
     if(length(listAl) < length(listAli)) {
-      stop(paste("Other files in non fasta using .fas extension are present
-                   in the input folder, only .fas alignment files must be present."))
+      stop(paste("Other files in non fasta format using '.fas' extension are present
+                   in the input folder, only '.fas' alignment files must be present."))
     }
 
 

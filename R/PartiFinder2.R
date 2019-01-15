@@ -4,34 +4,46 @@
 #' for a supermatrix (or concatenated alignment) to estimate the best
 #' number of partitions and their best associated substitution models.
 #'
-#' @details From a fasta alignment and partition file following the
-#' RAxML requirements (as exported by \code{\link{Align.Concat}} function) the function
+#' @details Using a fasta alignment and partition file following the
+#' RAxML requirements (as exported by \code{\link{Align.Concat}} function) this function
 #' prepares an alignment in phylip format ('.phy'), it builds a .cfg input file
-#' describing the settings for PartitionFinder2 and calls the program.
+#' describing the settings for PartitionFinder2 and calls the program. For details
+#' about software installation see
+#' \url{http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf}
 
-#' @return The function returns 1) a new partition file in RAxML format according to the best
+#' @return The function returns:
+#' \itemize{
+#' \item 1) a new partition file in RAxML format according to the best
 #' partition scheme proposed by PartitionFinder2 (=output file with a suffix
-#' composed of '_PF2' and the name of the model used in PartitionFinder2), 2) an
-#' alignment in nexus format with a new block at the end describing the new
-#' partitions provided by PartitionFinder2 (=name of the input nexus file with
+#' of '_PF2' and the name of the model used in PartitionFinder2),
+#' \item 2) an alignment in nexus format with a new block at the end
+#' describing the new partitions provided by PartitionFinder2
+#' (=name of the input nexus file with
 #' suffix '_PF2.nex'). This nexus file is ready to be read by BEAST2 for instance.
 #' All the normal PartitionFinder2 outputs are stored in the folder called
 #' 'analysis'.
+#' }
 #'
 #' @param input the name (with the path, if necessary) of the input alignment in
 #' fasta format.
+#'
 #' @param Partition the name (with the path, if necessary) of the file
 #' providing the gene partition of the alignment file. This file follows the RAxML
-#' format, see http://sco.h-its.org/exelixis/resource/download/NewManual.pdf
+#' format, see \url{http://sco.h-its.org/exelixis/resource/download/NewManual.pdf}.
+#'
 #' @param codon according to the file providing the gene partition in the alignment,
 #' codon is the number of the row in this file corresponding to a coding gene that
 #' will be split into first, second, and third codon positions, to prepare the
 #' .cfg PartitionFinder2 inputfile.
+#'
 #' @param nexus.file the name (with the path, if
-#' necessary) of the nexus concatenated alignment.
+#' necessary) of the concatenated nexus alignment.
+#'
 #' @param Path.PartiF2 path pointing to
 #' where the file 'PartitionFinder.py' is installed (e.g.
 #' '/home/davidpc/Programs/PartitionFinder2/partitionfinder-2.1.1/PartitionFinder.py').
+#' Note: Apply to both Linux and Windows OS.
+#'
 #' @param branchlengths 'linked' or 'unlinked'.
 #' @param models 'all', 'allx', 'beast',
 #' 'mrbayes', 'gamma', 'gammai', '<list>'
@@ -41,7 +53,7 @@
 #' @param Raxml 'TRUE', 'FALSE', PartitionFinder2 can use RAxML instead of PhyML to get a
 #' quicker output, but RAxML implements only three substitution models GTR, GTR+G,
 #' GTR+G+I, of the many more available in PhyML.
-#' @param nthread number of thread used by PartitionFinder2 to run.
+#' @param nthread number of threads used by PartitionFinder2 to run.
 #' @param rcluster_percent See description for rcluster-max, below.
 #' @param rcluster_max rcluster-max and rcluster-percent control
 #' the thoroughness of the relaxed clustering algorithm together. Setting either
@@ -52,13 +64,13 @@
 #' pairs of data blocks, OR the top rcluster-percent of similar datablocks, whichever
 #' is smaller. It then calculates the information score (e.g. AICc) of all of these data
 #' blocks and keeps the best one. Setting --rcluster-max to 1000 and --rcluster-percent
-#' to 10 (i.e. the default values) is usually sufficient to ensure that PF2 will
+#' to 10 (i.e. the default values) is usually sufficient to ensure that PartitionFinder2 will
 #' estimate a robust partitioning scheme, even on very large datasets in which
-#' there may be millions of possible pairs of data blocks." See Partitionfinder2
-#' manual (http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf)
+#' there may be millions of possible pairs of data blocks."
+#' (\url{http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf})
 
-#' @details For detailled descriptions about Partitionfinder2 options, see
-#' http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf
+#' @details For detailed descriptions about Partitionfinder2 options, see
+#' \url{http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf}.
 
 #' @details The function requires that PartitionFinder2 is installed and
 #' the path of the python script "PartitionFinder.py" must be provided
@@ -71,7 +83,7 @@
 #' @examples
 #' \dontrun{
 #'
-#' # To run the example it might be better to copy the input files
+#' # To run the example copy the input files
 #' # provided by the package to a temporary directory created into the
 #' # current working directory.
 #' src.dir = system.file("extdata/multi.align/ForPartiFinder2", package = "regPhylo")
@@ -88,8 +100,8 @@
 #'
 #' input = "TempDir.ForPartiFinder2/Concat.fas"
 #' Partition = "TempDir.ForPartiFinder2/Partitions_Concat.txt"
-#' # Open the convtab.txt document to know which genes need
-#' # to be partitioned for the first , second, and third codon position.
+#' # Open the convtab.txt document to determine which genes need
+#' # to be partitioned for the first, second, and third codon position.
 #' read.delim("TempDir.ForPartiFinder2/convtab.txt", sep = "\t", header = TRUE)
 #'
 #' # Run the function using RAxML software, BIC criteria,
@@ -101,20 +113,20 @@
 #' branchlengths = "linked", models = "all", model_selection = "BIC", search = "rcluster",
 #' Raxml = "TRUE", nthread = 5, rcluster_percent = 10, rcluster_max = 1000)
 #'
-#' # Details results of the analysis are stored in the newly created folder "analysis".
+#' # Detailed results of the analysis are stored in the newly created folder "analysis".
 #' # The nexus file of the concatenated alignment (supermatrix) including the best
 #' # partitioning scheme provided by PartitionFinder2 is called "Concat_PF2.nex",
-#' # and the partition file compatible for RAxML is
+#' # and the partition file compatible with RAxML is
 #' # called "Partitions_Concat.txt_PF2_all.txt", and both are
 #' # stored in the temporary directory "TempDir.ForPartiFinder2".
 #'
-#' # To clean the files created while running the example do the following:
-#' # Remove the fodler "analysis".
+#' # To remove the files created while running the example do the following:
+#' # Remove the folder "analysis".
 #' unlink("analysis", recursive = TRUE)
 #' # Remove the Temporary folder
 #' unlink("TempDir.ForPartiFinder2", recursive = TRUE)
 #'
-#' # Remove the files created by or for PartitionFinder2
+#' # Remove the files created by, or for, PartitionFinder2
 #' file.remove("Concat.phy")
 #' file.remove("log.txt")
 #' file.remove("partition_finder.cfg")

@@ -1,21 +1,22 @@
 #' @title Estimate the minimal number of gene regions to maximise species coverage
 
-#' @description This function returns additional information including the number of genes
-#' required to have 100% species coverage, the list of those genes, and a species
-#' accumulation curve from a gene perspective giving an idea of the contribution
-#' of each gene to maximise the species coverage.
+#' @description This function returns the number of gene regions
+#' required to otpimise the species coverage (i.e. the representation of taxa
+#' within the sequence dataset), the names of these gene regions, and a species
+#' accumulation curve from a gene perspective which informs the contribution
+#' of each gene region toward the species coverage.
 
 #' @details For a pre-selected number of
-#' genes, the function returns a list of the gene names maximizing the species
-#' coverage and the species coverage. For a preselected set of genes the function
-#' provides the species coverage, the list of species potentially missing, and the
-#' minimum list of genes enabling us to have 100% coverage.
+#' gene regions, the function returns a list of the gene region names maximizing the species
+#' coverage. For a preselected set of gene regions the function
+#' provides the species coverage, the list of species potentially not represented, and the
+#' minimum list of gene regions enabling us to have 100\% representation of the taxa.
 
 #' @param input the species-by-gene matrix which is provided as the first object in the
-# list returned by the function SpeciesGeneMat.Bl.R.
-#' @param NBGene either a number of genes that we would like to include optimizing
-#' the species coverage, or a vector of pre-defined gene regions
-#' or NULL when the function is turned off.
+#' list returned by the function \code{\link{SpeciesGeneMat.Bl}}.
+#' @param NBGene either a number of gene regions that we would like to include optimizing
+#' the species coverage, a vector of pre-defined gene regions,
+#' or NULL when the option is turned off.
 
 #' @examples # Load a Species-by-gene matrix exported from the SpeciesGeneMat.Bl function
 #' data(Seq.DF4) ## the first object of the list is the Species-by-gene matrix
@@ -24,9 +25,13 @@
 #' SelGene.MaxSpCov(input = Seq.DF4[[1]])
 #' # Run the function with a pre-selection of gene regions.
 #' SelGene.MaxSpCov(input = Seq.DF4[[1]], NBGene = c("co1", "12srrna"))
+#'
+#' # Build a dummy species-by-gene matrix including more species.
 #' SpbyGeneMat=rbind(as.matrix(Seq.DF4[[1]]), c("Titi_titi",0, 2, 1), c("Toto_toto", 0, 0, 4))
 #' row.names(SpbyGeneMat)=SpbyGeneMat[,1]
 #' SpbyGeneMat=as.data.frame(SpbyGeneMat)
+#'
+#' # Run the function on the dummy species-by-gene matrix using different settings.
 #' SelGene.MaxSpCov(input = SpbyGeneMat, NBGene = c("co1", "12srrna"))
 #' SelGene.MaxSpCov(input = SpbyGeneMat, NBGene = c("co1", "16srrna"))
 #' SelGene.MaxSpCov(input = SpbyGeneMat, NBGene = c("co1"))

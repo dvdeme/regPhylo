@@ -5,61 +5,82 @@
 \title{Align sequences using multiple alignment programs}
 \usage{
 Multi.Align(input = NULL, output = NULL, nthread = NULL,
-  methods = NULL)
+  methods = NULL, Mafft.path = NULL, Muscle.path = NULL,
+  Prank.path = NULL)
 }
 \arguments{
-\item{input}{path to the folder storing the files of interest for further alignment,
-(the files should have the extension '.fas' and the name of the gene region
+\item{input}{path to the folder storing the files of interest for further alignment.
+The files should have the extension '.fas' and the name of the gene region
 should be immediately before the extension separated from the rest of the name
-by '_', e.g.  'Alignment_co1.fas').}
+by '_' (e.g.  'Alignment_co1.fas').}
 
 \item{output}{path to the folder storing the
-final alignments (the output folder is created directly by the function). The
+final alignments. The output folder is created directly by the function. The
 name of the program appears as a prefix in the name of the alignment file using
-'_' as separator. The function also exports a table in the input folder with
-the name of all the sequences per gene region that have been reverse
+'_' as a separator. The function also exports a table into the input folder containing
+all the names of the sequences, per gene region, that have been reverse
 complemented.}
 
-\item{nthread}{number of threads used to run the alignment software in}
+\item{nthread}{number of threads used to run the alignment software in
+parallel for the different gene regions.}
 
-\item{methods}{programs used to aligned the sequences, the function used Mafft-FFTNS1 anyway,
+\item{methods}{programs used to align the sequences. The function used Mafft-FFTNS1
+to reverse complement and align quickly the sequences,
 but other programs can be used simultaneously, such as Mafft-fftns2, Mafft-fftnsi,
 Muscle, Prank and PASTA, c("mafftfftns2", "mafftfftnsi", "muscle", "prank", "pasta").}
+
+\item{Mafft.path}{for the Windows platform, a character string which provides the path
+to the Mafft executable
+(e.g. Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/
+mafft-7.409-win64-signed/mafft-win/mafft") (see examples below). Eventhough Mafft is not
+the alignment you are after, mafft is necessary to reverse complement the sequences
+and the Mafft.path must be completed in all cases.
+For Linux the mafft software must be in the $PATH.}
+
+\item{Muscle.path}{for the Windows platform, a character string which provides the path
+to the Muscle executable (e.g. "C:/Users/deme/Documents/Programs/Muscle/muscle3.8.31_i86win32.exe").
+For Linux the Muscle software must be in the $PATH.}
+
+\item{Prank.path}{for the Windows platform, a character string which provides the path
+to the Prank executable
+(e.g. "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe")
+For Linux the Prank software must be in the $PATH.}
 }
 \description{
-This function runs several alignment softwares, Muscle v3.8.31 (Edgar 2004),
+This function enables to run several alignment softwares in parallel, including Muscle v3.8.31 (Edgar 2004),
 Mafft v7.222 fftns1, fftns2, fftnsi (Katoh et al. 2005), Prank v.140603 (Loytymoja & Goldman 2008)
-and PASTA (Mirarab et al. 2015) in parallel.
+and PASTA (Mirarab et al. 2015).
+\strong{Note:} PASTA is not available to run for Windows users.
 }
 \details{
 First, for each distinct gene region, the function aligns all the sequences
 using Mafft v7.222 fftns1 (Katoh et al. 2005)
-with the option --adjustdirection to automatically detect the direction of the
+with the option \emph{--adjustdirection} to automatically detect the direction of the
 sequences and reverse complement the sequences if necessary (the function adds
-a '_R_' as prefix on the sequence name). Second, the function runs Mafft
-fftns2, fftnsi, Prank and PASTA, and alphabetically orders the sequences within
-each of all the alignments for the same gene.
+an '_R_' as a prefix on the sequence name if it has been reverse complemented).
+Second, the function runs Mafft fftns2, fftnsi, Prank and PASTA, and
+alphabetically orders the sequences within each of the gene region alignment.
 
 The function requires that Muscle, Mafft, Prank and Pasta are installed and in
 the PATH.
 
-The 'output', 'input' and 'nthread' objects need to be present in
-the R environment before running the function
-because the function runs in parallel using the R package 'parallel', see
-example.
+The 'output', 'input' and 'nthread' objects  the need
+to be present in the R environment before running the function
+because the function runs in parallel using the R package 'parallel' (see
+example).
 }
 \examples{
-# Load in the R environment the object used by the function.
-# Here the toy example consist of four alignment (co1, 12srrna, cytb, rag1)
-# for a subset of 16 species.
+# Load into the R environment the object used by the function.
+# Here the example consists of four alignment (co1, 12srrna, cytb, rag1)
+# for 16 species.
 \dontrun{
 
-# To run the example it might be better to copy the input alignment files
-# provided by the package to a temporary directory created into the
+# To run the example copy the input alignment files
+# provided by the package to a temporary directory created in the
 # current working directory.
 src.dir = system.file("extdata/multi.align", package = "regPhylo")
 dir.create("TempDir.Multi.aligned")
-# Set up the path of the TempDir folder.
+# Set up the path to the TempDir folder.
 dest.dir = paste(getwd(), "/TempDir.Multi.aligned", sep="")
 file.names <- dir(src.dir)
 # Copy all the files stored in regPhylo/extdata/multi.align"
@@ -73,10 +94,11 @@ output = "multi.alignedTest"
 nthread = 3
 methods = c("mafftfftnsi", "pasta")
 input = "TempDir.Multi.aligned"
-# run the function using two additional alignmenet program "mafftfftnsi" and "pasta"
+# run the function using two additional alignment program "mafftfftnsi" and "pasta"
+# (not availbale on Windows OS, see the example for Windows below).
 Multi.Align(input = input, output = "multi.alignedTest", nthread = 3,
 methods = c("mafftfftnsi", "pasta"))
-list.file("multi.alignedTest")
+list.files("multi.alignedTest")
 
 # To clean the file created while running the example do the following:
 # Remove the temporary folder
@@ -85,7 +107,27 @@ unlink("TempDir.Multi.aligned", recursive = TRUE)
 unlink("multi.alignedTest", recursive = TRUE)
 
 
-# The output files are also present as an external data in the regPhylo package
+#### To run Multi.Align on Windows OS. ###
+
+output = "multi.alignedTest"
+nthread = 3
+methods = c("mafftfftnsi", "muscle", "prank")
+input = "TempDir.Multi.aligned"
+
+# Example to run "mafftfftnsi", "muscle", and "prank" on Windows.
+# (Mafft.path, Muscle.path, Prank.path need to be adapted to the user's
+# computer configuration, and are provided hereas an example).
+
+Multi.Align(input = input, output = "multi.alignedTest", nthread = 3,
+methods = c("mafftfftnsi", "muscle", "prank"),
+Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft",
+Muscle.path = "C:/Users/deme/Documents/Programs/Muscle/muscle3.8.31_i86win32.exe",
+Prank.path = "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe")
+
+#### end specifications to run Multi.Align on Windows OS. ####
+
+
+# The output files are also present as external data in the regPhylo package
 # and can be accessed by the following code:
 # a = system.file("extdata/multi.align/multi.aligned", package = "regPhylo")
 # list.files(a)

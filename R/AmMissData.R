@@ -8,12 +8,13 @@
 #' @param gene.list a vector of the selected gene regions (gene names
 #'  have to be consistent with the header of the table with the suffix
 #'  '_CleanDataset.txt' exported by the function SpeciesGeneMat_Bl.R).
-#'  Example (Cytochrome c oxydase subunit 1, should be written 'co1' and not 'COI' or 'COX1').
+#'  For example: Cytochrome c oxidase subunit 1, should be written 'co1'
+#'  and not 'COI' or 'COX1'.
 #'
-#' @return The function return the percentage of missing gene regions.
+#' @return The function returns the percentage of missing gene regions.
 #'
-#' @examples # Load a species-by-gene matrix for instance exported by SpeciesGeneMat.Bl function.
-#' data(Seq.DF4) ## the first object of the list is the Species-by-gene matrix
+#' @examples # Load a species-by-gene matrix, such as that exported by SpeciesGeneMat.Bl function.
+#' data(Seq.DF4) ## the first object of the list is the species-by-gene matrix
 #'
 #' # Run the function
 #' AmMissData(input = Seq.DF4[[1]], gene.list = c("co1", "16srrna"))

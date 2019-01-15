@@ -2,74 +2,79 @@
 % Please edit documentation in R/First.Align.All.R
 \name{First.Align.All}
 \alias{First.Align.All}
-\title{Automatically reverse complement the sequence and align the sequences using MAFFT and PASTA}
+\title{Reverse complement and align the sequences using MAFFT and PASTA}
 \usage{
 First.Align.All(input = NULL, output = NULL, nthread = NULL,
   methods = NULL, Mafft.path = NULL)
 }
 \arguments{
-\item{input}{path to the folder storing the files of interest, (the files must have
+\item{input}{path to the folder storing the files of interest. The files must have
 the extension '.fas' and the name of the gene region must be immediately before
-the extension separated from the rest of the name by '_', e.g.
+the extension separated from the rest of the name by '_' (e.g.
 'Alignment_co1.fas').}
 
 \item{output}{path to the folder storing the final alignments,
 (the output folder is created directly by the function). The name of the
-program appears as a prefix in the name of the alignment file using '_' as
-separator. The function also exports a table in the input folder with the name
+program appears as a prefix in the name of the alignment file using '_' as a
+separator. The function also exports a table into the input folder with the name
 of all the sequences per gene region that have been reverse complemented.}
 
 \item{nthread}{number of threads used to run the alignment software in parallel for
 the different gene regions.}
 
-\item{methods}{programs used to aligned the sequences, the function used Mafft-FFTNS1 anyway,
-but other programs can be used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").}
+\item{methods}{programs used to align the sequences, the function used Mafft-FFTNS1
+to reverse complement and align quickly the sequences, but other programs can be also
+used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").}
 
-\item{Mafft.path}{for Windows plateform, a character string which provides the path
-to the mafft executable. For Linux the mafft software must be in the $PATH.}
+\item{Mafft.path}{for the Windows platform, a character string which provides the path
+to the mafft executable
+(e.g. Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft")
+(see examples below). Eventhough Mafft is not the alignment you
+are after, mafft is necessary to reverse complement the sequences and the Mafft.path must
+be completed in all cases. For Linux the mafft software must be in the $PATH.}
 }
 \value{
 The function returns the alignment in the output folder using the
-name of the program as prefix of the alignment (e.i. "mafftfftnsi_Alig_co1.fas").
+name of the program as a prefix of the alignment (i.e. "mafftfftnsi_Alig_co1.fas").
 The function also returns a table called "ListSeq_RevCompl_FirstAlignAll.txt"
-in the output folder listing the seqeunces names that have been reverse
+into the output folder listing the sequence names that have been reverse
 complemented by Mafft.
 }
 \description{
-First, for each distinct gene region, this function aligns all the sequences
+First, this function aligns all the sequences for each distinct gene region
 using Mafft v7.222 fftns1 (Katoh et al. 2005) with the
-option --adjustdirection to automatically detect the direction of the sequences
-and reverse complement the sequences if necessary (the function adds a '_R_' as
-prefix on the sequence name). Second, the function runs Mafft fftnsi (Katoh et
+option \emph{--adjustdirection} (i.e. to automatically detect the direction of the sequences
+and reverse complement the sequences if necessary). The function adds a '_R_' as a
+prefix to the sequence name if it is reverse complemented. Second, the function runs Mafft fftnsi (Katoh et
 al. 2005), and PASTA (Mirarab et al. 2015) in parallel and alphabetically orders
 the sequences within each alignment (i.e. for each gene region).
+\strong{Note:} PASTA is not available to run for Windows users.
 }
 \details{
 PASTA (as Sate I and II) may be better at handling very
 divergent sequences and at dealing with saturated phylogenetic signal because
-it splits the alignment into small chuncks of similar sequences and performs
+it splits the alignment into small chunks of similar sequences and performs
 profile alignments among those smaller chunk of sequences (Roquet et al. 2013).
 
-The 'output', 'input', and 'nthread' objects need
+The 'output', 'input' and 'nthread' objects need
 to be present in the R environment before running the function because the
 function runs in parallel using the R package 'parallel', see example below the
 function.
 
-The function requires that Mafft and PASTA to be installed and in the PATH.
-The function also requires the seqinr and parallel R packages.
+The function requires that Mafft and PASTA are installed and in the PATH.
 }
 \examples{
-# The input, output and nthread objet have to be present in
-# the R global environment before to run the function.
+# The input, output and nthread object have to be present in
+# the R global environment before running the function.
 \dontrun{
-# We used small alignments examples provided in the
+# To demonstrate the function we provided small example alignments in the
 # inst/extdata/FirstToAlign folder available with the package.
-# Those alignments are the export of Seq.DF5 dataset, for
-# the co1 and 16s regions. Notice that the 16s has only 1
-# sequences and explained the warnings messages.
+# These alignments are exported from the Seq.DF5 dataset, for
+# the co1 and 16s regions. Notice that the 16s has only one
+# sequence and this is explained in the warning message.
 
-# To run the example it might be better to copy the input alignment files
-# provided by the package to a temporary directory created into the
+# To run the example, copy the input alignment files
+# provided by the package to a temporary directory in your
 # current working directory.
 src.dir = system.file("extdata/FirstToAlign", package = "regPhylo")
 dir.create("TempDir.FirstToAlign")
@@ -97,7 +102,21 @@ First.Align.All(input = input, output =
 methods = c("mafftfftnsi", "pasta"))
 
 
-# To clean the file created while running the example do the following:
+#### To run FirstAlign.All on Windows OS. ###
+
+input = "TempDir.FirstToAlign"
+output = "TempDir.FirstToAlign/FirstAligned"
+nthread = 2
+methods = "mafftfftnsi"
+First.Align.All(input = input, output =
+"TempDir.FirstToAlign/FirstAligned", nthread = 2,
+methods = "mafftfftnsi",
+Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft")
+
+#### end specifications to run FirstAlign.All on Windows OS. ####
+
+
+# To remove the file created while running the example do the following:
 unlink("TempDir.FirstToAlign", recursive = TRUE)
 
 }

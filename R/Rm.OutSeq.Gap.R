@@ -1,29 +1,30 @@
-#' @title Remove sequences from an alignment and delete the gap sites only
+#' @title Remove outlier sequences from an alignment and delete the gap sites only
 
 #' @description This function removes the outlier sequences from the alignment and deletes the
 #' gap sites only.
 
 #' @param input vector with the name of the sequences to remove.
 #' @param SeqInput the original alignment as an "alignment" (seqinr) or a "DNAbin" (ape) object or
-#' the name (can include the path) of the original sequence alignment in fasta format to import in R.
+#' the name (can include the path) of the original sequence alignment in fasta format to import into R.
 #' @param AligoutputName name of the output (output will be in fasta format with .fas extension).
 
 #' @examples # Load the original alignment including the outlier sequences and the
 #' # table of potential outlier sequences detected by Detect.Outlier.Seq function.
-#' # Example_16S_outlier is a .Rdata object providding a list, of 1) the original alignment,
-#' # 2) the table of potential oulier sequences.
+#' # Example_16S_outlier is an .Rdata object providing a list of: 1) the original alignment; and
+#' # 2) the table of potential outlier sequences.
 #' \dontrun{
 #' data(Example_16S_outlier)
 #' Example_16S_outlier_align = Example_16S_outlier[[1]]
 #' Table.Outlier.Seq.16S = Example_16S_outlier[[2]]
 #'
-#' # Run the function. The name of all outliers sequences are stored
+#' # Run the function. The name of all outlier sequences are stored
 #' # in the third columns (i.e. "Hit_SeqName") of the table,
-#' # becasue the same sequence might be present multiple time in the
-#' # we use the function unique to remove the duplicated sequences (multiple hits by Blast).
+#' # because the same sequence might be present multiple times,
+#' # we use the function unique to remove the duplicated sequences
+#' # (i.e. multiple hits by Blast).
 #' # In the following example we also decided to remove another sequences
-#' # ("_R_Polyprion_americanus|NA|AM158291|NA") which was not detected by
-#' # the function Detect.Outlier.Seq.
+#' # (e.g. "_R_Polyprion_americanus|NA|AM158291|NA") which was not detected by
+#' # the function Detect.Outlier.Seq, but that we would like to remove.
 #'
 #' New16SAlignment = Rm.OutSeq.Gap(input = c(as.character(unique(Table.Outlier.Seq.16S[,3])),
 #' "_R_Polyprion_americanus|NA|AM158291|NA"), SeqInput = Example_16S_outlier_align,
@@ -32,7 +33,7 @@
 #' class(New16SAlignment) # it is a "DNAbin" object
 #' New16SAlignment # 280 DNA sequences.
 #'
-#' # To clean the file created while running the example do the following:
+#' # To remove the file created while running the example do the following:
 #' file.remove("16S_example_RMoutliers.fas")
 #'
 #' # The output files (and another example of outlier table "Example_16S_outliers_1.txt")
@@ -44,8 +45,9 @@
 #'
 #' }
 
-#' @return Two alignments are exported: one "DNAbin" alignment in the R environment and one alignment exported
-#' in fasta format with the .fas extension, in the location detailed in the AligoutputName otpion.
+#' @return Two alignments are exported: one "DNAbin" alignment in the R environment;
+#'  and one alignment exported in fasta format with the .fas extension to
+#'  the location defined in the AligoutputName option.
 
 #' @export Rm.OutSeq.Gap
 

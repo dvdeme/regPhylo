@@ -1,59 +1,70 @@
-#' @title Automatically reverse complement the sequence and align the sequences using MAFFT and PASTA
+#' @title Reverse complement and align the sequences using MAFFT and PASTA
 
-#' @description First, for each distinct gene region, this function aligns all the sequences
+#' @description First, this function aligns all the sequences for each distinct gene region
 #' using Mafft v7.222 fftns1 (Katoh et al. 2005) with the
-#' option --adjustdirection to automatically detect the direction of the sequences
-#' and reverse complement the sequences if necessary (the function adds a '_R_' as
-#' prefix on the sequence name). Second, the function runs Mafft fftnsi (Katoh et
+#' option \emph{--adjustdirection} (i.e. to automatically detect the direction of the sequences
+#' and reverse complement the sequences if necessary). The function adds a '_R_' as a
+#' prefix to the sequence name if it is reverse complemented. Second, the function runs Mafft fftnsi (Katoh et
 #' al. 2005), and PASTA (Mirarab et al. 2015) in parallel and alphabetically orders
 #' the sequences within each alignment (i.e. for each gene region).
+#' \strong{Note:} PASTA is not available to run for Windows users.
 #'
 #' @details PASTA (as Sate I and II) may be better at handling very
 #' divergent sequences and at dealing with saturated phylogenetic signal because
-#' it splits the alignment into small chuncks of similar sequences and performs
+#' it splits the alignment into small chunks of similar sequences and performs
 #' profile alignments among those smaller chunk of sequences (Roquet et al. 2013).
 
-#' @param input path to the folder storing the files of interest, (the files must have
+#' @param input path to the folder storing the files of interest. The files must have
 #' the extension '.fas' and the name of the gene region must be immediately before
-#' the extension separated from the rest of the name by '_', e.g.
+#' the extension separated from the rest of the name by '_' (e.g.
 #' 'Alignment_co1.fas').
+#'
 #' @param output path to the folder storing the final alignments,
 #' (the output folder is created directly by the function). The name of the
-#' program appears as a prefix in the name of the alignment file using '_' as
-#' separator. The function also exports a table in the input folder with the name
+#' program appears as a prefix in the name of the alignment file using '_' as a
+#' separator. The function also exports a table into the input folder with the name
 #' of all the sequences per gene region that have been reverse complemented.
+#'
 #' @param nthread number of threads used to run the alignment software in parallel for
 #' the different gene regions.
-#' @param methods programs used to aligned the sequences, the function used Mafft-FFTNS1 anyway,
-#' but other programs can be used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").
-#' @param Mafft.path for Windows plateform, a character string which provides the path
-#' to the mafft executable. For Linux the mafft software must be in the $PATH.
+#'
+#' @param methods programs used to align the sequences, the function used Mafft-FFTNS1
+#' to reverse complement and align quickly the sequences, but other programs can be also
+#' used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").
+#'
+#' @param Mafft.path for the Windows platform, a character string which provides the path
+#' to the mafft executable
+#' (e.g. Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft")
+#' (see examples below). Eventhough Mafft is not the alignment you
+#' are after, mafft is necessary to reverse complement the sequences and the Mafft.path must
+#' be completed in all cases. For Linux the mafft software must be in the $PATH.
+#'
 #' @details The 'output', 'input' and 'nthread' objects need
 #' to be present in the R environment before running the function because the
 #' function runs in parallel using the R package 'parallel', see example below the
 #' function.
 
-#' @details The function requires that Mafft and PASTA to be installed and in the PATH.
-#' The function also requires the seqinr and parallel R packages.
+#' @details The function requires that Mafft and PASTA are installed and in the PATH.
+
 
 #' @return The function returns the alignment in the output folder using the
-#' name of the program as prefix of the alignment (e.i. "mafftfftnsi_Alig_co1.fas").
+#' name of the program as a prefix of the alignment (i.e. "mafftfftnsi_Alig_co1.fas").
 #' The function also returns a table called "ListSeq_RevCompl_FirstAlignAll.txt"
-#' in the output folder listing the seqeunces names that have been reverse
-#' complemented by mafft.
+#' into the output folder listing the sequence names that have been reverse
+#' complemented by Mafft.
 #'
 
-#' @examples # The input, output and nthread objet have to be present in
-#' # the R global environment before to run the function.
+#' @examples # The input, output and nthread object have to be present in
+#' # the R global environment before running the function.
 #' \dontrun{
-#' # We used small alignments examples provided in the
+#' # To demonstrate the function we provided small example alignments in the
 #' # inst/extdata/FirstToAlign folder available with the package.
-#' # Those alignments are the export of Seq.DF5 dataset, for
-#' # the co1 and 16s regions. Notice that the 16s has only 1
-#' # sequences and explained the warnings messages.
+#' # These alignments are exported from the Seq.DF5 dataset, for
+#' # the co1 and 16s regions. Notice that the 16s has only one
+#' # sequence and this is explained in the warning message.
 #'
-#' # To run the example it might be better to copy the input alignment files
-#' # provided by the package to a temporary directory created into the
+#' # To run the example, copy the input alignment files
+#' # provided by the package to a temporary directory in your
 #' # current working directory.
 #' src.dir = system.file("extdata/FirstToAlign", package = "regPhylo")
 #' dir.create("TempDir.FirstToAlign")
@@ -75,19 +86,35 @@
 #' output = "TempDir.FirstToAlign/FirstAligned"
 #' nthread = 2
 #' methods = c("mafftfftnsi", "pasta")
+#'
 #' First.Align.All(input = input, output =
 #' "TempDir.FirstToAlign/FirstAligned", nthread = 2,
 #' methods = c("mafftfftnsi", "pasta"))
 #'
 #'
-#' # To clean the file created while running the example do the following:
+#' #### To run FirstAlign.All on Windows OS. ###
+#'
+#' input = "TempDir.FirstToAlign"
+#' output = "TempDir.FirstToAlign/FirstAligned"
+#' nthread = 2
+#' methods = "mafftfftnsi"
+
+#' First.Align.All(input = input, output =
+#' "TempDir.FirstToAlign/FirstAligned", nthread = 2,
+#' methods = "mafftfftnsi",
+#' Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft")
+#'
+#' #### end specifications to run FirstAlign.All on Windows OS. ####
+#'
+#'
+#' # To remove the file created while running the example do the following:
 #' unlink("TempDir.FirstToAlign", recursive = TRUE)
 #'
 #' }
 
 #' @references Katoh et al. 2005, DOI: 10.1093/nar/gki198
-#' Mirarab et al. 2015 DOI: 10.1089/cmb.1014.0156
-#' Roquet et al. 2013 DOI: 10.1111/j.1600-0587.2012.07773.x
+#' @references Mirarab et al. 2015 DOI: 10.1089/cmb.1014.0156
+#' @references Roquet et al. 2013 DOI: 10.1111/j.1600-0587.2012.07773.x
 #'
 #' @export First.Align.All
 
@@ -105,7 +132,6 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
       }
       mafft = Mafft.path
     }
-
 
     # Run the job in parallel through a certain number of threads.
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
@@ -138,12 +164,12 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     }
     parallel::stopCluster(cl)  # Stop Cluster.
 
-
-
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
-    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods", "Mafft.path"))
+
     if(length(which(methods=="mafftfftnsi"))==1){
+
       mafft = "mafft"
       os <- .Platform$OS
       if(os == "windows"){
@@ -168,29 +194,32 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     # PASTA alignment (Mirarab et al. 2015) based on 'divide and conquer' approach to
     # co-infer alignment and tree, based on SATEII (Liu et al. 2011, DOI:
     # 10.1093/sysbio/syr095) and transitivity.
-    pasta.align = function(x) {
-        a = paste("run_pasta.py -i ", input, "/", x, " -j PASTA_", " --num-cpus 1",
-            sep = "")
+      if(os == "windows") {
+        warning("Pasta cannot be used on a Windows plateform at the moment")
+      } else {
+        pasta.align = function(x) {
+            a = paste("run_pasta.py -i ", input, "/", x, " -j PASTA_", " --num-cpus 1",
+                      sep = "")
         system(a)
-    }
-    parallel::parLapply(cl, AlignSelect2, pasta.align)
+        }
+        parallel::parLapply(cl, AlignSelect2, pasta.align)
 
-    ## Move the final PASTA alignments into the same folder as the other alignments
-    ## Define the names of the PASTA alignment files to move.
-    b = list.files(input)
-    b1 = paste(input, "/", b[grep(".aln", b)], sep = "")
-    # Rename the files before to move them in the other folder.
-    bb = gsub(".aln", ".fas", gsub("(_[0-9]*.marker001.)", "_", b1, perl = T), fixed = T)
-    i = 1
-    for (i in 1:length(bb)) {
-      file.rename(from = b1[i], to = bb[i])
-    }
-    # Copy the renamed files to an appropriate output folder.
-    file.copy(from = bb, to = output)
-    # Remove the temporary files created by PASTA in the working directory.
-    c = paste(input, "/", b[grep("PASTA_", b)], sep = "")
-    file.remove(c)
-
+        # Move the final PASTA alignments into the same folder as the other alignments
+        # Define the names of the PASTA alignment files to move.
+        b = list.files(input)
+        b1 = paste(input, "/", b[grep(".aln", b)], sep = "")
+       # Rename the files before to move them in the other folder.
+        bb = gsub(".aln", ".fas", gsub("(_[0-9]*.marker001.)", "_", b1, perl = T), fixed = T)
+        i = 1
+        for (i in 1:length(bb)) {
+          file.rename(from = b1[i], to = bb[i])
+        }
+        # Copy the renamed files to an appropriate output folder.
+        file.copy(from = bb, to = output)
+        # Remove the temporary files created by PASTA in the working directory.
+        c = paste(input, "/", b[grep("PASTA_", b)], sep = "")
+        file.remove(c)
+      }
     }
 
     parallel::stopCluster(cl)  # Stop Cluster.
@@ -226,12 +255,10 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     # Re-order the sequences in each alignment in the same alphabetical order (using
     # the sequence name).
     x = Unigene
-    # listgeneb = vector()
     listRevComp = matrix(NA, ncol = 2)[-1, ]
     i = 1
     for (i in 1:length(x)) {
         # Loop over multiple genes.
-        #listgeneb = c(listgeneb, a[grep(x[i], a)])
         #listgeneb = c(listgeneb, a[which(Nbgene == x[i])])
         listgeneb = a[which(Nbgene == x[i])]
         j = 1
@@ -250,7 +277,6 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
               } else {
               DFtempord = DFtemp[order(DFtemp[, 1]), ]
             }
-            #DFtempord = DFtemp[order(DFtemp[, 1]), ]  # Re-order the sequences in alphabetical order.
             # Re-build and export the ordered alignments.
             Seq_Name = paste(">", paste(DFtempord[, 1], DFtempord[, 2], sep = "|_|"),
                              sep = "")

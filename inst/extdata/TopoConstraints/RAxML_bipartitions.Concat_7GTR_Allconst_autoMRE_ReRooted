@@ -1,0 +1,4 @@
+#NEXUS
+BEGIN trees;
+TREE '[1]Tree1' = (((Vinciguerria_poweriae:0.71225697,Vinciguerria_nimbaria:1.1490144)100:2.073201,((Asterorhombus_filifer:4.891621,Arnoglossus_scapha:0.17380272)100:1.1643149,(((Aplodactylus_etheridgii:0.16098456,Aplodactylus_arctidens:0.05249837)100:0.6253526,(Epigonus_robustus:0.4513203,Epigonus_denticulatus:0.634328)100:0.9865028)42:0.11248174,((Dendrochirus_zebra:1.139506,Scorpaena_papillosa:2.0662594)61:0.2064185,(Epinephelus_rivulatus:0.5665388,Epinephelus_lanceolatus:0.47551715)100:0.45602918)100:0.0745256)100:0.8901308)100:0.8403624)100:0.31239393,((Bassanago_bulbiceps:0.88588387,Conger_verreauxi:2.0550952)100:0.53501666,(Aldrovandia_affinis:3.54736,Halosauropsis_macrochir:0.96386486)100:0.6006645)100:0.10413131);
+END;

@@ -1,23 +1,24 @@
 #' @title Extract longitude and latitude coordinates in separate fields and conversion in WGS84 decimal degrees.
 
-#' @description This function splits the field 'Lat_Lon' in two distinct fields for 'Latitude'
-#' and 'Longitude' and transform them to WGS84 geographic coordinates using +- North, and +- East (i.e. -45.10
+#' @description This function splits the field 'Lat_Lon' into two distinct fields for 'Latitude'
+#' and 'Longitude' and transforms them to WGS84 geographic coordinates using +- North, and +- East (e.i. -45.10
 #' -53.23)
 
 #' @param input table coming from the function Congr.NCBI.BOLD.perReposit()
-#' @param output name of the output table exported in the working directory.
+#' @param output name of the output table exported into the working directory.
 #'
 #' @details This function uses some code from the '05.extract_coords_from_GB.r' available at
 #' 'https://github.com/paolo-gratton/Gratton_et_al_JBiogeogr_2016/blob/master/05.extract_coords_from_GB.r'
-#' and used in the paper Gratton et al. 2016 'A world of sequences: can we use
-#' georeferenced nucleotide databases for a robust automated phylogeography?'
-#' Journal of Biogeography. DOI: 10.1111/jbi.12786.
+#' used in the paper Gratton et al. (2016).
+#'
+#' @references Gratton et al. 2016, DOI: 10.1111/jbi.12786.
+#'
 #'
 #' @return Two identical tables are exported, one in the R environment and one in the working directory.
-#' These tables are similar to the input table except that they have one additional column,
-#' the previous "Lat_Lon" corresponds now to two distinct columns "Latitude" and "Longitude".
+#' These tables are similar to the input table except that they have one additional column.
+#' The column previously called "Lat_Lon" now corresponds to two distinct columns "Latitude" and "Longitude".
 
-#' @examples # Import a tables exported by the function Congr.NCBI.BOLD.perReposit
+#' @examples # Import the table exported by the function Congr.NCBI.BOLD.perReposit
 #' data(Seq.Diastocapen)
 #' Seq.DF = Seq.Diastocapen$Seq.DF
 #'

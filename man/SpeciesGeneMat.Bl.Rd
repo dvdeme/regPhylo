@@ -2,18 +2,28 @@
 % Please edit documentation in R/SpeciesGeneMat.Bl.R
 \name{SpeciesGeneMat.Bl}
 \alias{SpeciesGeneMat.Bl}
-\title{Clean gene nomenclature and build a species-by-gene matrix}
+\title{Correct gene nomenclature and build a species-by-gene matrix}
 \usage{
 SpeciesGeneMat.Bl(input = NULL, output = NULL, NCBI.Trash = NULL,
   BOLD.Trash = NULL)
 }
 \arguments{
-\item{input}{a table which is an output of the GeoCodeName() function}
+\item{input}{a table which is an output of the \code{\link{GeoCodeName}} function}
 
-\item{output}{a list of 4 tables exported in the working directory 1) the species-by-gene
-matrix (file name suffix = '_Mat.txt'), 2) the table from the gene perspective
-(file name suffix = '_DNApers.txt'), 3) the table from the species perspective
-(file name suffix = '_SPECIESpers.txt', 4) a table with clean gene names or}
+\item{output}{a list of four tables exported into the working directory:
+\itemize{
+\item 1) the species-by-gene
+matrix (file name suffix = '_Mat.txt'),
+\item 2) summary table from the gene perspective
+(file name suffix = '_DNApers.txt'),
+\item 3) summary table from the species perspective
+(file name suffix = '_SPECIESpers.txt',
+\item 4) a corrected table of the dataset reporting
+the corrected name for the gene region, and also the original gene region name (file name
+suffix = 'CleanDataset.txt').
+}
+In addition the blacklisted sequences,
+the microsatellites, and the unassigned DNA are also removed from this table.}
 
 \item{NCBI.Trash}{a vector of the NCBI accession numbers that are
 blacklisted and need to be removed from the dataset.}
@@ -22,48 +32,68 @@ blacklisted and need to be removed from the dataset.}
 blacklisted and need to be removed from the dataset.}
 }
 \value{
-The function computes and exports into the working directory
-the following object: 1) a species-by-gene matrix (with the number of sequences
-for each species and each DNA type also called gene or gene region for
+The function computes and exports the following objects into the working directory:
+\itemize{
+\item 1) A species-by-gene matrix (with the number of sequences
+for each species and each DNA type, also called gene or gene region for
 simplification). The order of the genes and species in the matrix is as follow:
-it starts from the gene with the maximum species coverage and finish with the
+it starts from the gene with the maximum species coverage and finishes with the
 gene with the minimum species coverage (genes in columns); for the species (in
-rows), it starts with the species with the minimal gene coverage and finishes
-with the species with the maximum gene coverage.  2) a table with the number of
-sequences for each gene and number of species for each gene (gene perspective).
-3) a table with the number of sequences for each species and number of genes
-for each species (species perspective).  4) a clean table of the dataset
-reporting the clean name for the gene, and also the original gene name, in
-addition the 'blacklisted' sequences, the microsatellites, and unassigned DNA
-are also removed from this table.  The function also returns a list of objects
+rows), it starts with the species with the minimum gene coverage and finishes
+with the species with the maximum gene coverage.
+\item 2) A table with the number of
+sequences for each gene and number of species for each gene region (i.e. gene perspective).
+\item 3) A table with the number of sequences for each species and number of gene regions
+for each species (i.e. species perspective).
+\item 4) A clean table of the dataset
+reporting the corrected name for the gene region, and also the original gene region name.
+The 'blacklisted' sequences, the microsatellites, and unassigned DNA
+are removed from this table.
+
+\item The function also returns a list of objects
 in the R environment, the table 1, 2, and 3 and the last object is a list of
-species that have been removed after cleaning the dataset.
+species that have been removed after correcting the dataset.
+}
 }
 \description{
-This function cleans the gene names with a special focus on 37 DNA
-markers commonly used in if fish molecular phylogenies
-and then build a species-by-gene matrix, and export a summary tables from a DNA
-and species perspectives reporting the species or the gene coverage respectively.
+This function cleans the gene names with a special focus on 36 DNA
+markers commonly used in molecular phylogenies
+and then build a species-by-gene matrix, and export a summary tables from a gene
+region (i.e. DNA) and a species perspective reporting the species or
+the gene region coverage respectively.
 The function also exports a clean table of the dataset
-reporting the clean name for the gene, and also the original gene name, in
-addition the 'blacklisted' sequences, the microsatellites, and unassigned DNA
-are also removed from this table.
+reporting the corrected name for the gene region, and the original gene region name.
+The 'blacklisted' sequences, the microsatellites, and unassigned DNA
+are removed from this table.
 }
 \details{
-The 37 gene regions targeted in priority are: 12S, 16S, COI,
+The 36 gene regions targeted in priority are: 12S, 16S, COI,
 CytB, ENC1, Glyt (=gtdc2), myh6, plagl2, Ptr (=ptchd1), rag1, SH3PX3 (=snx33),
 sreb2 (=gpr85), tbr1 (=tbr1b), zic1, rhodopsin (=rh), tmo4c4, bmp4, rag2, irbp,
 egr1, mll, ficd, hoxc6a, Kiaa1239, panx2, ripk4, sidkey, vcpip, RNF213,
-SLC10A3, ube3A-like, ZNF503, ZNF536, EHHADH, GCS1, GPR61, ube3A, that are
-commonly used in fish molecular phylogenies (Li et al. 2007; Santini et al.
-2009, 2013; Near et al. 2012, 2013; Betancur et al. 2013, 2015; Rabosky et al.
-2013, 2018).
+SLC10A3, ZNF503, ZNF536, EHHADH, GCS1, GPR61, ube3A (ube3A-like). These gene
+regions are commonly are commonly used in molecular phylogenies including for fishes
+(Li et al. 2007; Santini et al. 2009, 2013; Near et al. 2012, 2013; Betancur et al. 2013,
+2015; Rabosky et al. 2013, 2018).
 }
 \examples{
-# Load a table exported by GeoCodeName()
+# Load a table exported by GeoCodeName
 data(Seq.Diastocapen)
 Seq.DF3 = Seq.Diastocapen$Seq.DF3
 
 # Run the function
 Seq.DF4=SpeciesGeneMat.Bl(input=Seq.DF3, output="Seq.DF4.")
+}
+\references{
+\itemize{
+\item Li et al. 2007, DOI: 10.1186/1471-2148-7-44
+\item Santini et al. 2009, DOI: 10.1186/1471-2148-9-194
+\item Santini et al. 2013, DOI: 10.1111/jeb.12112
+\item Near et al. 2012, DOI: 10.1073/pnas.1206625109
+\item Near et al. 2013, DOI: 10.1073/pnas.1304661110
+\item Betancur et al. 2013, DOI: 10.1371/currents.tol.53a26640df0ccaee75bb165c8c26288.
+\item Betancur et al. 2015, DOI: 10.1111/ele.12423
+\item Rabosky et al. 2013, DOI: 10.1038/ncomms2958
+\item Rabosky et al. 2018, DOI: 10.1038/s41586-018-0273-1
+}
 }

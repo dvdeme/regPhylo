@@ -1,7 +1,7 @@
 Package: regPhylo
 Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
-Version: 0.1.0
+Version: 1.0.0
 Author: David Eme <david.eme3@gmail.com>
 Maintainer: David Eme <david.eme3@gmail.com>
 Description: The regPhylo package provides functions to assist in building 

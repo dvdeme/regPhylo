@@ -9,7 +9,7 @@
 #' we use the nominatim openstreetmap API in this function.
 #'
 #' @param input a table coming from the function \code{\link{GeoCoord.WGS84}} or from
-#' \code{\link{Query.GeOMe.XY}}.
+#' \code{\link{Query.GeOMe.XY.R}}.
 #' @param output name of the output table exported into the working directory.
 #'
 #' @param CorrTab an optional two column table providing a correction for the location names.
@@ -44,7 +44,7 @@
 #' AutoCorrNZ = TRUE)
 #'
 #' # To see the modifications
-#' Seq.DF3[, c(20,21, 23, 24, 25)]
+#' Seq.DF3[, c(20, 21, 23, 24, 25)]
 #'
 #' # Run the function including a correction table
 #' # Build a dummy correction table, including the following correction.
@@ -60,7 +60,7 @@
 #' CorrTab = correctionTab, AutoCorrNZ = FALSE)
 #'
 #' # To see the modifications.
-#' Seq.DF3_test[, c(20,21, 23, 24, 25)]
+#' Seq.DF3_test[, c(20, 21, 23, 24, 25)]
 #'
 #' # To remove the file created while running the example do the following:
 #' file.remove("Seq.DF3.txt")

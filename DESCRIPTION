@@ -3,13 +3,13 @@ Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
 Version: 1.0.1
 Date: 2019-01-17
-Author: David Eme <david.eme3@gmail.com>
-Maintainer: David Eme <david.eme3@gmail.com>
+Author: XX
+Maintainer: XX
 Description: The regPhylo package provides functions to assist in building 
     phylogenetic trees appropriate for use in ecological studies, particularly
     for a regional species pool. The regPhylo functions may be used in series 
     (following the tutorial "Appendix 1" explaining the pipeline used in the case 
-    study of Eme et al. Submitted), starting with a list of focal taxa, to create a
+    study of XX et al. Submitted), starting with a list of focal taxa, to create a
     file ready to run using the software BEAST2, 
     (appropriate for estimating time-calibrated trees and including phylogenetic 
     uncertainty in downstream ecological analyses). Alternatively, individual functions 
@@ -23,7 +23,7 @@ Description: The regPhylo package provides functions to assist in building
     from within the R environment to perform multiple alignments, compare alignments
     to remove poorly aligned positions within alignments, 
     and to prepare input files for phylogenetic analyses.
-    The philosophy of the package is described in Eme et al. Submitted.
+    The philosophy of the package is described in XX et al. Submitted.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

@@ -3,8 +3,8 @@ Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
 Version: 1.0.1
 Date: 2019-01-17
-Author: XX
-Maintainer: XX
+Author: regPhylo <regPhylo@gmail.com>
+Maintainer: regPhylo <regPhylo@gmail.com>
 Description: The regPhylo package provides functions to assist in building 
     phylogenetic trees appropriate for use in ecological studies, particularly
     for a regional species pool. The regPhylo functions may be used in series 

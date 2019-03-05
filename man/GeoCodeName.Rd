@@ -9,7 +9,7 @@ GeoCodeName(input = NULL, output = NULL, CorrTab = NULL,
 }
 \arguments{
 \item{input}{a table coming from the function \code{\link{GeoCoord.WGS84}} or from
-\code{\link{Query.GeOMe.XY}}.}
+\code{\link{Query.GeOMe.XY.R}}.}
 
 \item{output}{name of the output table exported into the working directory.}
 
@@ -57,7 +57,7 @@ Seq.DF3 = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt",
 AutoCorrNZ = TRUE)
 
 # To see the modifications
-Seq.DF3[, c(20,21, 23, 24, 25)]
+Seq.DF3[, c(20, 21, 23, 24, 25)]
 
 # Run the function including a correction table
 # Build a dummy correction table, including the following correction.
@@ -73,7 +73,7 @@ Seq.DF3_test = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt",
 CorrTab = correctionTab, AutoCorrNZ = FALSE)
 
 # To see the modifications.
-Seq.DF3_test[, c(20,21, 23, 24, 25)]
+Seq.DF3_test[, c(20, 21, 23, 24, 25)]
 
 # To remove the file created while running the example do the following:
 file.remove("Seq.DF3.txt")

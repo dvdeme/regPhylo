@@ -5,7 +5,7 @@
 #' It allows the user to specify if the sequences are proteins, DNA-non coding, or DNA coding regions.
 #' The function offers the possibility to use the default parameter (more stringent selection)
 #' or the less stringent selection approach (parameters equivalent to that on the Gblocks server,
-#' http://molevol.cmima.csic.es/castresana/Gblocks_server.html).
+#' \url{http://molevol.cmima.csic.es/castresana/Gblocks_server.html}).
 
 #' @param input name of the folder storing the alignments in fasta format (with the
 #' extension '.fas').
@@ -25,6 +25,10 @@
 #' For Linux the Gblocks software must be in the $PATH.
 #'
 #' @details This function requires Gblocks to be installed and set up in the PATH.
+#' Online documentation, including instruction for installing the program is available at
+#' \url{http://molevol.cmima.csic.es/castresana/Gblocks/Gblocks_documentation.html},
+#' and the download page is available at
+#' \url{http://molevol.cmima.csic.es/castresana/Gblocks.html}.
 
 #' @return An ouptut folder is created with the trimmed alignments. In the R environment
 #' the function returns a table with the length of the different alignments for

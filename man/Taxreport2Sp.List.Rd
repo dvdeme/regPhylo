@@ -9,9 +9,13 @@ Taxreport2Sp.List(input = NULL)
 \arguments{
 \item{input}{path to the tax_report.txt file exported by the NCBI taxonomic facility (https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)}
 }
+\value{
+The function reports a list of two tables: the first table $SpList.NCBI reports two columns the first one reports the NCBI taxid, and the second the binomial species names.
+the second table $SpList.BOLD reports two columns the first one reports all binominal species names potentially including synonyms used in NCBI that will be used as query in BOLD, and the second table #' reports the accepted species name that is going to be reported in the output table of the GetSeq_BOLD.
+}
 \description{
-This function converts the tax_report.txt file exported by the NCBI taxonomic facility 
-(https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi) into a list of two tables with 
-two columns with the species list appropriate to query DNA sequences in GenBank and associated databases 
+This function converts the tax_report.txt file exported by the NCBI taxonomic facility
+(https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi) into a list of two tables with
+two columns with the species list appropriate to query DNA sequences in GenBank and associated databases
 (through NCBI) using the function GetSeqInfo_NCBI_taxid, and in BOLD database using the function GetSeq_BOLD.
 }

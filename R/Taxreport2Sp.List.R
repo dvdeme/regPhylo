@@ -10,6 +10,40 @@
 #' @return The function reports a list of two tables: the first table $SpList.NCBI reports two columns the first one reports the NCBI taxid, and the second the binomial species names.
 #' the second table $SpList.BOLD reports two columns the first one reports all binominal species names potentially including synonyms used in NCBI that will be used as query in BOLD, and the second table #' reports the accepted species name that is going to be reported in the output table of the GetSeq_BOLD.
 
+#' @export Taxreport2Sp.List
+#'
+#' @examples
+#' \dontrun{
+#' # To run the example copy the input tax_report.txt file provided
+#' # by the regPhylo package to a temporary directory created into the
+#' # current working directory.
+#' src.dir = system.file("extdata/tax_report", package = "regPhylo")
+#' dir.create("TempDir")
+#' # Set up the path to the TempDir folder.
+#' dest.dir = paste(getwd(), "/TempDir", sep="")
+#' file.names <- dir(src.dir)
+#' # Copy all the files stored in regPhylo/extdata/multi.align"
+#' # into a temporary folder.
+#' sapply(file.names, function(x) {
+#' file.copy(from = paste(src.dir, x, sep = "/"),
+#' to = paste(dest.dir, x, sep = "/"),
+#' overwrite = FALSE) })
+#'
+#' # Run the function using this example of tax_report.txt file
+#' # for 30 species exported by NCBI taxonomic facility.
+#' taxreport = Taxreport2Sp.List(input = "TempDir/tax_report.txt")
+#' names(taxreport) # the first element of the list is the table
+#' # for NCBI search, the second is for BOLD search.
+#'
+#' ## Table for NCBI search.
+#' head(taxreport$SpList.NCBI)
+#' dim(taxreport$SpList.NCBI) # one taxa did not have a taxid
+#' # when the request was performed the 7/03/2019.
+#'
+#' ## Table for BOLD search.
+#' head(taxreport$SpList.BOLD)
+#' dim(taxreport$SpList.BOLD) # two taxa got another preferred NCBI species name.
+#' }
 
 Taxreport2Sp.List = function(input = NULL){
 # open the tax_report.txt file

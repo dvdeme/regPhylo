@@ -99,14 +99,14 @@ GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL) {
     for (k in 1:dim(splist)[1]) {
         # Select the Genbank database for each species to avoid breaking
         # the connection with the seqinr server even if it slows down the function.
-        seqinr::choosebank("genbank")
+        seqinr::choosebank("genbank", timeout = 20)
         if (gene == "ALL") {
             # If gene='ALL' all the DNA sequences of that species are recorded.
-            ee = tryCatch(seqinr::query(paste("tid=", splist[k, 1], sep = "")), error = function(e) e)
+            ee = tryCatch(seqinr::query("ee", paste("tid=", splist[k, 1], sep = "")), error = function(e) e)
         } else {
             # If the name of the gene is provided, the sequences of this gene of interest are
             # recorded.
-            ee = tryCatch(seqinr::query(paste("tid=", splist[k, 1], " et k=", gene, sep = "")),
+            ee = tryCatch(seqinr::query("ee", paste("tid=", splist[k, 1], " and k=", gene, sep = "")),
                 error = function(e) e)
         }
         # Filling up the summary table

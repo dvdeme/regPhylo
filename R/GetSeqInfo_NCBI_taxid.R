@@ -47,6 +47,12 @@
 #' sought.
 #' @param filename name of the output table (also needs to include the
 #' extension, e.g. ".txt")
+#' @param timeout the timeout in seconds for socketConnection, for the
+#' choosebank function of the seqinr R package. Default 10 seconds.
+#' It might be necessary to increase the timeout (time to get answer from
+#' the server) if the function cannot retrieve any DNA sequence for
+#' certain species while DNA sequences are available in GenBank for
+#' these species.
 
 #' @examples # A table with two species and their unique NCBI taxa ID
 #' Splist=cbind(TaxID=c(443778,189923),
@@ -68,7 +74,7 @@
 
 #' @export GetSeqInfo_NCBI_taxid
 
-GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL) {
+GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL, timeout = 10) {
     # Extract the character of string from the right.
     substrRight <- function(x, n) {
         substr(x, nchar(x) - n + 1, nchar(x))
@@ -99,7 +105,7 @@ GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL) {
     for (k in 1:dim(splist)[1]) {
         # Select the Genbank database for each species to avoid breaking
         # the connection with the seqinr server even if it slows down the function.
-        seqinr::choosebank("genbank", timeout = 20)
+        seqinr::choosebank("genbank", timeout = timeout)
         if (gene == "ALL") {
             # If gene='ALL' all the DNA sequences of that species are recorded.
             ee = tryCatch(seqinr::query("ee", paste("tid=", splist[k, 1], sep = "")), error = function(e) e)

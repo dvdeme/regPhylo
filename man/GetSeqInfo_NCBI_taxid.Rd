@@ -4,7 +4,8 @@
 \alias{GetSeqInfo_NCBI_taxid}
 \title{Extract DNA sequences and metadata from GenBank}
 \usage{
-GetSeqInfo_NCBI_taxid(splist = NULL, gene = NULL, filename = NULL)
+GetSeqInfo_NCBI_taxid(splist = NULL, gene = NULL, filename = NULL,
+  timeout = 10)
 }
 \arguments{
 \item{splist}{a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
@@ -17,6 +18,13 @@ sought.}
 
 \item{filename}{name of the output table (also needs to include the
 extension, e.g. ".txt")}
+
+\item{timeout}{the timeout in seconds for socketConnection, for the
+choosebank function of the seqinr R package. Default 10 seconds.
+It might be necessary to increase the timeout (time to get answer from
+the server) if the function cannot retrieve any DNA sequence for
+certain species while DNA sequences are available in GenBank for
+these species.}
 }
 \value{
 This function returns a table with the species names and the number of

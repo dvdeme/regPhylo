@@ -52,7 +52,9 @@
 #' It might be necessary to increase the timeout (time to get answer from
 #' the server) if the function cannot retrieve any DNA sequence for
 #' certain species while DNA sequences are available in GenBank for
-#' these species.
+#' these species. Alternatively, if the server connexion is quick the
+#' timeout can be decrease to 5 (deafult in choosebank) to speed-up
+#' the function.
 
 #' @examples # A table with two species and their unique NCBI taxa ID
 #' Splist=cbind(TaxID=c(443778,189923),

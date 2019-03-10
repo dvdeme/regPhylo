@@ -625,12 +625,14 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
       Locat = gsub("(,  ,[ ]?[ ]?[,]?$)", "", Locat, perl = TRUE)
       Locat = gsub(" :  ,  ,  ,[ ]+", "", Locat, perl = TRUE)
       Locat = gsub("(,  ,)", ", ", Locat, perl = TRUE)
-      Locat = gsub("^: $", "", Locat, perl = TRUE)
+      Locat = gsub("^[ ]?:[ ]?$", "", Locat, perl = TRUE)
       Locat = gsub(" ,", "", Locat, fixed = TRUE)
       Locat = gsub(", $", "", Locat, perl = TRUE)
       Locat = gsub(": [no locality data]", "", Locat, fixed = TRUE)
       Locat = gsub(" $", "", Locat, perl = TRUE)
       Locat = gsub(": NA$", "", Locat, perl = TRUE)
+      Locat = gsub("^[ ]?:[ ]?$", "", Locat, perl = TRUE)
+      Locat = gsub("^$", "NA", Locat, perl = TRUE)
     }
 
     LocatTab = cbind(Locat, orderLocat = seq(1, length(Locat), by = 1))

@@ -16,6 +16,15 @@
 #' written 'co1' and not 'COI' or 'COX1').
 #' @param output the name of the output table exported into the working directory.
 
+#' @param timeout the timeout in seconds for socketConnection, for the
+#' choosebank function of the seqinr R package. Default 10 seconds.
+#' It might be necessary to increase the timeout (time to get answer from
+#' the server) if the function cannot retrieve any DNA sequence for
+#' certain species while DNA sequences are available in GenBank for
+#' these species. Alternatively, if the server connexion is quick the
+#' timeout can be decrease to 5 (default in choosebank) to speed-up
+#' the function.
+
 #' @examples # Load the data table exported by the SpeciesGeneMat.Bl function
 #' data(Seq.DF4) # the table of sequences and metadata is called "CleanDataTable"
 #' # and is the fifth object of the list "Seq.DF4".
@@ -27,7 +36,7 @@
 
 #' @export Select.DNA
 
-Select.DNA = function(input = NULL, gene.list = NULL, output = NULL) {
+Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 10) {
 
     # Check the dimensions (number of columns) of the input table, if the input table
     # also includes the sequence order in the 29th column, this last column is
@@ -73,7 +82,7 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL) {
             gene.listB = gsub("SRRNA", "S ribosomal RNA", gene.listB, fixed = TRUE)
 
             # Connect to the Genbank database.
-            seqinr::choosebank("genbank")
+            seqinr::choosebank("genbank", timeout = timeout)
             DFadd = matrix(NA, ncol = dim(ShortTab)[2])[-1, ]
             i = 1
             for (i in 1:length(gene.list)) {
@@ -83,8 +92,8 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL) {
                 for (j in 1:length(Ori.multSeq.po)) {
                   # For all the multiple sequences.
                   seqinr::autosocket()
-                  ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j], 3],
-                    " et k=", gene.listB[i], sep = "")), error = function(e) e)
+                  ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j], 3],
+                    " and k=", gene.listB[i], sep = "")), error = function(e) e)
                   if (is.null(ee$nelem) == "TRUE")
                     ese = 0 else if (ee$nelem == 0)
                     ese = 0 else ese = 1
@@ -92,36 +101,36 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL) {
                   if (ese == 0) {
                     # If the first trial failed, it can be due to a wrong CO1 syntax.
                     if (gene.listB[i] == "COI") {
-                      ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j],
-                        3], " et k=", "COX1", sep = "")), error = function(e) e)  # 2nd CO1 syntax option.
+                      ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j],
+                        3], " and k=", "COX1", sep = "")), error = function(e) e)  # 2nd CO1 syntax option.
                       if (is.null(ee$nelem) == "TRUE")
                         ese = 0 else if (ee$nelem == 0)
                         ese = 0 else ese = 1
                       if (ese == 0) {
-                        ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j],
-                          3], " et k=", "CO1", sep = "")), error = function(e) e)  # 3rd CO1 syntax option.
+                        ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j],
+                          3], " and k=", "CO1", sep = "")), error = function(e) e)  # 3rd CO1 syntax option.
                         if (is.null(ee$nelem) == "TRUE")
                           ese = 0 else if (ee$nelem == 0)
                           ese = 0 else ese = 1
                       }
                       if (ese == 0) {
-                        ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j],
-                          3], " et k=", "COXI", sep = "")), error = function(e) e)  # 4th CO1 syntax option.
+                        ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j],
+                          3], " and k=", "COXI", sep = "")), error = function(e) e)  # 4th CO1 syntax option.
                         if (is.null(ee$nelem) == "TRUE")
                           ese = 0 else if (ee$nelem == 0)
                           ese = 0 else ese = 1
                       }
                       if (ese == 0) {
-                        ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j],
-                          3], " et k=", "cytochrome c oxidase subunit I", sep = "")),
+                        ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j],
+                          3], " and k=", "cytochrome c oxidase subunit I", sep = "")),
                           error = function(e) e)  # 5th CO1 syntax option.
                         if (is.null(ee$nelem) == "TRUE")
                           ese = 0 else if (ee$nelem == 0)
                           ese = 0 else ese = 1
                       }
                       if (ese == 0) {
-                        ee = tryCatch(seqinr::query(paste("AC=", ShortTab[Ori.multSeq.po[j],
-                          3], " et k=", "cytochrome oxidase subunit I", sep = "")),
+                        ee = tryCatch(seqinr::query("ee", paste("AC=", ShortTab[Ori.multSeq.po[j],
+                          3], " and k=", "cytochrome oxidase subunit I", sep = "")),
                           error = function(e) e)  # 6th CO1 syntax option.
                         if (is.null(ee$nelem) == "TRUE")
                           ese = 0 else if (ee$nelem == 0)
@@ -162,12 +171,15 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL) {
                   "FALSE"), ]
                 DFadd = rbind(DFadd, Addtab2)
             }  # End for i
+
             ShortTab2 = ShortTab[-Ori.multSeq.po, ]
             ShortTab = rbind(ShortTab2, DFadd)
+            seqinr::closebank()
 
         }  # End if(length(Ori.multSeq.po)>0){
 
     utils::write.table(ShortTab, file = paste(output, ".Select.DNA.txt", sep = ""), sep = "\t",
         row.names = FALSE, quote = FALSE)
     return(ShortTab)
+
 }  # End function.

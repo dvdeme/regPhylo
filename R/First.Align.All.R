@@ -166,7 +166,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
 
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
-    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods", "Mafft.path"))
+    parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
 
     if(length(which(methods=="mafftfftnsi"))==1){
 
@@ -190,6 +190,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
     }
 
+    options(warn=-1)
     if(length(which(methods=="pasta"))==1){
     # PASTA alignment (Mirarab et al. 2015) based on 'divide and conquer' approach to
     # co-infer alignment and tree, based on SATEII (Liu et al. 2011, DOI:
@@ -221,7 +222,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
         file.remove(c)
       }
     }
-
+    options(warn=0)
     parallel::stopCluster(cl)  # Stop Cluster.
 
 

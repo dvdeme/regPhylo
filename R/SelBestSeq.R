@@ -117,11 +117,7 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
             # ';' as separator) present in the column 'Db_xref'.
             pos.Tepapa = grep(perReposit, DF[, 28])
             a = strsplit(as.character(DF[pos.Tepapa, ][, 17]), ";", fixed = T)
-            ab = vector()
-            i = 1
-            for (i in 1:length(a)) {
-                ab = c(ab, a[[i]][1])
-            }
+            ab = unlist(lapply(a, function(x)x[1]))
             perRepositID[pos.Tepapa] <- ab
         }  # End if
     DF = cbind(DF, perRepositID)
@@ -133,8 +129,8 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
     k = 1
     for (k in 1:length(gene.list)) {
         # Loop over multiple genes.
-        DF1 = as.data.frame(DF[grep(gene.list[k], DF[, 29], fixed = TRUE), ])
-        SpUniq = unique(DF1[, 1])  # List of species.
+        DF1 = as.data.frame(DF[which(DF[, 29] == gene.list[k]), ])
+        SpUniq = as.character(unique(DF1[, 1])) # List of species.
 
         # Table info.
         Table_Info = matrix(NA, ncol = 32)[-1, ]
@@ -225,6 +221,9 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
                     "|", Table_Info[, 2], "|", Table_Info[, 3], "_%_", Seq, sep = ""),
                     sep = "")  # Name of the sequence and the sequence in one string
                 }  # End else.
+                # Remove any potential space in the Seq_Name object (happened sometimes
+                # in the BOLD Accession number due to formating error in BOLD database)
+                Seq_Name = gsub("[ ]?", "", Seq_Name, perl = TRUE)
                 AlignFasta = unlist(strsplit(Seq_Name, "_%_", Seq_Name, fixed = TRUE))
                 write(AlignFasta, file = paste(output, "_", gene.list[k], ".fas",
                   sep = ""))  # Write the alignments.

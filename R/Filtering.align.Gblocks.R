@@ -222,6 +222,13 @@ Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
     Unigene = unique(Nbgene)
     Unitrim = unique(Nbtrim)
 
+    # Test if multiple alignment belonging to the same gene occur in the input file.
+    if(length(which(table(Nbgene)>2))>0){
+      warning("There are multiple alignments of the same gene region in the input folder,
+     the function coudn't export the table with the sequences length of the alignment,
+              per program, gene region, and trimming algorithm")
+    }
+
     # Estimate the length of each alignment.
     resDF = matrix(NA, ncol = 5)[-1, ]
     k = 1

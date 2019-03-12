@@ -1,9 +1,9 @@
 #' @title Remove poorly aligned nucleotide positions using trimAl software
 
-#' @description This function uses the software trimAl (Capella-Gutierrez et al. 2009, DOI:
-#' 10.1093/bioinformatics/btp348) and in particular two approaches to filter out
+#' @description This function uses the software trimAl (Capella-Gutierrez et al. 2009)
+#' and in particular two approaches to filter out
 #' poorly aligned nucleotide positions using the option -gappyout or -automated1 (see Capella-Gutierrez et
-#' al.  2009).
+#' al. 2009).
 
 #' @param input path to the folder storing the alignments in fasta format (with the
 #' extension '.fas').
@@ -23,12 +23,12 @@
 #' each gene region and alignment programs.
 
 #' @details The option "-gappyout" is a very conservative method, it keeps the maximum nucleotide information and remove
-#' the most gappy positions). This option is one of the best according Tan et al.  2015, DOI: 10.1093/sysbio/syv033).
+#' the most gappy positions). This option is one of the best according Tan et al.  2015).
 #' The option "-automated1" automatically adjusts between the '-strict', '-strictplus' and '-gappyout' heuristics which all provide a more
-#' stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009, DOI:
-#' 10.1093/bioinformatics/btp348)
+#' stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009).
 
 #' @details The function requires trimAl to be installed and set up in the PATH for Linux platform.
+#' Online documentation, including download page, is available at \url{http://trimal.cgenomics.org/downloads}.
 
 #' @examples # Run the function
 #' \dontrun{
@@ -65,6 +65,7 @@
 #'
 #' @references Capella-Gutierrez et al. 2009, DOI:
 #' 10.1093/bioinformatics/btp348
+#' Tan et al.  2015, DOI: 10.1093/sysbio/syv033
 
 Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NULL) {
     b = list.files(input)
@@ -117,6 +118,13 @@ Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NUL
     Unigene = unique(Nbgene)
     Unitrim = unique(Nbtrim)
 
+    # Test if multiple alignment belonging to the same gene occur in the input file.
+    if(length(which(table(Nbgene)>2))>0){
+      warning("There are multiple alignments of the same gene region in the input folder,
+     the function coudn't export the table with the sequences length of the alignment,
+              per program, gene region, and trimming algorithm")
+    }
+
     # Estimate the length of each alignment.
     resDF = matrix(NA, ncol = 5)[-1, ]
     k = 1
@@ -128,7 +136,7 @@ Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NUL
             i = 1
             for (i in 1:length(Uniprog)) {
                 Align = seqinr::read.fasta(paste(output, "/", Atemp1[grep(Uniprog[i],
-                  Atemp1)], sep = ""), as.string = T)
+                  Atemp1)], sep = ""), as.string = TRUE)
                 resDF = rbind(resDF, c(Atemp1[grep(Uniprog[i], Atemp1)], Unitrim[k],
                   Unigene[j], Uniprog[i], nchar(Align[1])))
             }  ## End for i

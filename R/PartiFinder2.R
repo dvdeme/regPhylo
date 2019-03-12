@@ -54,11 +54,11 @@
 #' quicker output, but RAxML implements only three substitution models GTR, GTR+G,
 #' GTR+G+I, of the many more available in PhyML.
 #' @param nthread number of threads used by PartitionFinder2 to run.
-#' @param rcluster_percent See description for rcluster-max, below.
+#' @param rcluster_percent See description for rcluster-max, below. (Default 10).
 #' @param rcluster_max rcluster-max and rcluster-percent control
 #' the thoroughness of the relaxed clustering algorithm together. Setting either
 #' of them higher will tend to make the search more thorough and slower. Setting
-#' them lower will tend to make the search quicker but less thorough.
+#' them lower will tend to make the search quicker but less thorough. (Default 1000).
 
 #' @details "The rcluster algorithm works by finding the rcluster-max most similar
 #' pairs of data blocks, OR the top rcluster-percent of similar datablocks, whichever
@@ -136,7 +136,7 @@
 
 PartiFinder2 = function(input = NULL, Partition = NULL, codon = NULL, nexus.file = NULL,
     Path.PartiF2 = NULL, branchlengths = NULL, models = NULL, model_selection = NULL,
-    search = NULL, Raxml = NULL, nthread = NULL, rcluster_percent = NULL, rcluster_max = NULL) {
+    search = NULL, Raxml = NULL, nthread = NULL, rcluster_percent = 10, rcluster_max = 1000) {
 
   inputtree = input
     # Convert a fasta file in phylip format (only format read by PartitionFinder2).

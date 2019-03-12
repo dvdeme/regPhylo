@@ -15,11 +15,11 @@
 #' stringent selection (equivalent to ticking the following three options in Gblocks server,
 #' 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
 #' 'Allow less strict flanking positions', the output has the extension -gbls),
-#' otherwise the default parameters of Gblocks will be used rpoviding a more stringent selection
+#' otherwise the default parameters of Gblocks will be used providing a more stringent selection
 #' (output with the extension -gbms).
 #' @param Type Type of sequences can be Protein (p), DNA (d), or Codons (c).
 #' @param output path to the folder storing the trimmed alignments.
-#' The output folder is created automatically.
+#' The output folder is created automatically is necessary.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
 #' @param Gblocks.path for the Windows plateform, a character string which provides the path
 #' to the Gblocks executable but without the name of the executable
@@ -115,7 +115,7 @@ Filtering.align.Gblocks = function(input = NULL, target.file = NULL, LessStringe
     if(is.null(output)){
       output = input
     } else {
-      dir.create(output)
+      dir.create(output, showWarnings = FALSE)
     }
 
     # Check the os plateform

@@ -9,6 +9,8 @@
 
 #' @param input name of the folder storing the alignments in fasta format (with the
 #' extension '.fas').
+#' @param target.file the name of the file(s) in the input folder that will be used.
+#' By default the function uses all the files with a .fas extension in the input folder.
 #' @param LessStringent if 'TRUE' opts for the less
 #' stringent selection (equivalent to ticking the following three options in Gblocks server,
 #' 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
@@ -71,11 +73,19 @@
 #' @references Castresana 2000,
 #' DOI: 10.1093/oxfordjournals.molbev.a026334
 
-Filtering.align.Gblocks = function(input = NULL, LessStringent = NULL,
+Filtering.align.Gblocks = function(input = NULL, target.file = NULL, LessStringent = NULL,
                                    Type = NULL, output = NULL,
                                    remove.empty.align = NULL, Gblocks.path = NULL) {
-    b = list.files(input)
-    bb = b[grep(".fas", b, fixed = TRUE)]
+
+
+    if(is.null(file)){
+      b = list.files(input)
+      bb = b[grep(".fas", b, fixed = TRUE)] # if target.file is NULL then
+      # all the file in the input folder with .fas extension are used.
+    } else {
+      bb = target.file
+    }
+
 
     # Detect the empty alignments
     # Check for empty alignment checking the disk space for each file.

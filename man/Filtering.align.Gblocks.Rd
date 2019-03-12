@@ -42,10 +42,14 @@ to filter out poorly aligned positions and divergent regions in an alignment.
 It allows the user to specify if the sequences are proteins, DNA-non coding, or DNA coding regions.
 The function offers the possibility to use the default parameter (more stringent selection)
 or the less stringent selection approach (parameters equivalent to that on the Gblocks server,
-http://molevol.cmima.csic.es/castresana/Gblocks_server.html).
+\url{http://molevol.cmima.csic.es/castresana/Gblocks_server.html}).
 }
 \details{
 This function requires Gblocks to be installed and set up in the PATH.
+Online documentation, including instruction for installing the program is available at
+\url{http://molevol.cmima.csic.es/castresana/Gblocks/Gblocks_documentation.html},
+and the download page is available at
+\url{http://molevol.cmima.csic.es/castresana/Gblocks.html}.
 }
 \examples{
 # Run the function for DNA, using the less stringent

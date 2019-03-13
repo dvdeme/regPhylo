@@ -4,14 +4,20 @@
 \alias{ConstraintTaxo2newick}
 \title{Build a multifurcating topological constraint tree for RAxML}
 \usage{
-ConstraintTaxo2newick(inputTaxo = NULL, inputConst = NULL,
-  outputNewick = NULL)
+ConstraintTaxo2newick(inputTaxo = NULL, Taxo.Hier = "Phylum2Genus",
+  inputConst = NULL, outputNewick = NULL)
 }
 \arguments{
 \item{inputTaxo}{a classification table, the first column is the species name (or
 the name used as tip.label by the phylogenetic tree), then followed by the
 columns are the different hierarchical levels of the Linnean classification
 in the subsequent columns.}
+
+\item{Taxo.Hier}{order of entry of the different hierarchical levels of the
+Linnean classificationthe, "Phylum2Genus" is used by default the second column is the highest
+level (e.g. Phylum) and the last the lowest (e.g. Genus), the reverse can be used,
+(i.e. the second column contains the lowest level and the last the highest),
+using "Genus2Phylum"}
 
 \item{inputConst}{is a two column table; the first column refers to the hierarchical
 level of the topological constraints (e.g. 'Family', or 'Order', or

@@ -9,6 +9,12 @@
 #' the name used as tip.label by the phylogenetic tree), then followed by the
 #' columns are the different hierarchical levels of the Linnean classification
 #' in the subsequent columns.
+#' @param Taxo.Hier order of entry of the different hierarchical levels of the
+#' Linnean classification. "Phylum2Genus" is used by default the second column is the highest
+#' level (e.g. Phylum) and the last the lowest (e.g. Genus), the reverse can be used,
+#' (i.e. the second column contains the lowest level and the last the highest),
+#' using "Genus2Phylum".
+#'
 #' @param inputConst is a two column table; the first column refers to the hierarchical
 #' level of the topological constraints (e.g. 'Family', or 'Order', or
 #' 'Subdivision', note that the names of the hierarchical levels must be the same as
@@ -80,11 +86,19 @@
 
 #' @export ConstraintTaxo2newick
 
-ConstraintTaxo2newick = function(inputTaxo = NULL, inputConst = NULL, outputNewick = NULL) {
+ConstraintTaxo2newick = function(inputTaxo = NULL, Taxo.Hier = "Phylum2Genus",  inputConst = NULL, outputNewick = NULL) {
 
     # Evaluate the number of hierarchical levels with topological constraints.
     NbHier = length(unique(inputConst[, 1]))
-    Hier = as.character(unique(inputConst[, 1]))
+    Hiera = as.character(unique(inputConst[, 1]))
+    # By default the order of entry of the inputTaxo table follows the "Phylum2Genus" pattern
+    Hier = rev(colnames(inputTaxo)[sort(match(Hiera, colnames(inputTaxo)))])
+
+    # If the order of entry of the inputTaxo table follows the "Genus2Phylum" pattern
+    if(Taxo.Hier == "Genus2Phylum"){
+      Hier = colnames(inputTaxo)[sort(match(Hiera, colnames(inputTaxo)))]
+    }
+
 
     # Extract the column of the taxonomic table targeting the constraints.
     taxo1 = as.matrix(inputTaxo[, match(Hier, colnames(inputTaxo))])

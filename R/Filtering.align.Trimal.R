@@ -138,7 +138,7 @@ Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NUL
                 Align = seqinr::read.fasta(paste(output, "/", Atemp1[grep(Uniprog[i],
                   Atemp1)], sep = ""), as.string = TRUE)
                 resDF = rbind(resDF, c(Atemp1[grep(Uniprog[i], Atemp1)], Unitrim[k],
-                  Unigene[j], Uniprog[i], nchar(Align[1])))
+                  Unigene[j], Uniprog[i], nchar(gsub("[ ]?", "", Align[1], perl = TRUE))))
             }  ## End for i
         }  # End for j
     }  # End for k

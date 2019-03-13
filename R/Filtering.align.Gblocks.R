@@ -252,7 +252,7 @@ Filtering.align.Gblocks = function(input = NULL, target.file = NULL, LessStringe
           Align = seqinr::read.fasta(paste(output, "/", Atemp1[grep(Uniprog[i],
                                                                     Atemp1)], sep = ""), as.string = T)
           resDF = rbind(resDF, c(Atemp1[grep(Uniprog[i], Atemp1)], Unitrim[k],
-                                 Unigene[j], Uniprog[i], nchar(Align[1])))
+                                 Unigene[j], Uniprog[i], nchar(gsub("[ ]?", "", Align[1], perl = TRUE))))
         }  ## End for i
       }  # End for j
     }  # End for k

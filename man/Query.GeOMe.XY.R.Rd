@@ -14,7 +14,7 @@ Query.GeOMe.XY.R(input = NULL, Phylum = NULL, output = NULL)
 \item{output}{name of the output table exported in the working directory.}
 }
 \value{
-Two identical tables are exported, one in the R environment
+Two identical tables are exported; one in the R environment
 and one in the working directory with the output name.
 The output is similar to the input table except that the fields
 Lat Long have been updated with proper geographic coordinates if they are
@@ -27,13 +27,10 @@ metadata (i.e. geographic coordinates) for sequences lacking geographic coordina
 (\url{https://www.geome-db.org/} (Deck et al. 2017).
 }
 \details{
-The function checks for species name synonymies using Worms
-(\url{http://www.marinespecies.org}) through the worrms R package
-(Chamberlain 2018, \url{https://CRAN.R-project.org/package=worrms}).
-
 The names of the accepted phyla names in GeOMe are available
-at the following web page: (\url{https://www.geome-db.org/template}).
-Select any project, and refer to 'DEF' next to 'Phylum'.
+at the following web page: (\url{https://geome-db.org/query}).
+In this query page, see the field 'Phylum' to see the phyla
+available in GeOMe.
 }
 \examples{
 # Import Seq.DF1

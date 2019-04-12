@@ -14,9 +14,9 @@
 #' @param LessStringent if 'TRUE' opts for the less
 #' stringent selection (equivalent to ticking the following three options in Gblocks server,
 #' 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
-#' 'Allow less strict flanking positions', the output has the extension -gbls),
+#' 'Allow less strict flanking positions', the output has the prefix Gblocksls),
 #' otherwise the default parameters of Gblocks will be used providing a more stringent selection
-#' (output with the extension -gbms).
+#' (output with the prefix Gblocksms).
 #' @param Type Type of sequences can be Protein (p), DNA (d), or Codons (c).
 #' @param output path to the folder storing the trimmed alignments.
 #' The output folder is created automatically is necessary.
@@ -60,12 +60,21 @@
 #' Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 #' output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 #'
+#' # Run the function from the TempDir folder but selecting only one alignment
+#' # "Mafftfftns1_Alig_co1.fas", export the Gblocks alignement using the
+#' # stringent selection in a folder called "TrimmedGblocks_1file".
+#' # For Windows users, remember to additionally specify the Gblocks.path.
+#' Filtering.align.Gblocks(input = "TempDir", target.file = "Mafftfftns1_Alig_co1.fas",
+#' LessStringent = FALSE, output = "TrimmedGblocks_1file",
+#' Type = "d", remove.empty.align = TRUE)
+#'
 #'
 #' # To remove the file created while running the example do the following:
 #' # Remove the temporary folder
 #' unlink("TempDir", recursive = TRUE)
 #' # Remove the folder with the Gblocks outputs
 #' unlink("TrimmedGblocks", recursive = TRUE)
+#' unlink("TrimmedGblocks_1file", recursive = TRUE)
 #' }
 #'
 #' @export Filtering.align.Gblocks

@@ -107,5 +107,31 @@ test_that("Test the length in pb of the first file, more stringent", {
 
 # Remove the folder with Gblocks outputs
 unlink("TrimmedGblocks", recursive = TRUE)
+rm(a, b, filespace, ListDNAbin, classAlign)
+
+# Test the target.file option.
+a = Filtering.align.Gblocks(input = "TempDir", target.file = "Mafftfftns1_Alig_co1.fas",
+    LessStringent = TRUE, output = "TrimmedGblocks",
+    Type = "d", remove.empty.align = TRUE)
+
+b =  list.files("TrimmedGblocks")
+
+test_that("Test if only one alignment is present in th output folder", {
+  b =  list.files("TrimmedGblocks")
+  expect_equal(length(b), 1)
+})
+
+test_that("Test the length in pb of the first file, more stringent", {
+  test = ape::read.dna(paste("TempDir/", "Mafftfftns1_Alig_co1.fas", sep = ""), format = "fasta")
+  test1 = ape::read.dna(paste("TrimmedGblocks/", "Gblocksls_Mafftfftns1_Alig_co1.fas", sep = ""), format = "fasta")
+  expect_equal(dim(test)[2], 1551)
+  expect_equal(dim(test1)[2], 650)
+  expect_equal(a[5,1], 650)
+})
+
+
 # Remove temporary folder
 unlink("TempDir", recursive = TRUE)
+# Remove the folder with Gblocks outputs
+unlink("TrimmedGblocks", recursive = TRUE)
+

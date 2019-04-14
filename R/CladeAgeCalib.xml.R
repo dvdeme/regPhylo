@@ -248,8 +248,14 @@ CladeAgeCalib.xml = function(xml.input = NULL, input.tree = NULL, output = NULL,
             Tipnames = c(Tipnames, as.character(inputTaxono[aa, 1]))
             # Test if the tips of the clade defined in CalPointTable defined a monophyletic
             # group in our phylogenetic tree.
-            DescenTip = stats::na.omit(input.tree$tip.label[phytools::getDescendants(input.tree, ape::getMRCA(input.tree,
-                Tipnames))])
+            DescenTip = vector()
+            DescenTip = stats::na.omit(input.tree$tip.label[
+              phytools::getDescendants(input.tree, tryCatch({ape::getMRCA(input.tree, Tipnames)}, error = function(e) {
+                stop(paste("Error: Mismatch between the species names in
+                   the classification table (i.e. inputTaxono) and the tip names
+                   in the tree (i.e. input.tree) for the clade ", target, sep = ""))}))])
+
+
             if (setequal(DescenTip, Tipnames))
                 {
                   # If the group is also monophyletic then implement the CLADEAGE xml code,

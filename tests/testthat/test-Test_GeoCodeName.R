@@ -84,3 +84,41 @@ test_that("Without AutoCorrNZ but with the correction table", {
 rm(Seq.DF3)
 file.remove("Seq.DF3.txt")
 
+# Run the function with a table with all the sequences with geographic coordinates already.
+Seq.DF1 = Seq.DF1[-c(1:3),]
+Seq.DF3 = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE)
+
+test_that("Test if there is two additional columns, When all sequences have geographic coordinates", {
+  expect_equal(dim(Seq.DF3)[2], 28)
+  if(length(which(colnames(Seq.DF3) == "Latitude_Y")) == 1) {a =1} else {a = 0}
+  expect_equal(a, 1)
+  if(length(which(colnames(Seq.DF3) == "Longitude_X")) == 1) {b =1} else {b = 0}
+  expect_equal(b, 1)
+  if(which(colnames(Seq.DF3) == "Geo_accuracy") == 25) {c =1} else {c = 0}
+  expect_equal(c, 1)
+  if(which(colnames(Seq.DF3) == "Location_used") == 21) {d =1} else {d = 0}
+  expect_equal(d, 1)
+})
+
+test_that("Test if when all sequences have already some geographic coordinates the output is has expected", {
+  expect_equal(dim(Seq.DF3)[1], 8)
+  expect_equal(length(which(Seq.DF3[,25] == "From_DB")), 8)
+  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE), "All the sequences have geographic coordinates")
+})
+
+rm(Seq.DF3)
+file.remove("Seq.DF3.txt")
+
+# Run the function with a table with no place name for the sequences without geographic coordinates.
+Seq.DF1[3,20] = NA
+Seq.DF3 = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE)
+
+test_that("Test if when all seqeunces without geographic coordinates neither place name the output is correct", {
+  expect_equal(dim(Seq.DF3)[1], 11)
+  expect_equal(dim(Seq.DF3)[2], 28)
+  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE), "None of the DNA sequences without geographic coordinates has a
+            place name that can be used to extract geographic coordinates")
+})
+
+rm(Seq.DF3)
+file.remove("Seq.DF3.txt")

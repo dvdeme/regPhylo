@@ -80,7 +80,7 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
     input = gsub(";", "%3B", input) # ";"
     input = gsub(",", "%3C", input) # ","
     url  =paste("http://nominatim.openstreetmap.org/search?q=", input,
-              "&limit=20&format=json", sep="") ### build complete url for the request
+                "&limit=20&format=json", sep="") ### build complete url for the request
     # with maximun 20 answers.
     outres = RJSONIO::fromJSON(url)
     if(is.vector(outres)){
@@ -90,6 +90,21 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
     }
     return(res)
   }
+
+  # Check if all the Seqeucnes have accurate geographic coordinates already.
+
+  if(length(which(is.na(input$Lat) == "TRUE") == 0)){
+    print("All the sequences have geographic coordinates")
+    # Keep track of the Original location name
+    OrigLocatName = input[,20]
+    # Geo_accuracy is "From_DB"
+    Geo_accuracy = rep("From_DB", dim(input)[1])
+    # The output Table
+    outputDF = cbind(input[, c(1:19)], Location = OrigLocatName,
+                     Location_used = OrigLocatName, isolation_source = input[,21],
+                     Latitude_Y = input[,22], Longitude_X = input[,23], Geo_accuracy, input[, c(24:26)])
+
+  } else {
 
   # First clean the comma and other empty cells in the field 'Location'.
     LocatCl = gsub(" :  ,  ,  ", NA, input[, 20], fixed = TRUE)
@@ -134,6 +149,10 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
 
     Locat[pos.4] = as.character(input[pos.4, 21])  # Add the non NA isolation source to the Locat object.
     Locat = Locat[which(is.na(Locat) == "FALSE")]  # Remove the NA.
+
+    # test if there is still some geographic coordinates to be infered from the location place.
+    if(length(Locat) > 0){
+
     pos.Seq = sort(c(pos.Seq1, pos.4))  # Keep the right order of the rows.
 
     # Clean the unnecessary NAs.
@@ -681,6 +700,20 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
     # The output Table
     outputDF = cbind(input[, c(1:19)], Location = OrigLocatName, Location_used, isolation_source = input[,
         21], Latitude_Y, Longitude_X, Geo_accuracy, input[, c(24:26)])
+
+    } else {
+
+      pos.Seq = sort(c(pos.Seq1, pos.4))
+      Location_used = rep(NA, dim(input)[1])
+      Geo_accuracy = rep(NA, dim(input)[1])
+      Geo_accuracy[which(is.na(input[, 22]) == "FALSE")] = "From_DB"
+      # The output Table
+      outputDF = cbind(input[, c(1:19)], Location = OrigLocatName, Location_used,
+                       isolation_source = input[,21], Latitude_Y = input[,22] , Longitude_X = input[,23],
+                       Geo_accuracy, input[, c(24:26)])
+
+    }
+  }
     utils::write.table(outputDF, file = output, sep = "\t", row.names = FALSE)
     return(outputDF)
 }  # End of the function.

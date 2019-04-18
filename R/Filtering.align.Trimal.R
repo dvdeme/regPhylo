@@ -28,7 +28,7 @@
 #' stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009).
 
 #' @details The function requires trimAl to be installed and set up in the PATH for Linux platform.
-#' Online documentation, including download page, is available at \url{http://trimal.cgenomics.org/downloads}.
+#' Online documentation, including download page, are available at \url{http://trimal.cgenomics.org/downloads}.
 
 #' @examples # Run the function
 #' \dontrun{
@@ -96,7 +96,7 @@ Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NUL
     # Automatically adjust between -strict -strictplus and -gappyout heuristics (more
     # stringent selection potentially than the -gappyout option).
     trimal.automated = function(x) {
-        a = paste("trimal -in ", input, "/", x, " -out ", output, "/", "trimAuto_",
+        a = paste(trimal, " -in ", input, "/", x, " -out ", output, "/", "trimAuto_",
             x, " -automated1", sep = "")
         system(a)
     }

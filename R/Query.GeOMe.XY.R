@@ -24,7 +24,7 @@
 #' @references Deck et al. 2017, DOI: 10.1371/journal.pbio.2002925
 
 #' @examples # Import Seq.DF1
-#' #' data(Seq.Diastocapen)
+#' data(Seq.Diastocapen)
 #' Seq.DF1 = Seq.Diastocapen$Seq.DF1
 #' \dontrun{
 #' # Run the function
@@ -90,8 +90,8 @@ Query.GeOMe.XY.R = function(input = NULL, Phylum = NULL, output=NULL) {
         # Remove the duplicated sequences retrieved from the GeOMe database.
         Results = unique(Results)
         # Attribute the X and Y to the proper sequence in the original file.
-        Lat = inputa[, 22]
-        Long = inputa[, 23]
+        Lat = as.numeric(as.character(inputa[, 22]))
+        Long = as.numeric(as.character(inputa[, 23]))
         Lat[Results[, 5]] = Results[, 2]
         Long[Results[, 5]] = Results[, 3]
 
@@ -103,13 +103,12 @@ Query.GeOMe.XY.R = function(input = NULL, Phylum = NULL, output=NULL) {
         print(paste(dim(Results)[1], " sequence(s) with geographic coordinates in GeOMe has(ve) been retrieved", sep = ""))
         inputc = cbind(input[, c(1:21)], Lat, Long, input[, c(24:25)], OriginDatabase)
       } else {
-        print("None of the sequence without geographic coordinates has been retrived in GeOMe")
+        print("Geographic coordinates for sequences missing this metadata were not able to be retrieved from GeOMe")
         inputc = inputa[, -dim(inputa)[2]]
       }
     }
     utils::write.table(inputc, file = output, sep = "\t", row.names = FALSE)
     return(inputc)
-
 
     # Old code related to previous version of GeOMe R package and database.
     # Code change the 12th of april 2019.

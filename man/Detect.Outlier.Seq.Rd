@@ -87,9 +87,11 @@ distance matrices described above to detect both misaligned and very divergent s
 To do this, the two distance matrices are first re-scaled as percentages of the their highest
 distances respectively and then summed.
 
-This function requires BLAST a installed and in the PATH in order to detect 'secondary outliers'.
+This function requires BLAST+ installed and in the PATH in order to detect 'secondary outliers'.
 To download and install BLAST+ software locally go
-to \url{https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download}.
+to \url{https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download},
+specific installation instructions for the different operating systems (OS) can be find
+at \url{https://www.ncbi.nlm.nih.gov/books/NBK279671/}.
 }
 \examples{
 # Load the alignment file (class "alignment"), this is the first

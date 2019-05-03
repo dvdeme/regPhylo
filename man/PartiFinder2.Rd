@@ -7,8 +7,8 @@
 PartiFinder2(input = NULL, Partition = NULL, codon = NULL,
   nexus.file = NULL, Path.PartiF2 = NULL, branchlengths = NULL,
   models = NULL, model_selection = NULL, search = NULL,
-  Raxml = NULL, nthread = NULL, rcluster_percent = NULL,
-  rcluster_max = NULL)
+  Raxml = NULL, nthread = NULL, rcluster_percent = 10,
+  rcluster_max = 1000)
 }
 \arguments{
 \item{input}{the name (with the path, if necessary) of the input alignment in
@@ -47,12 +47,12 @@ GTR+G+I, of the many more available in PhyML.}
 
 \item{nthread}{number of threads used by PartitionFinder2 to run.}
 
-\item{rcluster_percent}{See description for rcluster-max, below.}
+\item{rcluster_percent}{See description for rcluster-max, below. (Default 10).}
 
 \item{rcluster_max}{rcluster-max and rcluster-percent control
 the thoroughness of the relaxed clustering algorithm together. Setting either
 of them higher will tend to make the search more thorough and slower. Setting
-them lower will tend to make the search quicker but less thorough.}
+them lower will tend to make the search quicker but less thorough. (Default 1000).}
 }
 \value{
 The function returns:
@@ -77,9 +77,7 @@ number of partitions and their best associated substitution models.
 Using a fasta alignment and partition file following the
 RAxML requirements (as exported by \code{\link{Align.Concat}} function) this function
 prepares an alignment in phylip format ('.phy'), it builds a .cfg input file
-describing the settings for PartitionFinder2 and calls the program. For details
-about software installation see
-\url{http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf}
+describing the settings for PartitionFinder2 and calls the program.
 
 "The rcluster algorithm works by finding the rcluster-max most similar
 pairs of data blocks, OR the top rcluster-percent of similar datablocks, whichever
@@ -98,6 +96,37 @@ the path of the python script "PartitionFinder.py" must be provided
 for the Path.PartiF2 parameter.
 Currently the function uses a temporary bash script to run Partitionfinder2
 on Linux plateforms.
+
+Online documentation and the download page are available at
+\url{http://www.robertlanfear.com/partitionfinder/}. Installation instructions
+ are provided in the PartitionFinder2 manual available at
+\url{http://www.robertlanfear.com/partitionfinder/assets/Manual_v2.1.x.pdf}.
+Download the source code from the Github page available at
+\url{http://www.robertlanfear.com/partitionfinder/}.
+Then copy and paste the archive into the desired folder, and extract (decompress) all the files.
+WARNINGS: PartitionFinder requires Python 2.7.x or higher (but not 3.x!) and
+dependencies including specific python libraries in order to run. All instructions
+are provided in the manual, but we provide a simple procedure to avoid many hurdles below:
+\itemize{
+\item - Download python 2.7.15 from \url{https://www.python.org/downloads/release/python-2715/},
+select the file appropriate for your OS. Install python 2.7.15 by double clicking on the installer
+and follow the instructions (for Windows users, during the installation "Customize Python 2.7.15" allows
+the option "Add python.exe to Path", but be careful if other version of python is already
+installed and set-up in the path).
+\item - Then, open the terminal (in Windows cmd.exe) and use the next set of commands
+to install numpy, pandas, tables, pyparsing, scipy and sklearn python's libraries.
+\itemize{ \item python -m pip install numpy
+\item python -m pip install pandas
+\item python -m pip install tables
+\item python -m pip install pyparsing
+\item python -m pip install scipy
+\item python -m pip install sklearn
+}
+\item - To check if Partitionfinder2 was successfully installed open the terminal,
+go to the folder storing the file PartitionFinder.py, and run the following command
+in order to see the help file. You should see several "help" options appear in your terminal.
+PartitionFinder.py --help
+}
 }
 \examples{
 \dontrun{

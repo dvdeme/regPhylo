@@ -1,23 +1,30 @@
-#' @title Convert a tax_report.txt file from the NCBI taxonomic facility to species lists used for GetSeqInfo_NCBI_taxid and GetSeq_BOLD functions.
+#' @title Convert a tax_report.txt file from the NCBI taxonomic facility to species lists used by GetSeqInfo_NCBI_taxid and GetSeq_BOLD functions.
 
 #' @description This function converts the tax_report.txt file exported by the NCBI taxonomic facility
-#' (https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi) into a list of two tables with
-#' two columns with the species list appropriate to query DNA sequences in GenBank and associated databases
-#' (through NCBI) using the function GetSeqInfo_NCBI_taxid, and in BOLD database using the function GetSeq_BOLD.
+#' (\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi}) into a list of two tables containing
+#' the species lists to query DNA sequences in GenBank and associated databases
+#' (through NCBI using the function \code{\link{GetSeqInfo_NCBI_taxid}}), and the BOLD database (using the
+#' function \code{\link{GetSeq_BOLD}}).
 
-#' @param input path to the tax_report.txt file exported by the NCBI taxonomic facility (https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi)
+#' @param input path to the "tax_report.txt" file exported by the NCBI taxonomic facility
+#' (\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi})
 
-#' @return The function reports a list of two tables: the first table $SpList.NCBI reports two columns the first one reports the NCBI taxid, and the second the binomial species names.
-#' the second table $SpList.BOLD reports two columns the first one reports all binominal species names potentially including synonyms used in NCBI that will be used as query in BOLD, and the second table #' reports the accepted species name that is going to be reported in the output table of the GetSeq_BOLD.
-
+#' @return This function creates a list of two tables: the first table $SpList.NCBI has two columns,
+#' the first one reports the NCBI taxid, and the second column contains the binomial species names.
+#' The second table $SpList.BOLD also has two columns, the first column reports all binominal species names,
+#' including synonyms used in NCBI taxon database that will be used to query BOLD,
+#' and the second column reports the accepted species name that is going to be reported in the output table of \code{\link{GetSeq_BOLD}}.
+#' Note: notice that in table $SpList.BOLD used to query BOLD, additional synonyms can be further added manually to those identified
+#' in the NCBI taxon database.
+#'
 #' @export Taxreport2Sp.List
 #'
 #' @examples
 #' \dontrun{
-#' # To run the example copy the input tax_report.txt file provided
-#' # by the regPhylo package to a temporary directory created into the
-#' # current working directory.
-#' src.dir = system.file("extdata/tax_report", package = "regPhylo")
+#' # To run the example, copy the input tax_report.txt file provided
+#' # by the regPhylo package to a temporary directory created in the
+#' # working directory.
+#' src.dir = system.file("extdata/tax_export", package = "regPhylo")
 #' dir.create("TempDir")
 #' # Set up the path to the TempDir folder.
 #' dest.dir = paste(getwd(), "/TempDir", sep="")
@@ -30,24 +37,25 @@
 #' overwrite = FALSE) })
 #'
 #' # Run the function using this example of tax_report.txt file
-#' # for 30 species exported by NCBI taxonomic facility.
+#' # for 30 species exported by the NCBI taxonomic facility.
 #' taxreport = Taxreport2Sp.List(input = "TempDir/tax_report.txt")
 #' names(taxreport) # the first element of the list is the table
-#' # for NCBI search, the second is for BOLD search.
+#' # for the NCBI search, the second is for the BOLD search.
 #'
 #' ## Table for NCBI search.
 #' head(taxreport$SpList.NCBI)
 #' dim(taxreport$SpList.NCBI) # one taxa did not have a taxid
-#' # when the request was performed the 7/03/2019.
+#' # when the request was performed on the 7/03/2019.
 #'
 #' ## Table for BOLD search.
 #' head(taxreport$SpList.BOLD)
-#' dim(taxreport$SpList.BOLD) # two taxa got another preferred NCBI species name.
+#' dim(taxreport$SpList.BOLD) # two taxa have another preferred NCBI species name.
+#' tail(taxreport$SpList.BOLD)
 #' }
 
 Taxreport2Sp.List = function(input = NULL){
 # open the tax_report.txt file
-input = read.delim(input, sep = "\t", h=T)
+input = read.delim(input, sep = "\t", header = TRUE)
 input = input[,-c(2,4,6)]
 
 ### convert all columns as.character

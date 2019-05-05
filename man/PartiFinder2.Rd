@@ -123,9 +123,25 @@ to install numpy, pandas, tables, pyparsing, scipy and sklearn python's librarie
 \item python -m pip install sklearn
 }
 \item - To check if Partitionfinder2 was successfully installed open the terminal,
-go to the folder storing the file PartitionFinder.py, and run the following command
+navigate to the folder storing the file PartitionFinder.py (you may need to change
+directories), and run the following command
 in order to see the help file. You should see several "help" options appear in your terminal.
 PartitionFinder.py --help
+}
+}
+\note{
+\itemize{ \item 1) In some case users might need to install the "png" and "reticulate" R package,
+ in order for python to run through R. This may be the case when the files
+ "partition_finder.cfg" and "xxxx.phy" have been exported in your working directory
+ and partitionfinder2 is working on your machine, but the following error message is
+ printed "Error in file(con, "r") : cannot open the connection
+In addition: Warning message:
+In file(con, "r") :
+ cannot open file 'analysis/best_scheme.txt': No such file or directory".
+\item 2) Another point is that sometimes partitionFinder2 crashed in the middle of the run,
+usually due to threading problems. So to re-run the function, all the files and folder
+previously created by the \code{\link{PartiFinder2}} function must be remove ("partition_finder.cfg",
+"xxxx.phy", and the folder called "analysis"), and we advise to use less threads.
 }
 }
 \examples{

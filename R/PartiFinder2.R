@@ -7,7 +7,7 @@
 #' @details Using a fasta alignment and partition file following the
 #' RAxML requirements (as exported by \code{\link{Align.Concat}} function) this function
 #' prepares an alignment in phylip format ('.phy'), it builds a .cfg input file
-#' describing the settings for PartitionFinder2 and calls the program.
+#' describing the settings for PartitionFinder2, and calls the program.
 #'
 #' @return The function returns:
 #' \itemize{
@@ -30,7 +30,7 @@
 #' format, see \url{http://sco.h-its.org/exelixis/resource/download/NewManual.pdf}.
 #'
 #' @param codon according to the file providing the gene partition in the alignment,
-#' codon is the number of the row in this file corresponding to a coding gene that
+#' codon is the number of the row/s in this file corresponding to a coding gene that
 #' will be split into first, second, and third codon positions, to prepare the
 #' .cfg PartitionFinder2 inputfile.
 #'
@@ -40,7 +40,7 @@
 #' @param Path.PartiF2 path pointing to
 #' where the file 'PartitionFinder.py' is installed (e.g.
 #' '/home/davidpc/Programs/PartitionFinder2/partitionfinder-2.1.1/PartitionFinder.py').
-#' Note: Apply to both Linux and Windows OS.
+#' Note: Applies to both Linux and Windows OS.
 #'
 #' @param branchlengths 'linked' or 'unlinked'.
 #' @param models 'all', 'allx', 'beast',
@@ -54,7 +54,7 @@
 #' @param nthread number of threads used by PartitionFinder2 to run.
 #' @param rcluster_percent See description for rcluster-max, below. (Default 10).
 #' @param rcluster_max rcluster-max and rcluster-percent control
-#' the thoroughness of the relaxed clustering algorithm together. Setting either
+#' the thoroughness of the relaxed clustering algorithm. Setting either
 #' of them higher will tend to make the search more thorough and slower. Setting
 #' them lower will tend to make the search quicker but less thorough. (Default 1000).
 
@@ -74,7 +74,7 @@
 #' the path of the python script "PartitionFinder.py" must be provided
 #' for the Path.PartiF2 parameter.
 #' Currently the function uses a temporary bash script to run Partitionfinder2
-#' on Linux plateforms.
+#' on Linux platforms.
 #'
 #' @details Online documentation and the download page are available at
 #' \url{http://www.robertlanfear.com/partitionfinder/}. Installation instructions
@@ -107,18 +107,19 @@
 #' in order to see the help file. You should see several "help" options appear in your terminal.
 #' PartitionFinder.py --help
 #' }
-#' @note \itemize{ \item - 1) In some case users might need to install the "png" and "reticulate" R package,
-#'  in order for python to run through R. This may be the case when the files
-#'  "partition_finder.cfg" and "xxxx.phy" have been exported in your working directory
-#'  and partitionfinder2 is working on your machine, but the following error message is
+#' @note \itemize{ \item 1) In some cases, users might need to install the "png" and "reticulate" R packages,
+#'  in order for python to run through R. This is likely the case when the files
+#'  "partition_finder.cfg" and "xxxx.phy" have been successfully exported in your working directory
+#'  and PartitionFinder2 is working on your machine, but the following error message is
 #'  printed "Error in file(con, "r") : cannot open the connection
 #' In addition: Warning message:
 #' In file(con, "r") :
 #'  cannot open file 'analysis/best_scheme.txt': No such file or directory".
-#' \item - 2) Another point is that sometimes partitionFinder2 crashed in the middle of the run,
-#' usually due to threading problems. So to re-run the function, all the files and folder
-#' previously created by the \code{\link{PartiFinder2}} function must be remove ("partition_finder.cfg",
-#' "xxxx.phy", and the folder called "analysis"), and we advise to use less threads.
+#' \item 2) Sometimes PartitionFinder2 crashes prior to finishing the run,
+#' usually due to threading problems. In order to successfully re-run the function, remove
+#' the folder and files by the unsuccessful execution of the \code{\link{PartiFinder2}} function. (i.e. "partition_finder.cfg",
+#' "xxxx.phy", and the folder called "analysis"), and we advise the user to decrease
+#' the number of threads.
 #' }
 #'
 #' @references Lanfear et al. 2017, DOI: 10.1093/molbev/msw260

@@ -4,25 +4,28 @@
 \alias{Filtering.align.Gblocks}
 \title{Remove poorly aligned nucleotide positions using Gblocks software}
 \usage{
-Filtering.align.Gblocks(input = NULL, LessStringent = NULL,
-  Type = NULL, output = NULL, remove.empty.align = NULL,
-  Gblocks.path = NULL)
+Filtering.align.Gblocks(input = NULL, target.file = NULL,
+  LessStringent = NULL, Type = NULL, output = NULL,
+  remove.empty.align = NULL, Gblocks.path = NULL)
 }
 \arguments{
 \item{input}{name of the folder storing the alignments in fasta format (with the
 extension '.fas').}
 
+\item{target.file}{in option the name of the file(s) in the input folder that will be used.
+By default (i.e. NULL) the function uses all the files with a .fas extension in the input folder.}
+
 \item{LessStringent}{if 'TRUE' opts for the less
 stringent selection (equivalent to ticking the following three options in Gblocks server,
 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
-'Allow less strict flanking positions', the output has the extension -gbls),
-otherwise the default parameters of Gblocks will be used rpoviding a more stringent selection
-(output with the extension -gbms).}
+'Allow less strict flanking positions', the output has the prefix Gblocksls),
+otherwise the default parameters of Gblocks will be used providing a more stringent selection
+(output with the prefix Gblocksms).}
 
 \item{Type}{Type of sequences can be Protein (p), DNA (d), or Codons (c).}
 
 \item{output}{path to the folder storing the trimmed alignments.
-The output folder is created automatically.}
+The output folder is created automatically is necessary.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
 
@@ -46,7 +49,7 @@ or the less stringent selection approach (parameters equivalent to that on the G
 }
 \details{
 This function requires Gblocks to be installed and set up in the PATH.
-Online documentation, including instruction for installing the program is available at
+Online documentation, including instructions for installing the program for different OS are available at
 \url{http://molevol.cmima.csic.es/castresana/Gblocks/Gblocks_documentation.html},
 and the download page is available at
 \url{http://molevol.cmima.csic.es/castresana/Gblocks.html}.
@@ -70,11 +73,19 @@ file.copy(from = paste(src.dir, x, sep = "/"),
 to = paste(dest.dir, x, sep = "/"),
 overwrite = FALSE) })
 
-# Run the function from the TempDir folder and store the outputs from
+# Run the function from the "TempDir" folder and store the outputs from
 # Gblocks in the "Trimmed-Gblocks" folder. For Windows users, remember
 # to additionally specify the Gblocks.path.
 Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
+
+# Run the function from the "TempDir" folder but selecting only one alignment
+# "Mafftfftns1_Alig_co1.fas", export the Gblocks alignment using the
+# stringent selection in a folder called "TrimmedGblocks_1file".
+# For Windows users, remember to additionally specify the Gblocks.path.
+Filtering.align.Gblocks(input = "TempDir", target.file = "Mafftfftns1_Alig_co1.fas",
+LessStringent = FALSE, output = "TrimmedGblocks_1file",
+Type = "d", remove.empty.align = TRUE)
 
 
 # To remove the file created while running the example do the following:
@@ -82,6 +93,7 @@ output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 unlink("TempDir", recursive = TRUE)
 # Remove the folder with the Gblocks outputs
 unlink("TrimmedGblocks", recursive = TRUE)
+unlink("TrimmedGblocks_1file", recursive = TRUE)
 }
 
 }

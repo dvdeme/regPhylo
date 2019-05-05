@@ -20,7 +20,7 @@
 
 #' @return An output folder is created with the trimmed alignments. In the R environment
 #' the function returns a table with the length of the different alignments for
-#' each gene region and alignment programs.
+#' each gene region and alignment program.
 
 #' @details The option "-gappyout" is a very conservative method, it keeps the maximum nucleotide information and remove
 #' the most gappy positions). This option is one of the best according Tan et al.  2015).
@@ -28,7 +28,7 @@
 #' stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009).
 
 #' @details The function requires trimAl to be installed and set up in the PATH for Linux platform.
-#' Online documentation, including download page, are available at \url{http://trimal.cgenomics.org/downloads}.
+#' Online documentation, including the download page, are available at \url{http://trimal.cgenomics.org/downloads}.
 
 #' @examples # Run the function
 #' \dontrun{
@@ -65,7 +65,8 @@
 #'
 #' @references Capella-Gutierrez et al. 2009, DOI:
 #' 10.1093/bioinformatics/btp348
-#' Tan et al.  2015, DOI: 10.1093/sysbio/syv033
+#' @references Tan et al.  2015, DOI: 10.1093/sysbio/syv033
+#'
 
 Filtering.align.Trimal = function(input = NULL, output = NULL, TrimAl.path = NULL) {
     b = list.files(input)

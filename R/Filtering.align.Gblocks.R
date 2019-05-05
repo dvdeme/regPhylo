@@ -9,32 +9,32 @@
 
 #' @param input name of the folder storing the alignments in fasta format (with the
 #' extension '.fas').
-#' @param target.file the name of the file(s) in the input folder that will be used.
-#' By default the function uses all the files with a .fas extension in the input folder.
+#' @param target.file in option the name of the file(s) in the input folder that will be used.
+#' By default (i.e. NULL) the function uses all the files with a .fas extension in the input folder.
 #' @param LessStringent if 'TRUE' opts for the less
-#' stringent selection (equivalent to ticking the following three options in Gblocks server,
+#' stringent selection (equivalent to ticking the following three options in Gblocks server:
 #' 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
-#' 'Allow less strict flanking positions', the output has the prefix Gblocksls),
+#' 'Allow less strict flanking positions'; the output has the prefix Gblocksls),
 #' otherwise the default parameters of Gblocks will be used providing a more stringent selection
 #' (output with the prefix Gblocksms).
 #' @param Type Type of sequences can be Protein (p), DNA (d), or Codons (c).
 #' @param output path to the folder storing the trimmed alignments.
-#' The output folder is created automatically is necessary.
+#' The output folder is created automatically.
 #' @param remove.empty.align If TRUE, the empty alignments are excluded from the computation.
-#' @param Gblocks.path for the Windows plateform, a character string which provides the path
+#' @param Gblocks.path for the Windows platform, a character string which provides the path
 #' to the Gblocks executable but without the name of the executable
 #' (e.g. "C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
 #' For Linux the Gblocks software must be in the $PATH.
 #'
 #' @details This function requires Gblocks to be installed and set up in the PATH.
-#' Online documentation, including instruction for installing the program is available at
+#' Online documentation, including instructions for installing the program for different OS are available at
 #' \url{http://molevol.cmima.csic.es/castresana/Gblocks/Gblocks_documentation.html},
 #' and the download page is available at
 #' \url{http://molevol.cmima.csic.es/castresana/Gblocks.html}.
 
-#' @return An ouptut folder is created with the trimmed alignments. In the R environment
+#' @return An output folder is created with the trimmed alignments. In the R environment
 #' the function returns a table with the length of the different alignments for
-#' each gene region and the alignment programs.
+#' each gene region and alignment program.
 #'
 #' @examples # Run the function for DNA, using the less stringent
 #' # selection heuristic, and remove potentially empty alignments.
@@ -54,14 +54,14 @@
 #' to = paste(dest.dir, x, sep = "/"),
 #' overwrite = FALSE) })
 #'
-#' # Run the function from the TempDir folder and store the outputs from
+#' # Run the function from the "TempDir" folder and store the outputs from
 #' # Gblocks in the "Trimmed-Gblocks" folder. For Windows users, remember
 #' # to additionally specify the Gblocks.path.
 #' Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
 #' output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 #'
-#' # Run the function from the TempDir folder but selecting only one alignment
-#' # "Mafftfftns1_Alig_co1.fas", export the Gblocks alignement using the
+#' # Run the function from the "TempDir" folder but selecting only one alignment
+#' # "Mafftfftns1_Alig_co1.fas", export the Gblocks alignment using the
 #' # stringent selection in a folder called "TrimmedGblocks_1file".
 #' # For Windows users, remember to additionally specify the Gblocks.path.
 #' Filtering.align.Gblocks(input = "TempDir", target.file = "Mafftfftns1_Alig_co1.fas",
@@ -259,7 +259,7 @@ Filtering.align.Gblocks = function(input = NULL, target.file = NULL, LessStringe
         i = 1
         for (i in 1:length(Uniprog)) {
           Align = seqinr::read.fasta(paste(output, "/", Atemp1[grep(Uniprog[i],
-                                                                    Atemp1)], sep = ""), as.string = T)
+                 Atemp1)], sep = ""), as.string = TRUE)
           resDF = rbind(resDF, c(Atemp1[grep(Uniprog[i], Atemp1)], Unitrim[k],
                                  Unigene[j], Uniprog[i], nchar(gsub("[ ]?", "", Align[1], perl = TRUE))))
         }  ## End for i

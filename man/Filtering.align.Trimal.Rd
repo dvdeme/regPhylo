@@ -27,19 +27,19 @@ the function returns a table with the length of the different alignments for
 each gene region and alignment programs.
 }
 \description{
-This function uses the software trimAl (Capella-Gutierrez et al. 2009, DOI:
-10.1093/bioinformatics/btp348) and in particular two approaches to filter out
+This function uses the software trimAl (Capella-Gutierrez et al. 2009)
+and in particular two approaches to filter out
 poorly aligned nucleotide positions using the option -gappyout or -automated1 (see Capella-Gutierrez et
-al.  2009).
+al. 2009).
 }
 \details{
 The option "-gappyout" is a very conservative method, it keeps the maximum nucleotide information and remove
-the most gappy positions). This option is one of the best according Tan et al.  2015, DOI: 10.1093/sysbio/syv033).
+the most gappy positions). This option is one of the best according Tan et al.  2015).
 The option "-automated1" automatically adjusts between the '-strict', '-strictplus' and '-gappyout' heuristics which all provide a more
-stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009, DOI:
-10.1093/bioinformatics/btp348)
+stringent selection potentially than the '-gappyout' option (for more information see Capella-Gutierrez et al. 2009).
 
 The function requires trimAl to be installed and set up in the PATH for Linux platform.
+Online documentation, including the download page, are available at \url{http://trimal.cgenomics.org/downloads}.
 }
 \examples{
 # Run the function
@@ -77,4 +77,5 @@ unlink("Trimmed", recursive = TRUE)
 \references{
 Capella-Gutierrez et al. 2009, DOI:
 10.1093/bioinformatics/btp348
+Tan et al.  2015, DOI: 10.1093/sysbio/syv033
 }

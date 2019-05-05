@@ -16,14 +16,13 @@
 #' written 'co1' and not 'COI' or 'COX1').
 #' @param output the name of the output table exported into the working directory.
 
-#' @param timeout the timeout in seconds for socketConnection, for the
-#' choosebank function of the seqinr R package. Default 10 seconds.
-#' It might be necessary to increase the timeout (time to get answer from
+#' @param timeout the timeout in seconds for socketConnection used in, the
+#' choosebank function of the seqinr R package. The default is 10 seconds.
+#' It might be necessary to increase the timeout (i.e. the time to get an answer from
 #' the server) if the function cannot retrieve any DNA sequence for
-#' certain species while DNA sequences are available in GenBank for
-#' these species. Alternatively, if the server connexion is quick the
-#' timeout can be decrease to 5 (default in choosebank) to speed-up
-#' the function.
+#' a certain species when DNA sequences are known to be available in GenBank.
+#' Alternatively, if the server connection is quick the timeout can be decreased to 5 seconds
+#'(the default in choosebank) to speed-up the function.
 
 #' @examples # Load the data table exported by the SpeciesGeneMat.Bl function
 #' data(Seq.DF4) # the table of sequences and metadata is called "CleanDataTable"

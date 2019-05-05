@@ -24,7 +24,9 @@ choosebank function of the seqinr R package. Default 10 seconds.
 It might be necessary to increase the timeout (time to get answer from
 the server) if the function cannot retrieve any DNA sequence for
 certain species while DNA sequences are available in GenBank for
-these species.}
+these species. Alternatively, if the server connexion is quick the
+timeout can be decrease to 5 (default in choosebank) to speed-up
+the function.}
 }
 \value{
 This function returns a table with the species names and the number of

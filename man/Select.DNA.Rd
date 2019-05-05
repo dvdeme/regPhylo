@@ -4,7 +4,8 @@
 \alias{Select.DNA}
 \title{Extract all the seqeunces and metadata from the data table for a list of selected gene regions}
 \usage{
-Select.DNA(input = NULL, gene.list = NULL, output = NULL)
+Select.DNA(input = NULL, gene.list = NULL, output = NULL,
+  timeout = 10)
 }
 \arguments{
 \item{input}{The table created using the function \code{\link{SpeciesGeneMat.Bl}}
@@ -16,6 +17,15 @@ exported by the function SpeciesGeneMat_Bl.R). For example (Cytochrome c oxidase
 written 'co1' and not 'COI' or 'COX1').}
 
 \item{output}{the name of the output table exported into the working directory.}
+
+\item{timeout}{the timeout in seconds for socketConnection, for the
+choosebank function of the seqinr R package. Default 10 seconds.
+It might be necessary to increase the timeout (time to get answer from
+the server) if the function cannot retrieve any DNA sequence for
+certain species while DNA sequences are available in GenBank for
+these species. Alternatively, if the server connexion is quick the
+timeout can be decrease to 5 (default in choosebank) to speed-up
+the function.}
 }
 \description{
 This function selects the sequences and associated information for a list

@@ -6,34 +6,35 @@
 #' reconstruction of the molecular phylogenetic tree.
 
 #' @param inputTaxo a classification table, the first column is the species name (or
-#' the name used as tip.label by the phylogenetic tree), then followed by the
-#' columns are the different hierarchical levels of the Linnean classification
+#' the name used as tip.label by the phylogenetic tree), followed by
+#' the different hierarchical levels of the Linnaean classification
 #' in the subsequent columns.
-#' @param Taxo.Hier order of entry of the different hierarchical levels of the
-#' Linnean classification. "Phylum2Genus" is used by default the second column is the highest
-#' level (e.g. Phylum) and the last the lowest (e.g. Genus), the reverse can be used,
-#' (i.e. the second column contains the lowest level and the last the highest),
-#' using "Genus2Phylum".
+#' @param Taxo.Hier order of entry for the different hierarchical levels of the
+#' Linnaean classification. "Phylum2Genus" is used by default, where the second column is the highest
+#' level (e.g. Phylum) and the last column is the lowest classification level (e.g. Genus).
+#' The reverse can also be used, using "Genus2Phylum" (i.e. the second column contains the lowest
+#' level and the last column contains the highest).
 #'
-#' @param inputConst is a two column table; the first column refers to the hierarchical
+#' @param inputConst a two column table: the first column refers to the hierarchical
 #' level of the topological constraints (e.g. 'Family', or 'Order', or
-#' 'Subdivision', note that the names of the hierarchical levels must be the same as
+#' 'Subdivision'; note that the names of the hierarchical levels must be the same as
 #' the headers of the classification table); the second column contains the name
-#' of the taxa to be constrained as of monophyletic (e.g. 'Aplodactylidae',
-#' Aulopiformes', 'Percomorphaceae'....).
+#' of the taxa to be constrained as monophyletic (e.g. 'Aplodactylidae',
+#' Aulopiformes', 'Percomorphaceae').
+#'
 #' @param outputNewick name of the output multifurcating newick tree that will
 #' be exported in a .txt file (can also include the path to the folder).
 
-#' @return This function exports into the R environment a list of two objects; the first
+#' @return This function exports into the R environment a list of two objects. The first
 #' object is the taxonomic table modified to include the constraints, and the
 #' second object is the multifurcating tree converted into a 'phylo' object.
-#' The function also exports a newick tree in a txt document that can be used to constrain
+#' The function also exports a newick tree as a txt document that can be used to constrain
 #' the topology in RAxML.
 #'
 #' @details Warning: branch lengths of the multifurcating tree are misleading, only the
 #' topology matters.
 #'
-#' @examples # Load a tables listing the topological constraints (first object of the list)
+#' @examples # Load the table listing the topological constraints (first object of the list)
 #' # and the classification table (second object of the list).
 #' \dontrun{
 #' data(TopoConstraints)
@@ -50,7 +51,7 @@
 #' BackBoneTreeAll = ConstraintTaxo2newick(inputTaxo = TopoConstraints[[2]],
 #' inputConst = TopoConstraints[[1]], outputNewick = "TempDir.TopoConstraints/BackboneTreeAll")
 #'
-#' # Plot the constraining tree (the branch length does not matter, only the topology matters).
+#' # Plot the constraining tree (the branch length do not matter, only the topology matters).
 #' plot(BackBoneTreeAll[[2]], cex=0.8)
 #'
 #' # Use only the constraints at the Family level.

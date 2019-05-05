@@ -1,14 +1,15 @@
 Package: regPhylo
 Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
-Version: 1.0.1
+Version: 1.0.2
 Date: 2019-01-17
 Author: regPhylo <regPhylo@gmail.com>
 Maintainer: regPhylo <regPhylo@gmail.com>
 Description: The regPhylo package provides functions to assist in building 
     phylogenetic trees appropriate for use in ecological studies, particularly
     for a regional species pool. The regPhylo functions may be used in series 
-    (following the tutorial "Appendix 1" explaining the pipeline used in the case 
+    (following the short tutorial "Appendix 1" explaining the workflow and features, 
+    or case-study tutorial “Appendix 2” reproducing the methods used in the case 
     study of XX et al. Submitted), starting with a list of focal taxa, to create a
     file ready to run using the software BEAST2, 
     (appropriate for estimating time-calibrated trees and including phylogenetic 
@@ -31,7 +32,6 @@ Imports: bold,
     seqinr,
     ape,
     geomedb,
-    worrms,
     RJSONIO,
     stringr,
     fields,

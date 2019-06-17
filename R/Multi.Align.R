@@ -71,7 +71,7 @@
 #' (e.g. "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe")
 #' For Linux the Prank software must be in the $PATH.
 #'
-#' @return This function return the new alignments in the output folder.
+#' @return This function returns the new alignments in the output folder.
 #' The output folder is created directly by the function. The
 #' name of the program appears as a prefix in the name of the alignment file using
 #' '_' as a separator. The function also exports a table into the input folder containing

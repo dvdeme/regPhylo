@@ -61,13 +61,25 @@ an '_R_' as a prefix on the sequence name if it has been reverse complemented).
 Second, the function runs Mafft fftns2, fftnsi, Prank and PASTA, and
 alphabetically orders the sequences within each of the gene region alignment.
 
-The function requires that Muscle, Mafft, Prank and Pasta are installed and in
-the PATH.
-
 The 'output', 'input' and 'nthread' objects  the need
 to be present in the R environment before running the function
 because the function runs in parallel using the R package 'parallel' (see
 example).
+
+The function requires that Muscle, Mafft, Prank and Pasta are installed and in
+the PATH.
+\itemize{ \item For Muscle, download for the different OS are available at
+\url{https://www.drive5.com/muscle/downloads.htm},
+and instructions at \url{https://www.drive5.com/muscle/manual/}.
+\item For Mafft, download for the different OS and all documentation are available at
+\url{https://mafft.cbrc.jp/alignment/software/}, (for Windows OS we have only tested the
+"All-in-one package for Windows" version of Maftt).
+\item For Prank, Download for the different OS and all documentation are available at
+\url{http://wasabiapp.org/software/prank/}, specific instructions for installation are
+available at \url{http://wasabiapp.org/software/prank/prank_installation/}.
+\item For PASTA, download and instructions for installation are provided on the Github page
+available at: \url{https://github.com/smirarab/pasta}.
+}
 }
 \examples{
 # Load into the R environment the object used by the function.

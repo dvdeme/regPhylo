@@ -13,13 +13,26 @@
 #' Second, the function runs Mafft fftns2, fftnsi, Prank and PASTA, and
 #' alphabetically orders the sequences within each of the gene region alignment.
 #'
-#' @details The function requires that Muscle, Mafft, Prank and Pasta are installed and in
-#' the PATH.
 #'
 #' @details The 'output', 'input' and 'nthread' objects  the need
 #' to be present in the R environment before running the function
 #' because the function runs in parallel using the R package 'parallel' (see
 #' example).
+#'
+#' @details The function requires that Muscle, Mafft, Prank and Pasta are installed and in
+#' the PATH.
+#' \itemize{ \item For Muscle, download for the different OS are available at
+#' \url{https://www.drive5.com/muscle/downloads.htm},
+#' and instructions at \url{https://www.drive5.com/muscle/manual/}.
+#' \item For Mafft, download for the different OS and all documentation are available at
+#' \url{https://mafft.cbrc.jp/alignment/software/}, (for Windows OS we have only tested the
+#' "All-in-one package for Windows" version of Maftt).
+#' \item For Prank, Download for the different OS and all documentation are available at
+#' \url{http://wasabiapp.org/software/prank/}, specific instructions for installation are
+#' available at \url{http://wasabiapp.org/software/prank/prank_installation/}.
+#' \item For PASTA, download and instructions for installation are provided on the Github page
+#' available at: \url{https://github.com/smirarab/pasta}.
+#' }
 
 #' @param input path to the folder storing the files of interest for further alignment.
 #' The files should have the extension '.fas' and the name of the gene region
@@ -31,7 +44,7 @@
 #' name of the program appears as a prefix in the name of the alignment file using
 #' '_' as a separator. The function also exports a table into the input folder containing
 #' all the names of the sequences, per gene region, that have been reverse
-#' complemented.
+#' complemented. A similar table is exported in the R environment.
 #'
 #' @param methods programs used to align the sequences. The function used Mafft-FFTNS1
 #' to reverse complement and align quickly the sequences,
@@ -57,6 +70,13 @@
 #' to the Prank executable
 #' (e.g. "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe")
 #' For Linux the Prank software must be in the $PATH.
+#'
+#' @return This function return the new alignments in the output folder.
+#' The output folder is created directly by the function. The
+#' name of the program appears as a prefix in the name of the alignment file using
+#' '_' as a separator. The function also exports a table into the input folder containing
+#' all the names of the sequences, per gene region, that have been reverse
+#' complemented, the same table is exported into the R environment as well.
 #'
 #'
 #' @examples # Load into the R environment the object used by the function.
@@ -382,13 +402,13 @@ Multi.Align = function(input = NULL, output = NULL, nthread = NULL, methods = NU
                                                  RevComp))
         } else {
           # If none of the sequence have been reverse complemented.
-          listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), NA))
+          listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), "None of the sequence has been reverse complemented"))
         }  # End if else.
       } # end for if(inherits(listAlig, "simpleError")==FALSE) {
     }  # End for i.
     # Return a table with the name of the sequences reverse complemented for each
     # gene region.
-    colnames(listRevComp) = c("Gene", "SequenceName")
+    colnames(listRevComp) = c("Gene", "SequenceName_ReverseComplemented")
     utils::write.table(listRevComp, file = paste(input, "/ListSeq_ReverseComplemented.txt",
         sep = ""), row.names = F, sep = "\t")
     return(listRevComp)

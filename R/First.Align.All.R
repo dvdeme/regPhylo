@@ -45,13 +45,19 @@
 #' function.
 
 #' @details The function requires that Mafft and PASTA are installed and in the PATH.
+#' \itemize{ \item For Mafft, download for the different OS and all documentation are available at
+#' \url{https://mafft.cbrc.jp/alignment/software/}, (for Windows OS we have only tested the
+#' "All-in-one package for Windows" version of Maftt).
+#' \item For PASTA, download and instructions for installation are provided on the Github page
+#' available at: \url{https://github.com/smirarab/pasta}.
+#' }
 
 
 #' @return The function returns the alignment in the output folder using the
 #' name of the program as a prefix of the alignment (i.e. "mafftfftnsi_Alig_co1.fas").
 #' The function also returns a table called "ListSeq_RevCompl_FirstAlignAll.txt"
 #' into the output folder listing the sequence names that have been reverse
-#' complemented by Mafft.
+#' complemented by Mafft, the same table is exported into the R environment as well.
 #'
 
 #' @examples # The input, output and nthread object have to be present in
@@ -301,13 +307,13 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
                 RevComp))
         } else {
             # If none of the sequence have been reverse complemented.
-            listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), NA))
+            listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), "None of the sequence has been reverse complemented"))
         }  # End if else.
         } # end for if(inherits(listAlig, "simpleError")==FALSE) {
     }  # End for i.
     # Return a table with the name of the sequences reverse complemented for each
     # gene region.
-    colnames(listRevComp) = c("Gene", "SequenceName")
+    colnames(listRevComp) = c("Gene", "SequenceName_ReverseComplemented")
     utils::write.table(listRevComp, file = paste(input, "/ListSeq_RevCompl_FirstAlignAll.txt",
         sep = ""), row.names = F, sep = "\t")
     return(listRevComp)

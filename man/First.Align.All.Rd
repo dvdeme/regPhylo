@@ -62,6 +62,12 @@ function runs in parallel using the R package 'parallel', see example below the
 function.
 
 The function requires that Mafft and PASTA are installed and in the PATH.
+\itemize{ \item For Mafft, download for the different OS and all documentation are available at
+\url{https://mafft.cbrc.jp/alignment/software/}, (for Windows OS we have only tested the
+"All-in-one package for Windows" version of Maftt).
+\item For PASTA, download and instructions for installation are provided on the Github page
+available at: \url{https://github.com/smirarab/pasta}.
+}
 }
 \examples{
 # The input, output and nthread object have to be present in

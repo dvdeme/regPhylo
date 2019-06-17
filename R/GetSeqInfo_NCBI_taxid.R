@@ -282,7 +282,13 @@ GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL, ti
 
     print(paste("Finish processing:", date()))
     return(TabSpGenSum)
-    seqinr::closebank()
+    CheckOK = tryCatch(seqinr::closebank(), error = function(e) e)
+    if(inherits(CheckOK, "error")){
+      stop(paste("The function could not retrieve the desired sequence(s), because the default ", "\n",
+                 " time-lag (timeout = 10 sec.) to connect to the seqinr server is too short:", "\n",
+                 " increasing the timeout to 15 or 20 seconds should solve the problem.", sep = ""))
+    }
+
 }  # End of the function.
 
 

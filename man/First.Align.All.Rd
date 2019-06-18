@@ -38,7 +38,7 @@ The function returns the alignment in the output folder using the
 name of the program as a prefix of the alignment (i.e. "mafftfftnsi_Alig_co1.fas").
 The function also returns a table called "ListSeq_RevCompl_FirstAlignAll.txt"
 into the output folder listing the sequence names that have been reverse
-complemented by Mafft.
+complemented by Mafft, the same table is exported into the R environment as well.
 }
 \description{
 First, this function aligns all the sequences for each distinct gene region

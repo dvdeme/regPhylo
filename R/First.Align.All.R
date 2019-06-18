@@ -307,7 +307,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
                 RevComp))
         } else {
             # If none of the sequence have been reverse complemented.
-            listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), "None of the sequence has been reverse complemented"))
+            listRevComp = rbind(listRevComp, cbind(rep(Unigene[i], 1), "None of the sequences have been reverse complemented"))
         }  # End if else.
         } # end for if(inherits(listAlig, "simpleError")==FALSE) {
     }  # End for i.

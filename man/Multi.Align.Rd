@@ -19,7 +19,7 @@ final alignments. The output folder is created directly by the function. The
 name of the program appears as a prefix in the name of the alignment file using
 '_' as a separator. The function also exports a table into the input folder containing
 all the names of the sequences, per gene region, that have been reverse
-complemented.}
+complemented. A similar table is exported in the R environment.}
 
 \item{nthread}{number of threads used to run the alignment software in
 parallel for the different gene regions.}
@@ -45,6 +45,14 @@ For Linux the Muscle software must be in the $PATH.}
 to the Prank executable
 (e.g. "C:/Users/deme/Documents/Programs/Prank/prank.windows.140603/prank/bin/prank.exe")
 For Linux the Prank software must be in the $PATH.}
+}
+\value{
+This function returns the new alignments in the output folder.
+The output folder is created directly by the function. The
+name of the program appears as a prefix in the name of the alignment file using
+'_' as a separator. The function also exports a table into the input folder containing
+all the names of the sequences, per gene region, that have been reverse
+complemented, the same table is exported into the R environment as well.
 }
 \description{
 This function enables to run several alignment softwares in parallel, including Muscle v3.8.31 (Edgar 2004),

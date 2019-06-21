@@ -19,22 +19,22 @@ final alignments. The output folder is created directly by the function. The
 name of the program appears as a prefix in the name of the alignment file using
 '_' as a separator. The function also exports a table into the input folder containing
 all the names of the sequences, per gene region, that have been reverse
-complemented. A similar table is exported in the R environment.}
+complemented. A similar table is exported into the R environment.}
 
 \item{nthread}{number of threads used to run the alignment software in
 parallel for the different gene regions.}
 
-\item{methods}{programs used to align the sequences. The function used Mafft-FFTNS1
-to reverse complement and align quickly the sequences,
+\item{methods}{programs used to align the sequences. The function uses Mafft-FFTNS1
+to reverse complement and quickly align the sequences,
 but other programs can be used simultaneously, such as Mafft-fftns2, Mafft-fftnsi,
 Muscle, Prank and PASTA, c("mafftfftns2", "mafftfftnsi", "muscle", "prank", "pasta").}
 
 \item{Mafft.path}{for the Windows platform, a character string which provides the path
 to the Mafft executable
 (e.g. Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/
-mafft-7.409-win64-signed/mafft-win/mafft") (see examples below). Eventhough Mafft is not
-the alignment you are after, mafft is necessary to reverse complement the sequences
-and the Mafft.path must be completed in all cases.
+mafft-7.409-win64-signed/mafft-win/mafft") (see examples below). Even if Mafft is not
+the alignment you would like to use, it is necessary to use mafft to reverse complement the sequences
+and therefore the Mafft.path must be completed in all cases.
 For Linux the mafft software must be in the $PATH.}
 
 \item{Muscle.path}{for the Windows platform, a character string which provides the path
@@ -47,7 +47,7 @@ to the Prank executable
 For Linux the Prank software must be in the $PATH.}
 }
 \value{
-This function returns the new alignments in the output folder.
+This function returns the new alignments into the output folder.
 The output folder is created directly by the function. The
 name of the program appears as a prefix in the name of the alignment file using
 '_' as a separator. The function also exports a table into the input folder containing
@@ -55,10 +55,10 @@ all the names of the sequences, per gene region, that have been reverse
 complemented, the same table is exported into the R environment as well.
 }
 \description{
-This function enables to run several alignment softwares in parallel, including Muscle v3.8.31 (Edgar 2004),
+This function enables running several alignment softwares in parallel, including Muscle v3.8.31 (Edgar 2004),
 Mafft v7.222 fftns1, fftns2, fftnsi (Katoh et al. 2005), Prank v.140603 (Loytymoja & Goldman 2008)
 and PASTA (Mirarab et al. 2015).
-\strong{Note:} PASTA is not available to run for Windows users.
+\strong{Note:} PASTA is not available for Windows users.
 }
 \details{
 First, for each distinct gene region, the function aligns all the sequences
@@ -67,9 +67,9 @@ with the option \emph{--adjustdirection} to automatically detect the direction o
 sequences and reverse complement the sequences if necessary (the function adds
 an '_R_' as a prefix on the sequence name if it has been reverse complemented).
 Second, the function runs Mafft fftns2, fftnsi, Prank and PASTA, and
-alphabetically orders the sequences within each of the gene region alignment.
+alphabetically orders the sequences within each of the gene region alignments.
 
-The 'output', 'input' and 'nthread' objects  the need
+The 'output', 'input' and 'nthread' objects need
 to be present in the R environment before running the function
 because the function runs in parallel using the R package 'parallel' (see
 example).
@@ -80,13 +80,13 @@ the PATH.
 \url{https://www.drive5.com/muscle/downloads.htm},
 and instructions at \url{https://www.drive5.com/muscle/manual/}.
 \item For Mafft, download for the different OS and all documentation are available at
-\url{https://mafft.cbrc.jp/alignment/software/}, (for Windows OS we have only tested the
+\url{https://mafft.cbrc.jp/alignment/software/} (for Windows OS we have only tested the
 "All-in-one package for Windows" version of Maftt).
-\item For Prank, Download for the different OS and all documentation are available at
+\item For Prank, download for the different OS and all documentation are available at
 \url{http://wasabiapp.org/software/prank/}, specific instructions for installation are
 available at \url{http://wasabiapp.org/software/prank/prank_installation/}.
 \item For PASTA, download and instructions for installation are provided on the Github page
-available at: \url{https://github.com/smirarab/pasta}.
+available at \url{https://github.com/smirarab/pasta}.
 }
 }
 \examples{

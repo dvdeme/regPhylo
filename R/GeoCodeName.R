@@ -18,7 +18,7 @@
 #'
 #' @param AutoCorrNZ if 'TRUE' then the correction of the place name will be applied
 #' based on New Zealand (i.e. relevant for the phylogenetic tree of New Zealand marine
-#' ray-finned fishes, Eme \emph{et al.} Submitted). However other corrections will be more
+#' ray-finned fishes, XXX \emph{et al.} Submitted). However other corrections will be more
 #' suitable in other contexts.
 #'
 #' @return Two identical tables are exported, one into the R environment and one into the working directory.
@@ -79,7 +79,7 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
     input = gsub(":", "%3A", input) # ":"
     input = gsub(";", "%3B", input) # ";"
     input = gsub(",", "%3C", input) # ","
-    url  =paste("http://nominatim.openstreetmap.org/search?q=", input,
+    url  =paste("https://nominatim.openstreetmap.org/search?q=", input,
                 "&limit=20&format=json", sep="") ### build complete url for the request
     # with maximun 20 answers.
     outres = RJSONIO::fromJSON(url)
@@ -91,10 +91,10 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
     return(res)
   }
 
-  # Check if all the Seqeucnes have accurate geographic coordinates already.
+  # Check if all the sequences have accurate geographic coordinates already.
 
-  if(length(which(is.na(input$Lat) == "TRUE") == 0)){
-    print("All the sequences have geographic coordinates")
+  if(length(which(is.na(input$Lat) == "TRUE")) == 0){
+    warning("All the sequences have geographic coordinates")
     # Keep track of the Original location name
     OrigLocatName = input[,20]
     # Geo_accuracy is "From_DB"
@@ -702,7 +702,8 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
         21], Latitude_Y, Longitude_X, Geo_accuracy, input[, c(24:26)])
 
     } else {
-
+      warning("None of the DNA sequences without geographic coordinates has a
+            place name that can be used to extract geographic coordinates")
       pos.Seq = sort(c(pos.Seq1, pos.4))
       Location_used = rep(NA, dim(input)[1])
       Geo_accuracy = rep(NA, dim(input)[1])

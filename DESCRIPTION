@@ -10,7 +10,7 @@ Description: The regPhylo package provides functions to assist in building
     for a regional species pool. The regPhylo functions may be used in series 
     (following the short tutorial "Appendix 1" explaining the workflow and features, 
     or case-study tutorial “Appendix 2” reproducing the methods used in the case 
-    study of XX et al. Submitted), starting with a list of focal taxa, to create a
+    study of Eme et al. (2019), starting with a list of focal taxa, to create a
     file ready to run using the software BEAST2, 
     (appropriate for estimating time-calibrated trees and including phylogenetic 
     uncertainty in downstream ecological analyses). Alternatively, individual functions 
@@ -24,7 +24,7 @@ Description: The regPhylo package provides functions to assist in building
     from within the R environment to perform multiple alignments, compare alignments
     to remove poorly aligned positions within alignments, 
     and to prepare input files for phylogenetic analyses.
-    The philosophy of the package is described in XX et al. Submitted.
+    The philosophy of the package is described in Eme et al. (2019) Global Ecology and Biogeography.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

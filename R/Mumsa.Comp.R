@@ -4,7 +4,7 @@
 #' Sonnhammer 2005) and reports the MOS (Multiple
 #' Overlap Score) and the AOS (Average Overlap Score) statistics.
 #' \strong{Note:} This function is currently not available on Windows platform (Windows user can use
-#' the online web server available at: http://msa.cgb.ki.se/cgi-bin/msa.cgi).
+#' the online web server available at: \url{http://msa.cgb.ki.se/cgi-bin/msa.cgi}).
 
 #' @details The MOS is provided for each alignment enabling us to check the support (more exactly the
 #' consensuality) of those alignments. The alignment with the highest MOS is
@@ -27,6 +27,8 @@
 #'
 #'
 #' @details The function requires that the MUMSA software is installed and in the PATH.
+#' Download from \url{http://msa.cgb.ki.se/cgi-bin/msa.cgi}, paste the archive into the desired
+#' folder, extract the archive and then compile the program using the make commands.
 #'
 #' @return A tables with the MOS for each alignment and programs and AOS for each
 #' alignment are exported as a txt file.

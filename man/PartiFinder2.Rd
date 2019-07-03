@@ -19,7 +19,7 @@ providing the gene partition of the alignment file. This file follows the RAxML
 format, see \url{http://sco.h-its.org/exelixis/resource/download/NewManual.pdf}.}
 
 \item{codon}{according to the file providing the gene partition in the alignment,
-codon is the number of the row in this file corresponding to a coding gene that
+codon is the number of the row/s in this file corresponding to a coding gene that
 will be split into first, second, and third codon positions, to prepare the
 .cfg PartitionFinder2 inputfile.}
 
@@ -29,7 +29,7 @@ necessary) of the concatenated nexus alignment.}
 \item{Path.PartiF2}{path pointing to
 where the file 'PartitionFinder.py' is installed (e.g.
 '/home/davidpc/Programs/PartitionFinder2/partitionfinder-2.1.1/PartitionFinder.py').
-Note: Apply to both Linux and Windows OS.}
+Note: Applies to both Linux and Windows OS.}
 
 \item{branchlengths}{'linked' or 'unlinked'.}
 
@@ -50,7 +50,7 @@ GTR+G+I, of the many more available in PhyML.}
 \item{rcluster_percent}{See description for rcluster-max, below. (Default 10).}
 
 \item{rcluster_max}{rcluster-max and rcluster-percent control
-the thoroughness of the relaxed clustering algorithm together. Setting either
+the thoroughness of the relaxed clustering algorithm. Setting either
 of them higher will tend to make the search more thorough and slower. Setting
 them lower will tend to make the search quicker but less thorough. (Default 1000).}
 }
@@ -77,7 +77,7 @@ number of partitions and their best associated substitution models.
 Using a fasta alignment and partition file following the
 RAxML requirements (as exported by \code{\link{Align.Concat}} function) this function
 prepares an alignment in phylip format ('.phy'), it builds a .cfg input file
-describing the settings for PartitionFinder2 and calls the program.
+describing the settings for PartitionFinder2, and calls the program.
 
 "The rcluster algorithm works by finding the rcluster-max most similar
 pairs of data blocks, OR the top rcluster-percent of similar datablocks, whichever
@@ -95,7 +95,7 @@ The function requires that PartitionFinder2 is installed and
 the path of the python script "PartitionFinder.py" must be provided
 for the Path.PartiF2 parameter.
 Currently the function uses a temporary bash script to run Partitionfinder2
-on Linux plateforms.
+on Linux platforms.
 
 Online documentation and the download page are available at
 \url{http://www.robertlanfear.com/partitionfinder/}. Installation instructions
@@ -130,18 +130,19 @@ PartitionFinder.py --help
 }
 }
 \note{
-\itemize{ \item 1) In some case users might need to install the "png" and "reticulate" R package,
- in order for python to run through R. This may be the case when the files
- "partition_finder.cfg" and "xxxx.phy" have been exported in your working directory
- and partitionfinder2 is working on your machine, but the following error message is
+\itemize{ \item 1) In some cases, users might need to install the "png" and "reticulate" R packages,
+ in order for python to run through R. This is likely the case when the files
+ "partition_finder.cfg" and "xxxx.phy" have been successfully exported in your working directory
+ and PartitionFinder2 is working on your machine, but the following error message is
  printed "Error in file(con, "r") : cannot open the connection
 In addition: Warning message:
 In file(con, "r") :
  cannot open file 'analysis/best_scheme.txt': No such file or directory".
-\item 2) Another point is that sometimes partitionFinder2 crashed in the middle of the run,
-usually due to threading problems. So to re-run the function, all the files and folder
-previously created by the \code{\link{PartiFinder2}} function must be remove ("partition_finder.cfg",
-"xxxx.phy", and the folder called "analysis"), and we advise to use less threads.
+\item 2) Sometimes PartitionFinder2 crashes prior to finishing the run,
+usually due to threading problems. In order to successfully re-run the function, remove
+the folder and files by the unsuccessful execution of the \code{\link{PartiFinder2}} function. (i.e. "partition_finder.cfg",
+"xxxx.phy", and the folder called "analysis"), and we advise the user to decrease
+the number of threads.
 }
 }
 \examples{

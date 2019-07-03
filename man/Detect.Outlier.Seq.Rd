@@ -85,7 +85,7 @@ substitution model to compute the distance matrix in order to detect very
 divergent sequences. The third option 'Comb' combines the two
 distance matrices described above to detect both misaligned and very divergent sequence.
 To do this, the two distance matrices are first re-scaled as percentages of the their highest
-distances respectively and then summed. For a additional details see XXX et al. XXX Appendix 4.
+distances respectively and then summed. For a additional details see Eme et al. (2019) Appendix 4.
 
 This function requires BLAST+ installed and in the PATH in order to detect 'secondary outliers'.
 To download and install BLAST+ software locally go
@@ -137,4 +137,7 @@ file.remove(c( "Example_16S_outliers_1.txt", "Example_16S_outliers_2.txt"))
 Criscuolo & Gascuel 2008, DOI: 10.1186/1471-21.5-9-166
 
 Chen et al. 2015, DOI: 10.1093/sysbio/syv059
+
+Eme et al. (2019). An integrated pathway for building regional
+phylogenies for ecological studies. \emph{Global Ecology and Biogeography}, Accepted.
 }

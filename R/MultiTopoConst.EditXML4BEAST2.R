@@ -107,7 +107,7 @@
 #'
 #' # Note for Windows user: RAxML executable for Windows can be found at:
 #' # https://github.com/stamatak/standard-RAxML/tree/master/WindowsExecutables_v8.2.10
-#' # and once the appropriate executbale is downloaded and extracted, RAxML can be run
+#' # and once the appropriate executable is downloaded and extracted, RAxML can be run
 #' # from that folder.
 #' # All input files must be present in the same folder.
 #' # RAxML can be run through R using similar type of command that

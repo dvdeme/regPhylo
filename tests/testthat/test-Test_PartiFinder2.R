@@ -25,7 +25,7 @@ Partition = "TempDir.ForPartiFinder2/Partitions_Concat.txt",
 codon = c(2:4), nexus.file = "TempDir.ForPartiFinder2/Concat.nex",
 Path.PartiF2 = "/home/davidpc/Programs/PartitionFinder2/partitionfinder-2.1.1/PartitionFinder.py",
 branchlengths = "linked", models = "all", model_selection = "BIC", search = "rcluster",
-Raxml = "TRUE", nthread = 5, rcluster_percent = 10, rcluster_max = 1000)
+Raxml = "TRUE", nthread = 5)
 
 
 

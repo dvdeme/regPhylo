@@ -1,5 +1,6 @@
 context("Test_Filtering.align.Gblocks")
 
+
 # To run the example we have to copy the input alignment files
 # provided by the package to a temporary directory created into the
 # current working directory.
@@ -18,7 +19,7 @@ overwrite = FALSE) })
 # Run the function from the TempDir folder and store the outputs from
 # Gblocks in the "Trimmed-Gblocks" folder.
 a = Filtering.align.Gblocks(input = "TempDir", LessStringent = TRUE,
-output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
+                            output = "TrimmedGblocks", Type = "d", remove.empty.align = TRUE)
 
 
 b =  list.files("TrimmedGblocks")
@@ -41,8 +42,8 @@ test_that("Test if the function run until the end, less stringent", {
   # Test if the output of the function in the R environment is a table with 12 rows
   expect_equal(dim(a)[1], 12)
   # Test if the output of the function in the R environment compute the sequence length.
-  expect_equal(as.numeric(as.character(a[1, 5])), 502)
-  expect_equal(as.numeric(as.character(a[12, 5])), 1176)
+  expect_equal(as.numeric(as.character(a[1, 5])), 463)
+  expect_equal(as.numeric(as.character(a[12, 5])), 1086)
   # Test if the number of alignements exported in the output directory is correct must be 12
   expect_equal(length(b), 12)
   # Test if all the files have some content.
@@ -88,8 +89,8 @@ test_that("Test if the function run until the end, more stringent", {
   # Test if the output of the function in the R environment is a table with 12 rows
   expect_equal(dim(a)[1], 12)
   # Test if the output of the function in the R environment compute the sequence length.
-  expect_equal(as.numeric(as.character(a[1, 5])), 132)
-  expect_equal(as.numeric(as.character(a[12, 5])), 666)
+  expect_equal(as.numeric(as.character(a[1, 5])), 122)
+  expect_equal(as.numeric(as.character(a[12, 5])), 615)
   # Test if the number of alignements exported in the output directory is correct must be 12
   expect_equal(length(b), 12)
   # Test if all the files have some content.
@@ -126,7 +127,7 @@ test_that("Test the length in pb of the first file, more stringent", {
   test1 = ape::read.dna(paste("TrimmedGblocks/", "Gblocksls_Mafftfftns1_Alig_co1.fas", sep = ""), format = "fasta")
   expect_equal(dim(test)[2], 1551)
   expect_equal(dim(test1)[2], 650)
-  expect_equal(a[5,1], 650)
+  expect_equal(as.numeric(as.character(a[5,1])), 650)
 })
 
 

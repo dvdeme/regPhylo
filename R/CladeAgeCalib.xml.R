@@ -255,7 +255,6 @@ CladeAgeCalib.xml = function(xml.input = NULL, input.tree = NULL, output = NULL,
                    the classification table (i.e. inputTaxono) and the tip names
                    in the tree (i.e. input.tree) for the clade ", target, sep = ""))}))])
 
-
             if (setequal(DescenTip, Tipnames))
                 {
                   # If the group is also monophyletic then implement the CLADEAGE xml code,
@@ -382,7 +381,10 @@ CladeAgeCalib.xml = function(xml.input = NULL, input.tree = NULL, output = NULL,
                       "\n", "            </distribution>", "\n", sep = "")
                   }  # End else if(is.na(match(NumberofTheClade, DFCladexml[,2]))=='FALSE'){
 
-                }  # End if(setequal(DescenTip, Tipnames)){.
+                } else { # End if(setequal(DescenTip, Tipnames)){.
+                    warning(paste("The monophyly of the group ", target, " is not recovered in the phylogenetic tree used in input.tree,
+                    so the calibration point of this group has been removed because CLADEAGE requires monophyletic groups.", sep = ""))
+        }
 
         } else {
             # End of if(length(aa)>0){

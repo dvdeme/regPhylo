@@ -57,7 +57,7 @@
 #' divergent sequences. The third option 'Comb' combines the two
 #' distance matrices described above to detect both misaligned and very divergent sequence.
 #' To do this, the two distance matrices are first re-scaled as percentages of the their highest
-#' distances respectively and then summed. For a additional details see XXX et al. XXX Appendix 4.
+#' distances respectively and then summed. For a additional details see Eme et al. (2019) Appendix 4.
 #' @details This function requires BLAST+ installed and in the PATH in order to detect 'secondary outliers'.
 #' To download and install BLAST+ software locally go
 #' to \url{https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download},
@@ -116,6 +116,8 @@
 #'
 #' @references Criscuolo & Gascuel 2008, DOI: 10.1186/1471-21.5-9-166
 #' @references Chen et al. 2015, DOI: 10.1093/sysbio/syv059
+#' @references Eme et al. (2019). An integrated pathway for building regional
+#' phylogenies for ecological studies. \emph{Global Ecology and Biogeography}, Accepted.
 
 #' @export Detect.Outlier.Seq
 

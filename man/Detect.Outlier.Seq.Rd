@@ -85,7 +85,7 @@ substitution model to compute the distance matrix in order to detect very
 divergent sequences. The third option 'Comb' combines the two
 distance matrices described above to detect both misaligned and very divergent sequence.
 To do this, the two distance matrices are first re-scaled as percentages of the their highest
-distances respectively and then summed.
+distances respectively and then summed. For a additional details see XXX et al. XXX Appendix 4.
 
 This function requires BLAST+ installed and in the PATH in order to detect 'secondary outliers'.
 To download and install BLAST+ software locally go

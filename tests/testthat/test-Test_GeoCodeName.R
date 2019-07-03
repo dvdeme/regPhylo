@@ -103,21 +103,22 @@ test_that("Test if there is two additional columns, When all sequences have geog
 test_that("Test if when all sequences have already some geographic coordinates the output is has expected", {
   expect_equal(dim(Seq.DF3)[1], 8)
   expect_equal(length(which(Seq.DF3[,25] == "From_DB")), 8)
-  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE), "All the sequences have geographic coordinates")
+  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE),
+                 "All the sequences")
 })
 
-rm(Seq.DF3)
+rm(Seq.DF3, Seq.DF1)
 file.remove("Seq.DF3.txt")
 
 # Run the function with a table with no place name for the sequences without geographic coordinates.
+Seq.DF1 = Seq.Diastocapen$Seq.DF1
 Seq.DF1[3,20] = NA
 Seq.DF3 = GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE)
 
 test_that("Test if when all seqeunces without geographic coordinates neither place name the output is correct", {
   expect_equal(dim(Seq.DF3)[1], 11)
   expect_equal(dim(Seq.DF3)[2], 28)
-  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE), "None of the DNA sequences without geographic coordinates has a
-            place name that can be used to extract geographic coordinates")
+  expect_warning(GeoCodeName(input = Seq.DF1, output = "Seq.DF3.txt", AutoCorrNZ = TRUE), "None of the DNA sequences")
 })
 
 rm(Seq.DF3)

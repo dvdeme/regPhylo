@@ -16,28 +16,28 @@ extension '.fas').}
 By default (i.e. NULL) the function uses all the files with a .fas extension in the input folder.}
 
 \item{LessStringent}{if 'TRUE' opts for the less
-stringent selection (equivalent to ticking the following three options in Gblocks server,
+stringent selection (equivalent to ticking the following three options in Gblocks server:
 'Allow smaller final blocks', 'Allow gap positions within the final blocks',
-'Allow less strict flanking positions', the output has the prefix Gblocksls),
+'Allow less strict flanking positions'; the output has the prefix Gblocksls),
 otherwise the default parameters of Gblocks will be used providing a more stringent selection
 (output with the prefix Gblocksms).}
 
 \item{Type}{Type of sequences can be Protein (p), DNA (d), or Codons (c).}
 
 \item{output}{path to the folder storing the trimmed alignments.
-The output folder is created automatically is necessary.}
+The output folder is created automatically.}
 
 \item{remove.empty.align}{If TRUE, the empty alignments are excluded from the computation.}
 
-\item{Gblocks.path}{for the Windows plateform, a character string which provides the path
+\item{Gblocks.path}{for the Windows platform, a character string which provides the path
 to the Gblocks executable but without the name of the executable
 (e.g. "C:/Users/deme/Documents/Programs/Gblocks/Gblocks_Windows_0.91b/Gblocks_0.91b").
 For Linux the Gblocks software must be in the $PATH.}
 }
 \value{
-An ouptut folder is created with the trimmed alignments. In the R environment
+An output folder is created with the trimmed alignments. In the R environment
 the function returns a table with the length of the different alignments for
-each gene region and the alignment programs.
+each gene region and alignment program.
 }
 \description{
 This function uses the software Gblocks V 0.91b (Castresana 2000)

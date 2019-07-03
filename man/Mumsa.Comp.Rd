@@ -28,7 +28,7 @@ This function compares multiple alignments using the MUMSA software (Lassmann &
 Sonnhammer 2005) and reports the MOS (Multiple
 Overlap Score) and the AOS (Average Overlap Score) statistics.
 \strong{Note:} This function is currently not available on Windows platform (Windows user can use
-the online web server available at: http://msa.cgb.ki.se/cgi-bin/msa.cgi).
+the online web server available at: \url{http://msa.cgb.ki.se/cgi-bin/msa.cgi}).
 }
 \details{
 The MOS is provided for each alignment enabling us to check the support (more exactly the
@@ -40,6 +40,8 @@ indicates that the sequences are too divergent to be properly aligned
 (potentially caused by saturation effects).
 
 The function requires that the MUMSA software is installed and in the PATH.
+Download from \url{http://msa.cgb.ki.se/cgi-bin/msa.cgi}, paste the archive into the desired
+folder, extract the archive and then compile the program using the make commands.
 }
 \examples{
 # Run the function without removing empty alignments

@@ -136,7 +136,7 @@ input = "TempDir.Multi.aligned"
 
 # Example to run "mafftfftnsi", "muscle", and "prank" on Windows.
 # (Mafft.path, Muscle.path, Prank.path need to be adapted to the user's
-# computer configuration, and are provided hereas an example).
+# computer configuration, and are provided here as an example).
 
 Multi.Align(input = input, output = "multi.alignedTest", nthread = 3,
 methods = c("mafftfftnsi", "muscle", "prank"),

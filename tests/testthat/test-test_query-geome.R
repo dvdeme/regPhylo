@@ -8,7 +8,7 @@ dim(Seq.DF2)
 
 test_that("Test the example, no sequence is present in GeOMe", {
   expect_equal(dim(Seq.DF2)[1], 11) # The original table is exported and includes 11 rows
-  expect_equal(dim(Seq.DF2)[1], 26) # 26 columns
+  expect_equal(dim(Seq.DF2)[2], 26) # 26 columns
   expect_equal(length(grep("XY-GeOMe", Seq.DF2[,26])), 0)
 })
 file.remove("Seq.DF2.txt")
@@ -23,7 +23,7 @@ Seq.DF2 = Query.GeOMe.XY.R(input = test.DF, Phylum = "Chordata", output = "Seq.D
 
 test_that("Test the example, 1 sequence is extracted from GeOMe", {
   expect_equal(dim(Seq.DF2)[1], 1) # The artificial table is exported and includes 1 row.
-  expect_equal(dim(Seq.DF2)[1], 26) # 26 columns
+  expect_equal(dim(Seq.DF2)[2], 26) # 26 columns
   expect_equal(length(grep("XY-GeOMe", Seq.DF2[,26])), 1) # The info XY-GeOMe
   # is added in the column OriginDataBase
   expect_equal(Seq.DF2[,22], -26.64805)

@@ -34,7 +34,7 @@ available in GeOMe.
 }
 \examples{
 # Import Seq.DF1
-#' data(Seq.Diastocapen)
+data(Seq.Diastocapen)
 Seq.DF1 = Seq.Diastocapen$Seq.DF1
 \dontrun{
 # Run the function

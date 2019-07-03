@@ -635,7 +635,7 @@ SpeciesGeneMat.Bl = function(input = NULL, output = NULL, NCBI.Trash = NULL, BOL
     utils::write.table(inputCl1, file = paste(output, "_CleanDataset.txt", sep = ""), sep = "\t",
         row.names = FALSE)
 
-    return(list(Specie.Gene_matrix = SpeciesDNAFragMat, Summary_DNA = DNASeq_SummarySort,
+    return(list(Species.Gene_matrix = SpeciesDNAFragMat, Summary_DNA = DNASeq_SummarySort,
         Summary_Species = SpeciesSeq_SummarySort, MissingSpecies_WithoutSequences = MissingSpecies))
 }  # End of the function.
 

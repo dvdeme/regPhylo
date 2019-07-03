@@ -1,30 +1,33 @@
 #' Sequences and metadata extracted from the Barcode of Life Database (BOLD), GenBank (NCBI) and the repository of the New Zealand National
 #' Fish Collection for the species "Diastobranchus capensis".
 #'
+#'
 #' This example data provides a list of tables storing sequences and metadata for the species "Diastobranchus capensis".
-#' Each table corresponds to the output table of the following functions: \code{\link{GetSeq_BOLD}}, \code{\link{GetSeqInfo_NCBI.taxid}},
+#' Each table corresponds to the output table of the following functions: \code{\link{GetSeq_BOLD}}, \code{\link{GetSeqInfo_NCBI_taxid}},
 #' \code{\link{Congr.NCBI.BOLD.perReposit}}, \code{\link{GeoCoord.WGS84}}, \code{\link{GeoCodeName}}.
 #' @format A list of six tables:
-#' 1) This table contains the raw output of the function \code{\link{GetSeq_BOLD}} from the regPhylo package (i.e. sequences and metadata extracted from the Barcode of Life Database (BOLD)
+#' \itemize{
+#' \item 1) This table contains the raw output of the function \code{\link{GetSeq_BOLD}} from the regPhylo package (i.e. sequences and metadata extracted from the Barcode of Life Database (BOLD)
 #' for the species "Diastobranchus capensis" the 9/10/2018).
 #' The table "Seq.BOLD" is a dataframe with 8 rows and 82 columns.
-#' 2) This table contains the raw output of the function \code{\link{GetSeqInfo_NCBI.taxid}} from the regPhylo package (i.e. sequences and metadata extracted from GenBank (NCBI)
+#' \item 2) This table contains the raw output of the function \code{\link{GetSeqInfo_NCBI_taxid}} from the regPhylo package (i.e. sequences and metadata extracted from GenBank (NCBI)
 #' for the species "Diastobranchus capensis" the 9/10/2018).
 #' The table "Seq.NCBI" is a dataframe with 4 rows and 23 columns.
-#' 3) This table contains 1 DNA sequence and the associated metadata present in the repository of
+#' \item 3) This table contains 1 DNA sequence and the associated metadata present in the repository of
 #' the New Zealand National Fish Collection of the National Museum of New Zealand, Te Papa Tongarewa.
 #' The table "Seq.Perso" is a dataframe with 1 row and 24 columns
-#' 4) This table contains the raw output of the function \code{\link{Congr.NCBI.BOLD.perReposit}} including data
+#' \item 4) This table contains the raw output of the function \code{\link{Congr.NCBI.BOLD.perReposit}} including data
 #' coming from NCBI, BOLD, and a personal repository, for the species "Diastobranchus capensis".
 #' The table "Seq.DF" is a data frame with 11 rows and 25 columns.
-#' 5) This table contains the raw output of the function \code{\link{GeoCoord.WGS84}} which splits
+#' \item 5) This table contains the raw output of the function \code{\link{GeoCoord.WGS84}} which splits
 #' the Lat_Lon field into two distinct fields "Latitude" and "Longitude" and converts all the geographic
 #' coordinates into WGS84 decimal degrees using +- North, and +- East (i.e. -45.10, -53.23).
 #' The table "Seq.DF1" is a dataframe with 11 rows and 26 columns
-#' 6) This table contains the raw output of the function \code{\link{GeoCodeName}} which extracts the geographic
+#' \item 6) This table contains the raw output of the function \code{\link{GeoCodeName}} which extracts the geographic
 #' coordinates from nominatim openstreetmap API for all the sequences with only place name information.
 #' The table provide two additional columns: the place name used for the query; and information about the precision of the geographic coordinates.
 #' The table "Seq.DF3" is a data frame with 11 rows and 28 columns.
+#' }
 "Seq.Diastocapen"
 
 

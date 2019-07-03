@@ -24,7 +24,7 @@ For Linux the trimAl software must be in the $PATH.}
 \value{
 An output folder is created with the trimmed alignments. In the R environment
 the function returns a table with the length of the different alignments for
-each gene region and alignment programs.
+each gene region and alignment program.
 }
 \description{
 This function uses the software trimAl (Capella-Gutierrez et al. 2009)
@@ -77,5 +77,6 @@ unlink("Trimmed", recursive = TRUE)
 \references{
 Capella-Gutierrez et al. 2009, DOI:
 10.1093/bioinformatics/btp348
+
 Tan et al.  2015, DOI: 10.1093/sysbio/syv033
 }

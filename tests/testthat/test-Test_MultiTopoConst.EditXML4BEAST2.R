@@ -16,7 +16,7 @@ overwrite = FALSE) })
 TreeRooted = ape::read.nexus("TempDir.TopoConstraints2/RAxML_bipartitions.Concat_7GTR_Allconst_autoMRE_ReRooted")
 
 
-### Remove the files in the example that will be cerated while running the function.
+### Remove the files in the example that will be created while running the function.
 file.remove("TempDir.TopoConstraints2/SimpleXml_Wcont.xml", "TempDir.TopoConstraints2/SimpleXml_2SpNoDNA_Wcont.xml",
             "TempDir.TopoConstraints2/Classif18sp_2NoDNA.csv", "TempDir.TopoConstraints2/BackboneTreeAll_2spNoDNA.txt")
 

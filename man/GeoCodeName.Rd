@@ -19,7 +19,7 @@ corrected name fitting the purpose of the study.}
 
 \item{AutoCorrNZ}{if 'TRUE' then the correction of the place name will be applied
 based on New Zealand (i.e. relevant for the phylogenetic tree of New Zealand marine
-ray-finned fishes, Eme \emph{et al.} Submitted). However other corrections will be more
+ray-finned fishes, Eme \emph{et al.} 2019). However other corrections will be more
 suitable in other contexts.}
 }
 \value{
@@ -80,4 +80,8 @@ file.remove("Seq.DF3.txt")
 
 }
 
+}
+\references{
+Eme et al. (2019). An integrated pathway for building regional
+phylogenies for ecological studies. \emph{Global Ecology and Biogeography}, Accepted.
 }

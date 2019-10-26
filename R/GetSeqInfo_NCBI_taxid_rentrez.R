@@ -3,7 +3,7 @@
 #' @description This function extracts all the sequences, accession numbers, and related
 #' information for all the gene regions or a given gene region, from a list of species using
 #' their NCBI taxid.
-#' @details This function extracts data from an external server and can be very slow.
+#' @details This function extracts data from an external server and can be slow.
 #' @return This function returns a table with the species names and the number of
 #' occurrences retrieved from GenBank in the R environment, and exports a table
 #' with the DNA sequences and the metadata into the working directory.
@@ -47,13 +47,6 @@
 #' sought.
 #' @param filename name of the output table (also needs to include the
 #' extension, e.g. ".txt")
-#' @param timeout the timeout in seconds for socketConnection used in, the
-#' choosebank function of the seqinr R package. The default is 10 seconds.
-#' It might be necessary to increase the timeout (i.e. the time to get an answer from
-#' the server) if the function cannot retrieve any DNA sequence for
-#' a certain species when DNA sequences are known to be available in GenBank.
-#' Alternatively, if the server connection is quick the timeout can be decreased to 5 seconds
-#'(the default in choosebank) to speed-up the function.
 
 #' @examples # A table with two species and their unique NCBI taxa ID
 #' Splist=cbind(TaxID=c(443778,189923),
@@ -75,7 +68,7 @@
 
 #' @export GetSeqInfo_NCBI_taxid_rentrez
 
-GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = NULL, timeout = 10) {
+GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = NULL) {
     # Extract the character of string from the right.
     substrRight <- function(x, n) {
         substr(x, nchar(x) - n + 1, nchar(x))
@@ -106,14 +99,11 @@ GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = 
     for (k in 1:dim(splist)[1]) {
         if (gene == "ALL") {
             # If gene='ALL' all the DNA sequences of that species are recorded.
-            oo = tryCatch(rentrez::entrez_search(db="nucleotide",term = paste("txid", splist[k, 1], " [Organism:exp]",sep = "")), error = function(e) e)
+            oo = rentrez::entrez_search(db="nucleotide",term = paste("txid", splist[k, 1], " [Organism:exp]",sep = ""))
             
         } else {
-            # # If the name of the gene is provided, the sequences of this gene of interest are
-            # # recorded.
-            # ee = tryCatch(seqinr::query("ee", paste("tid=", splist[k, 1], " and k=", gene, sep = "")),
-            #     error = function(e) e)
-          print("TODO")
+            # # If the name of the gene is provided, the sequences of this gene of interest are recorded.
+            oo = rentrez::entrez_search(db="nucleotide",term = paste("txid", splist[k, 1], " [Organism:exp]"," AND ",gene ,"[All Fields] ",sep = ""))
         }
         # Filling up the summary table
         TabSpGenSum = rbind(TabSpGenSum, c(as.character(splist[k, 2]), oo$count))
@@ -129,15 +119,14 @@ GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = 
                 imax = length(oo.seqs.xml)
                 # Fetch the annotation information for all the records in a species as genbank format text
                 oo.fetch = rentrez::entrez_fetch(db='nucleotide', id = oo$ids, rettype = 'gb', retmode = 'text')
-                oo.list = strsplit(oo.fetch, "//")[[1]]
+                oo.list = strsplit(oo.fetch, "//")[[1]] # make a list for each record
                 for (i in 1:imax) {
                   # Loop over the sequences within a species.
                   Infot = vector()
-                  # Provide the taxa name provided by the list
+                  # Provide the accesion number provided by the list
                   Infot = c(Infot, as.character(splist[k, 2]), oo.seqs.xml[i]$GBSeq$`GBSeq_primary-accession`)
                   if (as.numeric(oo.seqs.xml[i]$GBSeq$GBSeq_length) > 5000) {
-                    # If the sequence is longer than 5000bp, it is reported in the table as
-                    # 'Too_Long'
+                    # If the sequence is longer than 5000bp, it is reported in the table as 'Too_Long'
                     Infot = c(Infot, "Too_Long")
                   } else {
                     # If the sequence length <5000bp, the sequence is directly reported in the table.

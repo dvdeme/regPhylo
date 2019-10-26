@@ -14,11 +14,12 @@ SpList.NCBI = SpList.DF$SpList.NCBI
 SpList.NCBI.test = head(SpList.NCBI, n = 1)
 
 #THIS is the old function and obviously works
-#Seq.NCBI.info.redo = GetSeqInfo_NCBI_taxid(splist = SpList.NCBI.test, gene = "ALL", 
- #                                          filename = "~/Desktop/test1.txt", timeout = 10)
+#212 secs
+Seq.NCBI.info.redo = GetSeqInfo_NCBI_taxid(splist = SpList.NCBI.test, gene = "ALL",
+                                          filename = "~/Desktop/test1.txt", timeout = 20)
 
-
-Seq.NCBI.info.redo2 = GetSeqInfo_NCBI_taxid_rentrez(splist = SpList.NCBI.test, gene = "ALL", filename = "~/Desktop/test2.txt", timeout = 10)
+#3 secs
+Seq.NCBI.info.redo2 = GetSeqInfo_NCBI_taxid_rentrez(splist = SpList.NCBI.test, gene = "ALL", filename = "~/Desktop/test2.txt")
 
 
 #SANDBOX
@@ -56,17 +57,24 @@ oo = rentrez::entrez_search(db="nucleotide",term = "txid60557 [Organism:exp]")
 oo = tryCatch(rentrez::entrez_search(db="nucleotide",term = paste("txid", SpList.NCBI.test[1], " [Organism:exp]",sep = "")), error = function(e) e)
 oo$count
 
-oo.fetch = entrez_fetch(db='nucleotide', id=oo$ids,rettype = 'gb', retmode='xml',parsed=TRUE)
-oo.xml <- XML::xmlToList(oo.fetch)
-oo.xml[i]$GBSeq
-
-oo.fetch = rentrez::entrez_fetch(db='nucleotide', id=oo$ids, rettype = 'gb', retmode = 'text',parsed = FALSE)
+# Fetch the sequences for all the records in a species as a tinyseq XML
+oo.seqs = rentrez::entrez_fetch(db='nucleotide', id = oo$ids, rettype = 'fasta', retmode = 'xml', parsed = TRUE)
+oo.seqs.xml = XML::xmlToList(oo.seqs)
+imax = length(oo.seqs.xml)
+# Fetch the annotation information for all the records in a species as genbank format text
+oo.fetch = rentrez::entrez_fetch(db='nucleotide', id = oo$ids, rettype = 'gb', retmode = 'text')
 oo.list = strsplit(oo.fetch, "//")[[1]]
-ob = strsplit(oo.list[i], "\n")[[1]]
-obb = gsub("(^[ ]+)", "", ab, perl = TRUE)  # Remove the spaces at the start of each line.
+oo.seqs.xml[i]$TSeq$TSeq_defline
+as.numeric(oo.seqs.xml[i]$TSeq$TSeq_length)
 
 
 obb
 abb
 identical('ab','ob')
 identical(abb,obb)
+
+
+
+oo.fetch2 = entrez_fetch(db='nucleotide', id=oo$ids,rettype = 'gb', retmode='xml',parsed=TRUE)
+oo.xml = XML::xmlToList(oo.fetch2)
+as.numeric(oo.xml[i]$GBSeq$GBSeq_length)

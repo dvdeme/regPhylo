@@ -73,9 +73,9 @@
 #' }
 
 
-#' @export GetSeqInfo_NCBI_taxid2
+#' @export GetSeqInfo_NCBI_taxid_rentrez
 
-GetSeqInfo_NCBI_taxid2 = function(splist = NULL, gene = NULL, filename = NULL, timeout = 10) {
+GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = NULL, timeout = 10) {
     # Extract the character of string from the right.
     substrRight <- function(x, n) {
         substr(x, nchar(x) - n + 1, nchar(x))
@@ -106,7 +106,6 @@ GetSeqInfo_NCBI_taxid2 = function(splist = NULL, gene = NULL, filename = NULL, t
     for (k in 1:dim(splist)[1]) {
         if (gene == "ALL") {
             # If gene='ALL' all the DNA sequences of that species are recorded.
-            ee = tryCatch(seqinr::query("ee", paste("tid=", splist[k, 1], sep = "")), error = function(e) e)
             oo = tryCatch(rentrez::entrez_search(db="nucleotide",term = paste("txid", splist[k, 1], " [Organism:exp]",sep = "")), error = function(e) e)
             
         } else {
@@ -117,34 +116,35 @@ GetSeqInfo_NCBI_taxid2 = function(splist = NULL, gene = NULL, filename = NULL, t
           print("TODO")
         }
         # Filling up the summary table
-        # TabSpGenSum = rbind(TabSpGenSum, c(as.character(splist[k, 2]), length(ee$req)))
         TabSpGenSum = rbind(TabSpGenSum, c(as.character(splist[k, 2]), oo$count))
         print(paste(as.character(splist[k, 2]), ": ", oo$count, "seq."))
 
         # Storing the information about the DNA sequences in a table.  Retrieve the
         # information only when at least 1 sequence is available.
         if (is.null(oo$count) == FALSE)
-            {
-                oo.fetch = entrez_fetch(db='nucleotide', id=oo$ids,rettype = 'gb', retmode='xml',parsed=TRUE)
-                oo.xml = XML::xmlToList(oo.fetch)
-                imax = length(oo.xml)
+            {   
+                # Fetch the sequences for all the records in a species as a Genbank XML
+                oo.seqs = rentrez::entrez_fetch(db='nucleotide', id = oo$ids, rettype = 'gb', retmode = 'xml', parsed = TRUE)
+                oo.seqs.xml = XML::xmlToList(oo.seqs)
+                imax = length(oo.seqs.xml)
+                # Fetch the annotation information for all the records in a species as genbank format text
+                oo.fetch = rentrez::entrez_fetch(db='nucleotide', id = oo$ids, rettype = 'gb', retmode = 'text')
+                oo.list = strsplit(oo.fetch, "//")[[1]]
                 for (i in 1:imax) {
                   # Loop over the sequences within a species.
                   Infot = vector()
                   # Provide the taxa name provided by the list
-                  Infot = c(Infot, as.character(splist[k, 2]), oo.xml[i]$GBSeq$`GBSeq_primary-accession`)
-                  if (as.numeric(oo.xml[i]$GBSeq$GBSeq_length) > 5000) {
+                  Infot = c(Infot, as.character(splist[k, 2]), oo.seqs.xml[i]$GBSeq$`GBSeq_primary-accession`)
+                  if (as.numeric(oo.seqs.xml[i]$GBSeq$GBSeq_length) > 5000) {
                     # If the sequence is longer than 5000bp, it is reported in the table as
                     # 'Too_Long'
                     Infot = c(Infot, "Too_Long")
                   } else {
                     # If the sequence length <5000bp, the sequence is directly reported in the table.
-                    Infot = c(Infot, oo.xml[i]$GBSeq$GBSeq_sequence)
+                    Infot = c(Infot, oo.seqs.xml[i]$GBSeq$GBSeq_sequence)
                   }
-                  Infot = c(Infot, as.numeric(oo.xml[i]$GBSeq$GBSeq_length))
-                  # Need to test the internet connection
-                  seqinr::autosocket()  # Automatically select the last ACNUC database.
-                  ab = seqinr::getAnnot(ee$req[[i]], nbl = 5000)  # Extract all the annotations of the sequence.
+                  Infot = c(Infot, as.numeric(oo.seqs.xml[i]$GBSeq$GBSeq_length))
+                  ab = strsplit(oo.list[i], "\n")[[1]] # Extract all the annotations of the sequence.
                   ## Edit the annotation text provided by the NCBI for each sequence.
                   abb = gsub("(^[ ]+)", "", ab, perl = TRUE)  # Remove the spaces at the start of each line.
                   # Extract the information from the LOCUS (row 1) to the FEATURES (but excluded)
@@ -283,12 +283,6 @@ GetSeqInfo_NCBI_taxid2 = function(splist = NULL, gene = NULL, filename = NULL, t
 
     print(paste("Finish processing:", date()))
     return(TabSpGenSum)
-    CheckOK = tryCatch(seqinr::closebank(), error = function(e) e)
-    if(inherits(CheckOK, "error")){
-      stop(paste("The function could not retrieve the desired sequence(s), because the default ", "\n",
-                 " time-lag (timeout = 10 sec.) to connect to the seqinr server is too short:", "\n",
-                 " increasing the timeout to 15 or 20 seconds should solve the problem.", sep = ""))
-    }
 
 }  # End of the function.
 

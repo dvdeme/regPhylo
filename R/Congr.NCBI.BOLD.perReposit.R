@@ -97,7 +97,8 @@ Congr.NCBI.BOLD.perReposit = function(input.NCBI = NULL, input.BOLD = NULL, outp
     input.BOLD = input.BOLD[which(is.na(as.character(input.BOLD[, 2])) == "FALSE"),
                             ]
     # Change the BOLD table to match the NCBI table
-    SeqLength = nchar(as.character(input.BOLD[, 72]))
+    NoGapSeq = gsub("-","",as.character(input.BOLD[, 72]),fixed = TRUE) #Remove Gaps from BOLD seq
+    SeqLength = nchar(NoGapSeq)
     Definition = paste(input.BOLD[, 1], "BOLD", input.BOLD[, 2], sep = " ")
     OrganismClassif = paste(input.BOLD[, 11], input.BOLD[, 13], input.BOLD[, 15],
                             input.BOLD[, 17], input.BOLD[, 19], input.BOLD[, 21],
@@ -131,7 +132,7 @@ Congr.NCBI.BOLD.perReposit = function(input.NCBI = NULL, input.BOLD = NULL, outp
     Genes = gsub("Rho", "rhod", Genes, fixed = TRUE)
     Genes = gsub("^ $", NA, Genes, perl = T)
 
-    input.BOLD2 = cbind(input.BOLD[, c(1, 71, 72)], SeqLength, Definition, OrganismClassif,
+    input.BOLD2 = cbind(input.BOLD[, c(1, 71)], NoGapSeq, SeqLength, Definition, OrganismClassif,
                         Source, Title, Authors, Journal, Pubmed, Year, Organism, Organelle, Mol_type,
                         Db_xref, Product, Genes, Location, isolation_source, Lat_lon, Collection_date,
                         Date_Extract)
@@ -281,7 +282,6 @@ Congr.NCBI.BOLD.perReposit = function(input.NCBI = NULL, input.BOLD = NULL, outp
     if (length(aa) > 0) {
         DupliBOLD = input.BOLD2[match(aa, input.BOLD2[, 3]), ]
         DupliNCBI = input.NCBI[match(aa, input.NCBI[, 3]), ]
-
         LocBOLD = gsub("NA: NA, NA, NA, NA", NA, DupliBOLD[, 20], fixed = TRUE)
         LatLong_BOLD = gsub("NA NA", NA, DupliBOLD[, 22], fixed = TRUE)
 
@@ -295,10 +295,9 @@ Congr.NCBI.BOLD.perReposit = function(input.NCBI = NULL, input.BOLD = NULL, outp
         Collection_date = vector()
         Date_Extract = vector()
 
-
-        i = 1
-        for (i in 1:length(aa)) {
-            if (DupliNCBI[i, 5] - DupliBOLD[i, 5] > 0) {
+        
+         for (i in 1:length(aa)) {
+          if (as.integer(levels(DupliNCBI[i,5])[DupliNCBI[i,5]]) - DupliBOLD[i, 5] > 0) { #Need to change factor back to integer
                 Sequence = c(Sequence, as.character(DupliNCBI[i, 4]))
                 SeqLength = c(SeqLength, as.character(DupliNCBI[i, 5]))
                 Definition = c(Definition, as.character(DupliNCBI[i, 6]))

@@ -295,9 +295,9 @@ Congr.NCBI.BOLD.perReposit = function(input.NCBI = NULL, input.BOLD = NULL, outp
         Collection_date = vector()
         Date_Extract = vector()
 
-        
          for (i in 1:length(aa)) {
-          if (as.integer(levels(DupliNCBI[i,5])[DupliNCBI[i,5]]) - DupliBOLD[i, 5] > 0) { #Need to change factor back to integer
+           NCBI.len = max(DupliNCBI[i,5],as.integer(levels(DupliNCBI[i,5])[DupliNCBI[i,5]]))#Need to change factor back to integer
+           if (as.integer(NCBI.len) - DupliBOLD[i, 5] > 0) { 
                 Sequence = c(Sequence, as.character(DupliNCBI[i, 4]))
                 SeqLength = c(SeqLength, as.character(DupliNCBI[i, 5]))
                 Definition = c(Definition, as.character(DupliNCBI[i, 6]))

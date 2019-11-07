@@ -68,9 +68,9 @@
 #' }
 
 
-#' @export GetSeqInfo_NCBI_taxid_rentrez
+#' @export GetSeqInfo_NCBI_taxid
 
-GetSeqInfo_NCBI_taxid_rentrez = function(splist = NULL, gene = NULL, filename = NULL, chunk_size=50) {
+GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL, chunk_size=50) {
     # Extract the character of string from the right.
     substrRight <- function(x, n) {
         substr(x, nchar(x) - n + 1, nchar(x))

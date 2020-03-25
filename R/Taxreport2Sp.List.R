@@ -62,7 +62,7 @@ input = input[,-c(2,4,6)]
 input <- data.frame(lapply(input, as.character), stringsAsFactors=FALSE)
 
 # Prepare the two column table for the NCBI.
-SpList.NCBI = input[-which(is.na(input$taxid)==TRUE), c(4,2)]
+SpList.NCBI = input[which(is.na(input$taxid)==FALSE), c(4,2)]
 colnames(SpList.NCBI) = c("taxid", "Sp.names")
 
 # Prepare the two column table for BOLD.

@@ -1,6 +1,5 @@
 exportPattern("^[[:alpha:]]+")
 exportPattern(GetSeqInfo_NCBI_taxid)
-exportPattern(GenTaxid_NCBI)
 exportPattern(GetSeq_BOLD)
 importFrom("utils", "read.delim")
 exportPattern(Congr.NCBI.BOLD.perReposit)

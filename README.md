@@ -2,6 +2,9 @@
 
 The regPhylo R package provides functions to assist in building phylogenetic trees appropriate for use in ecological studies, particularly for a regional species pool.
 
+[Paper](https://doi.org/10.1111/geb.12986)
+
+
 # Installation
 
 regPhylo requires that the following package must be installed and loaded in the R environment:
@@ -44,4 +47,4 @@ help(package=regPhylo)
 &nbsp;
 
 # Tutorial using a case study.
-A tutorial is available to help the user to navigate through the different functions. The tutorial is based on an example aiming to build a posterior distribution of time-calibrated trees for the New Zealand marine ray-finned fishes.
+[A tutorial is available](https://doi.org/10.5061/dryad.2v4h7bv) to help the user to navigate through the different functions. The tutorial is based on an example aiming to build a posterior distribution of time-calibrated trees for the New Zealand marine ray-finned fishes.

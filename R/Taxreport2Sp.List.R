@@ -66,6 +66,9 @@ nb.na = which(is.na(input$taxid)==TRUE)
 if(length(nb.na) == 0){
   SpList.NCBI = input[, c(4, 2)]
 } else {
+  if(length(nb.na) == dim(input)[1]){
+    SpList.NCBI = "None of the species has a ncbi taxid yet"
+  }
 SpList.NCBI = input[-nb.na, c(4,2)]
 }
 colnames(SpList.NCBI) = c("taxid", "Sp.names")

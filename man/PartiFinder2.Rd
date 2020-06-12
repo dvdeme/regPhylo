@@ -4,11 +4,21 @@
 \alias{PartiFinder2}
 \title{Estimate the best number of partitions and substitution model for each partition: wrapper for PartitionFinder2}
 \usage{
-PartiFinder2(input = NULL, Partition = NULL, codon = NULL,
-  nexus.file = NULL, Path.PartiF2 = NULL, branchlengths = NULL,
-  models = NULL, model_selection = NULL, search = NULL,
-  Raxml = NULL, nthread = NULL, rcluster_percent = 10,
-  rcluster_max = 1000)
+PartiFinder2(
+  input = NULL,
+  Partition = NULL,
+  codon = NULL,
+  nexus.file = NULL,
+  Path.PartiF2 = NULL,
+  branchlengths = NULL,
+  models = NULL,
+  model_selection = NULL,
+  search = NULL,
+  Raxml = NULL,
+  nthread = NULL,
+  rcluster_percent = 10,
+  rcluster_max = 1000
+)
 }
 \arguments{
 \item{input}{the name (with the path, if necessary) of the input alignment in
@@ -167,7 +177,7 @@ input = "TempDir.ForPartiFinder2/Concat.fas"
 Partition = "TempDir.ForPartiFinder2/Partitions_Concat.txt"
 # Open the convtab.txt document to determine which genes need
 # to be partitioned for the first, second, and third codon position.
-read.delim("TempDir.ForPartiFinder2/convtab.txt", sep = "\\t", header = TRUE)
+read.delim("TempDir.ForPartiFinder2/convtab.txt", sep = "\t", header = TRUE)
 
 # Run the function using RAxML software, BIC criteria,
 # the fast "rcluster" algorithm and the classic default parameters.

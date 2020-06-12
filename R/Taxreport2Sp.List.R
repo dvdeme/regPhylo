@@ -54,6 +54,7 @@
 #' }
 
 Taxreport2Sp.List = function(input = NULL){
+
 # open the tax_report.txt file
 input = read.delim(input, sep = "\t", header = TRUE)
 input = input[,-c(2,4,6)]

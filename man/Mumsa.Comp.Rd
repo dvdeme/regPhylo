@@ -62,7 +62,7 @@ remove.empty.align = TRUE)
 # The output file is also present as an external data table in the regPhylo package
 # and can be accessed by the following code:
 # a = system.file("extdata", "Mumsa_output.txt", package = "regPhylo")
-# a = read.delim(a, sep="\\t", header = TRUE)
+# a = read.delim(a, sep="\t", header = TRUE)
 
 # To remove the file created while running the example do the following:
 file.remove("Mumsa_output.txt")

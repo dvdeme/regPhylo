@@ -4,7 +4,9 @@
 \name{TopoConstraints}
 \alias{TopoConstraints}
 \title{A list of two tables: a table of the topological constraints to build a multifurcating tree, and a classification table, for 16 species of NZ fish.}
-\format{A list of two tables: the first table has 22 rows and 2 columns; the second table has 16 rows and 23 columns.}
+\format{
+A list of two tables: the first table has 22 rows and 2 columns; the second table has 16 rows and 23 columns.
+}
 \usage{
 TopoConstraints
 }

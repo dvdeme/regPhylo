@@ -4,8 +4,12 @@
 \alias{SpeciesGeneMat.Bl}
 \title{Correct gene nomenclature and build a species-by-gene matrix}
 \usage{
-SpeciesGeneMat.Bl(input = NULL, output = NULL, NCBI.Trash = NULL,
-  BOLD.Trash = NULL)
+SpeciesGeneMat.Bl(
+  input = NULL,
+  output = NULL,
+  NCBI.Trash = NULL,
+  BOLD.Trash = NULL
+)
 }
 \arguments{
 \item{input}{a table which is an output of the \code{\link{GeoCodeName}} function}

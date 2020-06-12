@@ -5,10 +5,18 @@
 \title{Implements multiple monophyletic constraints in the xml file
 for BEAST2 using a rooted RAxML tree with bootstrap supports}
 \usage{
-MultiTopoConst.EditXML4BEAST2(inputtree = NULL, output = NULL,
-  bootstrapTH = NULL, xmltreename = NULL, input.xml = NULL,
-  Partitions = NULL, TaxaNoDNA = NULL, TaxoTable = NULL,
-  output.new.TaxoTable = NULL, output.new.tree = NULL)
+MultiTopoConst.EditXML4BEAST2(
+  inputtree = NULL,
+  output = NULL,
+  bootstrapTH = NULL,
+  xmltreename = NULL,
+  input.xml = NULL,
+  Partitions = NULL,
+  TaxaNoDNA = NULL,
+  TaxoTable = NULL,
+  output.new.TaxoTable = NULL,
+  output.new.tree = NULL
+)
 }
 \arguments{
 \item{inputtree}{a rooted phylogenetic tree of class 'phylo' (usually a RAxML tree
@@ -204,7 +212,7 @@ plot(NewTree)
 
 # To see the new classification table including the 2 taxa without DNA.
 NewClassifDF = read.delim("TempDir.TC/Classif18sp_2NoDNA.csv",
-sep = "\\t", header = TRUE)
+sep = "\t", header = TRUE)
 dim(NewClassifDF) # now there are 18 rows and still 23 columns.
 
 # To remove the files created while running the example, do the following:

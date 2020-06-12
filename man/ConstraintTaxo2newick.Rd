@@ -4,8 +4,12 @@
 \alias{ConstraintTaxo2newick}
 \title{Build a multifurcating topological constraint tree for RAxML}
 \usage{
-ConstraintTaxo2newick(inputTaxo = NULL, Taxo.Hier = "Phylum2Genus",
-  inputConst = NULL, outputNewick = NULL)
+ConstraintTaxo2newick(
+  inputTaxo = NULL,
+  Taxo.Hier = "Phylum2Genus",
+  inputConst = NULL,
+  outputNewick = NULL
+)
 }
 \arguments{
 \item{inputTaxo}{a classification table, the first column is the species name (or

@@ -4,8 +4,10 @@
 \name{Example_16S_outlier}
 \alias{Example_16S_outlier}
 \title{Example of an alignment including 319 sequences of 16S mitochondrial DNA, and a table of potential outlier sequences detected by the Detect.Outlier.Seq function.}
-\format{A list of two objects 1) an object of class "alignment" including a list of 319 DNA sequences of 16S mitochondrial DNA called "16S_example_outliers.fas",
-2) A table with 85 rows and 16 columns called "Table.Outlier.Seq.16S".}
+\format{
+A list of two objects 1) an object of class "alignment" including a list of 319 DNA sequences of 16S mitochondrial DNA called "16S_example_outliers.fas",
+2) A table with 85 rows and 16 columns called "Table.Outlier.Seq.16S".
+}
 \usage{
 Example_16S_outlier
 }

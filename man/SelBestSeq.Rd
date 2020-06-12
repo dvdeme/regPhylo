@@ -5,9 +5,16 @@
 \title{Select the sequences based on geographic proximity
 and/or sequence length, and export sequences (fasta format) and metadata for the selected gene regions}
 \usage{
-SelBestSeq(input = NULL, output = NULL, RefPoint = NULL,
-  perReposit = NULL, Alignment = NULL, MaxSeq = NULL,
-  gene.list = NULL, SeqChoice = NULL)
+SelBestSeq(
+  input = NULL,
+  output = NULL,
+  RefPoint = NULL,
+  perReposit = NULL,
+  Alignment = NULL,
+  MaxSeq = NULL,
+  gene.list = NULL,
+  SeqChoice = NULL
+)
 }
 \arguments{
 \item{input}{a data table coming from the function \code{\link{Select.DNA}} or

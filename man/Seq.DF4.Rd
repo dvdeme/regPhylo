@@ -4,7 +4,8 @@
 \name{Seq.DF4}
 \alias{Seq.DF4}
 \title{Output of the function SpeciesGeneMat.Bl and Select.DNA for the species "Diastobranchus capensis"}
-\format{A list of five data frames and one string:
+\format{
+A list of five data frames and one string:
 \itemize{
 \item 1) The first table provides the species-by-gene matrix
 a data frame with 1 row and 4 columns.
@@ -18,7 +19,8 @@ an empty string.
 a data frame with 1 rows and 30 columns
 \item 6) This data frame including all the sequences and metadata for selected gene regions.
 a data frame with 11 rows and 29 columns (the columns with the entry order of the sequences has been removed).
-}}
+}
+}
 \usage{
 Seq.DF4
 }

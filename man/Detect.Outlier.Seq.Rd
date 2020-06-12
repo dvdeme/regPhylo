@@ -4,9 +4,14 @@
 \alias{Detect.Outlier.Seq}
 \title{Help to detect outlier sequences in an alignment}
 \usage{
-Detect.Outlier.Seq(inputal = NULL, Strat.DistMat = NULL,
-  Dist.Th = NULL, output = NULL, Second.Outlier = NULL,
-  Bitsc.Th = NULL)
+Detect.Outlier.Seq(
+  inputal = NULL,
+  Strat.DistMat = NULL,
+  Dist.Th = NULL,
+  output = NULL,
+  Second.Outlier = NULL,
+  Bitsc.Th = NULL
+)
 }
 \arguments{
 \item{inputal}{an object of class "alignment" (seqinr R package),
@@ -111,7 +116,7 @@ head(S16_MisAlign0.6_1)
 # The output table is also present as an external data table provided in the regPhylo r package
 and can be accessed by the following code:
 # a = system.file("extdata/ExampleOutliers/Example_16S_outliers_1.txt", package = "regPhylo")
-# Example_16S_outliers_1 = read.delim(a, sep="\\t", header = TRUE)
+# Example_16S_outliers_1 = read.delim(a, sep="\t", header = TRUE)
 
 
 # Running the function with the 'Comb' option, a distance threshold of 0.6,
@@ -125,7 +130,7 @@ head(S16_MisAlign0.6_2)
 # The output table is also present as an external data table provided in the regPhylo r package
 and can be accessed by the following code:
 # a = system.file("extdata/ExampleOutliers/Example_16S_outliers_2.txt", package = "regPhylo")
-# Example_16S_outliers_2 = read.delim(a, sep="\\t", header = TRUE)
+# Example_16S_outliers_2 = read.delim(a, sep="\t", header = TRUE)
 
 # To remove the file created while running the example do the following:
 file.remove(c( "Example_16S_outliers_1.txt", "Example_16S_outliers_2.txt"))

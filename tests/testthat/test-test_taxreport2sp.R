@@ -1,7 +1,6 @@
 context("test-test_taxreport2sp")
 
 
-
 src.dir = system.file("extdata/tax_export", package = "regPhylo")
 dir.create("TempDir")
 # Set up the path to the TempDir folder.

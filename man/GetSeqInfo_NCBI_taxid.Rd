@@ -4,28 +4,28 @@
 \alias{GetSeqInfo_NCBI_taxid}
 \title{Extract DNA sequences and metadata from GenBank}
 \usage{
-GetSeqInfo_NCBI_taxid(splist = NULL, gene = NULL, filename = NULL,
-  timeout = 10)
+GetSeqInfo_NCBI_taxid(
+  splist = NULL,
+  gene = "ALL",
+  filename = NULL,
+  chunk_size = 50
+)
 }
 \arguments{
 \item{splist}{a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
 the first column and the accepted binomial species name in the second column
 which will be retained as 'TaxaName' in the output file.}
 
-\item{gene}{can be a
-particular gene region or 'ALL' if all gene regions are
-sought.}
+\item{gene}{can be a particular gene region or 'ALL' for all entries
+of that species. Please note that this will only retrieve genes 
+with the same name in genbank. For example, "COX1" will not return the 
+same entries as "COI". Defualt "ALL"}
 
 \item{filename}{name of the output table (also needs to include the
-extension, e.g. ".txt")}
+extension, e.g. "Genbank_info.txt")}
 
-\item{timeout}{the timeout in seconds for socketConnection used in, the
-choosebank function of the seqinr R package. The default is 10 seconds.
-It might be necessary to increase the timeout (i.e. the time to get an answer from
-the server) if the function cannot retrieve any DNA sequence for
-a certain species when DNA sequences are known to be available in GenBank.
-Alternatively, if the server connection is quick the timeout can be decreased to 5 seconds
-(the default in choosebank) to speed-up the function.}
+\item{chunk_size}{number of records to be downloaded at a time from genbank. 
+If connection drops try decreasing this value to 20 or smaller. Default 50.}
 }
 \value{
 This function returns a table with the species names and the number of
@@ -68,7 +68,7 @@ information for all the gene regions or a given gene region, from a list of spec
 their NCBI taxid.
 }
 \details{
-This function extracts data from an external server and can be very slow.
+This function extracts data from an external server and can be slow.
 }
 \examples{
 # A table with two species and their unique NCBI taxa ID
@@ -76,12 +76,20 @@ Splist=cbind(TaxID=c(443778,189923),
 Species.Name=c("Diastobranchus capensis", "Synaphobranchus affinis"))
 # Run the function to extract all DNA sequences and associated metadata
 \dontrun{
-NCBI.output = GetSeqInfo_NCBI_taxid(splist = Splist, gene = "ALL",
-filename = "output.NCBI.txt")
+# A table with two species and their unique NCBI taxa ID
+Splist=cbind(TaxID=c(443778,189923),
+             Species.Name=c("Diastobranchus capensis", "Synaphobranchus affinis"))
+# Run the function to extract all DNA sequences and associated metadata
+NCBI.stats = GetSeqInfo_NCBI_taxid(splist = Splist, gene = "ALL",
+                                    filename = "output.NCBI.txt")
 
-# The output can be loaded by doing the following
-data(Seq.Diastocapen)
-NCBI.output = Seq.Diastocapen$Seq.NCBI
+# Summary of results
+NCBI.stats
+
+#Access result list from file for next step
+Seq.NCBI.all = read.delim("output.NCBI.txt", sep = "\t", h = TRUE)
+AllSeqDF = Congr.NCBI.BOLD.perReposit(input.NCBI = Seq.NCBI.all, input.BOLD=Seq.BOLD,
+                                      output = "Data_Extraction/AllSeqDF.txt")
 
 # To remove the file created while running the example do the following:
 file.remove("output.NCBI.txt")

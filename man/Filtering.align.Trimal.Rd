@@ -4,8 +4,7 @@
 \alias{Filtering.align.Trimal}
 \title{Remove poorly aligned nucleotide positions using trimAl software}
 \usage{
-Filtering.align.Trimal(input = NULL, output = NULL,
-  TrimAl.path = NULL)
+Filtering.align.Trimal(input = NULL, output = NULL, TrimAl.path = NULL)
 }
 \arguments{
 \item{input}{path to the folder storing the alignments in fasta format (with the

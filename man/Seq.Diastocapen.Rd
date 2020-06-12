@@ -5,7 +5,8 @@
 \alias{Seq.Diastocapen}
 \title{Sequences and metadata extracted from the Barcode of Life Database (BOLD), GenBank (NCBI) and the repository of the New Zealand National
 Fish Collection for the species "Diastobranchus capensis".}
-\format{A list of six tables:
+\format{
+A list of six tables:
 \itemize{
 \item 1) This table contains the raw output of the function \code{\link{GetSeq_BOLD}} from the regPhylo package (i.e. sequences and metadata extracted from the Barcode of Life Database (BOLD)
 for the species "Diastobranchus capensis" the 9/10/2018).
@@ -27,7 +28,8 @@ The table "Seq.DF1" is a dataframe with 11 rows and 26 columns
 coordinates from nominatim openstreetmap API for all the sequences with only place name information.
 The table provide two additional columns: the place name used for the query; and information about the precision of the geographic coordinates.
 The table "Seq.DF3" is a data frame with 11 rows and 28 columns.
-}}
+}
+}
 \usage{
 Seq.Diastocapen
 }

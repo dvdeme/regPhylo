@@ -4,8 +4,7 @@
 \alias{GeoCodeName}
 \title{Retrieve geographic coordinates from place names using nominatim openstreetmap API}
 \usage{
-GeoCodeName(input = NULL, output = NULL, CorrTab = NULL,
-  AutoCorrNZ = NULL)
+GeoCodeName(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ = NULL)
 }
 \arguments{
 \item{input}{a table coming from the function \code{\link{GeoCoord.WGS84}} or from

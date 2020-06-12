@@ -4,9 +4,15 @@
 \alias{Multi.Align}
 \title{Align sequences using multiple alignment programs}
 \usage{
-Multi.Align(input = NULL, output = NULL, nthread = NULL,
-  methods = NULL, Mafft.path = NULL, Muscle.path = NULL,
-  Prank.path = NULL)
+Multi.Align(
+  input = NULL,
+  output = NULL,
+  nthread = NULL,
+  methods = NULL,
+  Mafft.path = NULL,
+  Muscle.path = NULL,
+  Prank.path = NULL
+)
 }
 \arguments{
 \item{input}{path to the folder storing the files of interest for further alignment.

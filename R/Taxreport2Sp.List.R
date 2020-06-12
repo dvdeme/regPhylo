@@ -54,29 +54,39 @@
 #' }
 
 Taxreport2Sp.List = function(input = NULL){
-# open the tax_report.txt file
-input = read.delim(input, sep = "\t", header = TRUE)
-input = input[,-c(2,4,6)]
-
-### convert all columns as.character
-input <- data.frame(lapply(input, as.character), stringsAsFactors=FALSE)
-
-# Prepare the two column table for the NCBI.
-SpList.NCBI = input[which(is.na(input$taxid)==FALSE), c(4,2)]
-colnames(SpList.NCBI) = c("taxid", "Sp.names")
-
-# Prepare the two column table for BOLD.
-
-## Detect when another preferred name is used.
-P1 = seq(1, dim(input)[1])[-grep("^ $", input$preferred.name, perl = TRUE)]
-
-if(length(P1) > 0){
-SpList.BOLD = rbind(cbind(input$name, input$name), cbind(input$preferred.name[P1], input$name[P1]))
-
-} else {
-SpList.BOLD = cbind(input$name, input$name)
-}
-
-colnames(SpList.BOLD) = c("SpName.Bold.search", "Sp.names")
-return(list(SpList.NCBI = SpList.NCBI, SpList.BOLD = SpList.BOLD))
+  # open the tax_report.txt file
+  input = read.delim(input, sep = "\t", header = TRUE)
+  input = input[,-c(2,4,6)]
+  
+  ### convert all columns as.character
+  input <- data.frame(lapply(input, as.character), stringsAsFactors=FALSE)
+  
+  # Prepare the two column table for the NCBI.
+  nb.na = which(is.na(input$taxid)==TRUE)
+  if(length(nb.na) == 0){
+    SpList.NCBI = input[, c(4, 2)]
+    colnames(SpList.NCBI) = c("taxid", "Sp.names")
+  } else {
+    if(length(nb.na) == dim(input)[1]){
+      SpList.NCBI = "None of the species has a ncbi taxid yet"
+    } else {
+      SpList.NCBI = input[-nb.na, c(4,2)]
+      colnames(SpList.NCBI) = c("taxid", "Sp.names")
+    }
+  }
+  
+  # Prepare the two column table for BOLD.
+  
+  ## Detect when another preferred name is used.
+  P1 = seq(1, dim(input)[1])[-grep("^ $", input$preferred.name, perl = TRUE)]
+  
+  if(length(P1) > 0){
+    SpList.BOLD = rbind(cbind(input$name, input$name), cbind(input$preferred.name[P1], input$name[P1]))
+    
+  } else {
+    SpList.BOLD = cbind(input$name, input$name)
+  }
+  
+  colnames(SpList.BOLD) = c("SpName.Bold.search", "Sp.names")
+  return(list(SpList.NCBI = SpList.NCBI, SpList.BOLD = SpList.BOLD))
 }

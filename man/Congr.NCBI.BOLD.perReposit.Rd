@@ -6,8 +6,13 @@
 (if available) into a single table and remove potential duplicate
 sequences.}
 \usage{
-Congr.NCBI.BOLD.perReposit(input.NCBI = NULL, input.BOLD = NULL,
-  output = NULL, input.perReposit = NULL, perReposit = NULL)
+Congr.NCBI.BOLD.perReposit(
+  input.NCBI = NULL,
+  input.BOLD = NULL,
+  output = NULL,
+  input.perReposit = NULL,
+  perReposit = NULL
+)
 }
 \arguments{
 \item{input.NCBI}{table coming from the function \code{\link{GetSeqInfo_NCBI_taxid}}.}

@@ -23,7 +23,7 @@ file.remove("TempDir.ForPartiFinder2/Partitions_Concat.txt_PF2_all.txt")
 PartiFinder2(input = "TempDir.ForPartiFinder2/Concat.fas",
 Partition = "TempDir.ForPartiFinder2/Partitions_Concat.txt",
 codon = c(2:4), nexus.file = "TempDir.ForPartiFinder2/Concat.nex",
-Path.PartiF2 = "/home/davidpc/Programs/PartitionFinder2/partitionfinder-2.1.1/PartitionFinder.py",
+Path.PartiF2 = "~/git_clones/partitionfinder-2.1.1/PartitionFinder.py",
 branchlengths = "linked", models = "all", model_selection = "BIC", search = "rcluster",
 Raxml = "TRUE", nthread = 5)
 

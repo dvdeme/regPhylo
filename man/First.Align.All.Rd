@@ -4,8 +4,13 @@
 \alias{First.Align.All}
 \title{Reverse complement and align the sequences using MAFFT and PASTA}
 \usage{
-First.Align.All(input = NULL, output = NULL, nthread = NULL,
-  methods = NULL, Mafft.path = NULL)
+First.Align.All(
+  input = NULL,
+  output = NULL,
+  nthread = NULL,
+  methods = NULL,
+  Mafft.path = NULL
+)
 }
 \arguments{
 \item{input}{path to the folder storing the files of interest. The files must have

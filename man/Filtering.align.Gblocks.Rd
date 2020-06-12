@@ -4,9 +4,15 @@
 \alias{Filtering.align.Gblocks}
 \title{Remove poorly aligned nucleotide positions using Gblocks software}
 \usage{
-Filtering.align.Gblocks(input = NULL, target.file = NULL,
-  LessStringent = NULL, Type = NULL, output = NULL,
-  remove.empty.align = NULL, Gblocks.path = NULL)
+Filtering.align.Gblocks(
+  input = NULL,
+  target.file = NULL,
+  LessStringent = NULL,
+  Type = NULL,
+  output = NULL,
+  remove.empty.align = NULL,
+  Gblocks.path = NULL
+)
 }
 \arguments{
 \item{input}{name of the folder storing the alignments in fasta format (with the

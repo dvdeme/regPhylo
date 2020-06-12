@@ -24,17 +24,16 @@
 
 
 #' @export GetTaxnum_NCBI
-
 GetTaxnum_NCBI = function(splist = NULL) {
   #format list of names for POST using httr package
   string2post <- paste(splist, collapse="\n")
-  r<-POST(url="https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi",
+  r<-httr::POST(url="https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi",
        encode="form",
        body=list(tax=string2post,
                  match=1,
                  button="Save in file"))
   #convert results of POST to a dataframe
-  ncbiblock<- content(r, "text")[[1]]
+  ncbiblock<- httr::content(r, "text")[[1]]
   ncbitaxdf <- read.table(header=T, text=ncbiblock,sep='\t')
   return(ncbitaxdf)
 } # End of GetTaxnum_NCBI

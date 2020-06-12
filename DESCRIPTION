@@ -1,8 +1,8 @@
 Package: regPhylo
 Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
-Version: 1.0.3
-Date: 2019-06-21
+Version: 1.0.4
+Date: 2020-06-12
 Author: regPhylo <regPhylo@gmail.com>
 Maintainer: regPhylo <regPhylo@gmail.com>
 Description: The regPhylo package provides functions to assist in building 
@@ -28,16 +28,18 @@ Description: The regPhylo package provides functions to assist in building
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports: bold,
-    seqinr,
-    ape,
-    geomedb,
-    RJSONIO,
-    stringr,
-    fields,
-    parallel,
+Imports: ape,
+    bold,
     caper,
-    phytools
-RoxygenNote: 6.1.0
-Suggests: testthat
+    fields,
+    geomedb,
+    parallel,
+    phytools,
+    rentrez,
+    RJSONIO,
+    seqinr,
+    stringr,
+RoxygenNote: 7.1.0
+Suggests: testthat,
+    httr
 Depends: R (>= 2.10)

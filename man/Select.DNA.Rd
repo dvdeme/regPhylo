@@ -4,8 +4,7 @@
 \alias{Select.DNA}
 \title{Extract all the seqeunces and metadata from the data table for a list of selected gene regions}
 \usage{
-Select.DNA(input = NULL, gene.list = NULL, output = NULL,
-  timeout = 10)
+Select.DNA(input = NULL, gene.list = NULL, output = NULL, timeout = 10)
 }
 \arguments{
 \item{input}{The table created using the function \code{\link{SpeciesGeneMat.Bl}}

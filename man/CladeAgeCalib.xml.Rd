@@ -5,11 +5,21 @@
 \title{Include CladeAge blocks into an xml file formatted by BEAUTi
 to calibrate the tree in an absolute time frame using BEAST2}
 \usage{
-CladeAgeCalib.xml(xml.input = NULL, input.tree = NULL, output = NULL,
-  CalPointTable = NULL, MinDivRate = NULL, MaxDivRate = NULL,
-  MinTurnoverRate = NULL, MaxTurnoverRate = NULL,
-  MinSamplingRate = NULL, MaxSamplingRate = NULL, xmltreename = NULL,
-  inputTaxono = NULL, Partitions = NULL)
+CladeAgeCalib.xml(
+  xml.input = NULL,
+  input.tree = NULL,
+  output = NULL,
+  CalPointTable = NULL,
+  MinDivRate = NULL,
+  MaxDivRate = NULL,
+  MinTurnoverRate = NULL,
+  MaxTurnoverRate = NULL,
+  MinSamplingRate = NULL,
+  MaxSamplingRate = NULL,
+  xmltreename = NULL,
+  inputTaxono = NULL,
+  Partitions = NULL
+)
 }
 \arguments{
 \item{xml.input}{an xml input file including topological constraints set-up with
@@ -96,7 +106,7 @@ overwrite = FALSE) })
 # Import the table (i.e. "CalPointTable") listing the 4 clades constrained
 # with the occurrence of the first fossil.
 CalibrationTable4clades = read.delim("TempDir.CladeAge/Calib_CA_Fossil_4cl.csv",
-sep="\\t", header = TRUE)
+sep="\t", header = TRUE)
 
 
 #### Example restricted to taxa with at least a DNA sequence in the supermatrix.
@@ -130,7 +140,7 @@ xmltreename = "Subset1", inputTaxono = ClassifDF, Partitions = "TRUE")
 
 # Load the new classification table including the two additional taxa without DNA
 # exported by the function MultiTopoConst.EditXML4BEAST2.
-NewClassifDF = read.delim("TempDir.CladeAge/Classif18sp_2NoDNA.csv", sep = "\\t", header = TRUE)
+NewClassifDF = read.delim("TempDir.CladeAge/Classif18sp_2NoDNA.csv", sep = "\t", header = TRUE)
 
 # Load the new rooted "RAxML" tree including the two additional taxa and also the
 # bootstrap values for each node exported by the function MultiTopoConst.EditXML4BEAST2
@@ -139,7 +149,7 @@ NewTree = read.tree("TempDir.CladeAge/BackboneTreeAll_2spNoDNA.txt")
 
 # We then load the calibration table.
 CalibrationTable4clades = read.delim("TempDir.CladeAge/Calib_CA_Fossil_4cl.csv",
-sep="\\t", header = TRUE)
+sep="\t", header = TRUE)
 
 # Run the function with all other setting and options unchanged.
 CladeAgeCalib.xml(xml.input = "TempDir.CladeAge/SimpleXml_2SpNoDNA_Wcont.xml",

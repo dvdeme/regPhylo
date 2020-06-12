@@ -55,15 +55,15 @@ Query.GeOMe.XY.R = function(input = NULL, Phylum = NULL, output=NULL) {
       # Extract all the metadata associated with 'Chordata' in GeOMe.
       # First extract all the data associated to the Tissue to get access to the associatedSequences
       # field storing the NCBI accession number for each tissue.
-      dftissue <- geomedb::queryMetadata('Tissue', query=paste('phylum=',Phy,sep=''), limit = 10000000)
+      dftissue <- geomedb::queryMetadata('Tissue', query=paste('phylum=',Phylum,sep=''), limit = 10000000)
       dftissue = as.data.frame(dftissue[[1]])
 
       # Extract from the Sample table the eventID associated to the materialSampleID
-      dfsamples <- geomedb::queryMetadata('Sample', query=paste('phylum=',Phy,sep=''), limit = 10000000)
+      dfsamples <- geomedb::queryMetadata('Sample', query=paste('phylum=',Phylum,sep=''), limit = 10000000)
       dfsamples = as.data.frame(dfsamples[[1]])
 
       # Extract from the Event table the geographic coordinates
-      dfevent <- geomedb::queryMetadata('Event', query=paste('phylum=',Phy,sep=''), limit = 10000000)
+      dfevent <- geomedb::queryMetadata('Event', query=paste('phylum=',Phylum,sep=''), limit = 10000000)
       dfevent = as.data.frame(dfevent[[1]])
 
       # For each of the NCBI accession number extract Geographic coordinates
@@ -74,7 +74,7 @@ Query.GeOMe.XY.R = function(input = NULL, Phylum = NULL, output=NULL) {
         ID_info = unique(dftissue$Tissue[grep(Toquery.i, dftissue$Tissue$associatedSequences), c('materialSampleID', 'tissueID'),])
         if(dim(ID_info)[1] > 0){ #check if the NCBI Accession number is present in GeOMe.
           # Extract the ID_event of the tissue
-          ID_event = unique(dfsamples[which(dfsamplesSample$materialSampleID == ID_info[,1]), 'eventID'])
+          ID_event = unique(dfsamples[which(dfsamples$Sample$materialSampleID == ID_info[,1]), 'eventID'])
           # Export the results of the request.
           Results = rbind(Results, unlist(c(unique(dfevent[dfevent$Event$eventID == ID_event, c('country', 'decimalLatitude', 'decimalLongitude', 'locality')]), Toquery[i,2])))
         }

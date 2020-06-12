@@ -42,13 +42,14 @@
 #' @param splist a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
 #' the first column and the accepted binomial species name in the second column
 #' which will be retained as 'TaxaName' in the output file.
-#' @param gene can be a
-#' particular gene region or 'ALL' if all gene regions are
-#' sought.
+#' @param gene can be a particular gene region or 'ALL' for all entries
+#' of that species. Please note that this will only retrieve genes 
+#' with the same name in genbank. For example, "COX1" will not return the 
+#' same entries as "COI". Defualt "ALL"
 #' @param filename name of the output table (also needs to include the
-#' extension, e.g. ".txt")
+#' extension, e.g. "Genbank_info.txt")
 #' @param chunk_size number of records to be downloaded at a time from genbank. 
-#' If connection drops try decreasing this value to 20. Default 50.
+#' If connection drops try decreasing this value to 20 or smaller. Default 50.
 
 #' @examples # A table with two species and their unique NCBI taxa ID
 #' Splist=cbind(TaxID=c(443778,189923),
@@ -66,11 +67,9 @@
 #' file.remove("output.NCBI.txt")
 #'
 #' }
-
-
 #' @export GetSeqInfo_NCBI_taxid
 
-GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = NULL, filename = NULL, chunk_size=50) {
+GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = "ALL", filename = NULL, chunk_size=50) {
     # Extract the character of string from the right.
     substrRight <- function(x, n) {
         substr(x, nchar(x) - n + 1, nchar(x))

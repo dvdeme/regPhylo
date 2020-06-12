@@ -12,13 +12,18 @@
 #' 
 #' 
 #' @examples 
-#' Create a species list and retrieve NCBI:txid codes
+#' #Create a species list and retrieve NCBI:txid codes
 #' 
 #' 
 #' \dontrun{
 #' Sp.List = c("Aplodactylus etheridgii", "Aplodactylus arctidens", "Asterorhombus filifer")
 #' taxReport <- GetTaxnum_NCBI(splist = Sp.List)
 #' write.table(taxReport, file="tax_report.txt", sep= "\t", quote = FALSE, row.names = FALSE)
+#' #Are any sp not in NCBI taxonomy database?
+#' paste(taxReport$name[which(taxReport$code==3)])
+#' # Run the function with the path to the file "tax_report.txt"
+#' SpList.DF = Taxreport2Sp.List(input = "tax_report.txt")
+#' SpList.DF$SpList.NCBI
 #' 
 #' }
 

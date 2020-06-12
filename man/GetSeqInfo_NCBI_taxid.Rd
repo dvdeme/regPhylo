@@ -76,12 +76,20 @@ Splist=cbind(TaxID=c(443778,189923),
 Species.Name=c("Diastobranchus capensis", "Synaphobranchus affinis"))
 # Run the function to extract all DNA sequences and associated metadata
 \dontrun{
-NCBI.output = GetSeqInfo_NCBI_taxid(splist = Splist, gene = "ALL",
-filename = "output.NCBI.txt")
+# A table with two species and their unique NCBI taxa ID
+Splist=cbind(TaxID=c(443778,189923),
+             Species.Name=c("Diastobranchus capensis", "Synaphobranchus affinis"))
+# Run the function to extract all DNA sequences and associated metadata
+NCBI.stats = GetSeqInfo_NCBI_taxid(splist = Splist, gene = "ALL",
+                                    filename = "output.NCBI.txt")
 
-# The output can be loaded by doing the following
-data(Seq.Diastocapen)
-NCBI.output = Seq.Diastocapen$Seq.NCBI
+# Summary of results
+NCBI.stats
+
+#Access result list from file for next step
+Seq.NCBI.all = read.delim("output.NCBI.txt", sep = "\t", h = TRUE)
+AllSeqDF = Congr.NCBI.BOLD.perReposit(input.NCBI = Seq.NCBI.all, input.BOLD=Seq.BOLD,
+                                      output = "Data_Extraction/AllSeqDF.txt")
 
 # To remove the file created while running the example do the following:
 file.remove("output.NCBI.txt")

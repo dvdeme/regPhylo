@@ -48,7 +48,7 @@
 #' same entries as "COI". Defualt "ALL"
 #' @param filename name of the output table (also needs to include the
 #' extension, e.g. "Genbank_info.txt")
-#' @param chunk_size number of records to be downloaded at a time from genbank. 
+#' @param chunk_size number of records to be downloaded at a time from Genbank. 
 #' If connection drops try decreasing this value to 20 or smaller. Default 50.
 
 #' @examples # A table with two species and their unique NCBI taxa ID

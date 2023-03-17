@@ -108,5 +108,5 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
     utils::write.table(TabAll2, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.
 
     colnames(TabSum) = c("Species_Name", "Nb_Occ")
-    return(list(TabSum, TabTot))  # Report a table with all the species listed in the list and the number of occurrences found in BOLD (Note that some of occurrences are not associated with a sequence and so the total number of occurrences may be different from the number of occurrences retained in the output table (Only those with DNA sequences are retained)).
+    return(list(Summary.Table = TabSum, Full.Table = TabTot))  # Report a table with all the species listed in the list and the number of occurrences found in BOLD (Note that some of occurrences are not associated with a sequence and so the total number of occurrences may be different from the number of occurrences retained in the output table (Only those with DNA sequences are retained)).
 }  # End of the function.

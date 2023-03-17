@@ -18,13 +18,13 @@ which will be retained as 'TaxaName' in the output file.}
 
 \item{gene}{can be a particular gene region or 'ALL' for all entries
 of that species. Please note that this will only retrieve genes 
-with the same name in genbank. For example, "COX1" will not return the 
-same entries as "COI". Defualt "ALL"}
+with the same name in Genbank. For example, "COX1" will not return the 
+same entries as "COI". Default "ALL"}
 
 \item{filename}{name of the output table (also needs to include the
 extension, e.g. "Genbank_info.txt")}
 
-\item{chunk_size}{number of records to be downloaded at a time from genbank. 
+\item{chunk_size}{number of records to be downloaded at a time from Genbank. 
 If connection drops try decreasing this value to 20 or smaller. Default 50.}
 }
 \value{

@@ -3,7 +3,6 @@ Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
 Version: 1.0.4
 Date: 2020-06-12
-
 Author: regPhylo <regPhylo@gmail.com>
 Maintainer: regPhylo <regPhylo@gmail.com>
 Description: The regPhylo package provides functions to assist in building 
@@ -40,8 +39,7 @@ Imports: ape,
     RJSONIO,
     seqinr,
     stringr,
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 Suggests: testthat,
     httr
-
 Depends: R (>= 2.10)

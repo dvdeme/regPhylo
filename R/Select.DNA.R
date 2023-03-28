@@ -1,4 +1,4 @@
-#' @title Extract all the seqeunces and metadata from the data table for a list of selected gene regions
+#' @title Extract all the sequences and metadata from the data table for a list of selected gene regions
 
 #' @description This function selects the sequences and associated information for a list
 #' of selected gene regions for all the species present in the data table. For
@@ -23,6 +23,9 @@
 #' a certain species when DNA sequences are known to be available in GenBank.
 #' Alternatively, if the server connection is quick the timeout can be decreased to 5 seconds
 #'(the default in choosebank) to speed-up the function.
+#'
+#'@param Seqinr by default FALSE, so the rentrez R package is used to query Genbank, 
+#'if TRUE, the old version using seqinr R package is used.
 
 #' @examples # Load the data table exported by the SpeciesGeneMat.Bl function
 #' data(Seq.DF4) # the table of sequences and metadata is called "CleanDataTable"
@@ -35,7 +38,7 @@
 
 #' @export Select.DNA
 
-Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 10) {
+Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 10, Seqinr = FALSE) {
 
     # Check the dimensions (number of columns) of the input table, if the input table
     # also includes the sequence order in the 29th column, this last column is
@@ -70,7 +73,8 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 1
     # 'Sequence'.
     Ori.multSeq.po = grep("Too_Long", ShortTab[, 4])  # Identify the position of the sequence with multiple genes associated in the ShortTab.
 
-
+    if(Seqinr == TRUE){
+    
     if (length(Ori.multSeq.po) > 0)
         {
             # If at least one sequence need to be retrieved from NCBI.
@@ -181,6 +185,159 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 1
             }
 
         }  # End if(length(Ori.multSeq.po)>0){
+    } else {
+      if (length(Ori.multSeq.po) > 0){
+        # If at least one sequence need to be retrieved from NCBI.
+        
+        # Homogenize the gene names according to NCBI requirements for the request.
+        gene.listB = toupper(gene.list)
+        gene.listB = gsub("CO1", "COI", gene.listB, fixed = TRUE)
+        gene.listB = gsub("SRRNA", "S ribosomal RNA", gene.listB, fixed = TRUE)
+        
+        
+        # Connect to the Genbank database.
+        DFadd = matrix(NA, ncol = dim(ShortTab)[2])[-1, ]
+        i = 1
+        for (i in 1:length(gene.list)) {
+          # For multiple genes of interest.
+          j = 1
+          Addtab = as.matrix(ShortTab[Ori.multSeq.po, ])
+          for (j in 1:length(Ori.multSeq.po)) {
+            # For all the multiple sequences.
+            
+            # new way to get the sequence 
+            oo = rentrez::entrez_search(db="nucleotide", 
+                                        term =paste(ShortTab[Ori.multSeq.po[j], 3], "[ACCESSION]", sep = ""), 
+                                        use_history= TRUE)
+            
+            #oo = rentrez::entrez_search(db="nucleotide", 
+            #term =paste("ON838225", "[ACCESSION]", sep = ""), 
+            #use_history= TRUE)
+            
+            
+            
+            # Fetch the sequences for records in a chunk as a Genbank XML
+            oo.seqs = rentrez::entrez_fetch(db='nucleotide',
+                                            web_history = oo$web_history, 
+                                            rettype = 'gb', retmode = 'xml',
+                                            parsed = TRUE)
+            oo.seqs.xml = XML::xmlToList(oo.seqs)
+            
+            posF = which(names(oo.seqs.xml[[1]]) == "GBSeq_feature-table")
+            posSeq = which(names(oo.seqs.xml[[1]]) == "GBSeq_sequence")
+            # Build an annotaed table of the gene sequence 
+            Annotated.DF = unique(as.data.frame(do.call(rbind, 
+                                                        lapply(1:length(oo.seqs.xml[[1]][[posF]]), function(x)
+                                                        {
+                                                          
+                                                          feat1 = oo.seqs.xml[[1]][[posF]][[x]]
+                                                          a = feat1$GBFeature_intervals$GBInterval$GBInterval_from # starting Position
+                                                          b = feat1$GBFeature_intervals$GBInterval$GBInterval_to # ending position
+                                                          
+                                                          c = unlist(lapply(1:length(feat1$GBFeature_quals), function(i){
+                                                            feat1$GBFeature_quals[[i]][[2]]}))
+                                                          
+                                                          if(length(c) == 1){ # x = 75
+                                                            c1 = c(c, NA)
+                                                          }
+                                                          
+                                                          if(length(c) == 3){ # x = 3
+                                                            c1 = c[c(1,2)]
+                                                          }
+                                                          
+                                                          if(length(c) == 5){ # x = 1
+                                                            c1 = c[c(1,4)]
+                                                          }
+                                                          
+                                                          if(length(c) == 6){ # x = 72
+                                                            c1 = c[c(1,4)]
+                                                          }
+                                                          
+                                                          if(length(c) == 8){ #x = 76
+                                                            c1 = c[c(1,6)]
+                                                          }
+                                                          
+                                                          
+                                                          if(length(c) == 2 | length(c) == 4 | length(c) == 7 | length(c) > 8){
+                                                            c1 = c(NA, NA)
+                                                          }
+                                                          
+                                                          c(a,b,c1)
+                                                        }))))
+            
+            Annotated.DF = Annotated.DF[-1,]
+            
+            
+            if (gene.listB[i] == "COI"){
+              
+              select = which(Annotated.DF[,3] == gene.listB[i] | 
+                               Annotated.DF[,4] == gene.listB[i]) 
+              
+              if(length(select) == 0){
+                select = which(Annotated.DF[,3] == "CO1" | Annotated.DF[,4] == "CO1") 
+              }
+              
+              if(length(select) == 0){
+                select = which(Annotated.DF[,3] == "COX1" | Annotated.DF[,4] == "COX1") 
+              }
+              
+              if(length(select) == 0){
+                select = which(Annotated.DF[,3] == "COXI" | Annotated.DF[,4] == "COXI") 
+              }
+              
+              if(length(select) == 0){
+                select = which(Annotated.DF[,3] == "cytochrome c oxidase subunit I" |
+                                 Annotated.DF[,4] == "cytochrome c oxidase subunit I") 
+              }
+              
+              if(length(select) == 0){
+                select = which(Annotated.DF[,3] == "cytochrome oxidase subunit I" | 
+                                 Annotated.DF[,4] == "cytochrome oxidase subunit I") 
+              } 
+              
+              ### for other gene than COI
+            } else {
+              
+              select = which(Annotated.DF[,3] == gene.listB[i] | 
+                               Annotated.DF[,4] == gene.listB[i]) 
+              
+            }
+            
+            if(length(select) > 0){
+              Boundary.From = as.numeric(Annotated.DF[select[1], 1])
+              Boundary.To = as.numeric(Annotated.DF[select[1], 2])
+              if(Boundary.From < Boundary.To){
+                dna1 = substring(oo.seqs.xml[[1]][[posSeq]], Boundary.From, Boundary.To)
+              } else {
+                # in case the start and end of the sequence are inverted 
+                dna1 = substring(oo.seqs.xml[[1]][[posSeq]], Boundary.To, Boundary.From)
+              }
+              
+              Addtab[j, 4] = dna1
+              Addtab[j, 3] = ShortTab[Ori.multSeq.po[j], 3]  # Accession number.
+              Addtab[j, 5] = nchar(dna1)  # Sequence length.
+              Addtab[j, 18] = gene.listB[i]
+              Addtab[j, 19] = gene.listB[i]
+              Addtab[j, 29] = gene.list[i]
+              
+            } else {
+              Addtab[j, 4] = NA
+              Addtab[j, 3] = NA
+              Addtab[j, 5] = NA
+              
+            }
+          } # end fo j
+          Addtab2 = Addtab[which(is.na(as.numeric(as.character(Addtab[, 5]))) ==
+                                   "FALSE"), ]
+          DFadd = rbind(DFadd, Addtab2)
+        } # end for i
+        
+        ShortTab2 = ShortTab[-Ori.multSeq.po, ]
+        ShortTab = rbind(ShortTab2, DFadd)
+        
+      }
+      
+    }
 
     utils::write.table(ShortTab, file = paste(output, ".Select.DNA.txt", sep = ""), sep = "\t",
         row.names = FALSE, quote = FALSE)

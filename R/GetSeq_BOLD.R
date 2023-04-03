@@ -10,7 +10,8 @@
 #' @param filename name of the output table. The format of the output follows the
 #' format provided by the bold R package.
 #' @param bold.id  if TRUE then the first column of the splist table contains the bold taxid of the taxa 
-#' (should be character), by default FALSE
+#' (should be character), by default FALSE. This option is not working woith the taxonomic ID but other ids 
+#'  such as Sample IDs, Process IDs, Museum IDs and Field IDs.
 #' 
 #'
 #' @return The function returns three tables: a first table exported within the working directory

@@ -669,7 +669,10 @@ GeoCodeName = function(input = NULL, output = NULL, CorrTab = NULL, AutoCorrNZ =
         if (is.na(LocatUniq[i])) {
             a = c(NA, NA)
         } else {
-          a = geocodeOpenStreetMap(LocatUniq[i])
+          a = tryCatch(geocodeOpenStreetMap(LocatUniq[i]), error=function(e) "error")
+          if(length(a) == 1){
+            a = c(NA, NA)
+          }
         }
         Latitude = c(Latitude, a[[1]])
         Longitude = c(Longitude, a[[2]])

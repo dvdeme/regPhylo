@@ -2,9 +2,15 @@
 % Please edit documentation in R/Select.DNA.R
 \name{Select.DNA}
 \alias{Select.DNA}
-\title{Extract all the seqeunces and metadata from the data table for a list of selected gene regions}
+\title{Extract all the sequences and metadata from the data table for a list of selected gene regions}
 \usage{
-Select.DNA(input = NULL, gene.list = NULL, output = NULL, timeout = 10)
+Select.DNA(
+  input = NULL,
+  gene.list = NULL,
+  output = NULL,
+  timeout = 10,
+  Seqinr = FALSE
+)
 }
 \arguments{
 \item{input}{The table created using the function \code{\link{SpeciesGeneMat.Bl}}
@@ -24,6 +30,9 @@ the server) if the function cannot retrieve any DNA sequence for
 a certain species when DNA sequences are known to be available in GenBank.
 Alternatively, if the server connection is quick the timeout can be decreased to 5 seconds
 (the default in choosebank) to speed-up the function.}
+
+\item{Seqinr}{by default FALSE, so the rentrez R package is used to query Genbank, 
+if TRUE, the old version using seqinr R package is used.}
 }
 \description{
 This function selects the sequences and associated information for a list

@@ -75,6 +75,10 @@
 #' (i.e. the alignment provided to 'inputal') in order to detect secondary outliers.
 #' @param Bitsc.Th bitscore similarity threshold to detect 'secondary'
 #' outlier sequences, should be a value between [0-1].
+#' @param Evol.Model evolutionary model used ton compute the DNA distance among sequences, default "TN93" 
+#' (Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package. 
+#' Use "raw" for fast estimate for large dataset. 
+#' 
 
 #' @examples # Load the alignment file (class "alignment"), this is the first
 #' # object of the list called Example_16S_outlier.
@@ -123,7 +127,7 @@
 
 
 Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NULL,
-    output = NULL, Second.Outlier = NULL, Bitsc.Th = NULL) {
+    output = NULL, Second.Outlier = NULL, Bitsc.Th = NULL, Evol.Model = "TN93") {
   # if the class of the inputal object is "alignment" object recognised by ape and seqinr r packages.
   if(class(inputal)=="alignment"){
     cytb2=inputal
@@ -143,7 +147,7 @@ Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NU
     if (Strat.DistMat == "DivSeq") {
         # Compute the distance between all sequences using the TN93 substitution model,
         # enabling pairwise.deletion option.
-        a = ape::dist.dna(cytb2a, model = "TN93", pairwise.deletion = TRUE)
+        a = ape::dist.dna(cytb2a, model = Evol.Model, pairwise.deletion = TRUE)
         if (is.na(mean(a, na.rm = T))) {
             aprop = a
             aprop[is.na(aprop)] = 0
@@ -169,7 +173,10 @@ Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NU
 
     if (Strat.DistMat == "Comb") {
         # Compute the distance between all sequences using the TN93 substitution model
-        a = ape::dist.dna(cytb2a, model = "TN93", pairwise.deletion = TRUE)
+      cpu0 = Sys.time()  
+      a = ape::dist.dna(cytb2a, model = Evol.Model, pairwise.deletion = TRUE)
+      cpu1 = Sys.time()
+      cpu1-cpu0
         if (is.na(mean(a, na.rm = T))) {
             aprop = a
             aprop[is.na(aprop)] = 0
@@ -194,7 +201,18 @@ Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NU
 
 
     # Build a BIONJs tree.
-    anj2 = ape::bionjs(matdis)
+    #cpu0 = Sys.time()
+    #anj2 = ape::bionjs(matdis)
+    #cpu1 = Sys.time()
+    #cpu1-cpu0
+    
+    # A faster algorithm,using fastme.ols from ape
+    #cpu0 = Sys.time()
+    anj2 = ape::fastme.ols(matdis)
+    #cpu1 = Sys.time()
+    #cpu1-cpu0
+    
+    
     anj2$edge.length = abs(anj2$edge.length)  # To avoid very short negative branch length.
 
     # Compute distance root to tips for all the tips.

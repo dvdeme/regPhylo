@@ -123,17 +123,23 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
     DF = cbind(DF, perRepositID)
 
 
-    Table_InfoTot = matrix(NA, ncol = 32)[-1, ]
+    Table_InfoTot = matrix(NA, ncol = (dim(DF)[2]+2))[-1, ]
     colnames(Table_InfoTot) = c(names(DF), "SeqLengthNoIndelsNoAmbig", "GreatCircleDistanceKm")
 
     k = 1
     for (k in 1:length(gene.list)) {
         # Loop over multiple genes.
-        DF1 = as.data.frame(DF[which(DF[, 29] == gene.list[k]), ])
+         pos1 = unique(c(which(DF[, 29] == gene.list[k]), grep(gene.list[k], DF[, 29])))
+         
+         if(length(pos1) == 0){
+           warning(paste("No species are retrieved for the DNA marker ", gene.list[k], sep=""))
+         } else {
+        DF1 = as.data.frame(DF[pos1,])
+        
         SpUniq = as.character(unique(DF1[, 1])) # List of species.
 
         # Table info.
-        Table_Info = matrix(NA, ncol = 32)[-1, ]
+        Table_Info = matrix(NA, ncol = (dim(DF)[2]+2))[-1, ]
         colnames(Table_Info) = c(names(DF1), "SeqLengthNoIndelsNoAmbig", "GreatCircleDistanceKm")
 
         j = 1
@@ -205,6 +211,7 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
                   imax = dim(DFtemp)[1] else imax = MaxSeq
                 Table_Info = rbind(Table_Info, DFtempord[1:imax, ])
             }
+        
         }  # End for j.
 
         # Build the alignments if needed.
@@ -228,9 +235,9 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
                 write(AlignFasta, file = paste(output, "_", gene.list[k], ".fas",
                   sep = ""))  # Write the alignments.
             }  # End if Alignment==T.
-
-        # Feed the large table with the selected sequences and their associated
-        # information for all the species and each gene.
+         }
+         # Feed the large table with the selected sequences and their associated
+         # information for all the species and each gene.
         Table_InfoTot = rbind(Table_InfoTot, Table_Info)
     }  # End for k (multiple genes).
 

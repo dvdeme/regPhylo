@@ -30,7 +30,9 @@
 #'
 #' @param methods programs used to align the sequences, the function used Mafft-FFTNS1
 #' to reverse complement and align quickly the sequences, but other programs can be also
-#' used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").
+#' used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta", 
+#' "mafftfftns2", "mafft_auto"). The option mafft_auto choose automatically the best 
+#' algorithm among fftns1, fftns2, fftnsi or l-nsi.
 #'
 #' @param Mafft.path for the Windows platform, a character string which provides the path
 #' to the mafft executable
@@ -195,6 +197,52 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     }
     parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
     }
+    
+    
+    if(length(which(methods=="mafftfftns2"))==1){
+      
+      mafft = "mafft"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Mafft.path)){
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = paste(Mafft.path, " ", sep = "")
+      }
+      
+      
+      # Mafft alignment using fftnsi algorithm.
+      mafftfftnsi.align = function(x) {
+        a = paste(mafft, " --retree 2 ",
+                  input, "/", x, " > ", output, "/",
+                  "Mafftfftns2_", x, sep = "")
+        system(a)
+      }
+      parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
+    }
+    
+    if(length(which(methods=="mafft_auto"))==1){
+      
+      mafft = "mafft"
+      os <- .Platform$OS
+      if(os == "windows"){
+        if(missing(Mafft.path)){
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = paste(Mafft.path, " ", sep = "")
+      }
+      
+      
+      # Mafft alignment using the best algorithm among fftns1, fftnns2, fftnsi or l-nsi .
+      mafftfftnsi.align = function(x) {
+        a = paste(mafft, " --auto ",
+                  input, "/", x, " > ", output, "/",
+                  "Mafftfftns2_", x, sep = "")
+        system(a)
+      }
+      parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
+    }
+    
 
     options(warn=-1)
     if(length(which(methods=="pasta"))==1){

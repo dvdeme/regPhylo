@@ -211,14 +211,14 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
       }
       
       
-      # Mafft alignment using fftnsi algorithm.
-      mafftfftnsi.align = function(x) {
+      # Mafft alignment using fftns2 algorithm.
+      mafftfftns2.align = function(x) {
         a = paste(mafft, " --retree 2 ",
                   input, "/", x, " > ", output, "/",
                   "Mafftfftns2_", x, sep = "")
         system(a)
       }
-      parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
+      parallel::parLapply(cl, AlignSelect2, mafftfftns2.align)
     }
     
     if(length(which(methods=="mafft_auto"))==1){
@@ -234,13 +234,13 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
       
       
       # Mafft alignment using the best algorithm among fftns1, fftnns2, fftnsi or l-nsi .
-      mafftfftnsi.align = function(x) {
+      mafft_auto.align = function(x) {
         a = paste(mafft, " --auto ",
                   input, "/", x, " > ", output, "/",
-                  "Mafftfftns2_", x, sep = "")
+                  "Mafft_auto_", x, sep = "")
         system(a)
       }
-      parallel::parLapply(cl, AlignSelect2, mafftfftnsi.align)
+      parallel::parLapply(cl, AlignSelect2, mafft_auto.align)
     }
     
 

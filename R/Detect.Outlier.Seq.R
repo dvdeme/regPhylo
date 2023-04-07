@@ -173,10 +173,7 @@ Detect.Outlier.Seq = function(inputal = NULL, Strat.DistMat = NULL, Dist.Th = NU
 
     if (Strat.DistMat == "Comb") {
         # Compute the distance between all sequences using the TN93 substitution model
-      cpu0 = Sys.time()  
       a = ape::dist.dna(cytb2a, model = Evol.Model, pairwise.deletion = TRUE)
-      cpu1 = Sys.time()
-      cpu1-cpu0
         if (is.na(mean(a, na.rm = T))) {
             aprop = a
             aprop[is.na(aprop)] = 0

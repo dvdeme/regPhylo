@@ -27,6 +27,10 @@
 #'
 #' @param nthread number of threads used to run the alignment software in parallel for
 #' the different gene regions.
+#' 
+#' @param nthread.per.align number of threads used to run the alignment software for a 
+#' single alignment at the time. This option is NULL by default but is specially suited 
+#' when performing an alignment for a single DNA marker with many DNA sequences. 
 #'
 #' @param methods programs used to align the sequences, the function used Mafft-FFTNS1
 #' to reverse complement and align quickly the sequences, but other programs can be also
@@ -41,7 +45,7 @@
 #' are after, mafft is necessary to reverse complement the sequences and the Mafft.path must
 #' be completed in all cases. For Linux the mafft software must be in the $PATH.
 #'
-#' @details The 'output', 'input' and 'nthread' objects need
+#' @details The 'output', 'input' and 'nthread' or 'nthread.per.align' objects need
 #' to be present in the R environment before running the function because the
 #' function runs in parallel using the R package 'parallel', see example below the
 #' function.
@@ -126,7 +130,7 @@
 #'
 #' @export First.Align.All
 
-First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods = NULL , Mafft.path = NULL) {
+First.Align.All = function(input = NULL, output = NULL, nthread = NULL, nthread.per.align = NULL, methods = NULL , Mafft.path = NULL) {
     AlignSelect = list.files(input)
     AlignSelect = AlignSelect[grep(".fas", AlignSelect)]
     AlignSelect2 = paste("revc_", AlignSelect, sep = "")
@@ -141,21 +145,42 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
       mafft = Mafft.path
     }
 
+    # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
+    # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
+    # alignment for all other algorithms
+
+    
+    if(is.numeric(nthread.per.align)){
+      
+      # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
+      # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
+      # alignment for all other algorithms
+      mafftfftns1.align = function(x) {
+        a = paste(mafft, " --retree 1 --maxiterate 0 --adjustdirection --thread ", nthread.per.align," ", input, "/",
+                  x, " > ", input, "/", "revc_", x, sep = "")
+        system(a)
+      }
+      
+      lapply(AlignSelect, mafftfftns1.align)
+      
+    } else {
+      
+      # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
+      # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
+      # alignment for all other algorithms
+      mafftfftns1.align = function(x) {
+        a = paste(mafft, " --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
+                  x, " > ", input, "/", "revc_", x, sep = "")
+        system(a)
+      }
     # Run the job in parallel through a certain number of threads.
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
     parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
-
-    # Mafft alignment using FFT-NS-1 algorithm This step also checks the necessity to
-    # reverse complement the sequence. The MAFFT FFTNS1 alignment will serve as input
-    # alignment for all other algorithms
-    mafftfftns1.align = function(x) {
-        a = paste(mafft, " --retree 1 --maxiterate 0 --adjustdirection ", input, "/",
-            x, " > ", input, "/", "revc_", x, sep = "")
-        system(a)
-    }
     parallel::parLapply(cl, AlignSelect, mafftfftns1.align)
-
+    parallel::stopCluster(cl)  # Stop Cluster.
+    }
+    
     # Copy the revc_ file in the output folder.
     p = list.files(input)
     # Copy in the new folder.
@@ -170,8 +195,118 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
         file.rename(from = paste(output, "/", p1[i], sep = ""), to = paste(output,
             "/", p2[i], sep = ""))
     }
-    parallel::stopCluster(cl)  # Stop Cluster.
 
+    
+    ### Run a single alignment at the time but in parallel using Mafft and Pasta parallel capabilities
+    if(is.numeric(nthread.per.align)){
+    
+      if(length(which(methods=="mafftfftnsi"))==1){
+        
+        mafft = "mafft"
+        os <- .Platform$OS
+        if(os == "windows"){
+          if(missing(Mafft.path)){
+            stop("The path to the mafft executable must be provided in Mafft.path")
+          }
+          mafft = paste(Mafft.path, " ", sep = "")
+        }
+        
+        
+        # Mafft alignment using fftnsi algorithm.
+        mafftfftnsi.align = function(x) {
+          a = paste(mafft, " --retree 2 --maxiterate 2 --thread ", nthread.per.align, " ",
+                    input, "/", x, " > ", output, "/",
+                    "Mafftfftnsi_", x, sep = "")
+          system(a)
+        }
+        lapply(AlignSelect2, mafftfftnsi.align)
+      }
+      
+      
+      
+      if(length(which(methods=="mafftfftns2"))==1){
+        
+        mafft = "mafft"
+        os <- .Platform$OS
+        if(os == "windows"){
+          if(missing(Mafft.path)){
+            stop("The path to the mafft executable must be provided in Mafft.path")
+          }
+          mafft = paste(Mafft.path, " ", sep = "")
+        }
+        
+        
+        # Mafft alignment using fftns2 algorithm.
+        mafftfftns2.align = function(x) {
+          a = paste(mafft, " --retree 2 --thread ", nthread.per.align, " ",
+                    input, "/", x, " > ", output, "/",
+                    "Mafftfftns2_", x, sep = "")
+          system(a)
+        }
+        lapply(AlignSelect2, mafftfftns2.align)
+      }
+      
+      
+      if(length(which(methods=="mafft_auto"))==1){
+        
+        mafft = "mafft"
+        os <- .Platform$OS
+        if(os == "windows"){
+          if(missing(Mafft.path)){
+            stop("The path to the mafft executable must be provided in Mafft.path")
+          }
+          mafft = paste(Mafft.path, " ", sep = "")
+        }
+        
+        
+        # Mafft alignment using the best algorithm among fftns1, fftnns2, fftnsi or l-nsi .
+        mafft_auto.align = function(x) {
+          a = paste(mafft, " --auto --thread ", nthread.per.align, " ",
+                    input, "/", x, " > ", output, "/",
+                    "Mafft_auto_", x, sep = "")
+          system(a)
+        }
+        lapply(AlignSelect2, mafft_auto.align)
+      }
+      
+      
+      options(warn=-1)
+      if(length(which(methods=="pasta"))==1){
+        # PASTA alignment (Mirarab et al. 2015) based on 'divide and conquer' approach to
+        # co-infer alignment and tree, based on SATEII (Liu et al. 2011, DOI:
+        # 10.1093/sysbio/syr095) and transitivity.
+        if(os == "windows") {
+          warning("Pasta cannot be used on a Windows plateform at the moment")
+        } else {
+          pasta.align = function(x) {
+            a = paste("run_pasta.py -i ", input, "/", x, " -j PASTA_", " --num-cpus ", nthread.per.align,
+                      sep = "")
+            system(a)
+          }
+          lapply(AlignSelect2, pasta.align)
+          
+          # Move the final PASTA alignments into the same folder as the other alignments
+          # Define the names of the PASTA alignment files to move.
+          b = list.files(input)
+          b1 = paste(input, "/", b[grep(".aln", b)], sep = "")
+          # Rename the files before to move them in the other folder.
+          bb = gsub(".aln", ".fas", gsub("(_[0-9]*.marker001.)", "_", b1, perl = T), fixed = T)
+          i = 1
+          for (i in 1:length(bb)) {
+            file.rename(from = b1[i], to = bb[i])
+          }
+          # Copy the renamed files to an appropriate output folder.
+          file.copy(from = bb, to = output)
+          # Remove the temporary files created by PASTA in the working directory.
+          c = paste(input, "/", b[grep("PASTA_", b)], sep = "")
+          file.remove(c)
+        }
+      }
+      options(warn=0)
+      
+    } else {
+    
+    ### Parallel over multiple alignments
     cl <- parallel::makeCluster(nthread)  # Create the cluster.
     # Designate the functions and variables that need to be exported for the parallel version.
     parallel::clusterExport(cl, varlist = c("output", "input", "nthread", "methods"))
@@ -278,7 +413,7 @@ First.Align.All = function(input = NULL, output = NULL, nthread = NULL, methods 
     }
     options(warn=0)
     parallel::stopCluster(cl)  # Stop Cluster.
-
+}
 
     # Remove the temporary file used for the alignment
     bn = list.files(input)

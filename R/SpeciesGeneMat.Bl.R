@@ -216,7 +216,7 @@ SpeciesGeneMat.Bl = function(input = NULL, output = NULL, NCBI.Trash = NULL, BOL
 
 
         options(warn = -1)  # Remove the warnings that appear if DNAfrag has a length greater to one, we can use length because we report the data in a matrix with a single column only.
-        if (length(DNAfrag) == 1 & is.na(DNAfrag) == TRUE) {
+        if (length(which(is.na(DNAfrag))) == length(DNAfrag)) {
             product = product
         } else {
             # Removed the '; ' in front of each row.

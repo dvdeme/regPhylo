@@ -8,6 +8,7 @@ First.Align.All(
   input = NULL,
   output = NULL,
   nthread = NULL,
+  nthread.per.align = NULL,
   methods = NULL,
   Mafft.path = NULL
 )
@@ -27,9 +28,15 @@ of all the sequences per gene region that have been reverse complemented.}
 \item{nthread}{number of threads used to run the alignment software in parallel for
 the different gene regions.}
 
+\item{nthread.per.align}{number of threads used to run the alignment software for a 
+single alignment at the time. This option is NULL by default but is specially suited 
+when performing an alignment for a single DNA marker with many DNA sequences.}
+
 \item{methods}{programs used to align the sequences, the function used Mafft-FFTNS1
 to reverse complement and align quickly the sequences, but other programs can be also
-used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta").}
+used simultaneously, such as  Mafft-fftnsi and PASTA, c("mafftfftnsi", "pasta", 
+"mafftfftns2", "mafft_auto"). The option mafft_auto choose automatically the best 
+algorithm among fftns1, fftns2, fftnsi or l-nsi.}
 
 \item{Mafft.path}{for the Windows platform, a character string which provides the path
 to the mafft executable
@@ -61,7 +68,7 @@ divergent sequences and at dealing with saturated phylogenetic signal because
 it splits the alignment into small chunks of similar sequences and performs
 profile alignments among those smaller chunk of sequences (Roquet et al. 2013).
 
-The 'output', 'input' and 'nthread' objects need
+The 'output', 'input' and 'nthread' or 'nthread.per.align' objects need
 to be present in the R environment before running the function because the
 function runs in parallel using the R package 'parallel', see example below the
 function.

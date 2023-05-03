@@ -10,7 +10,8 @@ Detect.Outlier.Seq(
   Dist.Th = NULL,
   output = NULL,
   Second.Outlier = NULL,
-  Bitsc.Th = NULL
+  Bitsc.Th = NULL,
+  Evol.Model = "TN93"
 )
 }
 \arguments{
@@ -30,6 +31,10 @@ against the local database of retrieved and aligned sequences
 
 \item{Bitsc.Th}{bitscore similarity threshold to detect 'secondary'
 outlier sequences, should be a value between [0-1].}
+
+\item{Evol.Model}{evolutionary model used ton compute the DNA distance among sequences, default "TN93" 
+(Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package. 
+Use "raw" for fast estimate for large dataset.}
 }
 \value{
 The function return a table for all the retained sequences with the following headers:

@@ -130,8 +130,7 @@ SpeciesGeneMat.Bl = function(input = NULL, output = NULL, NCBI.Trash = NULL, BOL
         # MLL4.
 
         # Add the sequence order.
-        input = cbind(input[, c(1:18)], Genes, input[, c(20:dim(input)[2])], SeqOrder = seq(1,
-            dim(input)[1], by = 1))
+        input = cbind(input[, c(1:18)], Genes, input[, c(20:dim(input)[2])])
 
         # Remove rows without DNA sequences attached (sometimes happens in the BOLD
         # database)
@@ -139,6 +138,9 @@ SpeciesGeneMat.Bl = function(input = NULL, output = NULL, NCBI.Trash = NULL, BOL
             input = input[-grep("^$", input[, 4], perl = T), ]
         }
 
+        input = cbind(input, SeqOrder = seq(1,dim(input)[1], by = 1))
+        
+        
         # Find all the sequences with no (i.e. 'NA') DNA annotation in the 'Product' and
         # 'gene' fields.
         input2 = input[intersect(which(is.na(input[, 18]) == "TRUE"), which(is.na(input[,

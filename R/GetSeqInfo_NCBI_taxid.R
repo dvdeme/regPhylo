@@ -125,7 +125,7 @@ GetSeqInfo_NCBI_taxid = function(splist = NULL, gene = "ALL", filename = NULL, c
         # Storing the information about the DNA sequences in a table.  Retrieve the
         # information only when at least 1 sequence is available.
         if (imax > 0){   
-            for(seq_start in seq(0,imax,chunk_size)){ 
+            for(seq_start in seq(0, (imax-1), chunk_size)){ 
                 #Loop to break up the genbank queries into chunks.
                 # seq_start needs to start at 0 not 1
                 # Fetch the sequences for records in a chunk as a Genbank XML

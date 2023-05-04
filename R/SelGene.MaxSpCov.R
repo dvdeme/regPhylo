@@ -127,7 +127,7 @@ SelGene.MaxSpCov = function(input = NULL, NBGene = NULL) {
         ## If a single gene gets 100% species coverage the class(BringNsp2) will be a
         ## 'character', otherwise it will be a 'matrix' if more than one gene is required
         ## to get 100% species coverage.
-        if (class(BringNsp2) == "matrix") {
+        if (class(BringNsp2)[1] == "matrix") {
             Sp.DNAMatPA2 = Sp.DNAMatPA[, match(BringNsp2[c(1:dim(BringNsp2)[1]),
                 2], colnames(Sp.DNAMatPA))]
 

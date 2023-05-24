@@ -254,22 +254,22 @@ return(list(Outlier.Sequences = Outlier.Seqs, Clean.Haplo.Alignment = cytb2Sa, C
 
 #' @description This function helps to detect sequences that are abnormally distance form all other sequences in alignment. See the Clean.Seq function for a more detailled description.
 
-#' @parameter input is a DNAbin alignment object.
+#' @param input is a DNAbin alignment object.
 
-#' @parameter Evol.Model evolutionary model used to compute the DNA distance among sequences, default "TN93" (Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package. 
+#' @param Evol.Model evolutionary model used to compute the DNA distance among sequences, default "TN93" (Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package. 
 
-#' @parameter Sum.Stat type of symmary statistic to compare the DNA distance of the focal sequence with the other, by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.
+#' @param Sum.Stat type of symmary statistic to compare the DNA distance of the focal sequence with the other, by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.
 
-#' @parameter Outlier.Th is a number (by default 1.5) defining the distance to consider an outlier sequences. The Outlier.Th is a multiplier of the interquartile range from the genetic distances distribution using the Sum.stat (eg. median). This parameter is equivalent of the "range" parameter from the boxplot function from the stat R package.
+#' @param Outlier.Th is a number (by default 1.5) defining the distance to consider an outlier sequences. The Outlier.Th is a multiplier of the interquartile range from the genetic distances distribution using the Sum.stat (eg. median). This parameter is equivalent of the "range" parameter from the boxplot function from the stat R package.
 
-#' @parameter Approxim if TRUE (defaults FALSE) the functions uses an approximation approches to estimate the outlier sequences. If sequence is compare to a random selection of other sequences (defined by the parameter nb.seq) x times (the number of repetition of randoms election is performed by the parameter  nb.rep). This function can speed up a lot the discovery of potential oulier sequences for lareg alignment (more than 5000 - 10000 sequences) becasue the function can run in parallel. However we need to keep in mind that this option provide only an approximation of the outlier sequences when Approxim  = TRUE.
+#' @param Approxim if TRUE (defaults FALSE) the functions uses an approximation approches to estimate the outlier sequences. If sequence is compare to a random selection of other sequences (defined by the parameter nb.seq) x times (the number of repetition of randoms election is performed by the parameter  nb.rep). This function can speed up a lot the discovery of potential oulier sequences for lareg alignment (more than 5000 - 10000 sequences) becasue the function can run in parallel. However we need to keep in mind that this option provide only an approximation of the outlier sequences when Approxim  = TRUE.
 
-#' @parameter nb.seq a number (by default 25) defining the number of sequences than are randomly choosen too detect an oultier sequences. This option works only if Approxim = TRUE. To increase the precision of the outlier detection increasing this number help, but it will be slower to run!
+#' @param nb.seq a number (by default 25) defining the number of sequences than are randomly choosen too detect an oultier sequences. This option works only if Approxim = TRUE. To increase the precision of the outlier detection increasing this number help, but it will be slower to run!
 
 
-#' @parameter nb.rep a number (by default 5) precising how many time the random selection of sequences will be performed. This option works only if Approxim = TRUE. 
+#' @param nb.rep a number (by default 5) precising how many time the random selection of sequences will be performed. This option works only if Approxim = TRUE. 
 
-#' @parameter nbthreads a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences 
+#' @param nbthreads a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences 
 
 #' @export detect.out.seq
 
@@ -352,29 +352,29 @@ medist.DF = Res1[order(Res1[,2], decreasing = T),]
 
 #' @description This function helps to detect and remove sequences and loci with rare insertions, or containing too many ambiguous nucleotides, or sequences that are too short. 
 
-#' @parameter input an object of class "alignment" (seqinr R package),
+#' @param input an object of class "alignment" (seqinr R package),
 #' or "DNAbin" (ape R package) or the name (including the path if necessary) of the input fasta file.
 
-#' @parameter Remove.del.gaps if TRUE (by default) it removes the deletion gap only site.
+#' @param Remove.del.gaps if TRUE (by default) it removes the deletion gap only site.
 
-#' @parameter Remove.Seq.Indels if TRUE (default FALSE) removes the sequence with a rare insertion creating an insertion gap for most of the other sequences.
+#' @param Remove.Seq.Indels if TRUE (default FALSE) removes the sequence with a rare insertion creating an insertion gap for most of the other sequences.
 
-#' @parameter Nb.Seq.Indels is an integer precising the maximal number of sequences that could include a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).
+#' @param Nb.Seq.Indels is an integer precising the maximal number of sequences that could include a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).
 
-#' @parameter Remove.Indels.Only if TRUE (default falase) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.
+#' @param Remove.Indels.Only if TRUE (default falase) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.
 
-#' @parameter Remove.Short.Seq if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage of the of the number of missing nucleotide of the loguest sequence (default 15% of missing nucleotide). So sequences with more than 50% of missing nucleotides are removed.
+#' @param Remove.Short.Seq if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage of the of the number of missing nucleotide of the loguest sequence (default 15% of missing nucleotide). So sequences with more than 50% of missing nucleotides are removed.
 
-#'  @parameter Max.Per.missing a number precising the maximal percentage (by default 50%) of missing nucleotide allow in a sequence to be retained. If the sequence contains more missing data than the Max.Per.missing threshold, then the sequences is removed from the alignment. This functions works only if Remove.Short.Seq is set to TRUE.
+#' @param Max.Per.missing a number precising the maximal percentage (by default 50%) of missing nucleotide allow in a sequence to be retained. If the sequence contains more missing data than the Max.Per.missing threshold, then the sequences is removed from the alignment. This functions works only if Remove.Short.Seq is set to TRUE.
 
-#'  @parameter Remove.Seq.TooManyAmbig if TRUE (default FALSE) then the function removes sequences with too many ambiguous nucleotides (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) from the IUPAC nucleotide code.
+#' @param Remove.Seq.TooManyAmbig if TRUE (default FALSE) then the function removes sequences with too many ambiguous nucleotides (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) from the IUPAC nucleotide code.
 
-#'  @parameter Percent.Ambig a number precising the maximal percentage (by default 50%) of ambiguous nucleotide per sequence (by default 30%). This option works only if Percent.Ambig is set to TRUE.
+#'  @param Percent.Ambig a number precising the maximal percentage (by default 50%) of ambiguous nucleotide per sequence (by default 30%). This option works only if Percent.Ambig is set to TRUE.
 
-#'  @parameter Remove.Loc.Low.Freq if TRUE (default FALSE), this function remove the loci of the alignment with less than X percent of sequences with some informtaion, the percentage of information is provide by the option Minimal.Locus.Freq (by default 30%). This option is used typically to trim the beginning and the end of the alignment to avoid few extra long sequences.
+#'  @param Remove.Loc.Low.Freq if TRUE (default FALSE), this function remove the loci of the alignment with less than X percent of sequences with some informtaion, the percentage of information is provide by the option Minimal.Locus.Freq (by default 30%). This option is used typically to trim the beginning and the end of the alignment to avoid few extra long sequences.
 
 
-#'  @parameter Minimal.Locus.Freq the percentage of minimal sequences with some nucleotides used to retained a locus in the alignment. by default at least the locus should have 30% of sequences with some nucleotide to be retained. This option works only if Remove.Loc.Low.Freq is TRUE
+#'  @param Minimal.Locus.Freq the percentage of minimal sequences with some nucleotides used to retained a locus in the alignment. by default at least the locus should have 30% of sequences with some nucleotide to be retained. This option works only if Remove.Loc.Low.Freq is TRUE
 
 #' @export rm.del.gap
 

@@ -38,19 +38,19 @@
 
 #' @param Evol.Model evolutionary model used to compute the DNA distance among sequences, default "TN93" (Tamura and Nei 1993), This options accepts all the models used in dist.dna function from the ape R package.  
 
-#' @parameter Sum.Stat type of symmary statistic ("median" by default)  to compare the DNA distance of the focal sequence with the other, by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.
+#' @param Sum.Stat type of symmary statistic ("median" by default)  to compare the DNA distance of the focal sequence with the other, by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.
 
-#' @parameter Iter.optim if TRUE then an iterative outlier detection appraoch is performed until no longer outlier sequenece are detected considering the outier threshold defined by the Outlier.Th option.
+#' @param Iter.optim if TRUE then an iterative outlier detection appraoch is performed until no longer outlier sequenece are detected considering the outier threshold defined by the Outlier.Th option.
 
-#' @parameter Re.Align the sequences are realigned after the indel gaps were removed using fast mafft.fftns1 algorithm, but this steps can be long especially combined the automatic iteration of the optimisation approach that can be perfomed multiple times.
+#' @param Re.Align the sequences are realigned after the indel gaps were removed using fast mafft.fftns1 algorithm, but this steps can be long especially combined the automatic iteration of the optimisation approach that can be perfomed multiple times.
 
-#' @parameter Approxim if TRUE then the function perform an approximate estimate of the outlier sequence detection by using a random selection of nb.seq (25 by default) sequences nb.rep (5 by default) times for each sequence, this options is worth using for large alignement including more than 10 000 sequences.
+#' @param Approxim if TRUE then the function perform an approximate estimate of the outlier sequence detection by using a random selection of nb.seq (25 by default) sequences nb.rep (5 by default) times for each sequence, this options is worth using for large alignement including more than 10 000 sequences.
 
-#' @parameter  nb.seq is a number defining how many sequence need to be selected randomly if Approxim is TRUE, increasing the number of sequence will considerably slow dow the algorithm. default 25.
+#' @param  nb.seq is a number defining how many sequence need to be selected randomly if Approxim is TRUE, increasing the number of sequence will considerably slow dow the algorithm. default 25.
 
-#' @parameter nb.rep is a number defining how many replicate of the randomw selection of sequence must be performed for each sequence of interest (default 5 times)
+#' @param nb.rep is a number defining how many replicate of the randomw selection of sequence must be performed for each sequence of interest (default 5 times)
 
-#' @parameter nbthreads a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences 
+#' @param nbthreads a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences 
 
 
 
@@ -69,7 +69,7 @@
 #' file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
 #'
 
-# Running the function with an approximate computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences. For the approximate comparison we used 25 sequences randomly repeated 5 times as suggested by default.
+#' Running the function with an approximate computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences. For the approximate comparison we used 25 sequences randomly repeated 5 times as suggested by default.
 #' S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
 
 #' S16_MisAlign.approx[[1]]  # 36 sequences are considered as outlier sequences the model detect
@@ -77,7 +77,7 @@
 #' setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the excact or the approximate search of outlier sequences.
 
 
-#' # To remove the file created while running the example do the following:
+#' To remove the file created while running the example do the following:
 #' file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
 #'
 #' }

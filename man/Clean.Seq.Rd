@@ -63,7 +63,7 @@ alignments by eye to ensure your confidence in the retained sequences.
 }
 \details{
 This function uses the following general strategy to detect outlier
-sequences.  First, the fucntion detects and removes the duplicated sequences to work considering only the haplotypes. Second, a distance matrix between all pairwise sequences is built considering different strategies implemented in the dist.DNA function from the ape R package.
+sequences.  First, the function detects and removes the duplicated sequences to work considering only the haplotypes. Second, a distance matrix between all pairwise sequences is built considering different strategies implemented in the dist.DNA function from the ape R package.
 Third the function computes a summary statistic (can be the "median" or the "min" for the minimal distance) for each focal sequence with the genetic distance with all the other sequences using the Sum.Stat option. Fourth, the distribution of summary statistic is compared to an outlier threshold defined by the Outlier.Th option. Outlier.Th is a multiplier of the interquartile range distance as defined by the "range" parameter from the boxplot R function. All the sequences with a summary statistic above the threshold are considered as potential outliers and are removed from the final alignment. Then, the deletion gap only sites are removed automatically and the retained sequences can be re-aligned using a MAFFT FFT NS1 algorithm if desired.
 In order to speed up the detection of outlier sequences, we also provide an approximate option to compute the pairwise genetic distances among sequences. The option "Approxim = TRUE" allows to perform such approximative detection by randomly selecting a number of sequences (set by the option nb.seq) several times (set by the option nb.rep) to compare the average summary statistic of each focal sequences. We can here higly parallelized this approximate search. By default, the function selects 25 random sequences 5 times, increasing the number of random sequences increases the accuracy but increase the computational time and the memory load. Based on several tests, we considered that approximate estimate are worth trying for large dataset above  5000 / 10000 sequences, because the parallel computing start to subtantially decrease the computational time for minimal differences in outlier sequences detection.
 }
@@ -74,18 +74,35 @@ data(Example_16S_outlier)
 Example_16S_outlier_align = Example_16S_outlier[[1]]
 \dontrun{
 
-# Running the function with an excat computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences.
-S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, nb.rep = 5) 
+# Running the function with an exact computation approach performing all the 
+pairwise genetic comparisons among sequences. We used "raw" model to compute 
+the genetic distances and considered a median distance as summary statistic 
+to define the outlier threshold. We used a classic 1.5 interquartile range 
+distance threshold to consider the outlier sequences.
+S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
+output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", 
+Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, 
+nb.rep = 5) 
 S16_MisAlign[[1]]  # 36 sequences are considered as outlier sequences the model detect
 # To remove the file created while running the example do the following:
-file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
+file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", 
+"Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
 
-Running the function with an approximate computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences. For the approximate comparison we used 25 sequences randomly repeated 5 times as suggested by default.
-S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
+Running the function with an approximate computation approach performing all 
+the pairwise genetic comparisons among sequences. We used "raw" model to compute 
+the genetic distances and considered a median distance as summary statistic to 
+define the outlier threshold. We used a classic 1.5 interquartile range distance 
+threshold to consider the outlier sequences. For the approximate comparison we used 
+25 sequences randomly repeated 5 times as suggested by default.
+S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
+output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", 
+Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
 S16_MisAlign.approx[[1]]  # 36 sequences are considered as outlier sequences the model detect
-setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the excact or the approximate search of outlier sequences.
+setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the exact 
+or the approximate search of outlier sequences.
 To remove the file created while running the example do the following:
-file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
+file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", 
+"Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
 
 }
 

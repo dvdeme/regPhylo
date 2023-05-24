@@ -9,14 +9,13 @@ GetSeq_BOLD(splist = NULL, filename = NULL, bold.id = FALSE)
 \arguments{
 \item{splist}{a two column table. The first column contains all the binomial species names including
 synonyms and the second column contains only the names that will be reported
-in the output table as 'species_name'. If bold.id = TRUE then the first column can contain the bold taxonomic id, 
-and the request will be done with the taxid.}
+in the output table as 'species_name'.}
 
 \item{filename}{name of the output table. The format of the output follows the
 format provided by the bold R package.}
 
 \item{bold.id}{if TRUE then the first column of the splist table contains the bold taxid of the taxa 
-(should be character), by default FALSE. This option is not working woith the taxonomic ID but other ids 
+(should be character), by default FALSE. This option is not working with the taxonomic ID but other ids 
  such as Sample IDs, Process IDs, Museum IDs and Field IDs.}
 }
 \value{

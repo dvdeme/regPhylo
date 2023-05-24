@@ -36,17 +36,17 @@ same entries as "COI". Default "ALL"}
 \item{Path.output}{the path to the output folder within which all the intermediate and final
 results files will be stored.}
 
-\item{Nb.DNA.marker}{can be a numeric (eg. 4) to select the first gene with the highest species
-coverage, it can be a gene name (eg. "co1") or it an be "Min.All.Sp.cov" in order to include the
-minimum gene region to get 100% species coverage.}
+\item{Nb.DNA.marker}{can be a numeric ,eg. 4, to select the first gene with the highest species
+coverage, it can be a gene name ,eg. "co1", or it an be "Min.All.Sp.cov" in order to include the
+minimum gene region to get 100 percent species coverage.}
 
-\item{Steps}{is a vector of numeric value from 1 to 3, with 1 extract the DNA squences and 
-associated metadata from NCBI and BOLD, dereplicate the data, improve the metada location, and
+\item{Steps}{is a vector of numeric value from 1 to 3, with 1 extract the DNA sequences and 
+associated metadata from NCBI and BOLD, dereplicate the data, improve the metadata location, and
 build the Species by Gene matrix, step 2 selects the gene of interest and exports the metadata 
 and the alignments in fasta format, step 3 performs a first alignment approach of the selected gene
-of interest to detect sequence entered in wrong direction and perfomed automatic reverse
-complementation. The steps are perfomed sequentially so the steps 2 cannot be performed alone
-without perfoming the steps 1.}
+of interest to detect sequence entered in wrong direction and performed automatic reverse
+complementation. The steps are performed sequentially so the steps 2 cannot be performed alone
+without performing the steps 1.}
 
 \item{nthread, }{if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose #' how many thread we wouldlike to use to perform the first alignment steps in case there are multiple
 markers to align.}
@@ -65,19 +65,20 @@ this function returns a set of intermediate and final files and folders within t
 precised in the Path.output option. The structure of the folders is organised as follow, 
 The function return a list of 4 objects using the following headers:
 \itemize{
-\item the "Raw.Data" folder containing the raw data files of NCBI ("Seq.NCBI.txt") and BOLD
-(Seq.BOLD.txt") DNA and metadata extraction, the combine file of DNA sequences from NCBI an BOLD
-after dereplication ("Seq_NCBI_BOLD.txt"), the intermediate files with all the improve
-georeferencing ("Seq_NCBI_BOLD_Geo1.txt", "Seq_NCBI_BOLD_Geo2.txt"), the files of the 
-"species-"by-gene" matrix ("Matrix.Sp.DNA.NaiveSpDNA_Mat.txt") including files with all the
-metadata ("Matrix.Sp.DNA.Naive_CleanDataset.txt"), and summary files of the species-by-gene matrix
-from a DNA perspective ("Matrix.Sp.DNA.NaiveSummary_DNApers.txt") and from a species perspective ("Matrix.Sp.DNA.NaiveSummary_SPECIESpers.txt").
+\item the "Raw.Data" folder containing the raw data files of NCBI, "Seq.NCBI.txt", and BOLD
+,Seq.BOLD.txt", DNA and metadata extraction, the combine file of DNA sequences from NCBI an BOLD
+after dereplication ,"Seq_NCBI_BOLD.txt", the intermediate files with all the improve
+georeferencing "Seq_NCBI_BOLD_Geo1.txt", "Seq_NCBI_BOLD_Geo2.txt", the files of the 
+"species-"by-gene" matrix "Matrix.Sp.DNA.NaiveSpDNA_Mat.txt" including files with all the
+metadata "Matrix.Sp.DNA.Naive_CleanDataset.txt", and summary files of the species-by-gene matrix
+from a DNA perspective "Matrix.Sp.DNA.NaiveSummary_DNApers.txt" and from a species perspective 
+"Matrix.Sp.DNA.NaiveSummary_SPECIESpers.txt".
 \item the "Selected.DNA" folder containing the non-aligned fasta files of the selected DNA regions
-and the metadata of all the selected DNA sequences ("Align_InfoTabSelSeq.txt"), and the folder 
+and the metadata of all the selected DNA sequences "Align_InfoTabSelSeq.txt", and the folder 
 "FirstAlign"if the step 3 of the pipeline was performed. This folder contains the alignments of 
 the selected DNA region from the different alignment software specify in the option "methods".
 \item the folder "Selected.META" contains a file of the Metadata of the sequences of the 
-selected DNA regions ("MetaData.Select.DNA.Select.DNA.txt").
+selected DNA regions "MetaData.Select.DNA.Select.DNA.txt".
 }
 }
 \description{
@@ -104,9 +105,9 @@ gene region such as the COI within the mitogenome), "SelBestSeq" (select the DNA
 several criteria including some geographic proximity to some geographic region of interest, and
 export the alignments in fasta format), "First.Align.All" (detection of sequences that are entered
 in the wrong direction and first alignments using Mafft and pasta software).
-When a taxa is detected with too many sequences ste by the max.seq option (10 000sequences by
+When a taxa is detected with too many sequences set by the max.seq option (10 000sequences by
 default), these taxa are momentarily excluded and the species-by-gene matrix is performed without
-them to identify the DNA region with the higeth taxonomic coverage, then once those region
-identified, the DNA sequences and metadat of those region are extracted for the taxa initially
-recognised with too many sequences. This function allows to run different steps, see the definition of the "Steps" parameter.
+them to identify the DNA region with the highest taxonomic coverage, then once those region
+identified, the DNA sequences and metadata of those region are extracted for the taxa initially
+recognized with too many sequences. This function allows to run different steps, see the definition of the "Steps" parameter.
 }

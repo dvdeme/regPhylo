@@ -2,7 +2,8 @@
 % Please edit documentation in R/Pipeline.DNA.extraction.R
 \name{Pipeline.DNA.extraction}
 \alias{Pipeline.DNA.extraction}
-\title{A pipeline to automat the retriveal and organisation of DNA sequences and metadata from NCBI and BOLD database from a list fo taxa of interest.}
+\title{A pipeline to automat the retriveal and organisation of DNA sequences and metadata 
+from NCBI and BOLD databases from a list fo taxa of interest.}
 \usage{
 Pipeline.DNA.extraction(
   input.ncbi = NULL,
@@ -61,9 +62,23 @@ is interesting when few alignments have many sequence > 1000 DNA sequences.}
 }
 \value{
 this function returns a set of intermediate and final files and folders within the folder
-precised in the Path.output option. The structure of the folders is organised as follow,
-
-
+precised in the Path.output option. The structure of the folders is organised as follow, 
+The function return a list of 4 objects using the following headers:
+\itemize{
+\item the "Raw.Data" folder containing the raw data files of NCBI ("Seq.NCBI.txt") and BOLD
+(Seq.BOLD.txt") DNA and metadata extraction, the combine file of DNA sequences from NCBI an BOLD
+after dereplication ("Seq_NCBI_BOLD.txt"), the intermediate files with all the improve
+georeferencing ("Seq_NCBI_BOLD_Geo1.txt", "Seq_NCBI_BOLD_Geo2.txt"), the files of the 
+"species-"by-gene" matrix ("Matrix.Sp.DNA.NaiveSpDNA_Mat.txt") including files with all the
+metadata ("Matrix.Sp.DNA.Naive_CleanDataset.txt"), and summary files of the species-by-gene matrix
+from a DNA perspective ("Matrix.Sp.DNA.NaiveSummary_DNApers.txt") and from a species perspective ("Matrix.Sp.DNA.NaiveSummary_SPECIESpers.txt").
+\item the "Selected.DNA" folder containing the non-aligned fasta files of the selected DNA regions
+and the metadata of all the selected DNA sequences ("Align_InfoTabSelSeq.txt"), and the folder 
+"FirstAlign"if the step 3 of the pipeline was performed. This folder contains the alignments of 
+the selected DNA region from the different alignment software specify in the option "methods".
+\item the folder "Selected.META" contains a file of the Metadata of the sequences of the 
+selected DNA regions ("MetaData.Select.DNA.Select.DNA.txt").
+}
 }
 \description{
 This function allows to extract DNA sequences and metadata from NCBI and BOLD,

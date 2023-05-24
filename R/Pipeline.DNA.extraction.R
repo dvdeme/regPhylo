@@ -1,4 +1,5 @@
-#' @title A pipeline to automat the retriveal and organisation of DNA sequences and metadata from NCBI and BOLD database from a list fo taxa of interest.
+#' @title A pipeline to automat the retriveal and organisation of DNA sequences and metadata 
+#' from NCBI and BOLD databases from a list fo taxa of interest.
 
 
 #' @description This function allows to extract DNA sequences and metadata from NCBI and BOLD,
@@ -92,7 +93,7 @@
 
 #' @return this function returns a set of intermediate and final files and folders within the folder
 #' precised in the Path.output option. The structure of the folders is organised as follow, 
-#' @return The function return a list of 4 objects using the following headers:
+#' The function return a list of 4 objects using the following headers:
 #' \itemize{
 #' \item the "Raw.Data" folder containing the raw data files of NCBI ("Seq.NCBI.txt") and BOLD
 #' (Seq.BOLD.txt") DNA and metadata extraction, the combine file of DNA sequences from NCBI an BOLD
@@ -105,7 +106,9 @@
 #' and the metadata of all the selected DNA sequences ("Align_InfoTabSelSeq.txt"), and the folder 
 #' "FirstAlign"if the step 3 of the pipeline was performed. This folder contains the alignments of 
 #' the selected DNA region from the different alignment software specify in the option "methods".
-#' \item the folder "Selected.META" contains a file of the Metadata of the sequences of the selected DNA regions ("MetaData.Select.DNA.Select.DNA.txt").
+#' \item the folder "Selected.META" contains a file of the Metadata of the sequences of the 
+#' selected DNA regions ("MetaData.Select.DNA.Select.DNA.txt").
+#' }
 
 
 #' @export Pipeline.DNA.extraction

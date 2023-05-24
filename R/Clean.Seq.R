@@ -60,25 +60,42 @@
 #' Example_16S_outlier_align = Example_16S_outlier[[1]]
 #' \dontrun{
 #'
-#' # Running the function with an excat computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences.
-#' S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, nb.rep = 5) 
+#' # Running the function with an exact computation approach performing all the 
+#' pairwise genetic comparisons among sequences. We used "raw" model to compute 
+#' the genetic distances and considered a median distance as summary statistic 
+#' to define the outlier threshold. We used a classic 1.5 interquartile range 
+#' distance threshold to consider the outlier sequences.
+#' S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
+#' output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", 
+#' Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, 
+#' nb.rep = 5) 
 
 #' S16_MisAlign[[1]]  # 36 sequences are considered as outlier sequences the model detect
 
 #' # To remove the file created while running the example do the following:
-#' file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
+#' file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", 
+#' "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
 #'
 
-#' Running the function with an approximate computation appraoch performing all the pairwise genetic comparisons among sequences. We used "raw" model to compute the genetic distances and considered a median distance as summary statistic to define the outlier threshold. We used a classic 1.5 interquartile range distance threshold to consider the outlier sequences. For the approximate comparison we used 25 sequences randomly repeated 5 times as suggested by default.
-#' S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
+#' Running the function with an approximate computation approach performing all 
+#' the pairwise genetic comparisons among sequences. We used "raw" model to compute 
+#' the genetic distances and considered a median distance as summary statistic to 
+#' define the outlier threshold. We used a classic 1.5 interquartile range distance 
+#' threshold to consider the outlier sequences. For the approximate comparison we used 
+#' 25 sequences randomly repeated 5 times as suggested by default.
+#' S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
+#' output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", 
+#' Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
 
 #' S16_MisAlign.approx[[1]]  # 36 sequences are considered as outlier sequences the model detect
 
-#' setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the excact or the approximate search of outlier sequences.
+#' setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the exact 
+#' or the approximate search of outlier sequences.
 
 
 #' To remove the file created while running the example do the following:
-#' file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
+#' file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", 
+#' "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
 #'
 #' }
 #'
@@ -87,163 +104,225 @@
 
 
 
-Clean.Seq = function(inputal = NULL, Outlier.Th = 1.5,
-    output = NULL, Evol.Model = "TN93", Sum.Stat = "median", Iter.optim = TRUE, Re.Align = FALSE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, nb.rep = 5) 
-    {
-    
+Clean.Seq = function(inputal = NULL,
+                     Outlier.Th = 1.5,
+                     output = NULL,
+                     Evol.Model = "TN93",
+                     Sum.Stat = "median",
+                     Iter.optim = TRUE,
+                     Re.Align = FALSE,
+                     nbthreads = 1,
+                     Approxim = FALSE,
+                     nb.seq = 25,
+                     nb.rep = 5)
+{
   # if the class of the inputal object is "alignment" object recognised by ape and seqinr r packages.
-  if(class(inputal)=="alignment"){
-    cytb2=inputal
+  if (class(inputal) == "alignment") {
+    cytb2 = inputal
     cytb2a = ape::as.DNAbin(inputal) # Convert in a DNAbin object.
   }
   # if the path to the alignment file in fasta format is provided as inputal
-  if(class(inputal)=="character"){
+  if (class(inputal) == "character") {
     cytb2 = seqinr::read.alignment(inputal, format = "fasta")
     cytb2a = ape::as.DNAbin(cytb2) # Convert in a DNAbin object.
   }
   # if the class of the inputal object is a "DNAbin" object.
-  if(class(inputal)=="DNAbin"){
-    cytb2a=inputal
-    cytb2=ape::as.alignment(inputal) # convert to an "alignment" object.
+  if (class(inputal) == "DNAbin") {
+    cytb2a = inputal
+    cytb2 = ape::as.alignment(inputal) # convert to an "alignment" object.
   }
-
-
-   # Remove duplicated sequences before to find the outlier sequences
-   cytb2.uniq = cytb2
-   cytb2.uniq$seq = cytb2$seq[which(base::duplicated(cytb2$seq) == FALSE)]
-   cytb2.uniq$nam = cytb2$nam[which(base::duplicated(cytb2$seq) == FALSE)]
-   cytb2.uniq$nb = length(cytb2.uniq$seq)
-   cytb2Sa = ape::as.DNAbin(cytb2.uniq) 
-   Seq.name.origin = cytb2.uniq$nam # to keep track of the original list of sequence name, before removing
-   
-   
-   Res.Tot = detect.out.seq(input = cytb2Sa, Evol.Model = Evol.Model, Sum.Stat = Sum.Stat, Outlier.Th = Outlier.Th, Approxim = Approxim, nb.seq = nb.seq, nb.rep = nb.rep, nbthreads = nbthreads) 
-
-   if(length(Res.Tot[[1]]) > 0){
-   
-   # remove the previously outlier sequences identified
-   pos.2.rm = match(Res.Tot[[1]], cytb2.uniq$nam)
-   cytb2.uniq$nam = cytb2.uniq$nam[-pos.2.rm]
-   cytb2.uniq$seq = cytb2.uniq$seq[-pos.2.rm]
-   cytb2.uniq$nb = length(cytb2.uniq$seq)  
-   # Remove the gap only site
-   cytb2.uniq = rm.del.gap(input = cytb2.uniq)
-   
-    if(Re.Align ==TRUE){
-    
-    #Export a temporary file 
-    if(class(cytb2.uniq) == "alignment"){
-    cytb2Sa = ape::as.DNAbin(cytb2.uniq[[1]])  # convert to DNAbin object and export as fasta format.
-    } else {
-    cytb2Sa = cytb2.uniq[[1]]
-    }
-    ape::write.dna(cytb2Sa, file = "Temp.realig.fas", format = "fasta", nbcol = -1, colsep = "")
-
-    mafft = "mafft"
-    os <- .Platform$OS
-    if(os == "windows"){
-      if(missing(Mafft.path)){
-        stop("The path to the mafft executable must be provided in Mafft.path")
-      }
-      mafft = Mafft.path
-    }
-    a = paste(mafft, " --retree 1 --maxiterate 0 --thread ", nbthreads, " Temp.realig.fas > ", 
-    "Temp.mafft.realign.fas", sep = "")
-    system(a)
-    
-    # import the new alignement
-    cytb2.uniq = seqinr::read.alignment("Temp.mafft.realign.fas", format = "fasta")
-    cytb2Sa = ape::as.DNAbin(cytb2.uniq) # Convert in a DNAbin object.
-    
-    }
-}
-
-
-if(class(cytb2.uniq) == "DNAbin") {
-cytb2Sa = cytb2.uniq
-cytb2.uniq = ape::as.alignment(cytb2.uniq)
-} else {
-cytb2Sa = ape::as.DNAbin(cytb2.uniq)
-}
-
-
- 
- 
-if(Iter.optim == TRUE){
-   
-   if(length(Res.Tot[[1]]) < 1){
-   print("No outlier sequence detected, either Outlier.Th value (default 1.5) could be decrease to increase the chance to get an outlier sequence, and /or the Evol.Model should be changed")
-   } else {
-   
-   repeat{
-   
-      Res.optim = detect.out.seq(input = cytb2Sa, Evol.Model = Evol.Model, Sum.Stat = Sum.Stat, Outlier.Th = Outlier.Th, Approxim = Approxim, nb.seq = nb.seq, nb.rep = nb.rep, nbthreads = nbthreads)
-   
-   if(length(Res.optim[[1]]) > 0){
-   
-   # remove the previously outlier sequences identified
-   pos.2.rm = match(Res.optim[[1]], cytb2.uniq$nam)
-   cytb2.uniq$nam = cytb2.uniq$nam[-pos.2.rm]
-   cytb2.uniq$seq = cytb2.uniq$seq[-pos.2.rm]
-   cytb2.uniq$nb = length(cytb2.uniq$seq)  
-   # Remove the gap only site
-   cytb2.uniq = rm.del.gap(input = cytb2.uniq)
-   
-    if(Re.Align ==TRUE){
-    
-    #Export a temporary file 
-    if(class(cytb2.uniq[[1]]) == "alignment"){
-    cytb2Sa = ape::as.DNAbin(cytb2.uniq[[1]])  # convert to DNAbin object and export as fasta format.
-    } else {
-    cytb2Sa = cytb2.uniq[[1]]
-    }
-    ape::write.dna(cytb2Sa, file = "Temp.realig.fas", format = "fasta", nbcol = -1, colsep = "")
-
-    a = paste(mafft, " --retree 1 --maxiterate 0 --thread ", nbthreads, " Temp.realig.fas > ", 
-    "Temp.mafft.realign.fas", sep = "")
-    system(a)
-    
-    # import the new alignement
-    cytb2.uniq = seqinr::read.alignment("Temp.mafft.realign.fas", format = "fasta")
-    cytb2Sa = ape::as.DNAbin(cytb2.uniq) # Convert in a DNAbin object.
-    
-    }
-}
   
-if(length(Res.optim[[1]]) == 0){
-break
-}
-}
-}
-}
-
-# Remove the outlier sequence from the global alignment including the duplicated sequences.
-
-Outlier.Seqs = setdiff(Seq.name.origin, cytb2.uniq$nam)
-if(length(Outlier.Seqs) == 0){
-cytb2.toExport = cytb2
-Outlier.Seqs = NA
-} else {
-cytb2.toExport = cytb2
-cytb2.toExport$seq = cytb2.toExport$seq[-match(Outlier.Seqs, cytb2.toExport$nam)]
-cytb2.toExport$nam = cytb2.toExport$nam[-match(Outlier.Seqs, cytb2.toExport$nam)]
-cytb2.toExport$nb = length(cytb2.toExport$seq)
-}
-cytb2.toExport = ape::as.DNAbin(cytb2.toExport)
-
-# export the final alignment
-if(!is.null(output)){
-ape::write.dna(cytb2Sa, file = paste(output, ".Clean.haplo.fas", sep = ""), format = "fasta", nbcol = -1, colsep = "")
-
-ape::write.dna(cytb2.toExport, file = paste(output, ".Clean.AllSeq.fas", sep = ""), format = "fasta", nbcol = -1, colsep = "")
-}
-
-if(Re.Align == TRUE){
-# remove the temporary file
-unlink(c("Temp.realig.fas", "Temp.mafft.realign.fas"))
-}
-
-return(list(Outlier.Sequences = Outlier.Seqs, Clean.Haplo.Alignment = cytb2Sa, Clean.All.Seq.Alignment = cytb2.toExport, First.Dist.Mat = Res.Tot[[2]]))
+  
+  # Remove duplicated sequences before to find the outlier sequences
+  cytb2.uniq = cytb2
+  cytb2.uniq$seq = cytb2$seq[which(base::duplicated(cytb2$seq) == FALSE)]
+  cytb2.uniq$nam = cytb2$nam[which(base::duplicated(cytb2$seq) == FALSE)]
+  cytb2.uniq$nb = length(cytb2.uniq$seq)
+  cytb2Sa = ape::as.DNAbin(cytb2.uniq)
+  Seq.name.origin = cytb2.uniq$nam # to keep track of the original list of sequence name, before removing
+  
+  
+  Res.Tot = detect.out.seq(
+    input = cytb2Sa,
+    Evol.Model = Evol.Model,
+    Sum.Stat = Sum.Stat,
+    Outlier.Th = Outlier.Th,
+    Approxim = Approxim,
+    nb.seq = nb.seq,
+    nb.rep = nb.rep,
+    nbthreads = nbthreads
+  )
+  
+  if (length(Res.Tot[[1]]) > 0) {
+    # remove the previously outlier sequences identified
+    pos.2.rm = match(Res.Tot[[1]], cytb2.uniq$nam)
+    cytb2.uniq$nam = cytb2.uniq$nam[-pos.2.rm]
+    cytb2.uniq$seq = cytb2.uniq$seq[-pos.2.rm]
+    cytb2.uniq$nb = length(cytb2.uniq$seq)
+    # Remove the gap only site
+    cytb2.uniq = rm.del.gap(input = cytb2.uniq)
+    
+    if (Re.Align == TRUE) {
+      #Export a temporary file
+      if (class(cytb2.uniq) == "alignment") {
+        cytb2Sa = ape::as.DNAbin(cytb2.uniq[[1]])  # convert to DNAbin object and export as fasta format.
+      } else {
+        cytb2Sa = cytb2.uniq[[1]]
+      }
+      ape::write.dna(
+        cytb2Sa,
+        file = "Temp.realig.fas",
+        format = "fasta",
+        nbcol = -1,
+        colsep = ""
+      )
+      
+      mafft = "mafft"
+      os <- .Platform$OS
+      if (os == "windows") {
+        if (missing(Mafft.path)) {
+          stop("The path to the mafft executable must be provided in Mafft.path")
+        }
+        mafft = Mafft.path
+      }
+      a = paste(
+        mafft,
+        " --retree 1 --maxiterate 0 --thread ",
+        nbthreads,
+        " Temp.realig.fas > ",
+        "Temp.mafft.realign.fas",
+        sep = ""
+      )
+      system(a)
+      
+      # import the new alignement
+      cytb2.uniq = seqinr::read.alignment("Temp.mafft.realign.fas", format = "fasta")
+      cytb2Sa = ape::as.DNAbin(cytb2.uniq) # Convert in a DNAbin object.
+      
+    }
+  }
+  
+  
+  if (class(cytb2.uniq) == "DNAbin") {
+    cytb2Sa = cytb2.uniq
+    cytb2.uniq = ape::as.alignment(cytb2.uniq)
+  } else {
+    cytb2Sa = ape::as.DNAbin(cytb2.uniq)
+  }
+  
+  
+  if (Iter.optim == TRUE) {
+    if (length(Res.Tot[[1]]) < 1) {
+      print(
+        "No outlier sequence detected, either Outlier.Th value (default 1.5) could be decrease to increase the chance to get an outlier sequence, and /or the Evol.Model should be changed"
+      )
+    } else {
+      repeat {
+        Res.optim = detect.out.seq(
+          input = cytb2Sa,
+          Evol.Model = Evol.Model,
+          Sum.Stat = Sum.Stat,
+          Outlier.Th = Outlier.Th,
+          Approxim = Approxim,
+          nb.seq = nb.seq,
+          nb.rep = nb.rep,
+          nbthreads = nbthreads
+        )
+        
+        if (length(Res.optim[[1]]) > 0) {
+          # remove the previously outlier sequences identified
+          pos.2.rm = match(Res.optim[[1]], cytb2.uniq$nam)
+          cytb2.uniq$nam = cytb2.uniq$nam[-pos.2.rm]
+          cytb2.uniq$seq = cytb2.uniq$seq[-pos.2.rm]
+          cytb2.uniq$nb = length(cytb2.uniq$seq)
+          # Remove the gap only site
+          cytb2.uniq = rm.del.gap(input = cytb2.uniq)
+          
+          if (Re.Align == TRUE) {
+            #Export a temporary file
+            if (class(cytb2.uniq[[1]]) == "alignment") {
+              cytb2Sa = ape::as.DNAbin(cytb2.uniq[[1]])  # convert to DNAbin object and export as fasta format.
+            } else {
+              cytb2Sa = cytb2.uniq[[1]]
+            }
+            ape::write.dna(
+              cytb2Sa,
+              file = "Temp.realig.fas",
+              format = "fasta",
+              nbcol = -1,
+              colsep = ""
+            )
+            
+            a = paste(
+              mafft,
+              " --retree 1 --maxiterate 0 --thread ",
+              nbthreads,
+              " Temp.realig.fas > ",
+              "Temp.mafft.realign.fas",
+              sep = ""
+            )
+            system(a)
+            
+            # import the new alignement
+            cytb2.uniq = seqinr::read.alignment("Temp.mafft.realign.fas", format = "fasta")
+            cytb2Sa = ape::as.DNAbin(cytb2.uniq) # Convert in a DNAbin object.
+            
+          }
+        }
+        
+        if (length(Res.optim[[1]]) == 0) {
+          break
+        }
+      }
+    }
+  }
+  
+  # Remove the outlier sequence from the global alignment including the duplicated sequences.
+  
+  Outlier.Seqs = setdiff(Seq.name.origin, cytb2.uniq$nam)
+  if (length(Outlier.Seqs) == 0) {
+    cytb2.toExport = cytb2
+    Outlier.Seqs = NA
+  } else {
+    cytb2.toExport = cytb2
+    cytb2.toExport$seq = cytb2.toExport$seq[-match(Outlier.Seqs, cytb2.toExport$nam)]
+    cytb2.toExport$nam = cytb2.toExport$nam[-match(Outlier.Seqs, cytb2.toExport$nam)]
+    cytb2.toExport$nb = length(cytb2.toExport$seq)
+  }
+  cytb2.toExport = ape::as.DNAbin(cytb2.toExport)
+  
+  # export the final alignment
+  if (!is.null(output)) {
+    ape::write.dna(
+      cytb2Sa,
+      file = paste(output, ".Clean.haplo.fas", sep = ""),
+      format = "fasta",
+      nbcol = -1,
+      colsep = ""
+    )
+    
+    ape::write.dna(
+      cytb2.toExport,
+      file = paste(output, ".Clean.AllSeq.fas", sep = ""),
+      format = "fasta",
+      nbcol = -1,
+      colsep = ""
+    )
+  }
+  
+  if (Re.Align == TRUE) {
+    # remove the temporary file
+    unlink(c("Temp.realig.fas", "Temp.mafft.realign.fas"))
+  }
+  
+  return(
+    list(
+      Outlier.Sequences = Outlier.Seqs,
+      Clean.Haplo.Alignment = cytb2Sa,
+      Clean.All.Seq.Alignment = cytb2.toExport,
+      First.Dist.Mat = Res.Tot[[2]]
+    )
+  )
 }
 
 #' For debug
@@ -273,68 +352,74 @@ return(list(Outlier.Sequences = Outlier.Seqs, Clean.Haplo.Alignment = cytb2Sa, C
 
 #' @export detect.out.seq
 
-detect.out.seq = function(input = NULL, Evol.Model = Evol.Model, Sum.Stat = "median", Outlier.Th = 1.5, Approxim = FALSE, nb.seq = 25, nb.rep = 5, nbthreads = 1){
-
-if(Approxim == TRUE){
-
-cpu0 = Sys.time()
-Res1 = do.call(rbind, parallel::mclapply(1:dim(input)[1], mc.cores = nbthreads, function(x){
-nb.pot = seq(1, dim(input)[1])[-x]
-repl = replicate(nb.rep, sample(nb.pot, nb.seq))
-
-res.ind = unlist(lapply(1:dim(repl)[2], function(i){
-input.repl = rbind(input[x,], input[repl[,i],])
-
-matdis = ape::dist.dna(input.repl, model = Evol.Model, pairwise.deletion = TRUE)
-matdis.mat = as.matrix(matdis)
-
-   diag(matdis.mat) = NA # remove the diagonal
-   if(Sum.Stat == "median"){
-   # Compute the mediane distance for each sequence in comparison to all the other sequences
-   medist = apply(matdis.mat, 2, median, na.rm = T) 
-   }
-   if(Sum.Stat == "min"){
-   # Compute the mediane distance for each sequence in comparison to all the other sequences
-   medist = apply(matdis.mat, 2, min, na.rm = T) 
-   }
-medist[1]
-}))
-c(labels(input)[x], mean(res.ind))
-}))
-cpu1 = Sys.time()
-cpu1 - cpu0
-Res1 = as.data.frame(Res1)
-Res1[,2] = as.numeric(Res1[,2])
-medist.DF = Res1[order(Res1[,2], decreasing = T),]
-
-} else {
-
-
-   matdis = ape::dist.dna(input, model = Evol.Model, pairwise.deletion = TRUE)
-   matdis.mat = as.matrix(matdis)
-   diag(matdis.mat) = NA # remove the diagonal
-   if(Sum.Stat == "median"){
-   # Compute the mediane distance for each sequence in comparison to all the other sequences
-   medist = apply(matdis.mat, 2, median, na.rm = T) 
-   }
-   if(Sum.Stat == "min"){
-   # Compute the mediane distance for each sequence in comparison to all the other sequences
-   medist = apply(matdis.mat, 2, min, na.rm = T) 
-   }
-   medist.DF = data.frame(names(sort(medist, decreasing = T)), sort(medist, decreasing = T))
-   }
-   
-   
-   # define the threshold distance
-   TH.out = quantile(medist.DF[,2], 0.75) + Outlier.Th * IQR(medist.DF[,2])
- 
-   # identify the outlier sequence.
-   Res2 = medist.DF[which(medist.DF[,2] > TH.out),1]
-   
-   
+detect.out.seq = function(input = NULL,
+                          Evol.Model = Evol.Model,
+                          Sum.Stat = "median",
+                          Outlier.Th = 1.5,
+                          Approxim = FALSE,
+                          nb.seq = 25,
+                          nb.rep = 5,
+                          nbthreads = 1) {
+  if (Approxim == TRUE) {
+    # cpu0 = Sys.time()
+    Res1 = do.call(rbind,
+                   parallel::mclapply(1:dim(input)[1], mc.cores = nbthreads, function(x) {
+                     nb.pot = seq(1, dim(input)[1])[-x]
+                     repl = replicate(nb.rep, sample(nb.pot, nb.seq))
+                     
+                     res.ind = unlist(lapply(1:dim(repl)[2], function(i) {
+                       input.repl = rbind(input[x, ], input[repl[, i], ])
+                       
+                       matdis = ape::dist.dna(input.repl,
+                                              model = Evol.Model,
+                                              pairwise.deletion = TRUE)
+                       matdis.mat = as.matrix(matdis)
+                       
+                       diag(matdis.mat) = NA # remove the diagonal
+                       if (Sum.Stat == "median") {
+                         # Compute the mediane distance for each sequence in comparison to all the other sequences
+                         medist = apply(matdis.mat, 2, median, na.rm = T)
+                       }
+                       if (Sum.Stat == "min") {
+                         # Compute the mediane distance for each sequence in comparison to all the other sequences
+                         medist = apply(matdis.mat, 2, min, na.rm = T)
+                       }
+                       medist[1]
+                     }))
+                     c(labels(input)[x], mean(res.ind))
+                   }))
+    # cpu1 = Sys.time()
+    # cpu1 - cpu0
+    
+    Res1 = as.data.frame(Res1)
+    Res1[, 2] = as.numeric(Res1[, 2])
+    medist.DF = Res1[order(Res1[, 2], decreasing = T), ]
+    
+  } else {
+    matdis = ape::dist.dna(input, model = Evol.Model, pairwise.deletion = TRUE)
+    matdis.mat = as.matrix(matdis)
+    diag(matdis.mat) = NA # remove the diagonal
+    if (Sum.Stat == "median") {
+      # Compute the mediane distance for each sequence in comparison to all the other sequences
+      medist = apply(matdis.mat, 2, median, na.rm = T)
+    }
+    if (Sum.Stat == "min") {
+      # Compute the mediane distance for each sequence in comparison to all the other sequences
+      medist = apply(matdis.mat, 2, min, na.rm = T)
+    }
+    medist.DF = data.frame(names(sort(medist, decreasing = T)), sort(medist, decreasing = T))
+  }
+  
+  
+  # define the threshold distance
+  TH.out = quantile(medist.DF[, 2], 0.75) + Outlier.Th * IQR(medist.DF[, 2])
+  
+  # identify the outlier sequence.
+  Res2 = medist.DF[which(medist.DF[, 2] > TH.out), 1]
+  
+  
   return(list(Outlier.seq = Res2, All.Distance.DF = medist.DF))
 }
-
 
 
 
@@ -378,222 +463,237 @@ medist.DF = Res1[order(Res1[,2], decreasing = T),]
 
 #' @export rm.del.gap
 
-rm.del.gap = function(input = NULL, Remove.del.gaps = TRUE, Remove.Seq.Indels = FALSE, Nb.Seq.Indels = 2, Remove.Indels.Only = FALSE,  Remove.Short.Seq = FALSE, Max.Per.missing = 50, Remove.Seq.TooManyAmbig = FALSE, Percent.Ambig = 30, Remove.Loc.Low.Freq = FALSE, Minimal.Locus.Freq = 30){
-
+rm.del.gap = function(input = NULL,
+                      Remove.del.gaps = TRUE,
+                      Remove.Seq.Indels = FALSE,
+                      Nb.Seq.Indels = 2,
+                      Remove.Indels.Only = FALSE,
+                      Remove.Short.Seq = FALSE,
+                      Max.Per.missing = 50,
+                      Remove.Seq.TooManyAmbig = FALSE,
+                      Percent.Ambig = 30,
+                      Remove.Loc.Low.Freq = FALSE,
+                      Minimal.Locus.Freq = 30) {
   # if the class of the inputal object is a "DNAbin" object.
-  if(class(input)=="DNAbin"){
-    input=ape::as.alignment(input) # convert to an "alignment" object.
+  if (class(input) == "DNAbin") {
+    input = ape::as.alignment(input) # convert to an "alignment" object.
   }
-
-
-cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
-Seq.names.original = row.names(cytb2Smat)
-
-if(Remove.del.gaps == "TRUE"){
-
+  
+  
+  cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
+  Seq.names.original = row.names(cytb2Smat)
+  
+  if (Remove.del.gaps == "TRUE") {
     # remove the deletion gap site only.
     nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
-        sum(stringr::str_count(cytb2Smat[, x], "-"))
+      sum(stringr::str_count(cytb2Smat[, x], "-"))
     })
     
     a = which(nbindels == dim(cytb2Smat)[1])
     
-    if(length(a) > 0){
-    cytb2Smat = cytb2Smat[, -a]
+    if (length(a) > 0) {
+      cytb2Smat = cytb2Smat[,-a]
     }
-}
-    
-
-if(Remove.Seq.Indels == "TRUE"){
-
-   nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
-        sum(stringr::str_count(cytb2Smat[, x], "-"))
+  }
+  
+  
+  if (Remove.Seq.Indels == "TRUE") {
+    nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
+      sum(stringr::str_count(cytb2Smat[, x], "-"))
     })
     a = which(nbindels >= (dim(cytb2Smat)[1] - Nb.Seq.Indels))
     
     
-    if(length(a) > 0){
-    
-aa = seqle(a)
-Starting = aa$values
-Ending = aa$values + (aa$length-1)
-
-# For each indels blocks
-Seq.to.remove.Indel = do.call(rbind, lapply(1:length(Starting), function(x){
-if(Starting[x] == 1 | Ending[x] == dim(cytb2Smat)[2]){
-resa = 0
-} else {
-Test.preceding = sum(stringr::str_count(cytb2Smat[, (Starting[x]-1)], "-")) # test if the preceding loci of the starting position of the insertion include enougth informed loci.
-Test.Ending = sum(stringr::str_count(cytb2Smat[, (Ending[x]+1)], "-")) # test if the following position of the ending position of the insertion include enougth informed loci.
-nb.seq = dim(cytb2Smat)[1]
-if(Test.preceding < nb.seq * 0.1 & Test.Ending < nb.seq * 0.1){
-resa = 1
-} else {
-resa = 0
-}
-}
-
-# detect the sequence causing the true indels
-if(resa == 1){
-seq.name.indel = which(!cytb2Smat[, Starting[x]] == "-")
-data.frame(Seq.name = seq.name.indel, Starting.Indel = rep(Starting[x], length(seq.name.indel)), Ending.Indel = rep(Ending[x], length(seq.name.indel)))
-}
-}))
-
-
-if(dim(Seq.to.remove.Indel)[1] > 0){
-
-if(Remove.Indels.Only == TRUE){
-
-bb = unique(Seq.to.remove.Indel[,c(2,3)])
-Pos.ToRemove = unlist(lapply(1:dim(bb)[1], function(x){
-seq(bb[x,1], bb[x,2])
-}))
-Seq.to.remove.indels = row.names(cytb2Smat)[unique(Seq.to.remove.Indel[,1])]
-cytb2Smat = cytb2Smat[, -Pos.ToRemove]
-
-} else {
-
-Seq.to.remove.indels = row.names(cytb2Smat)[unique(Seq.to.remove.Indel[,1])]
-cytb2Smat = cytb2Smat[-unique(Seq.to.remove.Indel[,1]),]
-
-}
-
-
-
-} else {
-
-Seq.to.remove.indels = NA
-
-}
-
-
-} else {
-Seq.to.remove.indels = NA
-}
-
-} else {
-Seq.to.remove.indels = NA
-}
-
-
-
-# Remove sequence tha are too short
-if(Remove.Short.Seq == "TRUE"){
-
-nbmissing = apply(as.matrix(seq(1, dim(cytb2Smat)[1], 1)), 1, function(x) {
-        sum(stringr::str_count(cytb2Smat[x, ], "-"))
-    })
-
-Seq.To.remove = which(((nbmissing/dim(cytb2Smat)[2])*100) >= Max.Per.missing)
-
-if(length(Seq.To.remove) > 0){
-    Seq.To.remove.short = row.names(cytb2Smat)[Seq.To.remove]
-    cytb2Smat = cytb2Smat[-Seq.To.remove, ]
+    if (length(a) > 0) {
+      aa = seqle(a)
+      Starting = aa$values
+      Ending = aa$values + (aa$length - 1)
+      
+      # For each indels blocks
+      Seq.to.remove.Indel = do.call(rbind, lapply(1:length(Starting), function(x) {
+        if (Starting[x] == 1 | Ending[x] == dim(cytb2Smat)[2]) {
+          resa = 0
+        } else {
+          Test.preceding = sum(stringr::str_count(cytb2Smat[, (Starting[x] - 1)], "-")) # test if the preceding loci of the starting position of the insertion include enougth informed loci.
+          Test.Ending = sum(stringr::str_count(cytb2Smat[, (Ending[x] + 1)], "-")) # test if the following position of the ending position of the insertion include enougth informed loci.
+          nb.seq = dim(cytb2Smat)[1]
+          if (Test.preceding < nb.seq * 0.1 & Test.Ending < nb.seq * 0.1) {
+            resa = 1
+          } else {
+            resa = 0
+          }
+        }
+        
+        # detect the sequence causing the true indels
+        if (resa == 1) {
+          seq.name.indel = which(!cytb2Smat[, Starting[x]] == "-")
+          data.frame(
+            Seq.name = seq.name.indel,
+            Starting.Indel = rep(Starting[x], length(seq.name.indel)),
+            Ending.Indel = rep(Ending[x], length(seq.name.indel))
+          )
+        }
+      }))
+      
+      
+      if (dim(Seq.to.remove.Indel)[1] > 0) {
+        if (Remove.Indels.Only == TRUE) {
+          bb = unique(Seq.to.remove.Indel[, c(2, 3)])
+          Pos.ToRemove = unlist(lapply(1:dim(bb)[1], function(x) {
+            seq(bb[x, 1], bb[x, 2])
+          }))
+          Seq.to.remove.indels = row.names(cytb2Smat)[unique(Seq.to.remove.Indel[, 1])]
+          cytb2Smat = cytb2Smat[,-Pos.ToRemove]
+          
+        } else {
+          Seq.to.remove.indels = row.names(cytb2Smat)[unique(Seq.to.remove.Indel[, 1])]
+          cytb2Smat = cytb2Smat[-unique(Seq.to.remove.Indel[, 1]), ]
+          
+        }
+        
+        
+        
+      } else {
+        Seq.to.remove.indels = NA
+        
+      }
+      
+      
     } else {
-    Seq.To.remove.short = NA
+      Seq.to.remove.indels = NA
     }
-
-} else {
-Seq.To.remove.short = NA
-}
-
-
-### Remove sequence with too many ambiguities (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) from the IUPAC nucleotide code.
-if(Remove.Seq.TooManyAmbig == "TRUE"){
-nb.loc = dim(cytb2Smat)[2]
-
-nbAmbig = unlist(lapply(1:dim(cytb2Smat)[1], function(x) {
-     nb.loc.noindel = nb.loc - sum(stringr::str_count(cytb2Smat[x, ], "-"))
-     ((nb.loc.noindel - (sum(stringr::str_count(cytb2Smat[x, ], "a")) + sum(stringr::str_count(cytb2Smat[x, ], "c")) + sum(stringr::str_count(cytb2Smat[x, ], "t")) + sum(stringr::str_count(cytb2Smat[x, ], "g")) +  sum(stringr::str_count(cytb2Smat[x, ], "u")))) / nb.loc.noindel) * 100
+    
+  } else {
+    Seq.to.remove.indels = NA
+  }
+  
+  
+  
+  # Remove sequence tha are too short
+  if (Remove.Short.Seq == "TRUE") {
+    nbmissing = apply(as.matrix(seq(1, dim(cytb2Smat)[1], 1)), 1, function(x) {
+      sum(stringr::str_count(cytb2Smat[x,], "-"))
+    })
+    
+    Seq.To.remove = which(((nbmissing / dim(cytb2Smat)[2]) * 100) >= Max.Per.missing)
+    
+    if (length(Seq.To.remove) > 0) {
+      Seq.To.remove.short = row.names(cytb2Smat)[Seq.To.remove]
+      cytb2Smat = cytb2Smat[-Seq.To.remove,]
+    } else {
+      Seq.To.remove.short = NA
+    }
+    
+  } else {
+    Seq.To.remove.short = NA
+  }
+  
+  
+  # Remove sequence with too many ambiguities (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) 
+  # from the IUPAC nucleotide code.
+  if (Remove.Seq.TooManyAmbig == "TRUE") {
+    nb.loc = dim(cytb2Smat)[2]
+    
+    nbAmbig = unlist(lapply(1:dim(cytb2Smat)[1], function(x) {
+      nb.loc.noindel = nb.loc - sum(stringr::str_count(cytb2Smat[x,], "-"))
+      ((nb.loc.noindel - (
+        sum(stringr::str_count(cytb2Smat[x,], "a")) + sum(stringr::str_count(cytb2Smat[x,], "c")) + sum(stringr::str_count(cytb2Smat[x,], "t")) + sum(stringr::str_count(cytb2Smat[x,], "g")) +  sum(stringr::str_count(cytb2Smat[x,], "u"))
+      )) / nb.loc.noindel) * 100
     }))
     
-Seq.To.remove.Too.Ambig = which(nbAmbig > Percent.Ambig) 
-
-if(length(Seq.To.remove.Too.Ambig) > 0){
-    Seq.To.remove.amb = row.names(cytb2Smat)[Seq.To.remove.Too.Ambig]
-    cytb2Smat = cytb2Smat[-Seq.To.remove.Too.Ambig, ]
+    Seq.To.remove.Too.Ambig = which(nbAmbig > Percent.Ambig)
+    
+    if (length(Seq.To.remove.Too.Ambig) > 0) {
+      Seq.To.remove.amb = row.names(cytb2Smat)[Seq.To.remove.Too.Ambig]
+      cytb2Smat = cytb2Smat[-Seq.To.remove.Too.Ambig,]
     } else {
-    Seq.To.remove.amb = NA
+      Seq.To.remove.amb = NA
     }
-
-} else {
-Seq.To.remove.amb = NA
-}
-
-
-if(Remove.Loc.Low.Freq == TRUE){
-
-# remove the locus in low frequency ### NEED TO BE DONE
+    
+  } else {
+    Seq.To.remove.amb = NA
+  }
+  
+  
+  if (Remove.Loc.Low.Freq == TRUE) {
+    # remove the locus in low frequency ### NEED TO BE DONE
     nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
-        sum(stringr::str_count(cytb2Smat[, x], "-"))
+      sum(stringr::str_count(cytb2Smat[, x], "-"))
     })
     
-    a = which(nbindels >= round(dim(cytb2Smat)[1]/100 * Minimal.Locus.Freq, digits = 0))
+    a = which(nbindels >= round(dim(cytb2Smat)[1] / 100 * Minimal.Locus.Freq, digits = 0))
     
-    if(length(a) > 0){
-    cytb2Smat = cytb2Smat[, -a]
-    }
-
-}
-
-
-
-    # convert the matrix in string for all the sequences
-    NewAlign.Noindels2 = vector()
-    i = 1
-    for (i in 1:dim(cytb2Smat)[1]) {
-        NewAlign.Noindels2 = c(NewAlign.Noindels2, seqinr::c2s(cytb2Smat[i, ]))
-    }
-    output = list()
-    output$nb = dim(cytb2Smat)[1]
-    output$nam = row.names(cytb2Smat)
-    output$seq = NewAlign.Noindels2
-    output$com = NA
-    class(output) = class(input)
-    #input$seq = NewAlign.Noindels2
-
-    # Convert to DNAbin object and export as fasta format.
-    cytb2Sa = ape::as.DNAbin(output)
-    
-    Seq.names.final = row.names(cytb2Smat)
-    
-    Seq.removed = setdiff(Seq.names.original, Seq.names.final)
-    
-    Seq.removed.DF = data.frame(Sequence.names.removed = Seq.removed, Removal.type = rep(NA, length(Seq.removed)))
-    
-    if(Remove.Seq.Indels == "TRUE" & is.na(Seq.to.remove.indels[1]) == FALSE & Remove.Indels.Only == FALSE){
-    if(length(Seq.to.remove.indels) > 0){
-    Seq.removed.DF[na.omit(match(Seq.to.remove.indels, Seq.removed.DF[,1])),2] = "Indels"
-    } 
+    if (length(a) > 0) {
+      cytb2Smat = cytb2Smat[,-a]
     }
     
-    if(Remove.Seq.Indels == "TRUE" & is.na(Seq.to.remove.indels[1]) == FALSE & Remove.Indels.Only == TRUE){
-    if(length(Seq.to.remove.indels) > 0){
-    
-    Seq.removed.DF.add = data.frame(Sequence.names.removed = Seq.to.remove.indels, 
-    Removal.type =  rep("Indels", length(Seq.to.remove.indels)))
-    
-    Seq.removed.DF = data.frame(rbind(Seq.removed.DF, Seq.removed.DF.add))
-
-    } 
+  }
+  
+  
+  
+  # convert the matrix in string for all the sequences
+  NewAlign.Noindels2 = vector()
+  i = 1
+  for (i in 1:dim(cytb2Smat)[1]) {
+    NewAlign.Noindels2 = c(NewAlign.Noindels2, seqinr::c2s(cytb2Smat[i,]))
+  }
+  output = list()
+  output$nb = dim(cytb2Smat)[1]
+  output$nam = row.names(cytb2Smat)
+  output$seq = NewAlign.Noindels2
+  output$com = NA
+  class(output) = class(input)
+  #input$seq = NewAlign.Noindels2
+  
+  # Convert to DNAbin object and export as fasta format.
+  cytb2Sa = ape::as.DNAbin(output)
+  
+  Seq.names.final = row.names(cytb2Smat)
+  
+  Seq.removed = setdiff(Seq.names.original, Seq.names.final)
+  
+  Seq.removed.DF = data.frame(Sequence.names.removed = Seq.removed,
+                              Removal.type = rep(NA, length(Seq.removed)))
+  
+  if (Remove.Seq.Indels == "TRUE" &
+      is.na(Seq.to.remove.indels[1]) == FALSE &
+      Remove.Indels.Only == FALSE) {
+    if (length(Seq.to.remove.indels) > 0) {
+      Seq.removed.DF[na.omit(match(Seq.to.remove.indels, Seq.removed.DF[, 1])), 2] = "Indels"
     }
-    
-    
-    
-    if(Remove.Short.Seq == "TRUE" & is.na(Seq.To.remove.short[1]) == FALSE){
-    if(length(Seq.To.remove.short) > 0){
-    Seq.removed.DF[na.omit(match(Seq.To.remove.short, Seq.removed.DF[,1])),2] = "Too.short"
-    } 
+  }
+  
+  if (Remove.Seq.Indels == "TRUE" &
+      is.na(Seq.to.remove.indels[1]) == FALSE &
+      Remove.Indels.Only == TRUE) {
+    if (length(Seq.to.remove.indels) > 0) {
+      Seq.removed.DF.add = data.frame(
+        Sequence.names.removed = Seq.to.remove.indels,
+        Removal.type =  rep("Indels", length(Seq.to.remove.indels))
+      )
+      
+      Seq.removed.DF = data.frame(rbind(Seq.removed.DF, Seq.removed.DF.add))
+      
     }
-    
-    if(Remove.Seq.TooManyAmbig == "TRUE" & is.na(Seq.To.remove.amb[1]) == FALSE) {
-    if(length(Seq.To.remove.amb) > 0 ){
-    Seq.removed.DF[na.omit(match(Seq.To.remove.amb, Seq.removed.DF[,1])),2] = "Too.Ambiguous"
+  }
+  
+  
+  
+  if (Remove.Short.Seq == "TRUE" &
+      is.na(Seq.To.remove.short[1]) == FALSE) {
+    if (length(Seq.To.remove.short) > 0) {
+      Seq.removed.DF[na.omit(match(Seq.To.remove.short, Seq.removed.DF[, 1])), 2] = "Too.short"
     }
+  }
+  
+  if (Remove.Seq.TooManyAmbig == "TRUE" &
+      is.na(Seq.To.remove.amb[1]) == FALSE) {
+    if (length(Seq.To.remove.amb) > 0) {
+      Seq.removed.DF[na.omit(match(Seq.To.remove.amb, Seq.removed.DF[, 1])), 2] = "Too.Ambiguous"
     }
-    
-return(list(Alignment = cytb2Sa, Sequences.Removed = Seq.removed.DF))
+  }
+  
+  return(list(Alignment = cytb2Sa, Sequences.Removed = Seq.removed.DF))
 }
 
 

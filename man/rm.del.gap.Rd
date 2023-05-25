@@ -2,7 +2,8 @@
 % Please edit documentation in R/Clean.Seq.R
 \name{rm.del.gap}
 \alias{rm.del.gap}
-\title{Function to remove sequences (or loci) with rare insertion, or containing too many ambiguous nucleotide, or sequences that are too short.}
+\title{Function to remove sequences (or loci) with rare insertion, or containing too many ambiguous nucleotides, 
+or sequences that are too short.}
 \usage{
 rm.del.gap(
   input = NULL,
@@ -28,7 +29,7 @@ or "DNAbin" (ape R package) or the name (including the path if necessary) of the
 
 \item{Nb.Seq.Indels}{is an integer precising the maximal number of sequences that could include a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).}
 
-\item{Remove.Indels.Only}{if TRUE (default falase) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.}
+\item{Remove.Indels.Only}{if TRUE (default FALSE) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.}
 
 \item{Remove.Short.Seq}{if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage of the of the number of missing nucleotide of the loguest sequence (default 15% of missing nucleotide). So sequences with more than 50% of missing nucleotides are removed.}
 

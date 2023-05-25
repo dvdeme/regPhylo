@@ -2,7 +2,7 @@
 % Please edit documentation in R/Get.taxo.classif.R
 \name{Get.classif}
 \alias{Get.classif}
-\title{Arrange the classification information exracted from the itis, gbif and bold.}
+\title{Arrange the classification information extracted from the itis, gbif and bold databases.}
 \usage{
 Get.classif(input = NULL, Tax.list = NULL)
 }

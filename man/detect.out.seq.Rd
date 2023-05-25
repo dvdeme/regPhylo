@@ -2,7 +2,7 @@
 % Please edit documentation in R/Clean.Seq.R
 \name{detect.out.seq}
 \alias{detect.out.seq}
-\title{This function detects outlier sequences and is used internally by teh Clean.Seq function.}
+\title{This function detects outlier sequences and is used internally by the Clean.Seq function.}
 \usage{
 detect.out.seq(
   input = NULL,

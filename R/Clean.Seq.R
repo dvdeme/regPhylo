@@ -329,7 +329,7 @@ Clean.Seq = function(inputal = NULL,
 #' rm(cytb2Sa, NewAlign.Noindels, NewAlign.Noindels2, Res1, cytb2.uniq, Res.optim, Seq.name.origin, cytb2, cytb2a, cytb2.toExportOutlier.Seqs)
 
 
-#' @title This function detects outlier sequences and is used internally by teh Clean.Seq function.
+#' @title This function detects outlier sequences and is used internally by the Clean.Seq function.
 
 #' @description This function helps to detect sequences that are abnormally distance form all other sequences in alignment. See the Clean.Seq function for a more detailled description.
 
@@ -433,7 +433,8 @@ detect.out.seq = function(input = NULL,
 
 
 
-#' @title Function to remove sequences (or loci) with rare insertion, or containing too many ambiguous nucleotide, or sequences that are too short.
+#' @title Function to remove sequences (or loci) with rare insertion, or containing too many ambiguous nucleotides, 
+#' or sequences that are too short.
 
 #' @description This function helps to detect and remove sequences and loci with rare insertions, or containing too many ambiguous nucleotides, or sequences that are too short. 
 
@@ -446,7 +447,7 @@ detect.out.seq = function(input = NULL,
 
 #' @param Nb.Seq.Indels is an integer precising the maximal number of sequences that could include a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).
 
-#' @param Remove.Indels.Only if TRUE (default falase) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.
+#' @param Remove.Indels.Only if TRUE (default FALSE) the indels blocks detected are removed form the alignement but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.
 
 #' @param Remove.Short.Seq if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage of the of the number of missing nucleotide of the loguest sequence (default 15% of missing nucleotide). So sequences with more than 50% of missing nucleotides are removed.
 
@@ -697,15 +698,14 @@ rm.del.gap = function(input = NULL,
 }
 
 
-#' for Debug
-#' rm(Remove.Seq.TooManyAmbig, Remove.Short.Seq, Remove.Seq.Indels, Seq.removed, Seq.removed.DF, output, NewAlign.Noindels2, Seq.names.final, Seq.removed, Seq.To.remove.short, Seq.to.remove.indels, Seq.To.remove.amb, Seq.To.remove, nbAmbig,nb.loc, Seq.To.remove.Too.Ambig, nbmissing, cytb2Smat, bb, Pos.ToRemove, resa, Ending, Starting, seq.name.indel, Test.Ending, Test.preceding, Seq.to.remove.Indel, aa, nbindels)
+# for Debug
+# rm(Remove.Seq.TooManyAmbig, Remove.Short.Seq, Remove.Seq.Indels, Seq.removed, Seq.removed.DF, output, NewAlign.Noindels2, Seq.names.final, Seq.removed, Seq.To.remove.short, Seq.to.remove.indels, Seq.To.remove.amb, Seq.To.remove, nbAmbig,nb.loc, Seq.To.remove.Too.Ambig, nbmissing, cytb2Smat, bb, Pos.ToRemove, resa, Ending, Starting, seq.name.indel, Test.Ending, Test.preceding, Seq.to.remove.Indel, aa, nbindels)
 
 
 
 
-#' @description a function to detect sequences of consecutive numbers from https://stackoverflow.com/questions/8400901/group-integer-vector-into-consecutive-runs/8402950#8402950
-
-#' @export seqle
+#' @description a function to detect sequences of consecutive numbers from 
+#' https://stackoverflow.com/questions/8400901/group-integer-vector-into-consecutive-runs/8402950#8402950
 
 seqle <- function(x,incr=1) { 
   if(!is.numeric(x)) x <- as.numeric(x) 

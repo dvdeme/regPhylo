@@ -60,17 +60,6 @@
 #' @export Get.taxo.classif.Multi
 
 
-
-require(taxize)
-require(rentrez)
-require(XML)
-require(ritis)
-require(rgbif)
-require(rtaxref)
-require(bold)
-require(httr)
-require(taxizedb)
-
 Get.taxo.classif.Multi = function(Taxa.list = NULL, dbs = NULL, api_keys = NULL, ncbi.api.key = NULL,  ID.Rank = "Genus", Save.Intermediate.ID.rank = NULL){
 
 Overall.Results = do.call(rbind, lapply(1:length(Taxa.list), function(i){
@@ -168,7 +157,7 @@ Res.DF3 = Res.DF3[-Toremove,]
 
 
 
-### Combine the resukts of the First search based on the Genus of interest and the results of the second search based on the results from the synonymised genera from the different database.
+### Combine the results of the first search based on the genus of interest and the results of the second search based on the results from the synonymised genera from the different database.
 
 #if(dim(Res.DF3)[1] > 0){
 res.tot = data.frame(rbind(res.DF, Res.DF3))
@@ -223,9 +212,10 @@ return(Overall.Results)
 
 #' @param db =  the names of the taxonomic data base, among "itis", "ncbi", "tropicos", "gbif", "eol", "nbn", "pow", "bold", and taxref (via rtaxref Rpackage to get acess to the taxref from the French INPN database)).
 
+#' @return the function returns a vector of the taxonomic id of the corresponding databases.
+
 #' @export get.db.ids
 
-#' @return the function returns a vector of the taxonomic id of the corresponding databases.
 
 get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL){
 if(db == "bold"){
@@ -256,9 +246,7 @@ res.id = tryCatch(as.character(taxize::get_ids(taxon.name, db = db, rows = 1)[[1
 #res.id = NA
 #}
 
-
 }
-
 }
 }
 
@@ -301,7 +289,6 @@ res.id
 #' important request. This is working with "ncbi", "gbif" (not for the search of synonyms). if FALSE
 #' the function use the API to query the online server.
 
-
 #' @param input.ID.Rank the Rank of the ID requested eg. "Genus" or "Species"
 
 #' @return The function returns a table with the following fields
@@ -310,16 +297,6 @@ res.id
 #' "extraction.date").
 
 #' @export Get.taxo.classif
-
-require(taxize)
-require(rentrez)
-require(XML)
-require(ritis)
-require(rgbif)
-require(rtaxref)
-require(bold)
-require(taxizedb)
-require(httr)
 
 
 Get.taxo.classif = function(input.id = NULL, db = NULL, downto = "species", api_key = NULL, local.db = FALSE, input.ID.Rank = "Genus"){
@@ -403,7 +380,6 @@ child.ID = taxize::downstream(input.id, db = db, downto = downto)
 
 
 
-
 #### GBIF data base.
 if(db == "gbif"){
 if(dim(child.ID[[1]])[1] == 0){
@@ -466,7 +442,7 @@ Classif.Summary = unique(Complement.Syno)
 }
 
 
-#### BOLD data base
+#### BOLD database
 if(db == "bold"){
 if(dim(child.ID[[1]])[1] == 0){ 
 sp.Info = id2name(input.id, db = db)
@@ -485,7 +461,7 @@ warning("BOLD does not provide any information about synonymes, so \"species.syn
 }
 
 
-
+### ITIS database
 if(db == "itis"){
 
 if(is.null(child.ID[[1]]$tsn[1])){

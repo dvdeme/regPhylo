@@ -218,7 +218,7 @@ return(Overall.Results)
 
 get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL){
 if(db == "bold"){
-res.id = tryCatch(as.character(bold::bold_search(taxon.name)[1,1]), error=function(e) "error")
+res.id = tryCatch(as.character(taxize::bold_search(taxon.name)[1,1]), error=function(e) "error")
 if(res.id == "error" | res.id == taxon.name){
 res.id = NA
 }

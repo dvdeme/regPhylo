@@ -2,14 +2,14 @@
 % Please edit documentation in R/Get.taxo.classif.R
 \name{get_classif.ncbi}
 \alias{get_classif.ncbi}
-\title{Get Classification table and synonyms from NCBI taxonomy database}
+\title{Get the classification table and synonyms from NCBI taxonomy database}
 \usage{
 get_classif.ncbi(input = NULL, api_key = NULL)
 }
 \arguments{
 \item{input}{a vector with the ncbi taxonomic ID of the taxa of interest.}
 
-\item{api_key}{a vector with the personnal api key to get a better acces to the NCBI API.}
+\item{api_key}{a vector with the personal api key to get a better access to the NCBI API.}
 }
 \value{
 The function returns a table with the following fields

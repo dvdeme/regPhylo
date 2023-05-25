@@ -8,7 +8,7 @@ Get.classif(input = NULL, Tax.list = NULL)
 }
 \arguments{
 \item{input}{is the output of the /emph{taxize::classification} function, which is 
-a list of data.frames with the taxonomic classiciation of the supplied taxa.}
+a list of data.frames with the taxonomic classifiation of the supplied taxa.}
 
 \item{Tax.list}{is a data frame with two columns the first include the accepted taxonomic name 
 and the second the synonyms taxonomic names.}

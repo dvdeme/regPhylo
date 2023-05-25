@@ -2,7 +2,7 @@
 % Please edit documentation in R/Get.taxo.classif.R
 \name{Get.taxo.classif.Multi}
 \alias{Get.taxo.classif.Multi}
-\title{Extract a taxonomic information and check for synonymes in the NCBI, itis, gbif, bold and
+\title{Extract a taxonomic information and check for synonyms in the NCBI, itis, gbif, bold and
 taxref (MNHN) databases}
 \usage{
 Get.taxo.classif.Multi(
@@ -16,8 +16,8 @@ Get.taxo.classif.Multi(
 }
 \arguments{
 \item{ID.Rank}{the name of the Rank of the Taxa.list, it can be either "Species", or any other
-levels (by default, the function considere the "Genus"), however in the results only the Species,
-Genus, Family, Order and Class hierachical levels are reported.}
+levels (by default, the function considers the "Genus"), however in the results only the Species,
+Genus, Family, Order and Class hierarchical levels are reported.}
 
 \item{Save.Intermediate.ID.rank}{the path of the folder to store the results of the different
 Taxa.list.}
@@ -28,14 +28,13 @@ ncbi, itis, gbif, bold and taxref database.}
 \item{db}{the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
 from the rtaxref R package).}
 
-\item{downto}{hierachical level to look for descent, by default it is species. see function
+\item{downto}{hierarchical level to look for descent, by default it is species. see function
 downstream from the taxize R package.}
 
-\item{local.db}{if TRUE (by default FALSE),it use local imported database to query the
-classification and
-perfomed request, can be much faster for important request. This is working with "ncbi",
-"gbif" (not for the search of synonyms). if FALSE the function use the API to query the online
-server.}
+\item{local.db}{THIS OPTION IS CURRENTLY INVALID, WORK IN PROGRESS, if TRUE (by default FALSE),it use local imported database to query the
+classification and performed request, can be much faster for important request. 
+This is working with "ncbi","gbif" (not for the search of synonyms). 
+If FALSE the function use the API to query the online server.}
 
 \item{input.ID.Rank}{the Rank of the ID requested}
 }
@@ -53,7 +52,7 @@ taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the get_ids("ple
 "ncbi") function for instance.
 }
 \details{
-This function allows to check for the prence of the synonyms found in a database, their
+This function allows to check for the presence of the synonyms found in a database, their
 are also cross checked in the other databases. This function allow to loop the search over 
 multiple species or genera or family at the same time over the different databases.
 }

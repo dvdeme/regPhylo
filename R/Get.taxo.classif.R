@@ -365,7 +365,7 @@ child.ID = taxizedb::downstream(input.id, db = db, downto = downto)
 if(db == "taxref"){
 Child.ID.DF = tryCatch(as.data.frame(rtaxref::rt_taxa_children(as.numeric(as.character(input.id)))), error=function(e) "error")
 
-### If the taxonomic namecoreespondto a synonyms of another validated taxa name.
+### If the taxonomic names correspond to a synonyms of another validated taxa name.
 if(!class(Child.ID.DF) == "data.frame"){
 taxa.info = as.data.frame(rtaxref::rt_taxa_id(as.numeric(as.character(input.id))))
 Child.ID.DF = as.data.frame(rtaxref::rt_taxa_children(as.numeric(as.character(taxa.info$referenceId))))
@@ -455,7 +455,7 @@ Classif.Summary = Get.classif(input = Classif.tax, Tax.list = child.ID.DF[,c(2,1
 Classif.Summary = data.frame(Classif.Summary, database = rep(db, dim(Classif.Summary)[1]), extraction.date = rep(Sys.time(), dim(Classif.Summary)[1]))
 Classif.Summary = data.frame(species.valid = Classif.Summary[,1],  species.syn = Classif.Summary[,1], Classif.Summary[,c(2:5)], txid.species.valid = Classif.Summary[,6], txid.species.syn = Classif.Summary[,6], Classif.Summary[, c(7:12)])
 Classif.Summary$extraction.date = as.character(Classif.Summary$extraction.date)
-### BOLD does not keep track of the synonymes so we cannot check for those !
+### BOLD does not keep track of the synonyms so we cannot check for those !
 warning("BOLD does not provide any information about synonymes, so \"species.syn\" is identical to \"species.valid\"")
 }
 
@@ -571,19 +571,30 @@ names(Valid.species.Taxonomy) = c("species.valid", "referenceId", "txid.genus", 
 
 
 Classif.Summary = do.call(rbind, lapply(1:dim(Classif.summary)[1], function(x){
-a = tryCatch(as.data.frame(taxize::rt_taxa_synonyms(Classif.summary[x,c("referenceId")])), error=function(e) "error")
+a = tryCatch(as.data.frame(rtaxref::rt_taxa_synonyms(Classif.summary[x,c("referenceId")])), error=function(e) "error")
 
 if(class(a) == "character"){
-res1 = data.frame(Classif.summary[x,], Valid.species.Taxonomy[,c("txid.genus", "txid.family", "txid.order", "txid.class", "database", "extraction.date")])  ## there is no synonymes so the full names is provided
+res1 = data.frame(Classif.summary[x,], Valid.species.Taxonomy[x,c("txid.genus", "txid.family", "txid.order", "txid.class", "database", "extraction.date")])  ## there is no synonymes so the full names is provided
 } else {
 res1 = a[,c("scientificName", "genusName", "familyName", "orderName", "className", "id")] ## there is no synonymes so the full names is
-res2 = data.frame(scientificName = rep(Valid.species[x, "scientificName"], dim(res1)[1]),  res1[,-dim(res1)[2]], referenceId = rep(Valid.species[x, "referenceId"], dim(res1)[1]), id = res1[, dim(res1)[2]], txid.genus = rep(Valid.species.Taxonomy[x, "txid.genus"], dim(res1)[1]), txid.family = rep(Valid.species.Taxonomy[x, "txid.family"], dim(res1)[1]), txid.order = rep(Valid.species.Taxonomy[x, "txid.order"], dim(res1)[1]), txid.class = rep(Valid.species.Taxonomy[x, "txid.class"], dim(res1)[1]), database = rep(Valid.species.Taxonomy[x, "database"], dim(res1)[1]), extraction.date = rep(Valid.species.Taxonomy[x, "extraction.date"], dim(res1)[1]))
+res2 = data.frame(scientificName = rep(Valid.species[x, "scientificName"], dim(res1)[1]),  
+                  res1[,-dim(res1)[2]], 
+                  referenceId = rep(Valid.species[x, "referenceId"], dim(res1)[1]), 
+                  id = res1[, dim(res1)[2]], 
+                  txid.genus = rep(Valid.species.Taxonomy[x, "txid.genus"], dim(res1)[1]), 
+                  txid.family = rep(Valid.species.Taxonomy[x, "txid.family"], dim(res1)[1]), 
+                  txid.order = rep(Valid.species.Taxonomy[x, "txid.order"], dim(res1)[1]), 
+                  txid.class = rep(Valid.species.Taxonomy[x, "txid.class"], dim(res1)[1]), 
+                  database = rep(Valid.species.Taxonomy[x, "database"],dim(res1)[1]), 
+                  extraction.date = rep(Valid.species.Taxonomy[x, "extraction.date"], dim(res1)[1]))
+res0 = data.frame(Classif.summary[x,], Valid.species.Taxonomy[x,c("txid.genus", "txid.family", "txid.order", "txid.class", "database", "extraction.date")])  ## there is no synonymes so the full names is provided
+res2 = data.frame(rbind(res0, res2))
 res1 = res2
 }
 res1
 }))
 
-# Remove potential duplicate (without accounting the date and timing of exctraction).
+# Remove potential duplicate (without accounting the date and timing of extraction).
 ToRemove = which(duplicated(Classif.Summary[,-14]))
 if(length(ToRemove) > 0){
 Classif.Summary = Classif.Summary[-ToRemove,]

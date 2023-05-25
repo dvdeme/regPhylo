@@ -83,10 +83,10 @@ selected DNA regions "MetaData.Select.DNA.Select.DNA.txt".
 }
 \description{
 This function allows to extract DNA sequences and metadata from NCBI and BOLD,
-dereplicates the data from both databases, improve the georefercing of DNA sequences 
-using openstreetmap API, buit a species by gene matrix, select the DNA region with the best
-taxonmic coverage, export DNA sequences and the assocated metadata for selected Gene region, 
-select the best DNA seqeunces per taxa and perform first alignment allowing automatic detection 
+dereplicates the data from both databases, improve the georeferencing of DNA sequences 
+using openstreetmap API, built a species by gene matrix, select the DNA region with the best
+taxonomic coverage, export DNA sequences and the associated metadata for selected Gene region, 
+select the best DNA sequences per taxa and perform first alignment allowing automatic detection 
 of sequences entered in a wrong direction.
 }
 \details{
@@ -96,10 +96,10 @@ get a faster access to the NCBI server.
 This function build a pipeline of the following function "GetSeqNumber_NCBI_taxid" (to detect the number of sequence per taxon and identify the model species with too many 
 sequence to download), "GetSeqInfo_NCBI_taxid" (get the DNA and the metadata from NCBI),
 "GetSeq_BOLD" (get the DNA and the metadata from BOLD), "Congr.NCBI.BOLD.perReposit" (dereplicate
-and improve metadata from NCBI and BOLD), "GeoCoord.WGS84" (homogeneize the geographic coordinates),
-"GeoCodeName" (improve the georeferencing ofthe data with just locality names using the
+and improve metadata from NCBI and BOLD), "GeoCoord.WGS84" (homogenize the geographic coordinates),
+"GeoCodeName" (improve the georeferencing of the data with just locality names using the
 openstreetmap API), "SpeciesGeneMat.Bl" (build the species-by-gene matrix),
-"SelGene.MaxSpCov" (identify the DNA region maximiasing the sepcies coverage), "Select.DNA" (expot
+"SelGene.MaxSpCov" (identify the DNA region maximising the species coverage), "Select.DNA" (export
 the metadata of the selected DNA region, including the extraction of the DNA region within larger
 gene region such as the COI within the mitogenome), "SelBestSeq" (select the DNA sequences based on
 several criteria including some geographic proximity to some geographic region of interest, and

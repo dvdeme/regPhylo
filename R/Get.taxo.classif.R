@@ -1,4 +1,4 @@
-#' @title Extract a taxonomic information and check for synonymes in the NCBI, itis, gbif, bold and
+#' @title Extract a taxonomic information and check for synonyms in the NCBI, itis, gbif, bold and
 #' taxref (MNHN) databases
 
 #' @description This functions extracts the species list, the classification and the synonyms 
@@ -7,7 +7,7 @@
 #' taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the get_ids("plecoptera", db =
 #' "ncbi") function for instance.
 
-#' @details This function allows to check for the prence of the synonyms found in a database, their
+#' @details This function allows to check for the presence of the synonyms found in a database, their
 #' are also cross checked in the other databases. This function allow to loop the search over 
 #' multiple species or genera or family at the same time over the different databases.
 
@@ -17,18 +17,17 @@
 #' @param db the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
 #' from the rtaxref R package).
 
-#' @param downto hierachical level to look for descent, by default it is species. see function
+#' @param downto hierarchical level to look for descent, by default it is species. see function
 #' downstream from the taxize R package.
 
-#' @param local.db if TRUE (by default FALSE),it use local imported database to query the
-#' classification and
-#' perfomed request, can be much faster for important request. This is working with "ncbi",
-#' "gbif" (not for the search of synonyms). if FALSE the function use the API to query the online
-#' server.
+#' @param local.db THIS OPTION IS CURRENTLY INVALID, WORK IN PROGRESS, if TRUE (by default FALSE),it use local imported database to query the
+#' classification and performed request, can be much faster for important request. 
+#' This is working with "ncbi","gbif" (not for the search of synonyms). 
+#' If FALSE the function use the API to query the online server.
 
 #' @param ID.Rank the name of the Rank of the Taxa.list, it can be either "Species", or any other
-#' levels (by default, the function considere the "Genus"), however in the results only the Species,
-#' Genus, Family, Order and Class hierachical levels are reported.
+#' levels (by default, the function considers the "Genus"), however in the results only the Species,
+#' Genus, Family, Order and Class hierarchical levels are reported.
 
 #' @param input.ID.Rank the Rank of the ID requested
 
@@ -606,7 +605,7 @@ return(Classif.Summary)
 
 #################################################################################################
 
-#' @title Get Classification table and synonyms from NCBI taxonomy database
+#' @title Get the classification table and synonyms from NCBI taxonomy database
 
 #' @description This function gets the classification and the synonyms taxonomic name of the taxa of
 #' interest from the NCBI taxonomy database using the rentrez R package. This function is used
@@ -617,7 +616,7 @@ return(Classif.Summary)
 
 #' @param input a vector with the ncbi taxonomic ID of the taxa of interest.
 
-#' @param api_key a vector with the personnal api key to get a better acces to the NCBI API.
+#' @param api_key a vector with the personal api key to get a better access to the NCBI API.
 
 #' @return The function returns a table with the following fields
 #' c("species.valid", "species.syn", "genus", "family", "order", "class", "txid.species.valid",
@@ -684,7 +683,7 @@ return(info)
 #' @description This function arranges the classification from the ncbi or itis database using the taxize R package. It keeps the class, order, family, genus and species names with their associated txid. This function work internally for the \emph{Get.taxo.classif} function.
 
 #' @param input is the output of the /emph{taxize::classification} function, which is 
-#' a list of data.frames with the taxonomic classiciation of the supplied taxa.
+#' a list of data.frames with the taxonomic classifiation of the supplied taxa.
 
 #' @param Tax.list is a data frame with two columns the first include the accepted taxonomic name 
 #' and the second the synonyms taxonomic names.

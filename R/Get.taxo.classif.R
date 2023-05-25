@@ -450,7 +450,7 @@ child.ID.DF = data.frame(sp.Info[[1]]$id, sp.Info[[1]]$name, sp.Info[[1]]$rank)
 child.ID.DF = data.frame(child.ID[[1]]$id, child.ID[[1]]$name, child.ID[[1]]$rank)
 }
 
-Classif.tax = classification(child.ID.DF[,1], db = db)
+Classif.tax = taxize::classification(child.ID.DF[,1], db = db)
 Classif.Summary = Get.classif(input = Classif.tax, Tax.list = child.ID.DF[,c(2,1)])
 Classif.Summary = data.frame(Classif.Summary, database = rep(db, dim(Classif.Summary)[1]), extraction.date = rep(Sys.time(), dim(Classif.Summary)[1]))
 Classif.Summary = data.frame(species.valid = Classif.Summary[,1],  species.syn = Classif.Summary[,1], Classif.Summary[,c(2:5)], txid.species.valid = Classif.Summary[,6], txid.species.syn = Classif.Summary[,6], Classif.Summary[, c(7:12)])

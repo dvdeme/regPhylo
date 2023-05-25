@@ -38,6 +38,13 @@ Imports: ape,
     RJSONIO,
     seqinr,
     stringr,
+    XML,
+    rtaxref,
+    taxize,
+    ritis,
+    rgbif,
+    httr,
+    taxizedb
 RoxygenNote: 7.1.2
 Suggests: testthat,
     httr

@@ -79,11 +79,7 @@ Get.taxo.classif(input.id = input.ids[x], db = dbs[x], downto = "species", api_k
 }
 }))
 
-### The database name follow by ".Ori" indicates that this is the original 
-# data extraction from the database, to distinguished with synonyms species 
-# considered in other database that could be secondary extracted 
-# in the following steps.
-res.DF$database = paste(res.DF$database, ".Ori", sep="")
+
 
 ### Remove the taxa included as NA (absent in the database).
 ToremoveNA = which(res.DF[,1]== "NA")
@@ -107,7 +103,6 @@ if(length(Toremove) > 0){
 Syno.Sp = Syno.Sp[-Toremove]
 }
 
-
 #### Check if among the different synonyms recovered in the different DB, in that case we look for in the 
 # other database with the different synonym name.
 Res.DF3 = do.call(rbind, lapply(1:length(Syno.Sp), function(j){
@@ -122,7 +117,7 @@ if(length(BD.2.look) > 0){ ### in case the synonyms are already reported in all 
 
 # get taxid 
 input.ids2 = unlist(lapply(1:length(BD.2.look), function(x){
-get.db.ids(taxon.name = a[1, "species.syn"], db = BD.2.look[x])
+get.db.ids(taxon.name = a[1, "species.syn"], db = BD.2.look[x], input.ID.Rank = "Species")
 }))
 
 ### Check the DB to keep for additional search
@@ -141,7 +136,8 @@ api_keys2[ncbi.pres] = ncbi.api.key
 res.DF2 = do.call(rbind, lapply(1:length(RemainDB), function(x){
 
 if(RemainDB[x] == "taxref"){
-Get.taxo.classif(input.id = as.numeric(as.character(remainId[x])), db = RemainDB[x], downto = "species", api_key = api_keys2[x], input.ID.Rank = "Species")
+Get.taxo.classif(input.id = as.numeric(as.character(remainId[x])), db = RemainDB[x], downto = "species", 
+                 api_key = api_keys2[x], input.ID.Rank = "Species")
 } else {
 Get.taxo.classif(input.id = remainId[x], db = RemainDB[x], downto = "species", api_key = api_keys2[x], input.ID.Rank = "Species")
 }
@@ -153,32 +149,37 @@ res.DF2
 
 }))
 
-### Add the suffix "Sec" to the name of teh database to distinguish the secondary
-# search done due to the presence of additional synonymes species in other database.
-res.DF3$database = paste(res.DF3$database, ".Sec", sep="")
 
 
-### For some reason sometimes the taxref return the taxid of the genus and not from the species because
-# that species is not present in the taxref (but the genus is present), 
-# and the then the function extract the information at the genus level while we are looking for some species.
-# So we remove those non wanted genera.
+### The database name follow by ".Ori" indicates that this is the original 
+# data extraction from the database, to distinguished with synonyms species 
+# considered in other database that could be secondary extracted 
+# in the following steps.
+res.DF$database = paste(res.DF$database, ".Ori", sep="")
 
-if(ID.Rank == "Genus" ) {
-Toremove = which(is.na(Res.DF3$txid.genus))
-if(length(Toremove) >0){
-Res.DF3 = Res.DF3[-Toremove,]
+
+### Combine the results of the first search based on the genus of interest and the 
+# results of the second search based on the results from the synonymised genera from the different database.
+if(is.null(Res.DF3)){
+  res.tot = res.DF
+} else {
+  ### Add the suffix "Sec" to the name of teh database to distinguish the secondary
+  # search done due to the presence of additional synonymes species in other database.
+  res.DF3$database = paste(res.DF3$database, ".Sec", sep="")
+  
+  ### For some reason sometimes the taxref return the taxid of the genus and not from the species because
+  # that species is not present in the taxref (but the genus is present), 
+  # and the then the function extract the information at the genus level while we are looking for some species.
+  # So we remove those non wanted genera.
+  if(ID.Rank == "Genus" ) {
+    Toremove = which(is.na(Res.DF3$txid.genus))
+    if(length(Toremove) >0){
+      Res.DF3 = Res.DF3[-Toremove,]
+    }
+  }
+  # Fonally put the two data.frame together
+  res.tot = data.frame(rbind(res.DF, Res.DF3))
 }
-}
-
-
-
-### Combine the results of the first search based on the genus of interest and the results of the second search based on the results from the synonymised genera from the different database.
-
-#if(dim(Res.DF3)[1] > 0){
-res.tot = data.frame(rbind(res.DF, Res.DF3))
-#} else {
-#res.tot = res.DF
-#}
 
 } else {
 res.tot = res.DF
@@ -232,7 +233,7 @@ return(Overall.Results)
 #' @export get.db.ids
 
 
-get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL){
+get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL, input.ID.Rank = "Genus"){
 if(db == "bold"){
 res.id = tryCatch(as.character(taxize::bold_search(taxon.name)[1,1]), error=function(e) "error")
 if(res.id == "error" | res.id == taxon.name){
@@ -241,7 +242,14 @@ res.id = NA
 
 } else {
 if(db == "taxref"){### get the taxid of the TAXREF data base
+  if(input.ID.Rank == "Species"){
+    res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_search(sciname = taxon.name)), error=function(e) "error")
+    if(dim(res.id)[2] == 1){
+      class(res.id) = "character"
+    }
+  } else {
 res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_fuzzymatch(taxon.name)), error=function(e) "error")
+}
 if(class(res.id) == "character"){
 res.id = NA
 } else {
@@ -314,7 +322,8 @@ res.id
 #' @export Get.taxo.classif
 
 
-Get.taxo.classif = function(input.id = NULL, db = NULL, downto = "species", api_key = NULL, local.db = FALSE, input.ID.Rank = "Genus"){
+Get.taxo.classif = function(input.id = NULL, db = NULL, downto = "species", api_key = NULL, 
+                            local.db = FALSE, input.ID.Rank = "Genus"){
 
 ### Test if the input.id correspond to a species level or higher taxonomic rank.
 if(input.ID.Rank == "Species"){

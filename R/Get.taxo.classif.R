@@ -552,7 +552,7 @@ Classif.summary = Child.ID.DF[,c("scientificName", "scientificName", "genusName"
 
 
 Valid.species = as.data.frame(do.call(rbind, lapply(1:length(Classif.summary$referenceId), function(x){
-rt_taxa_id(Classif.summary$referenceId[x])
+rtaxref::rt_taxa_id(Classif.summary$referenceId[x])
 })))
 Valid.species = Valid.species[,c("scientificName", "referenceId")]
 
@@ -678,7 +678,7 @@ return(info)
 
 
 #################################################################################################
-#' @title Arrange the classification information exracted from the itis, gbif and bold. 
+#' @title Arrange the classification information extracted from the itis, gbif and bold databases. 
 
 #' @description This function arranges the classification from the ncbi or itis database using the taxize R package. It keeps the class, order, family, genus and species names with their associated txid. This function work internally for the \emph{Get.taxo.classif} function.
 

@@ -68,7 +68,7 @@ get.db.ids(taxon.name = Taxa.list[i], db = dbs[x])
 }))
 
 
-### Get the species list, the classification, and the synonymes
+### Get the species list, the classification, and the synonyms
 res.DF = do.call(rbind, lapply(1:length(dbs), function(x){
 #x= 1
 #for (x in 1:length(dbs)){
@@ -79,8 +79,13 @@ Get.taxo.classif(input.id = input.ids[x], db = dbs[x], downto = "species", api_k
 }
 }))
 
+### The database name follow by ".Ori" indicates that this is the original 
+# data extraction from the database, to distinguished with synonyms species 
+# considered in other database that could be secondary extracted 
+# in the following steps.
+res.DF$database = paste(res.DF$database, ".Ori", sep="")
 
-### Remove the taxa inclued as NA (absent in the database).
+### Remove the taxa included as NA (absent in the database).
 ToremoveNA = which(res.DF[,1]== "NA")
 if(length(ToremoveNA) > 0){
 which(is.na(res.DF[,1]))
@@ -91,7 +96,8 @@ res.DF = res.DF[-ToremoveNA,]
 
 if(dim(res.DF)[1] > 0){
 if(length(dbs) > 1){
-### Determine the synonmys names that are not found in the other DB.
+### Determine the synonyms names that are not found in the other DB.
+  ### THE PROBLEM LAy HERE, TO GLOBAL as a method to compare the synonyms.
 Syno.Sp = setdiff(res.DF[,"species.syn"], res.DF[,"species.valid"])
 
 if(length(Syno.Sp) > 0){ 
@@ -100,7 +106,10 @@ Toremove = which(is.na(Syno.Sp))
 if(length(Toremove) > 0){
 Syno.Sp = Syno.Sp[-Toremove]
 }
-#### Check if among the different synonymes recovered in the different DB, in that case we look for in the other dabase with the different synonym name.
+
+
+#### Check if among the different synonyms recovered in the different DB, in that case we look for in the 
+# other database with the different synonym name.
 Res.DF3 = do.call(rbind, lapply(1:length(Syno.Sp), function(j){
 #j=1
 #for(j in 98:length(Syno.Sp)){
@@ -109,7 +118,7 @@ a = res.DF[which(res.DF[,"species.syn"] == Syno.Sp[j]), c("species.valid", "spec
 ## Check in which Database the synonyms species should be look for
 BD.2.look = setdiff(unique(res.DF[,"database"]), a[,"database"])
 
-if(length(BD.2.look) > 0){ ### in case the synonymes are already reported in all the db but with distinct valid species names
+if(length(BD.2.look) > 0){ ### in case the synonyms are already reported in all the db but with distinct valid species names
 
 # get taxid 
 input.ids2 = unlist(lapply(1:length(BD.2.look), function(x){
@@ -121,7 +130,7 @@ RemainDB = BD.2.look[-which(is.na(input.ids2))]
 remainId = input.ids2[-which(is.na(input.ids2))]
 
 if(length(RemainDB) > 0){
-### check the presence of the ncbi DB in that case the propoer api_key need to to be setup.
+### check the presence of the ncbi DB in that case the proper api_key need to to be setup.
 ncbi.pres = which(RemainDB == "ncbi")
 api_keys2 = rep("NULL", length(RemainDB))
 if(length(ncbi.pres) > 0){
@@ -144,8 +153,15 @@ res.DF2
 
 }))
 
+### Add the suffix "Sec" to the name of teh database to distinguish the secondary
+# search done due to the presence of additional synonymes species in other database.
+res.DF3$database = paste(res.DF3$database, ".Sec", sep="")
 
-### For some reason sometimes the taxref retunr the txid of the genus and not form tehs pecies becasue that species is not present in the taxref (but the genus is present), and the then the function extract the information at the genus levele while we are looking for some species. So we remove those non wanted genera.
+
+### For some reason sometimes the taxref return the taxid of the genus and not from the species because
+# that species is not present in the taxref (but the genus is present), 
+# and the then the function extract the information at the genus level while we are looking for some species.
+# So we remove those non wanted genera.
 
 if(ID.Rank == "Genus" ) {
 Toremove = which(is.na(Res.DF3$txid.genus))

@@ -8,8 +8,11 @@
 #' "ncbi") function for instance.
 
 #' @details This function allows to check for the presence of the synonyms found in a database, their
-#' are also cross checked in the other databases. This function allow to loop the search over 
-#' multiple species or genera or family at the same time over the different databases.
+#' are also cross checked in the other databases. In this case, the function makes the distinction between 
+#' the original search ("Ori") in each database, form the secondary search ("Sec") when the cross checking of synonyms
+#' is performed, this information is available through the column /emph{"search.type"}.
+#' This function allow to loop the search over multiple species or genera or family at the 
+#' same time over the different databases.
 
 #' @param input.id the taxid of the taxa of interest, (extract all the descendant species, from the
 #' ncbi, itis, gbif, bold and taxref database.
@@ -37,7 +40,7 @@
 
 #' @return The function returns a table with the following fields
 #' c("species.valid", "species.syn", "genus", "family", "order", "class", "txid.species.valid",
-#' "txid.species.syn", "txid.genus", "txid.family", "txid.order", "txid.class", "database",
+#' "txid.species.syn", "txid.genus", "txid.family", "txid.order", "txid.class", "database", "search.type",
 #' "extraction.date").
 
 
@@ -165,7 +168,7 @@ if(is.null(Res.DF3)){
 } else {
   ### Add the suffix "Sec" to the name of teh database to distinguish the secondary
   # search done due to the presence of additional synonymes species in other database.
-  res.DF3$database = paste(res.DF3$database, ".Sec", sep="")
+  Res.DF3$database = paste(Res.DF3$database, ".Sec", sep="")
   
   ### For some reason sometimes the taxref return the taxid of the genus and not from the species because
   # that species is not present in the taxref (but the genus is present), 
@@ -177,7 +180,8 @@ if(is.null(Res.DF3)){
       Res.DF3 = Res.DF3[-Toremove,]
     }
   }
-  # Fonally put the two data.frame together
+  
+  # Finally put the two data.frame together
   res.tot = data.frame(rbind(res.DF, Res.DF3))
 }
 
@@ -195,6 +199,11 @@ if(length(Duplic.2Remove) > 0){
 res.tot = res.tot[-Duplic.2Remove,]
 }
 
+### Separate the Original and the secondary search from the database search
+res.tot$search.type  = unlist(lapply(strsplit(res.tot$database, ".", fixed = T), function(k){k[2]}))
+res.tot$database  = unlist(lapply(strsplit(res.tot$database, ".", fixed = T), function(k){k[1]}))
+# re-organise the columns
+res.tot = res.tot[,c(1:13, 15, 14)]
 
 if(is.null(Save.Intermediate.ID.rank) == FALSE){
 saveRDS(res.tot, file = paste(Save.Intermediate.ID.rank, "/", Taxa.list[i],".", paste(dbs, collapse="."), ".RDS", sep = ""))

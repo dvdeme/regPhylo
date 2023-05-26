@@ -703,9 +703,14 @@ rm.del.gap = function(input = NULL,
 
 
 
-
-#' @description a function to detect sequences of consecutive numbers from 
+#' @title Detect suites of consecutive numbers in a vector
+#' @description a function to detect suites of consecutive numbers in a vector from 
 #' https://stackoverflow.com/questions/8400901/group-integer-vector-into-consecutive-runs/8402950#8402950
+#' This function is used internally by the \emph{rm.del.gap} function.
+#' @param x the vector of interest with the suite of numbers.
+
+#' @export seqle
+
 
 seqle <- function(x,incr=1) { 
   if(!is.numeric(x)) x <- as.numeric(x) 

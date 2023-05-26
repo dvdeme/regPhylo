@@ -1,7 +1,7 @@
 Package: regPhylo
 Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
-Version: 1.0.6
+Version: 1.0.7
 Date: 2023-05-24
 Author: regPhylo <regPhylo@gmail.com>
 Maintainer: regPhylo <regPhylo@gmail.com>

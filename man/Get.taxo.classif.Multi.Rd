@@ -48,14 +48,14 @@ c("species.valid", "species.syn", "genus", "family", "order", "class", "txid.spe
 This functions extracts the species list, the classification and the synonyms 
 species name of the accepted species names from the ncbi taxonomy, itis, gbif, bold, taxref (MNHN
 INPN) databases from a taxid of a taxon from a hierarchical order from species level to higher
-taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the get_ids("plecoptera", db =
-"ncbi") function for instance.
+taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the \emph{get_ids("plecoptera", db =
+"ncbi")} function for instance.
 }
 \details{
 This function allows to check for the presence of the synonyms found in a database, their
 are also cross checked in the other databases. In this case, the function makes the distinction between 
 the original search ("Ori") in each database, form the secondary search ("Sec") when the cross checking of synonyms
-is performed, this information is available through the column /emph{"search.type"}.
+is performed, this information is available through the column \emph{search.type}.
 This function allow to loop the search over multiple species or genera or family at the 
 same time over the different databases.
 }

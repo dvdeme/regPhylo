@@ -4,7 +4,12 @@
 \alias{get.db.ids}
 \title{From a taxonomic name get the id of taxon from different open-acces databases, ncbid, gbif, bold, itis, and taxref}
 \usage{
-get.db.ids(taxon.name = NULL, db = NULL, ncbi.api.key = NULL)
+get.db.ids(
+  taxon.name = NULL,
+  db = NULL,
+  ncbi.api.key = NULL,
+  input.ID.Rank = "Genus"
+)
 }
 \arguments{
 \item{taxon.name}{= the name of the taxon of interest eg. "Drusus"}

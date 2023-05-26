@@ -41,7 +41,7 @@ If FALSE the function use the API to query the online server.}
 \value{
 The function returns a table with the following fields
 c("species.valid", "species.syn", "genus", "family", "order", "class", "txid.species.valid",
-"txid.species.syn", "txid.genus", "txid.family", "txid.order", "txid.class", "database",
+"txid.species.syn", "txid.genus", "txid.family", "txid.order", "txid.class", "database", "search.type",
 "extraction.date").
 }
 \description{
@@ -53,6 +53,9 @@ taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the get_ids("ple
 }
 \details{
 This function allows to check for the presence of the synonyms found in a database, their
-are also cross checked in the other databases. This function allow to loop the search over 
-multiple species or genera or family at the same time over the different databases.
+are also cross checked in the other databases. In this case, the function makes the distinction between 
+the original search ("Ori") in each database, form the secondary search ("Sec") when the cross checking of synonyms
+is performed, this information is available through the column /emph{"search.type"}.
+This function allow to loop the search over multiple species or genera or family at the 
+same time over the different databases.
 }

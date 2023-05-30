@@ -703,6 +703,45 @@ rm.del.gap = function(input = NULL,
 
 
 
+#' @title Detect automatically the reading frame and sequence with the presence of stop codon 
+#' in a coding DNA sequence
+#' 
+#' @description This function automatically detect the reading frame of a DNA sequences coding for a protein, 
+#' and then detect the sequence with the presence of stop codon. 
+
+#' @param input a "DNAbin" or an "alignment" object containing the multiple DNA sequences already aligned.
+#' 
+#' @param genet.code a number precising the genetic code of the DNA sequence. See the help page of the function
+#' \emph{translate} from the \emph{seqinr} R package available at https://cran.r-project.org/web/packages/seqinr/seqinr.pdf 
+
+#' @return The functions returns a data.frame with the sequence names including stop codons and the number of stops codon detected.
+#' 
+#' @export Detect.stop.codon
+
+Detect.stop.codon = function(input = NULL, genet.code = 5){
+  if(class(input) == "DNAbin"){
+    input = ape::as.alignment(input)
+  }
+  
+  # define the codonstart
+  frame.vec = c(0,1,2)
+  ReadingFrame = do.call(cbind, lapply(1:3, function(i){
+    unlist(lapply(1:length(input$seq), function(x){
+      aa.trans = paste(seqinr::translate(seq = seqinr::s2c(input$seq[[x]]), frame = frame.vec[i], numcode = genet.code), collapse = "")
+      stringr::str_count(aa.trans, stringr::fixed("*"))
+    }))
+  }))
+  # interesting the function trans from the ape R package provide slightly different results that are not in agreement with seaview software for instance, while the translate function from the seqinr R package provide the appropriate behavior!
+  
+  pos.codonstart = which.min(apply(ReadingFrame, 2,sum))
+  Seq.With.stop.codon = which(ReadingFrame[,pos.codonstart] > 0)
+  Nb.stop.codon = ReadingFrame[which(ReadingFrame[,pos.codonstart] > 0), pos.codonstart]
+  data.frame(Seq.with.stop.codon = input$nam[Seq.With.stop.codon], Nb.stop.codon = Nb.stop.codon)
+}
+
+
+
+
 #' @title Detect suites of consecutive numbers in a vector
 #' @description a function to detect suites of consecutive numbers in a vector from 
 #' https://stackoverflow.com/questions/8400901/group-integer-vector-into-consecutive-runs/8402950#8402950

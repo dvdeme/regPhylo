@@ -2,21 +2,23 @@
 % Please edit documentation in R/Clean.Seq.R
 \name{Detect.stop.codon}
 \alias{Detect.stop.codon}
-\title{Detect automatically the reading frame and sequence with the presence of stop codon 
-in a coding DNA sequence}
+\title{Detect automatically the reading frame and sequences with the presence of stop codon 
+in a coding DNA sequence alignment.}
 \usage{
 Detect.stop.codon(input = NULL, genet.code = 5)
 }
 \arguments{
 \item{input}{a "DNAbin" or an "alignment" object containing the multiple DNA sequences already aligned.}
 
-\item{genet.code}{a number precising the genetic code of the DNA sequence. See the help page of the function
-\emph{translate} from the \emph{seqinr} R package available at https://cran.r-project.org/web/packages/seqinr/seqinr.pdf}
+\item{genet.code}{a number precising the genetic code of the DNA sequence (by default 5 for invertebrate mitochondrial). See the help page of the function
+\emph{translate} from the \emph{seqinr} R package available at https://cran.r-project.org/web/packages/seqinr/seqinr.pdf 
+eg: 1 is standard, 2 is vertebrate.mitochondrial, 3 is yeast.mitochondrial, 4 protozoan.mitochondrial+mycoplasm, 
+5 invertebrate.mitochondrial etc...}
 }
 \value{
 The functions returns a data.frame with the sequence names including stop codons and the number of stops codon detected.
 }
 \description{
-This function automatically detect the reading frame of a DNA sequences coding for a protein, 
-and then detect the sequence with the presence of stop codon.
+This function automatically detects the reading frame of a DNA sequences coding for a protein, 
+and then identifies the sequences with the presence of stop codons.
 }

@@ -18,22 +18,36 @@ detect.out.seq(
 \arguments{
 \item{input}{is a DNAbin alignment object.}
 
-\item{Evol.Model}{evolutionary model used to compute the DNA distance among sequences, default "TN93" (Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package.}
+\item{Evol.Model}{evolutionary model used to compute the DNA distance among sequences, 
+default "TN93" (Tamura and Nei 1993), it allows all the models used in dist.dna function from the ape R package.}
 
-\item{Sum.Stat}{type of symmary statistic to compare the DNA distance of the focal sequence with the other, by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.}
+\item{Sum.Stat}{type of symmary statistic to compare the DNA distance of the focal sequence with the other, 
+by defult we use the median distance but it can also be the "min" for the minimal dNA distance between 1 sequence and its closest neighbor.}
 
-\item{Outlier.Th}{is a number (by default 1.5) defining the distance to consider an outlier sequences. The Outlier.Th is a multiplier of the interquartile range from the genetic distances distribution using the Sum.stat (eg. median). This parameter is equivalent of the "range" parameter from the boxplot function from the stat R package.}
+\item{Outlier.Th}{is a number (by default 1.5) defining the distance to consider an outlier sequences. 
+The Outlier.Th is a multiplier of the interquartile range from the genetic distances distribution using the 
+Sum.stat (eg. median). This parameter is equivalent of the "range" parameter from the boxplot function from the stat R package.}
 
-\item{Approxim}{if TRUE (defaults FALSE) the functions uses an approximation approches to estimate the outlier sequences. If sequence is compare to a random selection of other sequences (defined by the parameter nb.seq) x times (the number of repetition of randoms election is performed by the parameter  nb.rep). This function can speed up a lot the discovery of potential oulier sequences for lareg alignment (more than 5000 - 10000 sequences) becasue the function can run in parallel. However we need to keep in mind that this option provide only an approximation of the outlier sequences when Approxim  = TRUE.}
+\item{Approxim}{if TRUE (defaults FALSE) the functions uses an approximation approches to estimate the outlier sequences. 
+If sequence is compare to a random selection of other sequences (defined by the parameter nb.seq) x times (the number 
+of repetition of randoms election is performed by the parameter  nb.rep). This function can speed up a lot the discovery 
+of potential oulier sequences for lareg alignment (more than 5000 - 10000 sequences) becasue the function can run 
+in parallel. However we need to keep in mind that this option provide only an approximation of the outlier 
+sequences when Approxim  = TRUE.}
 
-\item{nb.seq}{a number (by default 25) defining the number of sequences than are randomly choosen too detect an oultier sequences. This option works only if Approxim = TRUE. To increase the precision of the outlier detection increasing this number help, but it will be slower to run!}
+\item{nb.seq}{a number (by default 25) defining the number of sequences than are randomly choosen too detect an 
+oultier sequences. This option works only if Approxim = TRUE. To increase the precision of the outlier detection 
+increasing this number help, but it will be slower to run!}
 
-\item{nb.rep}{a number (by default 5) precising how many time the random selection of sequences will be performed. This option works only if Approxim = TRUE.}
+\item{nb.rep}{a number (by default 5) precising how many time the random selection of sequences will be performed. 
+This option works only if Approxim = TRUE.}
 
-\item{nbthreads}{a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences}
+\item{nbthreads}{a number (by default 1) defining the number of threads used to performed the Approximate 
+detection of outlier sequences}
 }
 \description{
-This function helps to detect sequences that are abnormally distance form all other sequences in alignment. See the Clean.Seq function for a more detailled description.
+This function helps to detect sequences that are abnormally distant from all other sequences in 
+the alignment. See the Clean.Seq function for a more detailed description.
 }
 \details{
 For debug

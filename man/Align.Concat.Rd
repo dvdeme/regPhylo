@@ -4,7 +4,13 @@
 \alias{Align.Concat}
 \title{Concatenate alignments from different gene regions into a supermatrix at the species level}
 \usage{
-Align.Concat(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL)
+Align.Concat(
+  input = NULL,
+  Sp.List.NoDNA = NULL,
+  outputConcat = NULL,
+  split = "_",
+  chunk.names.to.Keep = 2
+)
 }
 \arguments{
 \item{input}{the path to the folder storing the alignments (alignments have to be in
@@ -15,6 +21,13 @@ in the alignment, or the option can be NULL, in which case the function automati
  species list of all the species present in the different alignments.}
 
 \item{outputConcat}{Name of the supermatrix (can include the path as well).}
+
+\item{split}{the split between the information in the sequence name, 
+by default the separator is "_".}
+
+\item{chunk.names.to.Keep}{the number of chunk of information (splitted by split) within the 
+sequence name to retain to build the super-matrix, this name must be common to the different 
+alignment files. By default the first two chunks of information splitted by the split (e.g. "_").}
 }
 \value{
 This function returns: 1) the alignments from different gene regions

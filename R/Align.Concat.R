@@ -22,6 +22,13 @@
 #' in the alignment, or the option can be NULL, in which case the function automatically creates a complete
 #'  species list of all the species present in the different alignments.
 #' @param outputConcat Name of the supermatrix (can include the path as well).
+#' @param split the split between the information in the sequence name, 
+#' by default the separator is "_".
+#' 
+#'@param chunk.names.to.Keep the number of chunk of information (splitted by split) within the 
+#'sequence name to retain to build the super-matrix, this name must be common to the different 
+#'alignment files. By default the first two chunks of information splitted by the split (e.g. "_").
+#'
 #'
 #' @examples # Run the function to build a supermatrix
 #' \dontrun{
@@ -79,7 +86,8 @@
 #'
 #' @export Align.Concat
 
-Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL) {
+Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL, 
+                        split = "_", chunk.names.to.Keep = 2) {
     listAli = paste(input, list.files(input), sep = "/")
     listAl = listAli[grep(".fas", listAli)]
     if(length(listAl) < length(listAli)) {
@@ -107,11 +115,14 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL)
     Seq.Name.cor = gsub("-", "", Seq.Name.cor, fixed = TRUE)  # Remove the '-', in the sequence name.
     Seq.Name.cor = gsub("_sp_", "_sp", Seq.Name.cor, fixed = TRUE)  # Remove the '_' between sp and the letter or number defining a species not yet assigned a binomial species name.
     Seq.Name.cor = gsub("_nsp_", "_nsp", Seq.Name.cor, fixed = TRUE)  # Remove the '_' between nsp and the letter or number defining a new species not yet assigned a binomial species name.
-    a = strsplit(Seq.Name.cor, "_", fixed = T)  # Split the sequence name using '_' to extract the genus and species name.
-    a1 = lapply(a, function(x) x[1])
-    a2 = lapply(a, function(x) unlist(strsplit(x[2], "|", fixed = T))[1])
-    Sp.Name = unlist(lapply(seq(1, length(a1)), function(x) paste(a1[x], "_", a2[x],
-        sep = "")))  # Extract the species name as the first two elements of each item in the list.
+    a = strsplit(Seq.Name.cor, split, fixed = T)  # Split the sequence name using '_' to extract the genus and species name.
+    #a1 = lapply(a, function(x) x[1])
+    #a2 = lapply(a, function(x) unlist(strsplit(x[2], "|", fixed = T))[1])
+    #Sp.Name = unlist(lapply(seq(1, length(a1)), function(x) paste(a1[x], "_", a2[x],
+    #   sep = "")))  # Extract the species name as the first two elements of each item in the list.
+    
+    Sp.Name = unlist(lapply(a, function(x) paste(x[1:chunk.names.to.Keep], collapse = "_")))  # Extract the species name as the first two elements of each item in the list.
+    
     Sp.Name.list = unique(Sp.Name)  # The species list present in the different alignments
 
     # Include the option to also provide additional species without DNA.

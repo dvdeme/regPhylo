@@ -256,15 +256,22 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
       
     } else {
       
+      bb = unlist(strsplit(outputConcat, "/", fixed = TRUE))
+      if(length(bb) == 1){
+        output.folder = paste(bb, "/", sep = "")
+      } else {
+      output.folder = paste(bb[-length(bb)], collapse = "/")
+      }
+      
       i = 1
       for (i in 1:dim(SuperMat)[2]) {
-        cat(file = paste(outputConcat, "Partitions_Concat.txt",
+        cat(file = paste(output.folder, "Partitions_Concat.txt",
                          sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
             append = TRUE)
         convtab = rbind(convtab, c(paste("gene", i, sep = ""), GeneName[i]))
       }
       colnames(convtab) = c("Name.PartitionFinder2", "Common.Gene.Name")
-      utils::write.table(convtab, file=paste(outputConcat, "convtab.txt", sep="/"), sep="\t", row.names=FALSE)
+      utils::write.table(convtab, file=paste(output.folder, "convtab.txt", sep="/"), sep="\t", row.names=FALSE)
     }
     
    

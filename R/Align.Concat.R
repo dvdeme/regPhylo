@@ -239,14 +239,34 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
     # Print the partition file (compatible with RAxML), and a conversion table providing information between the code of the gene region used by
     # PartitionFinder2 and the true name of the gene region.
     convtab=matrix(NA, ncol=2)[-1,]
-    i = 1
-    for (i in 1:dim(SuperMat)[2]) {
+    
+    if(is.null(outputConcat)){
+      i = 1
+      for (i in 1:dim(SuperMat)[2]) {
         cat(file = paste(paste(b[-length(b)], collapse = "/"), "Partitions_Concat.txt",
-            sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
+                         sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
             append = TRUE)
-      convtab = rbind(convtab, c(paste("gene", i, sep = ""), GeneName[i]))
+        convtab = rbind(convtab, c(paste("gene", i, sep = ""), GeneName[i]))
+      }
+      
+      colnames(convtab) = c("Name.PartitionFinder2", "Common.Gene.Name")
+      utils::write.table(convtab, file=paste(paste(b[-length(b)], collapse = "/"), 
+                                             "convtab.txt", sep = "/")
+                         , sep="\t", row.names=FALSE)
+      
+    } else {
+      
+      i = 1
+      for (i in 1:dim(SuperMat)[2]) {
+        cat(file = paste(outputConcat, "Partitions_Concat.txt",
+                         sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
+            append = TRUE)
+        convtab = rbind(convtab, c(paste("gene", i, sep = ""), GeneName[i]))
+      }
+      colnames(convtab) = c("Name.PartitionFinder2", "Common.Gene.Name")
+      utils::write.table(convtab, file=paste(outputConcat, "convtab.txt", sep="/"), sep="\t", row.names=FALSE)
     }
-    colnames(convtab) = c("Name.PartitionFinder2", "Common.Gene.Name")
-    utils::write.table(convtab, file=paste(input, "/convtab.txt", sep=""), sep="\t", row.names=FALSE)
+    
+   
 return(convtab)
 }  # End of the function.

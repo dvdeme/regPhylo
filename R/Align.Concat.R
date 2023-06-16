@@ -25,9 +25,14 @@
 #' @param split the split between the information in the sequence name, 
 #' by default the separator is "_".
 #' 
+#' 
 #'@param chunk.names.to.Keep the number of chunk of information (splitted by split) within the 
 #'sequence name to retain to build the super-matrix, this name must be common to the different 
 #'alignment files. By default the first two chunks of information splitted by the split (e.g. "_").
+#'
+#' @param Homogeneise.tip.names if TRUE then the tips names of the individuals nexus 
+#' alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
+#' of the alignment are conserved)
 #'
 #'
 #' @examples # Run the function to build a supermatrix
@@ -167,12 +172,6 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
             4]))), collapse = "")  # Replace the empty sequence by a long string of '----'
         AlignTemp[which(is.na(AlignTemp[, 4]) == "TRUE"), 4] = as.character(AlignTemp[which(is.na(AlignTemp[,
             4]) == "TRUE"), 1])  # Replace the sequence name of the empty sequence by the species name.
-        
-        if(Homogeneise.tip.names == TRUE){
-          
-          
-          
-        }
         
         
         # Feed the supermatrix.

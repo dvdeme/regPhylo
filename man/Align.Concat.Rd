@@ -9,7 +9,8 @@ Align.Concat(
   Sp.List.NoDNA = NULL,
   outputConcat = NULL,
   split = "_",
-  chunk.names.to.Keep = 2
+  chunk.names.to.Keep = 2,
+  Homogeneise.tip.names = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,10 @@ by default the separator is "_".}
 \item{chunk.names.to.Keep}{the number of chunk of information (splitted by split) within the 
 sequence name to retain to build the super-matrix, this name must be common to the different 
 alignment files. By default the first two chunks of information splitted by the split (e.g. "_").}
+
+\item{Homogeneise.tip.names}{if TRUE then the tips names of the individuals nexus 
+alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
+of the alignment are conserved)}
 }
 \value{
 This function returns: 1) the alignments from different gene regions

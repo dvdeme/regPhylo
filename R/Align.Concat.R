@@ -87,7 +87,7 @@
 #' @export Align.Concat
 
 Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL, 
-                        split = "_", chunk.names.to.Keep = 2) {
+                        split = "_", chunk.names.to.Keep = 2, Homogeneise.tip.names = FALSE) {
     listAli = paste(input, list.files(input), sep = "/")
     listAl = listAli[grep(".fas", listAli)]
     if(length(listAl) < length(listAli)) {
@@ -167,7 +167,14 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
             4]))), collapse = "")  # Replace the empty sequence by a long string of '----'
         AlignTemp[which(is.na(AlignTemp[, 4]) == "TRUE"), 4] = as.character(AlignTemp[which(is.na(AlignTemp[,
             4]) == "TRUE"), 1])  # Replace the sequence name of the empty sequence by the species name.
-
+        
+        if(Homogeneise.tip.names == TRUE){
+          
+          
+          
+        }
+        
+        
         # Feed the supermatrix.
         SuperMat = cbind(SuperMat, AlignTemp[, 5])
 
@@ -179,8 +186,14 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
                 NBChar, ";", sep = ""), sep = "", append = TRUE)
         cat(file = listAl.nexus[i], "\n", "\t", "FORMAT DATATYPE=DNA GAP=-;", "\n",
             "MATRIX", "\n", sep = "", append = T)
+        
+        if(Homogeneise.tip.names == TRUE){
+          utils::write.table(AlignTemp[, c(1, 5)], file = listAl.nexus[i], sep = "\t", append = TRUE,
+                             col.names = FALSE, row.names = FALSE, quote = FALSE)
+        } else {
         utils::write.table(AlignTemp[, c(4, 5)], file = listAl.nexus[i], sep = "\t", append = TRUE,
             col.names = FALSE, row.names = FALSE, quote = FALSE)
+          }
         cat(file = listAl.nexus[i], "\t", ";", "\n", "END;", sep = "", append = TRUE)
     }  ## End for i
 

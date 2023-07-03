@@ -36,6 +36,9 @@
 
 #' @param Save.Intermediate.ID.rank the path of the folder to store the results of the different
 #' Taxa.list. 
+#' 
+#' @param taxref.fuzzymatch if TRUE (default), a fuzzy search is also performed for the taxref database if the 
+#' request using an exact match is unsuccessful.
 
 
 #' @return The function returns a table with the following fields
@@ -63,14 +66,29 @@
 
 
 Get.taxo.classif.Multi = function(Taxa.list = NULL, dbs = NULL, api_keys = NULL, ncbi.api.key = NULL,  
-                                  ID.Rank = "Genus", downto = "species", Save.Intermediate.ID.rank = NULL){
+                                  ID.Rank = "Genus", downto = "species", Save.Intermediate.ID.rank = NULL, 
+                                  taxref.fuzzymatch = TRUE){
 
+  if(ID.Rank == "Species"){
+    
+    input.ids = lapply(1:length(dbs), function(x){
+      unlist(lapply(1:length(Taxa.list), function(i){
+        #i = 1
+        #for(i in 1:length(Taxa.list)){
+      get.db.ids(taxon.name = Taxa.list[i], db = dbs[x], input.ID.Rank = "Species", taxref.fuzzymatch = taxref.fuzzymatch)
+      }))
+    })
+    Taxa.list = "List.of.species"
+  }
+
+  
 Overall.Results = do.call(rbind, lapply(1:length(Taxa.list), function(i){
+
+if(!ID.Rank == "Species"){
 # get the id
 input.ids = unlist(lapply(1:length(dbs), function(x){
-get.db.ids(taxon.name = Taxa.list[i], db = dbs[x])
+get.db.ids(taxon.name = Taxa.list[i], db = dbs[x], input.ID.Rank = ID.Rank, taxref.fuzzymatch = taxref.fuzzymatch)
 }))
-
 
 ### Get the species list, the classification, and the synonyms
 res.DF = do.call(rbind, lapply(1:length(dbs), function(x){
@@ -83,6 +101,19 @@ Get.taxo.classif(input.id = input.ids[x], db = dbs[x], downto = downto, api_key 
 }
 }))
 
+} else {
+  
+  res.DF = do.call(rbind, lapply(1:length(dbs), function(x){
+    do.call(rbind, lapply(1:length(input.ids[[x]]), function(j){
+      if(is.na(input.ids[[x]][j]) == TRUE){
+        c(rep("NA", 12), dbs[x], NA)
+      } else {
+        Get.taxo.classif(input.id = input.ids[[x]][j], db = dbs[x], downto = "species", api_key = api_keys[x], input.ID.Rank = ID.Rank)
+      }
+    }))
+  }))
+
+}
 
 
 ### Remove the taxa included as NA (absent in the database).
@@ -90,8 +121,10 @@ ToremoveNA = which(res.DF[,1]== "NA")
 if(length(ToremoveNA) > 0){
 which(is.na(res.DF[,1]))
 res.DF = res.DF[-ToremoveNA,]
+# Taxa.absent = res.DF = res.DF[ToremoveNA,]
 }
 #dbs = unique(res.DF$database)
+
 
 
 if(dim(res.DF)[1] > 0){
@@ -242,12 +275,15 @@ return(Overall.Results)
 
 #' @param input.ID.Rank the Rank of the ID requested eg. "Genus" or "Species"
 
+#' @param taxref.fuzzymatch if TRUE (default), a fuzzy search is also performed for the taxref database if the 
+#' request using an exact match is unsuccessful.
+#' 
 #' @return the function returns a vector of the taxonomic id of the corresponding databases.
 
 #' @export get.db.ids
 
 
-get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL, input.ID.Rank = "Genus"){
+get.db.ids = function(taxon.name = NULL, db = NULL, ncbi.api.key = NULL, input.ID.Rank = "Genus", taxref.fuzzymatch = TRUE){
 if(db == "bold"){
 res.id = tryCatch(as.character(taxize::bold_search(taxon.name)[1,1]), error=function(e) "error")
 if(res.id == "error" | res.id == taxon.name){
@@ -255,15 +291,24 @@ res.id = NA
 }
 
 } else {
+  
 if(db == "taxref"){### get the taxid of the TAXREF data base
   if(input.ID.Rank == "Species"){
     res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_search(sciname = taxon.name)), error=function(e) "error")
     if(dim(res.id)[2] == 1){
       class(res.id) = "character"
+      
+    if(taxref.fuzzymatch == TRUE){
+      res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_fuzzymatch(taxon.name)), error=function(e) "error")
     }
+  }
+  
   } else {
-res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_fuzzymatch(taxon.name)), error=function(e) "error")
-}
+    
+    res.id = tryCatch(as.data.frame(rtaxref::rt_taxa_fuzzymatch(taxon.name)), error=function(e) "error")
+    
+  }
+  
 if(class(res.id) == "character"){
 res.id = NA
 } else {

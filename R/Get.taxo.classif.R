@@ -14,10 +14,10 @@
 #' This function allow to loop the search over multiple species or genera or family at the 
 #' same time over the different databases.
 
-#' @param input.id the taxid of the taxa of interest, (extract all the descendant species, from the
+#' @param Taxa.list the taxid of the taxa of interest, (extract all the descendant species, from the
 #' ncbi, itis, gbif, bold and taxref database.
 
-#' @param db the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
+#' @param dbs a vector with the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
 #' from the rtaxref R package).
 
 #' @param downto hierarchical level to look for descent, by default it is species. see function
@@ -62,7 +62,8 @@
 #' @export Get.taxo.classif.Multi
 
 
-Get.taxo.classif.Multi = function(Taxa.list = NULL, dbs = NULL, api_keys = NULL, ncbi.api.key = NULL,  ID.Rank = "Genus", Save.Intermediate.ID.rank = NULL){
+Get.taxo.classif.Multi = function(Taxa.list = NULL, dbs = NULL, api_keys = NULL, ncbi.api.key = NULL,  
+                                  ID.Rank = "Genus", downto = "species", Save.Intermediate.ID.rank = NULL){
 
 Overall.Results = do.call(rbind, lapply(1:length(Taxa.list), function(i){
 # get the id
@@ -78,7 +79,7 @@ res.DF = do.call(rbind, lapply(1:length(dbs), function(x){
 if(is.na(input.ids[x]) == TRUE){
 c(rep("NA", 12),dbs[x], NA)
 } else {
-Get.taxo.classif(input.id = input.ids[x], db = dbs[x], downto = "species", api_key = api_keys[x], input.ID.Rank = ID.Rank)
+Get.taxo.classif(input.id = input.ids[x], db = dbs[x], downto = downto, api_key = api_keys[x], input.ID.Rank = ID.Rank)
 }
 }))
 
@@ -237,6 +238,10 @@ return(Overall.Results)
 
 #' @param db =  the names of the taxonomic data base, among "itis", "ncbi", "tropicos", "gbif", "eol", "nbn", "pow", "bold", and taxref (via rtaxref Rpackage to get acess to the taxref from the French INPN database)).
 
+#' @param ncbi.api.key a string with the ncbi api key (personal to the user, it should be created via NCBI website)
+
+#' @param input.ID.Rank the Rank of the ID requested eg. "Genus" or "Species"
+
 #' @return the function returns a vector of the taxonomic id of the corresponding databases.
 
 #' @export get.db.ids
@@ -320,6 +325,8 @@ res.id
 #' local imported database to query the classification and perfomed request, can be much faster for
 #' important request. This is working with "ncbi", "gbif" (not for the search of synonyms). if FALSE
 #' the function use the API to query the online server.
+
+#' @param api_key a string with the api key of the database. 
 
 #' @param input.ID.Rank the Rank of the ID requested eg. "Genus" or "Species"
 

@@ -11,25 +11,26 @@ Get.taxo.classif.Multi(
   api_keys = NULL,
   ncbi.api.key = NULL,
   ID.Rank = "Genus",
+  downto = "species",
   Save.Intermediate.ID.rank = NULL
 )
 }
 \arguments{
+\item{Taxa.list}{the taxid of the taxa of interest, (extract all the descendant species, from the
+ncbi, itis, gbif, bold and taxref database.}
+
+\item{dbs}{a vector with the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
+from the rtaxref R package).}
+
 \item{ID.Rank}{the name of the Rank of the Taxa.list, it can be either "Species", or any other
 levels (by default, the function considers the "Genus"), however in the results only the Species,
 Genus, Family, Order and Class hierarchical levels are reported.}
 
-\item{Save.Intermediate.ID.rank}{the path of the folder to store the results of the different
-Taxa.list.}
-
-\item{input.id}{the taxid of the taxa of interest, (extract all the descendant species, from the
-ncbi, itis, gbif, bold and taxref database.}
-
-\item{db}{the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
-from the rtaxref R package).}
-
 \item{downto}{hierarchical level to look for descent, by default it is species. see function
 downstream from the taxize R package.}
+
+\item{Save.Intermediate.ID.rank}{the path of the folder to store the results of the different
+Taxa.list.}
 
 \item{local.db}{THIS OPTION IS CURRENTLY INVALID, WORK IN PROGRESS, if TRUE (by default FALSE),it use local imported database to query the
 classification and performed request, can be much faster for important request. 

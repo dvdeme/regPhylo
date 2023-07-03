@@ -15,6 +15,10 @@ get.db.ids(
 \item{taxon.name}{= the name of the taxon of interest eg. "Drusus"}
 
 \item{db}{=  the names of the taxonomic data base, among "itis", "ncbi", "tropicos", "gbif", "eol", "nbn", "pow", "bold", and taxref (via rtaxref Rpackage to get acess to the taxref from the French INPN database)).}
+
+\item{ncbi.api.key}{a string with the ncbi api key (personal to the user, it should be created via NCBI website)}
+
+\item{input.ID.Rank}{the Rank of the ID requested eg. "Genus" or "Species"}
 }
 \value{
 the function returns a vector of the taxonomic id of the corresponding databases.

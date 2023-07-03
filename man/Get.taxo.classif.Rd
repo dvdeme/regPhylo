@@ -24,6 +24,8 @@ or "taxref" (TAXREFV1.5, from the rtaxref R package).}
 \item{downto}{a hierachical level to look for descent, by default it is "species". see function
 downstream from the taxize R package.}
 
+\item{api_key}{a string with the api key of the database.}
+
 \item{local.db}{[currently not working but work in progress] if TRUE (by default FALSE), it uses
 local imported database to query the classification and perfomed request, can be much faster for
 important request. This is working with "ncbi", "gbif" (not for the search of synonyms). if FALSE

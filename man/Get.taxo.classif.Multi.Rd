@@ -12,7 +12,8 @@ Get.taxo.classif.Multi(
   ncbi.api.key = NULL,
   ID.Rank = "Genus",
   downto = "species",
-  Save.Intermediate.ID.rank = NULL
+  Save.Intermediate.ID.rank = NULL,
+  taxref.fuzzymatch = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ downstream from the taxize R package.}
 
 \item{Save.Intermediate.ID.rank}{the path of the folder to store the results of the different
 Taxa.list.}
+
+\item{taxref.fuzzymatch}{if TRUE (default), a fuzzy search is also performed for the taxref database if the 
+request using an exact match is unsuccessful.}
 
 \item{local.db}{THIS OPTION IS CURRENTLY INVALID, WORK IN PROGRESS, if TRUE (by default FALSE),it use local imported database to query the
 classification and performed request, can be much faster for important request. 

@@ -8,7 +8,8 @@ get.db.ids(
   taxon.name = NULL,
   db = NULL,
   ncbi.api.key = NULL,
-  input.ID.Rank = "Genus"
+  input.ID.Rank = "Genus",
+  taxref.fuzzymatch = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ get.db.ids(
 \item{ncbi.api.key}{a string with the ncbi api key (personal to the user, it should be created via NCBI website)}
 
 \item{input.ID.Rank}{the Rank of the ID requested eg. "Genus" or "Species"}
+
+\item{taxref.fuzzymatch}{if TRUE (default), a fuzzy search is also performed for the taxref database if the 
+request using an exact match is unsuccessful.}
 }
 \value{
 the function returns a vector of the taxonomic id of the corresponding databases.

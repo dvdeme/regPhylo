@@ -129,7 +129,8 @@ Clean.Seq = function(inputal = NULL,
   # if the class of the inputal object is a "DNAbin" object.
   if (class(inputal) == "DNAbin") {
     cytb2a = inputal
-    cytb2 = ape::as.alignment(inputal) # convert to an "alignment" object.
+    # cytb2 = ape::as.alignment(inputal) # convert to an "alignment" object.
+    cytb2 = DNAbin2alignment(inputal)
   }
   
   
@@ -205,7 +206,8 @@ Clean.Seq = function(inputal = NULL,
   
   if (class(cytb2.uniq) == "DNAbin") {
     cytb2Sa = cytb2.uniq
-    cytb2.uniq = ape::as.alignment(cytb2.uniq)
+    # cytb2.uniq = ape::as.alignment(cytb2.uniq)
+    cytb2.uniq = DNAbin2alignment(cytb2.uniq)
   } else {
     cytb2Sa = ape::as.DNAbin(cytb2.uniq)
   }
@@ -505,11 +507,13 @@ rm.del.gap = function(input = NULL,
                       Minimal.Locus.Freq = 30) {
   # if the class of the inputal object is a "DNAbin" object.
   if (class(input) == "DNAbin") {
-    input = ape::as.alignment(input) # convert to an "alignment" object.
+    # input = ape::as.alignment(input) # convert to an "alignment" object.
+    input = DNAbin2alignment(input)
   }
   
   
-  cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
+  # cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
+  cytb2Smat = alignment2matrix(input)
   Seq.names.original = row.names(cytb2Smat)
   
   if (Remove.del.gaps == "TRUE") {
@@ -795,8 +799,40 @@ seqle <- function(x,incr=1) {
 
 
 
+#' @title Convert a DNAbin object (ape format) to an alignment object (seqinr format)
+#' 
+#' @description This function converts a DNAbin object (ape format) 
+#' to an alignment object (seqinr format). It avoids the conversion from character 
+#' to numeric in the DNAbin object.
+#' @param input a DNAbin object
+#'
+#' @export DNAbin2alignment
 
+DNAbin2alignment = function(input){
+  nb = length(input)
+  seq = as.character(input)
+  nam = names(input)
+  com = NA
+  out.al = list(nb = nb, seq = seq, nam = nam, com = com)
+  class(out.al) = "alignment"
+  return(out.al)
+}
 
+#' @title Convert an alignment object (seqinr format) to a matrix
 
+#' @description This function converts an alignment object (seqinr format) to a matrix.
+#' It solves some recent probelm I encounter with the as.matrix.alignment function 
+#' from the seqinr package
+#' @param input an alignment object (seqinr format)
+#' 
+#' 
+
+alignment2matrix = function(input){
+  out.mat = do.call(rbind, lapply(input$seq, function(x){
+    x
+  }))
+  row.names(out.mat) = input$nam
+  return(out.mat)
+}
 
 

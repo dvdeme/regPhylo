@@ -520,11 +520,11 @@ rm.del.gap = function(input = NULL,
     input = DNAbin2alignment(input)
     cytb2Smat = alignment2matrix(input)
   }
+  } else {
+    cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
   }
   
   
-  # cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
-  # cytb2Smat = alignment2matrix(input)
   Seq.names.original = row.names(cytb2Smat)
   
   if (Remove.del.gaps == "TRUE") {
@@ -595,6 +595,16 @@ rm.del.gap = function(input = NULL,
           
         }
         
+        # Remove the deletion gap site only, create by the suppression of the sequence with insertion.
+        nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
+          sum(stringr::str_count(cytb2Smat[, x], "-"))
+        })
+        
+        aa = which(nbindels == dim(cytb2Smat)[1])
+        
+        if (length(aa) > 0) {
+          cytb2Smat = cytb2Smat[,-aa]
+        }
         
         
       } else {
@@ -613,7 +623,7 @@ rm.del.gap = function(input = NULL,
   
   
   
-  # Remove sequence tha are too short
+  # Remove sequence that are too short
   if (Remove.Short.Seq == "TRUE") {
     nbmissing = apply(as.matrix(seq(1, dim(cytb2Smat)[1], 1)), 1, function(x) {
       sum(stringr::str_count(cytb2Smat[x,], "-"))
@@ -660,7 +670,7 @@ rm.del.gap = function(input = NULL,
   
   
   if (Remove.Loc.Low.Freq == TRUE) {
-    # remove the locus in low frequency ### NEED TO BE DONE
+    # remove the locus in low frequency 
     nbindels = apply(as.matrix(seq(1, dim(cytb2Smat)[2], 1)), 1, function(x) {
       sum(stringr::str_count(cytb2Smat[, x], "-"))
     })
@@ -817,7 +827,7 @@ seqle <- function(x,incr=1) {
 
 #' @title Convert a DNAbin object (ape format) to an alignment object (seqinr format)
 #' 
-#' @description This function converts a DNAbin object (ape format) 
+#' @description This function converts a DNAbin object (ape format) loaded with the ape::read.FASTA 
 #' to an alignment object (seqinr format). It avoids the conversion from character 
 #' to numeric in the DNAbin object.
 #' @param input a DNAbin object
@@ -836,7 +846,8 @@ DNAbin2alignment = function(input){
 
 #' @title Convert an alignment object (seqinr format) to a matrix
 
-#' @description This function converts an alignment object (seqinr format) to a matrix.
+#' @description This function converts an alignment object (seqinr format) to a matrix, when the initial 
+#' alignment was converted from a DNAbin object loaded with the ape::read.FASTA function.
 #' It solves some recent probelm I encounter with the as.matrix.alignment function 
 #' from the seqinr package
 #' @param input an alignment object (seqinr format)

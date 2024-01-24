@@ -126,11 +126,14 @@ Clean.Seq = function(inputal = NULL,
     cytb2 = seqinr::read.alignment(inputal, format = "fasta")
     cytb2a = ape::as.DNAbin(cytb2) # Convert in a DNAbin object.
   }
+  
   # if the class of the inputal object is a "DNAbin" object.
-  if (class(inputal) == "DNAbin") {
-    cytb2a = inputal
-    # cytb2 = ape::as.alignment(inputal) # convert to an "alignment" object.
-    cytb2 = DNAbin2alignment(inputal)
+  if (class(input) == "DNAbin") {
+    if(length(input[[1]]) == 1){
+      input = ape::as.alignment(input) # convert to an "alignment" object.
+    } else {
+      input = DNAbin2alignment(input)
+    }
   }
   
   
@@ -206,8 +209,11 @@ Clean.Seq = function(inputal = NULL,
   
   if (class(cytb2.uniq) == "DNAbin") {
     cytb2Sa = cytb2.uniq
-    # cytb2.uniq = ape::as.alignment(cytb2.uniq)
-    cytb2.uniq = DNAbin2alignment(cytb2.uniq)
+    if(length(cytb2.uniq[[1]]) == 1){
+      cytb2.uniq = ape::as.alignment(cytb2.uniq) # convert to an "alignment" object.
+    } else {
+      cytb2.uniq = DNAbin2alignment(cytb2.uniq)
+    }
   } else {
     cytb2Sa = ape::as.DNAbin(cytb2.uniq)
   }
@@ -507,13 +513,18 @@ rm.del.gap = function(input = NULL,
                       Minimal.Locus.Freq = 30) {
   # if the class of the inputal object is a "DNAbin" object.
   if (class(input) == "DNAbin") {
-    # input = ape::as.alignment(input) # convert to an "alignment" object.
+    if(length(input[[1]]) == 1){
+    input = ape::as.alignment(input) # convert to an "alignment" object.
+    cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
+  } else {
     input = DNAbin2alignment(input)
+    cytb2Smat = alignment2matrix(input)
+  }
   }
   
   
   # cytb2Smat = seqinr::as.matrix.alignment(input)  # convert in a matrix
-  cytb2Smat = alignment2matrix(input)
+  # cytb2Smat = alignment2matrix(input)
   Seq.names.original = row.names(cytb2Smat)
   
   if (Remove.del.gaps == "TRUE") {
@@ -753,8 +764,13 @@ rm.del.gap = function(input = NULL,
 #' @export Detect.stop.codon
 
 Detect.stop.codon = function(input = NULL, genet.code = 5){
-  if(class(input) == "DNAbin"){
-    input = ape::as.alignment(input)
+  
+  if (class(input) == "DNAbin") {
+    if(length(input[[1]]) == 1){
+      input = ape::as.alignment(input) # convert to an "alignment" object.
+    } else {
+      input = DNAbin2alignment(input)
+    }
   }
   
   # define the codonstart

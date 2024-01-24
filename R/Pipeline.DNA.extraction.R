@@ -80,6 +80,13 @@
 #' @param nthread.per.align if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we
 #' can choose how many threads we would like to use to perform the first alignment step. This option
 #' is interesting when few alignments have many sequence > 1000 DNA sequences.
+ 
+#' @param Mafft.path for the Windows platform, a character string which provides the path 
+#' to the mafft executable (e.g. 
+#' Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft") 
+#' Eventhough Mafft is not the alignment you are after, mafft is necessary to reverse complement 
+#' the sequences and the Mafft.path must be completed in all cases. 
+#' For Linux the mafft software must be in the $PATH.
 
 #' @param methods if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose
 #' the method used for the alignment approach, it can be "mafft_auto", "mafftfftnsi", "mafftfftns2",
@@ -120,6 +127,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
                                    Remove.Large.Nuc.Fragment = TRUE,
                                    Steps = c(1, 2),
                                    nthread = 1,
+                                   Mafft.path = NULL,
                                    methods = "mafftfftns2",
                                    nthread.per.align = NULL) {
   # 1_Get the number of sequence per taxon for NCBI
@@ -439,7 +447,8 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
       output = output,
       nthread = nthread,
       methods = methods,
-      nthread.per.align = nthread.per.align
+      nthread.per.align = nthread.per.align,
+      Mafft.path = Mafft.path
     )
     
     results = c(

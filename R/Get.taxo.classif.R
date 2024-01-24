@@ -7,8 +7,9 @@
 #' taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the \emph{get_ids("plecoptera", db =
 #' "ncbi")} function for instance.
 
-#' @details This function allows to check for the presence of the synonyms found in a database, their
-#' are also cross checked in the other databases. In this case, the function makes the distinction between 
+#' @details This function allows to check for the presence of the synonyms found in a database, 
+#' it also cross-checks the presence of synonyms in the other databases.
+#' In this case, the function makes the distinction between 
 #' the original search ("Ori") in each database, form the secondary search ("Sec") when the cross checking of synonyms
 #' is performed, this information is available through the column \emph{search.type}.
 #' This function allow to loop the search over multiple species or genera or family at the 
@@ -200,8 +201,8 @@ res.DF$database = paste(res.DF$database, ".Ori", sep="")
 if(is.null(Res.DF3)){
   res.tot = res.DF
 } else {
-  ### Add the suffix "Sec" to the name of teh database to distinguish the secondary
-  # search done due to the presence of additional synonymes species in other database.
+  ### Add the suffix "Sec" to the name of the database to distinguish the secondary
+  # search done due to the presence of additional synonyms species in other database.
   Res.DF3$database = paste(Res.DF3$database, ".Sec", sep="")
   
   ### For some reason sometimes the taxref return the taxid of the genus and not from the species because
@@ -238,6 +239,7 @@ res.tot$search.type  = unlist(lapply(strsplit(res.tot$database, ".", fixed = T),
 res.tot$database  = unlist(lapply(strsplit(res.tot$database, ".", fixed = T), function(k){k[1]}))
 # re-organise the columns
 res.tot = res.tot[,c(1:13, 15, 14)]
+
 
 if(is.null(Save.Intermediate.ID.rank) == FALSE){
 saveRDS(res.tot, file = paste(Save.Intermediate.ID.rank, "/", Taxa.list[i],".", paste(dbs, collapse="."), ".RDS", sep = ""))

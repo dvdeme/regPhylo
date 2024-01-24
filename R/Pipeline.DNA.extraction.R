@@ -60,12 +60,17 @@
 #' coverage, it can be a gene name ,eg. "co1", or it an be "Min.All.Sp.cov" in order to include the
 #' minimum gene region to get 100 percent species coverage.
 
+#' @param Remove.Large.Nuc.Fragment if TRUE (by default) long nuclear DNA assembly fragment such,
+#' whole nuclear genome assembly, chromosomes assembly are removed from the NCBI ("GenBank") 
+#' output data file of the GetSeqInfo_NCBI_taxid function. So far all fragment longer than 50000 pb
+#' are removed.
+
 #' @param Steps is a vector of numeric value from 1 to 3, with 1 extract the DNA sequences and
 #' associated metadata from NCBI and BOLD, dereplicate the data, improve the metadata location, and
 #' build the Species by Gene matrix, step 2 selects the gene of interest and exports the metadata
 #' and the alignments in fasta format, step 3 performs a first alignment approach of the selected gene
 #' of interest to detect sequence entered in wrong direction and performed automatic reverse
-#' complementation. The steps are performed sequentially so the steps 2 cannot be performed alone
+#' complement. The steps are performed sequentially so the steps 2 cannot be performed alone
 #' without performing the steps 1.
 
 #' @param nthread, if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose
@@ -112,6 +117,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
                                    max.seq = 10000,
                                    Path.output = NULL,
                                    Nb.DNA.marker = 1,
+                                   Remove.Large.Nuc.Fragment = TRUE,
                                    Steps = c(1, 2),
                                    nthread = 1,
                                    methods = "mafftfftns2",
@@ -147,6 +153,27 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
     sep = "\t",
     header = T
   )
+  
+  # Remove DNA entry related to very large nuclear fragment assembly 
+  # such as the whole genome assembly, chromosomes assembly etc... 
+  If(Remove.Large.Nuc.Fragment == TRUE){
+    # First remove all the accession number corresponding to Whole genome assembly projet
+    a = which(nchar(NCBI.data[,"AccessNb"]) > 8)
+    if(length(a)> 0){
+      NCBI.data =  NCBI.data[-a,]
+    }
+    # Convert the sequence length into numeric values
+    NCBI.data$SeqLength = as.numeric(as.character(NCBI.data$SeqLength))
+    
+    # detect sequence possibly longer than  50 000 pb.
+    b = which(NCBI.data[,"SeqLength"] > 50000)
+    if(length(b) > 0){
+      NCBI.data =  NCBI.data[-b,]
+    }
+  }
+  
+  
+  
   
   # 4_Extract DNA sequences and Metadata from BOLD.
   

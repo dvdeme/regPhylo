@@ -156,7 +156,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
   
   # Remove DNA entry related to very large nuclear fragment assembly 
   # such as the whole genome assembly, chromosomes assembly etc... 
-  If(Remove.Large.Nuc.Fragment == TRUE){
+  if(Remove.Large.Nuc.Fragment == TRUE){
     # First remove all the accession number corresponding to Whole genome assembly projet
     a = which(nchar(NCBI.data[,"AccessNb"]) > 8)
     if(length(a)> 0){

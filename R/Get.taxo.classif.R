@@ -48,8 +48,7 @@
 #' "extraction.date").
 
 
-#' @example
-#' # List the database
+#' @examples # List the database
 #' \dontrun{
 #' dbs = c("ncbi", "bold", "itis", "gbif", "taxref")
 #' # List the API keys (needed for NCBI).

@@ -57,10 +57,24 @@ taxonomic levels (eg. "Genus", "Family" , "Order"..), obtain by the \emph{get_id
 "ncbi")} function for instance.
 }
 \details{
-This function allows to check for the presence of the synonyms found in a database, their
-are also cross checked in the other databases. In this case, the function makes the distinction between 
+This function allows to check for the presence of the synonyms found in a database, 
+it also cross-checks the presence of synonyms in the other databases.
+In this case, the function makes the distinction between 
 the original search ("Ori") in each database, form the secondary search ("Sec") when the cross checking of synonyms
 is performed, this information is available through the column \emph{search.type}.
 This function allow to loop the search over multiple species or genera or family at the 
 same time over the different databases.
+}
+\examples{
+# List the database
+\dontrun{
+dbs = c("ncbi", "bold", "itis", "gbif", "taxref")
+# List the API keys (needed for NCBI).
+api_keys = c("4XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "NULL", "NULL", "NULL", "NULL")
+# List of the different genera to search
+Taxa.list = c("Metanoea", "Anomalopterygella", "Cryptothrix", "Monocentra", "Leptodrusus")
+# Run the function
+Included.In.Drusus = Get.taxo.classif.Multi(Taxa.list = Taxa.list, dbs = dbs, api_keys = api_keys, ncbi.api.key = "472778dfff3834888186b7b0335e635b0e08", ID.Rank = "Genus", Save.Intermediate.ID.rank = "Results/Genus")
+
+}
 }

@@ -45,7 +45,7 @@ Imports: ape,
     rgbif,
     httr,
     taxizedb
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Suggests: testthat,
     httr
 Depends: R (>= 2.10)

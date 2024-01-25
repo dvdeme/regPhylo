@@ -2,7 +2,7 @@
 % Please edit documentation in R/Pipeline.DNA.extraction.R
 \name{Pipeline.DNA.extraction}
 \alias{Pipeline.DNA.extraction}
-\title{A pipeline to automat the retriveal and organisation of DNA sequences and metadata 
+\title{A pipeline to automate the retrieval and organisation of DNA sequences and metadata
 from NCBI and BOLD databases from a list fo taxa of interest.}
 \usage{
 Pipeline.DNA.extraction(
@@ -12,25 +12,27 @@ Pipeline.DNA.extraction(
   max.seq = 10000,
   Path.output = NULL,
   Nb.DNA.marker = 1,
+  Remove.Large.Nuc.Fragment = TRUE,
   Steps = c(1, 2),
   nthread = 1,
+  Mafft.path = NULL,
   methods = "mafftfftns2",
   nthread.per.align = NULL
 )
 }
 \arguments{
 \item{input.ncbi}{a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
-the first column (incluidng the taxonomic ID of synonyms species names) 
+the first column (incluidng the taxonomic ID of synonyms species names)
 and the accepted binomial species name in the second column
 which will be retained as 'TaxaName' in the output file.}
 
-\item{input.bold}{a two column table with the first column containing all 
-the binomial species names including synonyms and the second column contains 
+\item{input.bold}{a two column table with the first column containing all
+the binomial species names including synonyms and the second column contains
 only the names that will be reported in the output table as 'species_name'.}
 
 \item{gene}{can be a particular gene region or 'ALL' for all entries
-of that species. Please note that this will only retrieve genes 
-with the same name in Genbank. For example, "COX1" will not return the 
+of that species. Please note that this will only retrieve genes
+with the same name in Genbank. For example, "COX1" will not return the
 same entries as "COI". Default "ALL"}
 
 \item{Path.output}{the path to the output folder within which all the intermediate and final
@@ -40,16 +42,29 @@ results files will be stored.}
 coverage, it can be a gene name ,eg. "co1", or it an be "Min.All.Sp.cov" in order to include the
 minimum gene region to get 100 percent species coverage.}
 
-\item{Steps}{is a vector of numeric value from 1 to 3, with 1 extract the DNA sequences and 
+\item{Remove.Large.Nuc.Fragment}{if TRUE (by default) long nuclear DNA assembly fragment such,
+whole nuclear genome assembly, chromosomes assembly are removed from the NCBI ("GenBank") 
+output data file of the GetSeqInfo_NCBI_taxid function. So far all fragment longer than 50000 pb
+are removed.}
+
+\item{Steps}{is a vector of numeric value from 1 to 3, with 1 extract the DNA sequences and
 associated metadata from NCBI and BOLD, dereplicate the data, improve the metadata location, and
-build the Species by Gene matrix, step 2 selects the gene of interest and exports the metadata 
+build the Species by Gene matrix, step 2 selects the gene of interest and exports the metadata
 and the alignments in fasta format, step 3 performs a first alignment approach of the selected gene
 of interest to detect sequence entered in wrong direction and performed automatic reverse
-complementation. The steps are performed sequentially so the steps 2 cannot be performed alone
+complement. The steps are performed sequentially so the steps 2 cannot be performed alone
 without performing the steps 1.}
 
-\item{nthread, }{if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose #' how many thread we wouldlike to use to perform the first alignment steps in case there are multiple
-markers to align.}
+\item{nthread, }{if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose
+how many thread we would like to use to perform the first alignment steps in case there are multiple
+ markers to align.}
+
+\item{Mafft.path}{for the Windows platform, a character string which provides the path 
+to the mafft executable (e.g. 
+Mafft.path = "C:/Users/deme/Documents/Programs/Mafft/mafft-7.409-win64-signed/mafft-win/mafft") 
+Eventhough Mafft is not the alignment you are after, mafft is necessary to reverse complement 
+the sequences and the Mafft.path must be completed in all cases. 
+For Linux the mafft software must be in the $PATH.}
 
 \item{methods}{if steps 3 is present in the option Step (eg. Steps = c(1,2,3)) then we can choose
 the method used for the alignment approach, it can be "mafft_auto", "mafftfftnsi", "mafftfftns2",
@@ -62,38 +77,38 @@ is interesting when few alignments have many sequence > 1000 DNA sequences.}
 }
 \value{
 this function returns a set of intermediate and final files and folders within the folder
-precised in the Path.output option. The structure of the folders is organised as follow, 
+precised in the Path.output option. The structure of the folders is organised as follow,
 The function return a list of 4 objects using the following headers:
 \itemize{
 \item the "Raw.Data" folder containing the raw data files of NCBI, "Seq.NCBI.txt", and BOLD
 ,Seq.BOLD.txt", DNA and metadata extraction, the combine file of DNA sequences from NCBI an BOLD
 after dereplication ,"Seq_NCBI_BOLD.txt", the intermediate files with all the improve
-georeferencing "Seq_NCBI_BOLD_Geo1.txt", "Seq_NCBI_BOLD_Geo2.txt", the files of the 
+georeferencing "Seq_NCBI_BOLD_Geo1.txt", "Seq_NCBI_BOLD_Geo2.txt", the files of the
 "species-"by-gene" matrix "Matrix.Sp.DNA.NaiveSpDNA_Mat.txt" including files with all the
 metadata "Matrix.Sp.DNA.Naive_CleanDataset.txt", and summary files of the species-by-gene matrix
-from a DNA perspective "Matrix.Sp.DNA.NaiveSummary_DNApers.txt" and from a species perspective 
+from a DNA perspective "Matrix.Sp.DNA.NaiveSummary_DNApers.txt" and from a species perspective
 "Matrix.Sp.DNA.NaiveSummary_SPECIESpers.txt".
 \item the "Selected.DNA" folder containing the non-aligned fasta files of the selected DNA regions
-and the metadata of all the selected DNA sequences "Align_InfoTabSelSeq.txt", and the folder 
-"FirstAlign"if the step 3 of the pipeline was performed. This folder contains the alignments of 
+and the metadata of all the selected DNA sequences "Align_InfoTabSelSeq.txt", and the folder
+"FirstAlign"if the step 3 of the pipeline was performed. This folder contains the alignments of
 the selected DNA region from the different alignment software specify in the option "methods".
-\item the folder "Selected.META" contains a file of the Metadata of the sequences of the 
+\item the folder "Selected.META" contains a file of the Metadata of the sequences of the
 selected DNA regions "MetaData.Select.DNA.Select.DNA.txt".
 }
 }
 \description{
 This function allows to extract DNA sequences and metadata from NCBI and BOLD,
-dereplicates the data from both databases, improve the georeferencing of DNA sequences 
+dereplicates the data from both databases, improve the georeferencing of DNA sequences
 using openstreetmap API, built a species by gene matrix, select the DNA region with the best
-taxonomic coverage, export DNA sequences and the associated metadata for selected Gene region, 
-select the best DNA sequences per taxa and perform first alignment allowing automatic detection 
+taxonomic coverage, export DNA sequences and the associated metadata for selected Gene region,
+select the best DNA sequences per taxa and perform first alignment allowing automatic detection
 of sequences entered in a wrong direction.
 }
 \details{
-this function will require a specific NCBI personal API key in order to 
+this function will require a specific NCBI personal API key in order to
 get a faster access to the NCBI server.
 
-This function build a pipeline of the following function "GetSeqNumber_NCBI_taxid" (to detect the number of sequence per taxon and identify the model species with too many 
+This function build a pipeline of the following function "GetSeqNumber_NCBI_taxid" (to detect the number of sequence per taxon and identify the model species with too many
 sequence to download), "GetSeqInfo_NCBI_taxid" (get the DNA and the metadata from NCBI),
 "GetSeq_BOLD" (get the DNA and the metadata from BOLD), "Congr.NCBI.BOLD.perReposit" (dereplicate
 and improve metadata from NCBI and BOLD), "GeoCoord.WGS84" (homogenize the geographic coordinates),

@@ -22,6 +22,8 @@ Clean.Seq(
 \item{inputal}{an object of class "alignment" (seqinr R package),
 or "DNAbin" (ape R package) or the name (including the path if necessary) of the input fasta file. The input file must be a DNA alignement file already aligned.}
 
+\item{Outlier.Th}{is a number (by default 1.5) defining the distance to consider an outlier sequences. The Outlier.Th is a multiplier of the interquartile range from the genetic distances distribution using the Sum.stat (eg. median). This parameter is equivalent of the "range" parameter from the boxplot function from the stat R package.}
+
 \item{output}{name of the two alignment exported. The name can also include the path the folder.
 Two separate alignment are exported in a fasta format, the alignment with the ".Clean.haplo.fas" siffix includes only the haplotypes after removing outlier sequences, the alignment with the ".Clean.AllSeq.fas" suffix includes all the sequences after removing the outlier sequences.}
 

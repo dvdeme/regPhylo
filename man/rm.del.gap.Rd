@@ -10,6 +10,7 @@ rm.del.gap(
   Remove.del.gaps = TRUE,
   Remove.Seq.Indels = FALSE,
   Nb.Seq.Indels = 2,
+  Min.Perc.Seq.With.Info = 0.1,
   Remove.Indels.Only = FALSE,
   Remove.Short.Seq = FALSE,
   Max.Per.missing = 50,
@@ -30,6 +31,12 @@ an insertion gap for most of the other sequences.}
 
 \item{Nb.Seq.Indels}{is an integer precising the maximal number of sequences that could include 
 a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).}
+
+\item{Min.Perc.Seq.With.Info}{minimal percentage (on the scale between 0 and 1) of sequence 
+with a documented nucleotide for a loci preceding or following the indel blocks, when considering an
+insertion as a potential sequencing error and causing and indel blocks for the other sequence.
+This value by default is set up to 0.1, to avoid the few longer sequences to be considered as 
+problematic sequences causing indels.}
 
 \item{Remove.Indels.Only}{if TRUE (default FALSE) the indels blocks detected are removed form the 
 alignment but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.}

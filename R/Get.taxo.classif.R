@@ -23,6 +23,8 @@
 
 #' @param downto hierarchical level to look for descent, by default it is species. see function
 #' downstream from the taxize R package.
+#' 
+#' @param ncbi.api.key provide the ncbi API key for internal function using the ncbi server only.
 
 #' @param local.db THIS OPTION IS CURRENTLY INVALID, WORK IN PROGRESS, if TRUE (by default FALSE),it use local imported database to query the
 #' classification and performed request, can be much faster for important request. 

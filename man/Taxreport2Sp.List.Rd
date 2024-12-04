@@ -4,11 +4,15 @@
 \alias{Taxreport2Sp.List}
 \title{Convert a tax_report.txt file from the NCBI taxonomic facility to species lists used by GetSeqInfo_NCBI_taxid and GetSeq_BOLD functions.}
 \usage{
-Taxreport2Sp.List(input = NULL)
+Taxreport2Sp.List(input = NULL, ext.File = TRUE)
 }
 \arguments{
 \item{input}{path to the "tax_report.txt" file exported by the NCBI taxonomic facility
-(\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi})}
+(\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi}) or name of data.frame 
+return by the function \code{\link{GetTaxnum_NCBI}}}
+
+\item{ext.File}{by default TRUE, so the input file is stored as "tax_report.txt" in folder, if FALSE 
+the input file is a data.frame in the R Global environment.}
 }
 \value{
 This function creates a list of two tables: the first table $SpList.NCBI has two columns,

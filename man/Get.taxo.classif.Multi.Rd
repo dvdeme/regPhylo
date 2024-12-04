@@ -23,6 +23,8 @@ ncbi, itis, gbif, bold and taxref database.}
 \item{dbs}{a vector with the database to query either "ncbi", "itis", "gbif", "bold", or "taxref" (TAXREFV1.5,
 from the rtaxref R package).}
 
+\item{ncbi.api.key}{provide the ncbi API key for internal function using the ncbi server only.}
+
 \item{ID.Rank}{the name of the Rank of the Taxa.list, it can be either "Species", or any other
 levels (by default, the function considers the "Genus"), however in the results only the Species,
 Genus, Family, Order and Class hierarchical levels are reported.}

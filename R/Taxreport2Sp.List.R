@@ -7,7 +7,11 @@
 #' function \code{\link{GetSeq_BOLD}}).
 
 #' @param input path to the "tax_report.txt" file exported by the NCBI taxonomic facility
-#' (\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi})
+#' (\url{https://www.ncbi.nlm.nih.gov/Taxonomy/TaxIdentifier/tax_identifier.cgi}) or name of data.frame 
+#' return by the function \code{\link{GetTaxnum_NCBI}}
+#' 
+#' @param ext.File by default TRUE, so the input file is stored as "tax_report.txt" in folder, if FALSE 
+#'  the input file is a data.frame in the R Global environment.
 
 #' @return This function creates a list of two tables: the first table $SpList.NCBI has two columns,
 #' the first one reports the NCBI taxid, and the second column contains the binomial species names.
@@ -53,10 +57,12 @@
 #' tail(taxreport$SpList.BOLD)
 #' }
 
-Taxreport2Sp.List = function(input = NULL){
+Taxreport2Sp.List = function(input = NULL, ext.File = TRUE){
 
 # open the tax_report.txt file
+if(ext.File == TRUE) {
 input = read.delim(input, sep = "\t", header = TRUE)
+}
 input = input[,-c(2,4,6)]
 
 ### convert all columns as.character

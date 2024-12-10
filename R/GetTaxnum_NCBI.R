@@ -32,7 +32,6 @@
 #' 
 #' }
 
-
 #' @export GetTaxnum_NCBI
 GetTaxnum_NCBI = function(splist = NULL) {
   #format list of names for POST using httr package
@@ -46,7 +45,7 @@ GetTaxnum_NCBI = function(splist = NULL) {
   #convert results of POST to a dataframe
   ncbiblock<- httr::content(r, "text")[[1]]
 
-  ncbitaxdf <- read.table(header=T, text=ncbiblock,sep='\t')
+  ncbitaxdf <- read.table(header=T, text=ncbiblock, sep='\t')
   return(ncbitaxdf)
 } # End of GetTaxnum_NCBI
 

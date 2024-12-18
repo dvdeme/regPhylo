@@ -185,7 +185,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
   
   # 4_Extract DNA sequences and Metadata from BOLD.
   
-  BOLD.data = GetSeq_BOLD(
+  BOLD.data = GetSeq_BOLD.local.DT(
     splist = input.bold,
     filename = paste(Path.output.raw, "Seq.BOLD.txt", sep = ""),
     bold.id = FALSE
@@ -193,7 +193,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
   BOLD.stats = as.data.frame(BOLD.data[[1]])
   
   # 5_Merge and dereplication of GenBank and BOLD Data.
-  AllSeqDF = Congr.NCBI.BOLD.perReposit(
+  AllSeqDF = Congr.NCBI.BOLD.perReposit.V2(
     input.NCBI = NCBI.data,
     input.BOLD = BOLD.data[[2]],
     output = paste(Path.output.raw, "Seq_NCBI_BOLD.txt", sep = ""),

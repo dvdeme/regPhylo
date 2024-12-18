@@ -1,4 +1,4 @@
-#' @title Extract DNA sequences and metadata from BOLD (Barcode Of Life Database)
+#' @title Extract DNA sequences and metadata from BOLD (Barcode Of Life Database) from the BOLD server
 #'
 
 #' @description This function extracts sequences and associated information from the Barcode Of
@@ -115,7 +115,9 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 
 
 
-
+#' @title Extract DNA sequences and metadata from a local download of BOLD (Barcode Of Life Database)
+#'
+#'
 #' @description This function extracts sequences and associated information from a local version of the Barcode Of
 #' Life Database (BOLD) for all the species in the species list
 #' 
@@ -167,13 +169,14 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = 
   
   do.call(rbind, lapply(1:NB.tax, function(x){
     taxa.to.request = splist[x,1]
+    taxa.accepted2report = splist[x,2]
     res.df = BOLDV5.DF[species == taxa.to.request]
     
     
     if(dim(res.df)[1] == 0){ 
-      out1 = as.data.frame(t(c(taxa.to.request, rep(NA, 76))))
+      out1 = as.data.frame(t(c(taxa.accepted2report, rep(NA, 76))))
     } else {
-      out1 = cbind(rep(taxa.to.request, dim(res.df)[1]), res.df)
+      out1 = cbind(rep(taxa.accepted2report, dim(res.df)[1]), res.df)
     }
     out1 = cbind(out1, rep(date(), dim(out1)[1]))
     colnames(out1) = names.columns

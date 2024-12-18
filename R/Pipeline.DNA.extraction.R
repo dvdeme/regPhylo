@@ -187,8 +187,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
   
   BOLD.data = GetSeq_BOLD.local.DT(
     splist = input.bold,
-    filename = paste(Path.output.raw, "Seq.BOLD.txt", sep = ""),
-    bold.id = FALSE
+    filename = paste(Path.output.raw, "Seq.BOLD.txt", sep = "")
   )
   BOLD.stats = as.data.frame(BOLD.data[[1]])
   

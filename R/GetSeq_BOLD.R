@@ -188,20 +188,16 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = 
   # Remove the rows without DNA sequences.
   TabAll = utils::read.delim(filename, sep = "\t", header = TRUE)
   
-  NBChar = apply(TabAll, 1, function(x) {
-    # Count the number of nucleotides for each sequence.
-    nchar(as.character(x[72]))
-  })
-  if (length(which(NBChar == 0)) > 0) {
+  if (length(which(TabAll[,"nuc"] == "None")) > 0) {
     ## When the sequence is empty, the row is removed from the table.
-    TabAll2 = TabAll[-which(NBChar == 0), ]
+    TabAll2 = TabAll[-which(TabAll[,"nuc"] == "None"), ]
   } else {
     TabAll2 = TabAll
   }
   rm(TabAll)
-  if (length(which(is.na(TabAll2[, 72]) == TRUE)) > 0) {
+  if (length(which(is.na(TabAll2[, "nuc"]) == TRUE)) > 0) {
     # remove the rows without sequences or an NA.
-    TabAll2 = TabAll2[-which(is.na(TabAll2[, 72]) == TRUE), ]
+    TabAll2 = TabAll2[-which(is.na(TabAll2[, "nuc"]) == TRUE), ]
   } else {
     TabAll2 = TabAll2
   }

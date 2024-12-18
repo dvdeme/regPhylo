@@ -1,7 +1,7 @@
 Package: regPhylo
 Type: Package
 Title: Functions to build phylogenetic trees for ecological studies
-Version: 1.0.7
+Version: 1.0.8
 Date: 2023-05-24
 Author: regPhylo <regPhylo@gmail.com>
 Maintainer: regPhylo <regPhylo@gmail.com>
@@ -44,7 +44,8 @@ Imports: ape,
     ritis,
     rgbif,
     httr,
-    taxizedb
+    taxizedb,
+    data.table
 RoxygenNote: 7.2.3
 Suggests: testthat,
     httr

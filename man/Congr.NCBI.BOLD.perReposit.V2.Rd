@@ -2,7 +2,7 @@
 % Please edit documentation in R/Congr.NCBI.BOLD.perReposit.R
 \name{Congr.NCBI.BOLD.perReposit.V2}
 \alias{Congr.NCBI.BOLD.perReposit.V2}
-\title{#' @title Merge outputs from GenBank, BOLD and a personal repository
+\title{Merge outputs from GenBank, BOLD (local queries) and a personal repository
 (if available) into a single table and remove potential duplicate
 sequences.}
 \usage{
@@ -74,7 +74,9 @@ web portal),
 }
 \description{
 This function assembles a large common dataframe for all the data retrieved
-from GenBank (through the NCBI) and BOLD, and also from a personal repository, if available.
+from GenBank (through the NCBI) and BOLD (from a local database file 
+that can be downloaded from https://boldsystems.org/data/data-packages/) ), and 
+also from a personal repository, if available.
 The function checks for the presence of duplicated sequences and
 selects the most relevant information (i.e. selects the longest sequence, and
 maximise the metadata information across the different sources for the

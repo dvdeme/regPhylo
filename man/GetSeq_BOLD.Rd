@@ -2,7 +2,7 @@
 % Please edit documentation in R/GetSeq_BOLD.R
 \name{GetSeq_BOLD}
 \alias{GetSeq_BOLD}
-\title{Extract DNA sequences and metadata from BOLD (Barcode Of Life Database)}
+\title{Extract DNA sequences and metadata from BOLD (Barcode Of Life Database) from the BOLD server}
 \usage{
 GetSeq_BOLD(splist = NULL, filename = NULL, bold.id = FALSE)
 }

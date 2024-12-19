@@ -8,6 +8,7 @@ from NCBI and BOLD databases from a list fo taxa of interest.}
 Pipeline.DNA.extraction(
   input.ncbi = NULL,
   input.bold = NULL,
+  Path.BOLD.tsv = NULL,
   gene = "ALL",
   max.seq = 10000,
   Path.output = NULL,
@@ -29,6 +30,9 @@ which will be retained as 'TaxaName' in the output file.}
 \item{input.bold}{a two column table with the first column containing all
 the binomial species names including synonyms and the second column contains
 only the names that will be reported in the output table as 'species_name'.}
+
+\item{Path.BOLD.tsv}{name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
+the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/}
 
 \item{gene}{can be a particular gene region or 'ALL' for all entries
 of that species. Please note that this will only retrieve genes

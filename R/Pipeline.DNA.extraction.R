@@ -47,6 +47,9 @@
 #' @param input.bold a two column table with the first column containing all
 #' the binomial species names including synonyms and the second column contains
 #' only the names that will be reported in the output table as 'species_name'.
+#' 
+#' @param Path.BOLD.tsv name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
+#' the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/
 
 #' @param gene can be a particular gene region or 'ALL' for all entries
 #' of that species. Please note that this will only retrieve genes
@@ -120,6 +123,7 @@
 
 Pipeline.DNA.extraction = function(input.ncbi = NULL,
                                    input.bold = NULL,
+                                   Path.BOLD.tsv = NULL,
                                    gene = "ALL",
                                    max.seq = 10000,
                                    Path.output = NULL,

@@ -34,7 +34,7 @@
 #' alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
 #' of the alignment are conserved)
 #' 
-#' #' @param Parti.nexus if TRUE (default) then the partition file is also exported 
+#' @param Parti.nexus if TRUE (default) then the partition file is also exported 
 #' in nexus format ready to be used by IQtree2 or RAxML.
 #'
 #'

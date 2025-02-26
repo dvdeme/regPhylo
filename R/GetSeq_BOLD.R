@@ -1,4 +1,4 @@
-#' @title Extract DNA sequences and metadata from BOLD (Barcode Of Life Database) from the BOLD server
+#' @title Extract DNA sequences and metadata from the BOLD server
 #'
 
 #' @description This function extracts sequences and associated information from the Barcode Of

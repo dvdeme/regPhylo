@@ -50,12 +50,12 @@ Select.DNA = function(input = NULL, gene.list = NULL, output = NULL, timeout = 1
     r.pos = vector()
     i = 1
     for (i in 1:length(gene.list)) {
-        if (gene.list[i] == "mll") {
+        if(gene.list[i] == "mll") {
             # In the case that the 'mll' gene is in the gene.list, ensure that only this one
             # is called and not 'mll2' or 'mll4'
             r.pos = c(r.pos, which(input[, 29] == gene.list[i]))
         } else {
-            if (gene.list[i] == "h3") {
+            if(gene.list[i] == "h3") {
                 # In the case that the 'h3' gene is in the gene.list, ensure that only this one
                 # is called and not gnrh3 or sh3px3.
                 r.pos = c(r.pos, which(input[, 29] == gene.list[i]))

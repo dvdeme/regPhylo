@@ -163,7 +163,7 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = 
                     'funding_src','marker_code','primers_forward','primers_reverse','sequence_run_site',
                     'sequence_upload_date','bold_recordset_code_arr', 'Date_Extract')
   
-  NB.tax = dim(splist)[1] # nbumber of taxa to query
+  NB.tax = dim(splist)[1] # number of taxa to query
   
   cat(t(as.matrix(names.columns)), sep = "\t", "\n", file = filename)
   

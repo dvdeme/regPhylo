@@ -13,22 +13,27 @@
 #' txt format 'Partitions_Concat.txt' including the partitions of the different gene regions in the
 #' concatenated file (this file is designed to be RAxML compatible, see RAxML manual
 #' v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf);
-#' 4) a conversion table 'convtab.txt' betwen the gene region names used in the partition file and the
+#' 4) the partition file 'Partitions_Concat.nex' can also be exported in nexus format compatible to be 
+#' loaded directly into IQtree or RAxML it the option Parti.nexus = TRUE, 
+#' 5) a conversion table convtab.txt' betwen the gene region names used in the partition file and the
 #' true name of the gene region.
 
 #' @param input the path to the folder storing the alignments (alignments have to be in
 #' fasta format with the '.fas' extension)
+#' 
 #' @param Sp.List.NoDNA an optional  vector of the species without DNA sequences that should be included
 #' in the alignment, or the option can be NULL, in which case the function automatically creates a complete
 #'  species list of all the species present in the different alignments.
+#'  
 #' @param outputConcat Name of the supermatrix (can include the path as well).
+#' 
 #' @param split the split between the information in the sequence name, 
 #' by default the separator is "_".
 #' 
 #' 
-#'@param chunk.names.to.Keep the number of chunk of information (splitted by split) within the 
-#'sequence name to retain to build the super-matrix, this name must be common to the different 
-#'alignment files. By default the first two chunks of information splitted by the split (e.g. "_").
+#' @param chunk.names.to.Keep the number of chunk of information (splitted by split) within the 
+#' sequence name to retain to build the super-matrix, this name must be common to the different 
+#' alignment files. By default the first two chunks of information splitted by the split (e.g. "_").
 #'
 #' @param Homogeneise.tip.names if TRUE then the tips names of the individuals nexus 
 #' alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
@@ -255,6 +260,8 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
     # Print the partition file (compatible with RAxML), and a conversion table providing information between the code of the gene region used by
     # PartitionFinder2 and the true name of the gene region.
     convtab=matrix(NA, ncol=2)[-1,]
+    
+    Parti.4.nexus = matrix(ncol = 1, nrow = dim(SuperMat)[2])
     
     if(is.null(outputConcat)){
       i = 1

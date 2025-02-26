@@ -47,7 +47,9 @@ the different gene regions in nexus and fasta format; 3) a partition file in
 txt format 'Partitions_Concat.txt' including the partitions of the different gene regions in the
 concatenated file (this file is designed to be RAxML compatible, see RAxML manual
 v8.2, https://sco.h-its.org/exelixis/resource/download/NewManual.pdf);
-4) a conversion table 'convtab.txt' betwen the gene region names used in the partition file and the
+4) the partition file 'Partitions_Concat.nex' can also be exported in nexus format compatible to be 
+loaded directly into IQtree or RAxML it the option Parti.nexus = TRUE, 
+5) a conversion table convtab.txt' betwen the gene region names used in the partition file and the
 true name of the gene region.
 }
 \description{

@@ -457,7 +457,9 @@ Congr.NCBI.BOLD.perReposit.V2 = function(input.NCBI = NULL, input.BOLD = NULL, o
     input.BOLD2=matrix(NA, ncol=25)[-1,] # build an empty table.
   } else {
     # Remove the sequences without accession number in the BOLD ('processid)
+    if(length(which(is.na(as.character(input.BOLD[, "processid"])))) > 0){
     input.BOLD = input.BOLD[which(is.na(as.character(input.BOLD[, "processid"])) == "FALSE"),]
+    }
     
     # Change the BOLD table to match the NCBI table
     NoGapSeq = gsub("-","",as.character(input.BOLD[, "nuc"]), fixed = TRUE) #Remove Gaps from BOLD seq

@@ -10,7 +10,8 @@ Align.Concat(
   outputConcat = NULL,
   split = "_",
   chunk.names.to.Keep = 2,
-  Homogeneise.tip.names = FALSE
+  Homogeneise.tip.names = FALSE,
+  Parti.nexus = FALSE
 )
 }
 \arguments{
@@ -32,7 +33,10 @@ alignment files. By default the first two chunks of information splitted by the 
 
 \item{Homogeneise.tip.names}{if TRUE then the tips names of the individuals nexus 
 alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
-of the alignment are conserved)}
+of the alignment are conserved)
+
+#' @param Parti.nexus if TRUE (default) then the partition file is also exported 
+in nexus format ready to be used by IQtree2 or RAxML.}
 }
 \value{
 This function returns: 1) the alignments from different gene regions

@@ -33,6 +33,9 @@
 #' @param Homogeneise.tip.names if TRUE then the tips names of the individuals nexus 
 #' alignment use the same tips names as in the original individual alignment (by default FALSE, so the original tips names 
 #' of the alignment are conserved)
+#' 
+#' #' @param Parti.nexus if TRUE (default) then the partition file is also exported 
+#' in nexus format ready to be used by IQtree2 or RAxML.
 #'
 #'
 #' @examples # Run the function to build a supermatrix
@@ -92,7 +95,8 @@
 #' @export Align.Concat
 
 Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL, 
-                        split = "_", chunk.names.to.Keep = 2, Homogeneise.tip.names = FALSE) {
+                        split = "_", chunk.names.to.Keep = 2, Homogeneise.tip.names = FALSE, 
+                        Parti.nexus = FALSE) {
     listAli = paste(input, list.files(input), sep = "/")
     listAl = listAli[grep(".fas", listAli)]
     if(length(listAl) < length(listAli)) {
@@ -255,6 +259,9 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
     if(is.null(outputConcat)){
       i = 1
       for (i in 1:dim(SuperMat)[2]) {
+        if(Parti.nexus == TRUE){
+          Parti.4.nexus[i,] = paste("charset part", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "")
+        }
         cat(file = paste(paste(b[-length(b)], collapse = "/"), "Partitions_Concat.txt",
                          sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
             append = TRUE)
@@ -265,7 +272,11 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
       utils::write.table(convtab, file=paste(paste(b[-length(b)], collapse = "/"), 
                                              "convtab.txt", sep = "/")
                          , sep="\t", row.names=FALSE)
-      
+      if(Parti.nexus == TRUE){
+        cat(file = paste(paste(b[-length(b)], collapse = "/"), "Partitions_Concat.nex",
+                         sep = "/"), "#nexus", "\n",
+            "begin sets;", "\n", Parti.4.nexus, "end;", "\n", sep ="")
+      }
     } else {
       
       bb = unlist(strsplit(outputConcat, "/", fixed = TRUE))
@@ -277,6 +288,10 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
       
       i = 1
       for (i in 1:dim(SuperMat)[2]) {
+        if(Parti.nexus == TRUE){
+          Parti.4.nexus[i,] = paste("charset part", i, " = ", liminf[i], "-", LimSup[i], ";", "\n", sep = "")
+        }
+        
         cat(file = paste(output.folder, "Partitions_Concat.txt",
                          sep = "/"), "DNA, gene", i, " = ", liminf[i], "-", LimSup[i], "\n", sep = "",
             append = TRUE)
@@ -284,7 +299,12 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
       }
       colnames(convtab) = c("Name.PartitionFinder2", "Common.Gene.Name")
       utils::write.table(convtab, file=paste(output.folder, "convtab.txt", sep="/"), sep="\t", row.names=FALSE)
-    }
+      if(Parti.nexus == TRUE){
+        cat(file = paste(output.folder, "Partitions_Concat.nex",
+                         sep = "/"), "#nexus", "\n",
+            "begin sets;", "\n", Parti.4.nexus, "end;", "\n", sep ="")
+      }
+      }
     
    
 return(convtab)

@@ -19,7 +19,8 @@
 #' true name of the gene region.
 
 #' @param input the path to the folder storing the alignments (alignments have to be in
-#' fasta format with the '.fas' extension)
+#' fasta format with the '.fas' extension). The name of the alignement file must 
+#' follow thefollowing rule, WhatevereNameYouWant_NameOfTheGene.fas, e.g. "FishAlign_CO1.fas"
 #' 
 #' @param Sp.List.NoDNA an optional  vector of the species without DNA sequences that should be included
 #' in the alignment, or the option can be NULL, in which case the function automatically creates a complete

@@ -31,6 +31,8 @@
 #' @param split the split between the information in the sequence name, 
 #' by default the separator is "_".
 #' 
+#' @param Seq.Name.Identical if TRUE then all the alignment use the same sequences 
+#' names and the full names is used for the Concat.
 #' 
 #' @param chunk.names.to.Keep the number of chunk of information (splitted by split) within the 
 #' sequence name to retain to build the super-matrix, this name must be common to the different 
@@ -43,6 +45,10 @@
 #' @param Parti.nexus if TRUE (default) then the partition file is also exported 
 #' in nexus format ready to be used by IQtree2 or RAxML.
 #'
+#' @param Export.Indiv.Al.Nexus if TRUE then the alignment of each gene is also 
+#' exported in nexus format, it can include additional taxa without DNA sequence, 
+#' it is devoted to be used downstream with the BEASTV2 software. 
+#' Default is FALSE.
 #'
 #' @examples # Run the function to build a supermatrix
 #' \dontrun{
@@ -100,10 +106,17 @@
 #'
 #' @export Align.Concat
 
-Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL, 
-                        split = "_", chunk.names.to.Keep = 2, Homogeneise.tip.names = FALSE, 
-                        Parti.nexus = FALSE) {
-    listAli = paste(input, list.files(input), sep = "/")
+Align.Concat = function(input = NULL, 
+                        Sp.List.NoDNA = NULL, 
+                        outputConcat = NULL, 
+                        Seq.Name.Identical = NULL, 
+                        split = "_", 
+                        chunk.names.to.Keep = 2, 
+                        Homogeneise.tip.names = FALSE, 
+                        Parti.nexus = FALSE, 
+                        Export.Indiv.Al.Nexus = FALSE) {
+    
+  listAli = paste(input, list.files(input), sep = "/")
     listAl = listAli[grep(".fas", listAli)]
     if(length(listAl) < length(listAli)) {
       stop(paste("Other files in non fasta format using '.fas' extension are present
@@ -129,7 +142,15 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
     Seq.Name.cor = gsub("?", "", Seq.Name.cor, fixed = TRUE)  # Remove the '?', in the sequence name.
     Seq.Name.cor = gsub("-", "", Seq.Name.cor, fixed = TRUE)  # Remove the '-', in the sequence name.
     Seq.Name.cor = gsub("_sp_", "_sp", Seq.Name.cor, fixed = TRUE)  # Remove the '_' between sp and the letter or number defining a species not yet assigned a binomial species name.
-    Seq.Name.cor = gsub("_nsp_", "_nsp", Seq.Name.cor, fixed = TRUE)  # Remove the '_' between nsp and the letter or number defining a new species not yet assigned a binomial species name.
+    Seq.Name.cor = gsub("_nsp_", "_nsp", Seq.Name.cor, fixed = TRUE) # Remove the '_' between nsp and the letter or number defining a new species not yet assigned a binomial species name.
+    
+    if(Seq.Name.Identical == TRUE){
+      
+      Sp.Name = Seq.Name.cor
+      Sp.Name.list = unique(Seq.Name.cor)
+      
+    } else {
+      
     a = strsplit(Seq.Name.cor, split, fixed = T)  # Split the sequence name using '_' to extract the genus and species name.
     #a1 = lapply(a, function(x) x[1])
     #a2 = lapply(a, function(x) unlist(strsplit(x[2], "|", fixed = T))[1])
@@ -137,9 +158,10 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
     #   sep = "")))  # Extract the species name as the first two elements of each item in the list.
     
     Sp.Name = unlist(lapply(a, function(x) paste(x[1:chunk.names.to.Keep], collapse = "_")))  # Extract the species name as the first two elements of each item in the list.
-    
     Sp.Name.list = unique(Sp.Name)  # The species list present in the different alignments
-
+    
+    }
+    
     # Include the option to also provide additional species without DNA.
     if (is.null(Sp.List.NoDNA)) {
         Sp.DF = as.data.frame(cbind(Sp.Name = Sp.Name.list, PresenceOverall = rep(1,
@@ -189,7 +211,9 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
 
         # Create a nexus file including those empty sequences.
         NBChar = nchar(as.character(AlignTemp[1, 5]))
-
+        
+        if(Export.Indiv.Al.Nexus == TRUE){
+          
         cat(file = listAl.nexus[i], "#NEXUS", "\n", "\n", "BEGIN DATA;", "\n", "\t",
             paste("DIMENSIONS NTAX=", dim(AlignTemp)[1], sep = ""), paste(" NCHAR=",
                 NBChar, ";", sep = ""), sep = "", append = TRUE)
@@ -203,8 +227,12 @@ Align.Concat = function(input = NULL, Sp.List.NoDNA = NULL, outputConcat = NULL,
         utils::write.table(AlignTemp[, c(4, 5)], file = listAl.nexus[i], sep = "\t", append = TRUE,
             col.names = FALSE, row.names = FALSE, quote = FALSE)
           }
+        
         cat(file = listAl.nexus[i], "\t", ";", "\n", "END;", sep = "", append = TRUE)
-    }  ## End for i
+        
+        }
+        
+      }  ## End for i
 
     # Create a large supermatrix.
     concat = vector()

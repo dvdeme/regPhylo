@@ -8,10 +8,12 @@ Align.Concat(
   input = NULL,
   Sp.List.NoDNA = NULL,
   outputConcat = NULL,
+  Seq.Name.Identical = NULL,
   split = "_",
   chunk.names.to.Keep = 2,
   Homogeneise.tip.names = FALSE,
-  Parti.nexus = FALSE
+  Parti.nexus = FALSE,
+  Export.Indiv.Al.Nexus = FALSE
 )
 }
 \arguments{
@@ -24,6 +26,9 @@ in the alignment, or the option can be NULL, in which case the function automati
  species list of all the species present in the different alignments.}
 
 \item{outputConcat}{Name of the supermatrix (can include the path as well).}
+
+\item{Seq.Name.Identical}{if TRUE then all the alignment use the same sequences 
+names and the full names is used for the Concat.}
 
 \item{split}{the split between the information in the sequence name, 
 by default the separator is "_".}
@@ -38,6 +43,11 @@ of the alignment are conserved)}
 
 \item{Parti.nexus}{if TRUE (default) then the partition file is also exported 
 in nexus format ready to be used by IQtree2 or RAxML.}
+
+\item{Export.Indiv.Al.Nexus}{if TRUE then the alignment of each gene is also 
+exported in nexus format, it can include additional taxa without DNA sequence, 
+it is devoted to be used downstream with the BEASTV2 software. 
+Default is FALSE.}
 }
 \value{
 This function returns: 1) the alignments from different gene regions

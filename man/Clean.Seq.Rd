@@ -35,18 +35,18 @@ Two separate alignment are exported in a fasta format, the alignment with the ".
 
 \item{Re.Align}{the sequences are realigned after the indel gaps were removed using fast mafft.fftns1 algorithm, but this steps can be long especially combined the automatic iteration of the optimisation approach that can be perfomed multiple times.}
 
-\item{nbthreads}{a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences}
+\item{nbthreads}{a number (by default 1) defining the number of threads used to performed the Approximate detection of outlier sequences}
 
 \item{Approxim}{if TRUE then the function perform an approximate estimate of the outlier sequence detection by using a random selection of nb.seq (25 by default) sequences nb.rep (5 by default) times for each sequence, this options is worth using for large alignement including more than 10 000 sequences.}
 
 \item{nb.seq}{is a number defining how many sequence need to be selected randomly if Approxim is TRUE, increasing the number of sequence will considerably slow dow the algorithm. default 25.}
 
-\item{nb.rep}{is a number defining how many replicate of the randomw selection of sequence must be performed for each sequence of interest (default 5 times)}
+\item{nb.rep}{is a number defining how many replicate of the random selection of sequence must be performed for each sequence of interest (default 5 times)}
 }
 \value{
 The function return a list of 4 objects using the following headers:
 \itemize{
-\item 'Outlier.Sequences' which provides a vectorwith teh names of all the sequences considered as potential outlier.
+\item 'Outlier.Sequences' which provides a vector with the names of all the sequences considered as potential outlier.
 \item 'Clean.Haplo.Alignment' is a DNAbin object of the alignment of only the haplotypes sequences after removing the outlier sequences.
 \item 'Clean.All.Seq.Alignment' is a DNAbin object of the alignment of all the sequences after removing the outlier sequences.
 \item 'First.Dist.Mat' is the summary statistic (either median or minimal distance, this parameter is defined by the 'Sum.Stat' option) of the genetic distance from the each focal sequences in comparison to all the other.
@@ -77,10 +77,10 @@ Example_16S_outlier_align = Example_16S_outlier[[1]]
 \dontrun{
 
 # Running the function with an exact computation approach performing all the 
-pairwise genetic comparisons among sequences. We used "raw" model to compute 
-the genetic distances and considered a median distance as summary statistic 
-to define the outlier threshold. We used a classic 1.5 interquartile range 
-distance threshold to consider the outlier sequences.
+# pairwise genetic comparisons among sequences. We used "raw" model to compute 
+# the genetic distances and considered a median distance as summary statistic 
+# to define the outlier threshold. We used a classic 1.5 interquartile range 
+# distance threshold to consider the outlier sequences.
 S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
 output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", 
 Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, 
@@ -90,19 +90,19 @@ S16_MisAlign[[1]]  # 36 sequences are considered as outlier sequences the model 
 file.remove(c( "Example_16S_outlier_align.rm.out..Clean.AllSeq.fas", 
 "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
 
-Running the function with an approximate computation approach performing all 
-the pairwise genetic comparisons among sequences. We used "raw" model to compute 
-the genetic distances and considered a median distance as summary statistic to 
-define the outlier threshold. We used a classic 1.5 interquartile range distance 
-threshold to consider the outlier sequences. For the approximate comparison we used 
-25 sequences randomly repeated 5 times as suggested by default.
+# Running the function with an approximate computation approach performing all 
+# the pairwise genetic comparisons among sequences. We used "raw" model to compute 
+# the genetic distances and considered a median distance as summary statistic to 
+# define the outlier threshold. We used a classic 1.5 interquartile range distance 
+# threshold to consider the outlier sequences. For the approximate comparison we used 
+# 25 sequences randomly repeated 5 times as suggested by default.
 S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
 output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", 
 Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
 S16_MisAlign.approx[[1]]  # 36 sequences are considered as outlier sequences the model detect
-setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the exact 
-or the approximate search of outlier sequences.
-To remove the file created while running the example do the following:
+setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # exact same finding considering the exact 
+# or the approximate search of outlier sequences.
+# To remove the file created while running the example do the following:
 file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", 
 "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
 

@@ -45,7 +45,7 @@ Imports: ape,
     httr,
     taxizedb,
     data.table
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Suggests: testthat,
     httr
 Depends: R (>= 2.10)

@@ -384,8 +384,8 @@ Split.Codon.Partition =  function(input.parti = NULL, which.codon = NULL, output
     if(is.na(position[x])){
       res = Parti.Posi.ori[x,]
     } else {
-      Start.Pos = as.numeric(strsplit(Parti.Posi.ori[which.codon,2], "-")[[1]][1])
-      End.Pos = strsplit(Parti.Posi.ori[which.codon,2], "-")[[1]][2]
+      Start.Pos = as.numeric(strsplit(Parti.Posi.ori[which.codon[x],2], "-")[[1]][1])
+      End.Pos = strsplit(Parti.Posi.ori[which.codon[x],2], "-")[[1]][2]
       
       res = cbind(Seq.Order = seq(1,3), Position = c(paste(Start.Pos, "-", gsub(";", "\\3", End.Pos, fixed= T), ";", sep = ""), paste((Start.Pos+1), "-", gsub(";", "\\3", End.Pos, fixed= T), ";", sep = ""), paste((Start.Pos+2), "-", gsub(";", "\\3", End.Pos, fixed= T), ";", sep = "")))
     }

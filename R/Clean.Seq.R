@@ -20,7 +20,7 @@
 
 #' @return The function return a list of 4 objects using the following headers:
 #' \itemize{
-#' \item 'Outlier.Sequences' which provides a vectorwith teh names of all the sequences considered as potential outlier.
+#' \item 'Outlier.Sequences' which provides a vector with the names of all the sequences considered as potential outlier.
 #' \item 'Clean.Haplo.Alignment' is a DNAbin object of the alignment of only the haplotypes sequences after removing the outlier sequences.
 #' \item 'Clean.All.Seq.Alignment' is a DNAbin object of the alignment of all the sequences after removing the outlier sequences.
 #' \item 'First.Dist.Mat' is the summary statistic (either median or minimal distance, this parameter is defined by the 'Sum.Stat' option) of the genetic distance from the each focal sequences in comparison to all the other.
@@ -48,9 +48,9 @@
 
 #' @param  nb.seq is a number defining how many sequence need to be selected randomly if Approxim is TRUE, increasing the number of sequence will considerably slow dow the algorithm. default 25.
 
-#' @param nb.rep is a number defining how many replicate of the randomw selection of sequence must be performed for each sequence of interest (default 5 times)
+#' @param nb.rep is a number defining how many replicate of the random selection of sequence must be performed for each sequence of interest (default 5 times)
 
-#' @param nbthreads a number (by default 1) defining the number of threads used to perfoimed the Approximate detection of outlier sequences 
+#' @param nbthreads a number (by default 1) defining the number of threads used to performed the Approximate detection of outlier sequences 
 
 
 
@@ -61,10 +61,10 @@
 #' \dontrun{
 #'
 #' # Running the function with an exact computation approach performing all the 
-#' pairwise genetic comparisons among sequences. We used "raw" model to compute 
-#' the genetic distances and considered a median distance as summary statistic 
-#' to define the outlier threshold. We used a classic 1.5 interquartile range 
-#' distance threshold to consider the outlier sequences.
+#' # pairwise genetic comparisons among sequences. We used "raw" model to compute 
+#' # the genetic distances and considered a median distance as summary statistic 
+#' # to define the outlier threshold. We used a classic 1.5 interquartile range 
+#' # distance threshold to consider the outlier sequences.
 #' S16_MisAlign = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
 #' output = "Example_16S_outlier_align.rm.out.", Evol.Model = "raw", Sum.Stat = "median", 
 #' Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 1, Approxim = FALSE, nb.seq = 25, 
@@ -77,23 +77,23 @@
 #' "Example_16S_outlier_align.rm.out..Clean.haplo.fas"))
 #'
 
-#' Running the function with an approximate computation approach performing all 
-#' the pairwise genetic comparisons among sequences. We used "raw" model to compute 
-#' the genetic distances and considered a median distance as summary statistic to 
-#' define the outlier threshold. We used a classic 1.5 interquartile range distance 
-#' threshold to consider the outlier sequences. For the approximate comparison we used 
-#' 25 sequences randomly repeated 5 times as suggested by default.
+#' # Running the function with an approximate computation approach performing all 
+#' # the pairwise genetic comparisons among sequences. We used "raw" model to compute 
+#' # the genetic distances and considered a median distance as summary statistic to 
+#' # define the outlier threshold. We used a classic 1.5 interquartile range distance 
+#' # threshold to consider the outlier sequences. For the approximate comparison we used 
+#' # 25 sequences randomly repeated 5 times as suggested by default.
 #' S16_MisAlign.approx = Clean.Seq(inputal = Example_16S_outlier_align, Outlier.Th = 1.5, 
 #' output = "Example_16S_outlier_align.rm.out.approx", Evol.Model = "raw", Sum.Stat = "median", 
 #' Iter.optim = FALSE, Re.Align = TRUE, nbthreads = 5, Approxim = TRUE, nb.seq = 25, nb.rep = 5) 
 
 #' S16_MisAlign.approx[[1]]  # 36 sequences are considered as outlier sequences the model detect
 
-#' setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # excat same finding considering the exact 
-#' or the approximate search of outlier sequences.
+#' setdiff(S16_MisAlign.approx[[1]], S16_MisAlign[[1]]) # exact same finding considering the exact 
+#' # or the approximate search of outlier sequences.
 
 
-#' To remove the file created while running the example do the following:
+#' # To remove the file created while running the example do the following:
 #' file.remove(c( "Example_16S_outlier_align.rm.out.approx.Clean.AllSeq.fas", 
 #' "Example_16S_outlier_align.rm.out.approx.Clean.haplo.fas"))
 #'
@@ -469,7 +469,7 @@ detect.out.seq = function(input = NULL,
 #' an insertion gap for most of the other sequences.
 
 #' @param Nb.Seq.Indels is an integer precising the maximal number of sequences that could include 
-#' a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).
+#' a rare insertion blocks creating an insertion gap for most of the other sequences (valid only if Remove.Seq.Indels = TRUE).
 
 #' @param Min.Perc.Seq.With.Info minimal percentage (on the scale between 0 and 1) of sequence 
 #' with a documented nucleotide for a loci preceding or following the indel blocks, when considering an
@@ -481,22 +481,22 @@ detect.out.seq = function(input = NULL,
 #' alignment but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.
 
 #' @param Remove.Short.Seq if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage 
-#' of the of the number of missing nucleotides of the longuest sequence (default 15% of missing nucleotides). 
-#' So sequences with more than 50% of missing nucleotides are removed.
+#' of the of the number of missing nucleotides of the longest sequence (default 15\% of missing nucleotides). 
+#' So sequences with more than 50\% of missing nucleotides are removed.
 
-#' @param Max.Per.missing a number precising the maximal percentage (by default 50%) of missing nucleotides allow in a sequence 
+#' @param Max.Per.missing a number precising the maximal percentage (by default 50\%) of missing nucleotides allow in a sequence 
 #' to be retained. If the sequence contains more missing data than the Max.Per.missing threshold, then the sequences is 
 #' removed from the alignment. This functions works only if Remove.Short.Seq is set to TRUE.
 
 #' @param Remove.Seq.TooManyAmbig if TRUE (default FALSE) then the function removes sequences with too many ambiguous 
 #' nucleotides (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) from the IUPAC nucleotide code.
 
-#'  @param Percent.Ambig a number precising the maximal percentage (by default 50%) of ambiguous nucleotides per 
-#'  sequence (by default 30%). This option works only if Percent.Ambig is set to TRUE.
+#'  @param Percent.Ambig a number precising the maximal percentage (by default 50\%) of ambiguous nucleotides per 
+#'  sequence (by default 30/%). This option works only if Percent.Ambig is set to TRUE.
 
 #'  @param Remove.Loc.Low.Freq if TRUE (default FALSE), this function remove the loci of the alignment with less than 
-#'  X percent of sequences with some informtaion, the percentage of information is provide by the option 
-#'  Minimal.Locus.Freq (by default 30%). This option is used typically to trim the beginning and the end of the alignment 
+#'  X percent of sequences with some information, the percentage of information is provide by the option 
+#'  Minimal.Locus.Freq (by default 30\%). This option is used typically to trim the beginning and the end of the alignment 
 #'  to avoid few extra long sequences.
 
 

@@ -487,6 +487,7 @@ Pipeline.DNA.extraction = function(input.ncbi = NULL,
 #' @param chunk_size number of records to be downloaded at a time from Genbank.
 #' If connection drops try decreasing this value to 20 or smaller. Default 50.
 
+#' @export GetSeqNumber_NCBI_taxid
 
 GetSeqNumber_NCBI_taxid = function(splist = NULL,
                                    gene = "ALL",

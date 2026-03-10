@@ -30,7 +30,7 @@ or "DNAbin" (ape R package) or the name (including the path if necessary) of the
 an insertion gap for most of the other sequences.}
 
 \item{Nb.Seq.Indels}{is an integer precising the maximal number of sequences that could include 
-a rare insertion blocks creating an insertion gap for most of the other sequences (valide only if Remove.Seq.Indels = TRUE).}
+a rare insertion blocks creating an insertion gap for most of the other sequences (valid only if Remove.Seq.Indels = TRUE).}
 
 \item{Min.Perc.Seq.With.Info}{minimal percentage (on the scale between 0 and 1) of sequence 
 with a documented nucleotide for a loci preceding or following the indel blocks, when considering an
@@ -42,20 +42,20 @@ problematic sequences causing indels.}
 alignment but the sequence is maintained in the alignment. This option works only when the option Remove.Seq.Indels is TRUE.}
 
 \item{Remove.Short.Seq}{if TRUE (default FALSE) it removes sequences that are too short below a threshold in percentage 
-of the of the number of missing nucleotides of the longuest sequence (default 15% of missing nucleotides). 
-So sequences with more than 50% of missing nucleotides are removed.}
+of the of the number of missing nucleotides of the longest sequence (default 15\% of missing nucleotides). 
+So sequences with more than 50\% of missing nucleotides are removed.}
 
-\item{Max.Per.missing}{a number precising the maximal percentage (by default 50%) of missing nucleotides allow in a sequence 
+\item{Max.Per.missing}{a number precising the maximal percentage (by default 50\%) of missing nucleotides allow in a sequence 
 to be retained. If the sequence contains more missing data than the Max.Per.missing threshold, then the sequences is 
 removed from the alignment. This functions works only if Remove.Short.Seq is set to TRUE.}
 
 \item{Remove.Seq.TooManyAmbig}{if TRUE (default FALSE) then the function removes sequences with too many ambiguous 
 nucleotides (N,R, Y, S, W, K, M, B, D, H, V and N nucleotide code) from the IUPAC nucleotide code.
- @param Percent.Ambig a number precising the maximal percentage (by default 50%) of ambiguous nucleotides per 
- sequence (by default 30%). This option works only if Percent.Ambig is set to TRUE.
+ @param Percent.Ambig a number precising the maximal percentage (by default 50\%) of ambiguous nucleotides per 
+ sequence (by default 30/%). This option works only if Percent.Ambig is set to TRUE.
  @param Remove.Loc.Low.Freq if TRUE (default FALSE), this function remove the loci of the alignment with less than 
- X percent of sequences with some informtaion, the percentage of information is provide by the option 
- Minimal.Locus.Freq (by default 30%). This option is used typically to trim the beginning and the end of the alignment 
+ X percent of sequences with some information, the percentage of information is provide by the option 
+ Minimal.Locus.Freq (by default 30\%). This option is used typically to trim the beginning and the end of the alignment 
  to avoid few extra long sequences.
  @param Minimal.Locus.Freq the percentage of minimal sequences with some nucleotides used to retained a locus in 
  the alignment. By default at least the locus should have 30% of sequences with some nucleotides to be retained. 

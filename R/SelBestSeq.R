@@ -231,7 +231,7 @@ SelBestSeq = function(input = NULL, output = NULL, RefPoint = NULL, perReposit =
                 # Remove any potential space in the Seq_Name object (happened sometimes
                 # in the BOLD Accession number due to formating error in BOLD database)
                 Seq_Name = gsub("[ ]?", "", Seq_Name, perl = TRUE)
-                AlignFasta = unlist(strsplit(Seq_Name, "_%_", Seq_Name, fixed = TRUE))
+                AlignFasta = unlist(strsplit(Seq_Name, "_%_", fixed = TRUE))
                 write(AlignFasta, file = paste(output, "_", gene.list[k], ".fas",
                   sep = ""))  # Write the alignments.
             }  # End if Alignment==T.

@@ -169,7 +169,7 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = 
   do.call(rbind, lapply(1:NB.tax, function(x){
     taxa.to.request = splist[x,1]
     taxa.accepted2report = splist[x,2]
-    res.df = BOLDV5.DF[species == taxa.to.request]
+    res.df = BOLDV5.DF[BOLDV5.DF$species == taxa.to.request]
     
     
     if(dim(res.df)[1] == 0){ 

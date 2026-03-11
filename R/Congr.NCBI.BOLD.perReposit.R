@@ -457,9 +457,7 @@ Congr.NCBI.BOLD.perReposit.V2 = function(input.NCBI = NULL, input.BOLD = NULL, o
     input.BOLD2=matrix(NA, ncol=25)[-1,] # build an empty table.
   } else {
     # Remove the sequences without accession number in the BOLD ('processid)
-    if(length(which(is.na(as.character(input.BOLD[, "processid"])))) > 0){
     input.BOLD = input.BOLD[which(is.na(as.character(input.BOLD[, "processid"])) == "FALSE"),]
-    }
     
     # Change the BOLD table to match the NCBI table
     NoGapSeq = gsub("-","",as.character(input.BOLD[, "nuc"]), fixed = TRUE) #Remove Gaps from BOLD seq
@@ -477,9 +475,8 @@ Congr.NCBI.BOLD.perReposit.V2 = function(input.NCBI = NULL, input.BOLD = NULL, o
     Organism = input.BOLD[, "Species.names"]
     Organelle = rep(NA, dim(input.BOLD)[1])
     Mol_type = rep("genomic DNA", dim(input.BOLD)[1])
-    Db_xref = paste(input.BOLD[, "processid"], input.BOLD[,"specimenid"], input.BOLD[, "sampleid"], 
-                    input.BOLD[, "record_id"], input.BOLD[,"museumid"], input.BOLD[, "collection_code"], 
-                    input.BOLD[, "inst"], input.BOLD[, "sovereign_inst"], sep = "; ")
+    Db_xref = paste(input.BOLD[, "processid"], input.BOLD[,"specimenid"], input.BOLD[, "sampleid"], input.BOLD[, "record_id"], input.BOLD[,"museumid"], input.BOLD[, "collection_code"], input.BOLD[, "inst"],
+                    input.BOLD[, "sovereign_inst"], sep = "; ")
     Product = rep(NA, dim(input.BOLD)[1])
     Genes = input.BOLD[, "marker_code"]
     Location = as.character(paste(input.BOLD[, "country.ocean"], ": ",
@@ -504,9 +501,8 @@ Congr.NCBI.BOLD.perReposit.V2 = function(input.NCBI = NULL, input.BOLD = NULL, o
     
     # Include the origin of the sequences, and add a column in each table specifying
     # the specific BOLD 'recordID' or 'sequenceID' which are the same.
-    input.BOLD2 = cbind(input.BOLD2[, "Species.names"], AccessBold = paste(as.character(input.BOLD[,"processid"]), 
-                        input.BOLD[,"marker_code"], sep = "."), input.BOLD2[, -1],
-                        OriginDatabase = rep("BOLD", dim(input.BOLD2)[1]))
+    input.BOLD2 = cbind(input.BOLD2[, "Species.names"], AccessBold = paste(as.character(input.BOLD[,"processid"]), input.BOLD[,"marker_code"], sep = "."),
+                        input.BOLD2[, -1], OriginDatabase = rep("BOLD", dim(input.BOLD2)[1]))
     
   }
   
@@ -744,6 +740,3 @@ Congr.NCBI.BOLD.perReposit.V2 = function(input.NCBI = NULL, input.BOLD = NULL, o
   utils::write.table(DHTot, file = output, sep = "\t", row.names = FALSE)
   return(DHTot)
 }  # End of the function.
-
-
-

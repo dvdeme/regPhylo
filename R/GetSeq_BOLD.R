@@ -138,7 +138,8 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 #' the data retrieved from bold after removing record without DNA sequence.
 #'
 #' @export GetSeq_BOLD.local.DT
-#'
+#' @import data.table
+#' 
 GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = NULL){
   
   ### load the BOLD_Public.06-Dec-2024.tsv" file in R with the data.table R package

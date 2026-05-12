@@ -5,6 +5,8 @@
 \title{Get the number of DNA sequences available for taxa of interest in NCBI.}
 \usage{
 GetSeqNumber_NCBI_taxid(splist = NULL, gene = "ALL", chunk_size = 50)
+
+GetSeqNumber_NCBI_taxid(splist = NULL, gene = "ALL", chunk_size = 50)
 }
 \arguments{
 \item{splist}{a two column table with the unique NCBI taxonomic ID (i.e. taxid) in
@@ -20,6 +22,9 @@ same entries as "COI". Default "ALL"}
 If connection drops try decreasing this value to 20 or smaller. Default 50.}
 }
 \description{
+This function provides the number of DNA sequences available for the taxa of interest
+in th NCBI database, this function is used internally in the Pipeline.DNA.extraction function
+
 This function provides the number of DNA sequences available for the taxa of interest
 in th NCBI database, this function is used internally in the Pipeline.DNA.extraction function
 }

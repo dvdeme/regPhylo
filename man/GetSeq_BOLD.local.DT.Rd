@@ -4,7 +4,7 @@
 \alias{GetSeq_BOLD.local.DT}
 \title{Extract DNA sequences and metadata from a local download of BOLD (Barcode Of Life Database)}
 \usage{
-GetSeq_BOLD.local.DT(splist = NULL, filename = NULL, Path.BOLD.tsv = NULL)
+GetSeq_BOLD.local.DT(splist = NULL, filename = NULL, Path.BOLD = NULL)
 }
 \arguments{
 \item{splist}{a two column table. The first column contains all the binomial species names including
@@ -14,7 +14,7 @@ in the output table as 'species_name'.}
 \item{filename}{name of the output table. The format of the output follows the
 format provided by the bold R package.}
 
-\item{Path.BOLD.tsv}{name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
+\item{Path.BOLD}{name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
 the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/}
 }
 \value{

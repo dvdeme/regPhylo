@@ -127,7 +127,7 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 #' @param filename name of the output table. The format of the output follows the
 #' format provided by the bold R package.
 #' 
-#' @param Path.BOLD.tsv name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
+#' @param Path.BOLD name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
 #' the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/
 #' 
 #'
@@ -140,14 +140,14 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 #' @export GetSeq_BOLD.local.DT
 #' @import data.table
 #' 
-GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = NULL){
+GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL){
   
   ### load the BOLD_Public.06-Dec-2024.tsv" file in R with the data.table R package
-  if(class(Path.BOLD.tsv)[1] == "data.table"){
-    BOLDV5.DF = Path.BOLD.tsv
-    rm(Path.BOLD.tsv)
+  if(class(Path.BOLD)[1] == "data.table"){
+    BOLDV5.DF = Path.BOLD
+    rm(Path.BOLD)
   } else {
-    BOLDV5.DF = data.table::fread(Path.BOLD.tsv) # open with the data.table R package 
+    BOLDV5.DF = data.table::fread(Path.BOLD) # open with the data.table R package 
   }
   
   names.columns = c('Species.names','processid','sampleid','fieldid','museumid','record_id','specimenid',
@@ -170,7 +170,7 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD.tsv = 
   do.call(rbind, lapply(1:NB.tax, function(x){
     taxa.to.request = splist[x,1]
     taxa.accepted2report = splist[x,2]
-    res.df = BOLDV5.DF[BOLDV5.DF$species == taxa.to.requests]
+    res.df = BOLDV5.DF[species == taxa.to.request]
     
     
     if(dim(res.df)[1] == 0){ 

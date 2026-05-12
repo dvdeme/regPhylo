@@ -162,10 +162,10 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
   }
   utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
   
-  TabSum = data.frame(labels(table(TabAll2$Species.names)), as.vector(table(TabAll2$Species.names)))
+  TabSum = data.frame(labels(table(out1$Species.names)), as.vector(table(out1$Species.names)))
   colnames(TabSum) = c("Species_Name", "Nb_Occ")
   TabSum = merge(splist[,1], TabSum, by.x = 1, by.y = 1, all.x = T)
   
-  return(list(Summary.Table = TabSum, Full.Table = TabAll2))  # Report a table with all the species listed in the list and the number of occurrences found in BOLD (Note that some of occurrences are not associated with a sequence and so the total number of occurrences may be different from the number of occurrences retained in the output table (Only those with DNA sequences are retained)).
+  return(list(Summary.Table = TabSum, Full.Table = out1))  # Report a table with all the species listed in the list and the number of occurrences found in BOLD (Note that some of occurrences are not associated with a sequence and so the total number of occurrences may be different from the number of occurrences retained in the output table (Only those with DNA sequences are retained)).
 }  # End of the function.
 

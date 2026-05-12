@@ -14,8 +14,8 @@ in the output table as 'species_name'.}
 \item{filename}{name of the output table. The format of the output follows the
 format provided by the bold R package.}
 
-\item{Path.BOLD}{name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
-the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/}
+\item{Path.BOLD}{name of the data.frame (R object) containing the Barcode Of Life Database BOLD. It
+can be downloaded at https://boldsystems.org/data/data-packages/}
 }
 \value{
 The function returns three tables: a first table, indicated by "filename" exported in a folder

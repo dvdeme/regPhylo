@@ -127,8 +127,8 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 #' @param filename name of the output table. The format of the output follows the
 #' format provided by the bold R package.
 #' 
-#' @param Path.BOLD name of the data.frame (R object) containing the Barcode Of Life Database BOLD, or 
-#' the path of the tsv file of the BOLD that can be downloaded at https://boldsystems.org/data/data-packages/
+#' @param Path.BOLD name of the data.frame (R object) containing the Barcode Of Life Database BOLD. It
+#'  can be downloaded at https://boldsystems.org/data/data-packages/
 #' 
 #'
 #' @return The function returns three tables: a first table, indicated by "filename" exported in a folder
@@ -142,66 +142,25 @@ GetSeq_BOLD = function(splist = NULL, filename = NULL, bold.id = FALSE) {
 #' 
 GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL){
   
-  ### load the BOLD_Public.06-Dec-2024.tsv" file in R with the data.table R package
-  if(class(Path.BOLD)[1] == "data.table"){
-    BOLDV5.DF = Path.BOLD
-    rm(Path.BOLD)
-  } else {
-    BOLDV5.DF = data.table::fread(Path.BOLD) # open with the data.table R package 
-  }
+  # Get all the row corresponding to the species names 
+  res.df = Path.BOLD[species %in% splist[,1]]
   
-  names.columns = c('Species.names','processid','sampleid','fieldid','museumid','record_id','specimenid',
-                    'processid_minted_date','bin_uri','bin_created_date','collection_code','inst','sovereign_inst',
-                    'taxid','kingdom','phylum','class','order','family','subfamily','tribe','genus','species',
-                    'subspecies','species_reference','identification','identification_method','identification_rank',
-                    'identified_by','identifier_email','taxonomy_notes','sex','reproduction','life_stage','short_note',
-                    'notes','voucher_type','tissue_type','specimen_linkout','associated_specimens','associated_taxa',
-                    'collectors','collection_date_start','collection_date_end','collection_event_id','collection_time',
-                    'collection_notes','geoid','country/ocean','country_iso','province/state','region','sector','site','site_code','coord','coord_accuracy',
-                    'coord_source','elev','elev_accuracy','depth','depth_accuracy','habitat',
-                    'realm','biome','ecoregion','sampling_protocol','nuc','nuc_basecount','insdc_acs',
-                    'funding_src','marker_code','primers_forward','primers_reverse','sequence_run_site',
-                    'sequence_upload_date','bold_recordset_code_arr', 'Date_Extract')
+  # the Species names correspond to the accepted species names present in the second columns of the splist data frame.
+  out1 = merge(res.df, splist, by.x = "species", by.y ="SpName.Bold.search" , all.x = T)
+  out1 = data.frame(Species.names = out1$Sp.names, out1[,c(2:22)], species = out1[,1], out1[,c(23:76)], Date_Extract = rep(date(), dim(out1)[1]))
   
-  NB.tax = dim(splist)[1] # number of taxa to query
-  
-  cat(t(as.matrix(names.columns)), sep = "\t", "\n", file = filename)
-  
-  do.call(rbind, lapply(1:NB.tax, function(x){
-    taxa.to.request = splist[x,1]
-    taxa.accepted2report = splist[x,2]
-    res.df = BOLDV5.DF[species == taxa.to.request]
-    
-    
-    if(dim(res.df)[1] == 0){ 
-      out1 = as.data.frame(t(c(taxa.accepted2report, rep(NA, 76))))
-    } else {
-      out1 = cbind(rep(taxa.accepted2report, dim(res.df)[1]), res.df)
-    }
-    out1 = cbind(out1, rep(date(), dim(out1)[1]))
-    colnames(out1) = names.columns
-    # Save in file the results for each taxa	
-    utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE,
-                       col.names = FALSE, append = T)
-  }))	
   
   # Remove the rows without DNA sequences.
-  TabAll = utils::read.delim(filename, sep = "\t", header = TRUE)
-  
-  if (length(which(TabAll[,"nuc"] == "None")) > 0) {
+  if (length(which(out1[,"nuc"] == "None")) > 0) {
     ## When the sequence is empty, the row is removed from the table.
-    TabAll2 = TabAll[-which(TabAll[,"nuc"] == "None"), ]
-  } else {
-    TabAll2 = TabAll
+    out1 = out1[-which(out1[,"nuc"] == "None"), ]
   }
-  rm(TabAll)
-  if (length(which(is.na(TabAll2[, "nuc"]) == TRUE)) > 0) {
+  
+  if (length(which(is.na(out1[, "nuc"]) == TRUE)) > 0) {
     # remove the rows without sequences or an NA.
-    TabAll2 = TabAll2[-which(is.na(TabAll2[, "nuc"]) == TRUE), ]
-  } else {
-    TabAll2 = TabAll2
+    out1 = out1[-which(is.na(out1[, "nuc"]) == TRUE), ]
   }
-  utils::write.table(TabAll2, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.
+  utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
   
   TabSum = data.frame(labels(table(TabAll2$Species.names)), as.vector(table(TabAll2$Species.names)))
   colnames(TabSum) = c("Species_Name", "Nb_Occ")

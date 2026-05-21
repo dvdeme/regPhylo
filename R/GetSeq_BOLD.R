@@ -160,6 +160,20 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
     # remove the rows without sequences or an NA.
     out1 = out1[-which(is.na(out1[, "nuc"]) == TRUE), ]
   }
+  
+  # Replace the correct NCBI Accession number in the proper "insdc_acs" column in the BOLD table when the accession numbers are located in the "sampleid".
+  out1$insdc_acs[which(
+    out1$inst == "Mined from GenBank, NCBI" &
+      out1$insdc_acs == "" |
+      out1$sequence_run_site == "Mined from GenBank, NCBI" &
+      out1$insdc_acs == ""
+  )] =  Data.BOLD[which(
+    out1$inst == "Mined from GenBank, NCBI" &
+      out1$insdc_acs == "" |
+      out1$sequence_run_site == "Mined from GenBank, NCBI" &
+      out1$insdc_acs == ""
+  ), c("sampleid")]
+  
   utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
   
   TabSum = data.frame(labels(table(out1$Species.names)), as.vector(table(out1$Species.names)))

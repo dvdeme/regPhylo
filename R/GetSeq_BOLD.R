@@ -162,6 +162,12 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
   }
   
   # Replace the correct NCBI Accession number in the proper "insdc_acs" column in the BOLD table when the accession numbers are located in the "sampleid".
+  if(length(which(
+    out1$inst == "Mined from GenBank, NCBI" &
+    out1$insdc_acs == "" |
+    out1$sequence_run_site == "Mined from GenBank, NCBI" &
+    out1$insdc_acs == ""
+  )) > 0){
   out1$insdc_acs[which(
     out1$inst == "Mined from GenBank, NCBI" &
       out1$insdc_acs == "" |
@@ -173,6 +179,7 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
       out1$sequence_run_site == "Mined from GenBank, NCBI" &
       out1$insdc_acs == ""
   ), c("sampleid")]
+  }
   
   utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
   

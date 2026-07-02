@@ -145,15 +145,26 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
   # Get all the row corresponding to the species names 
   res.df = Path.BOLD[species %in% splist[,1]]
   
+  
   # the Species names correspond to the accepted species names present in the second columns of the splist data frame.
-  out1 = merge(res.df, splist, by.x = "species", by.y ="SpName.Bold.search" , all.x = T)
-  out1 = data.frame(Species.names = out1$Sp.names, out1[,c(2:22)], species = out1[,1], out1[,c(23:76)], Date_Extract = rep(date(), dim(out1)[1]))
+  out1 = merge(res.df,
+               splist,
+               by.x = "species",
+               by.y = "SpName.Bold.search" ,
+               all.x = T)
+  out1 = data.frame(
+    Species.names = out1$Sp.names,
+    out1[, c(2:22)],
+    species = out1[, 1],
+    out1[, c(23:76)],
+    Date_Extract = rep(date(), dim(out1)[1])
+  )
   
   
   # Remove the rows without DNA sequences.
-  if (length(which(out1[,"nuc"] == "None")) > 0) {
+  if (length(which(out1[, "nuc"] == "None")) > 0) {
     ## When the sequence is empty, the row is removed from the table.
-    out1 = out1[-which(out1[,"nuc"] == "None"), ]
+    out1 = out1[-which(out1[, "nuc"] == "None"), ]
   }
   
   if (length(which(is.na(out1[, "nuc"]) == TRUE)) > 0) {
@@ -162,30 +173,44 @@ GetSeq_BOLD.local.DT = function(splist = NULL, filename = NULL, Path.BOLD = NULL
   }
   
   # Replace the correct NCBI Accession number in the proper "insdc_acs" column in the BOLD table when the accession numbers are located in the "sampleid".
-  if(length(which(
-    out1$inst == "Mined from GenBank, NCBI" &
-    out1$insdc_acs == "" |
-    out1$sequence_run_site == "Mined from GenBank, NCBI" &
-    out1$insdc_acs == ""
-  )) > 0){
-  out1$insdc_acs[which(
-    out1$inst == "Mined from GenBank, NCBI" &
+  if (length(
+    which(
+      out1$inst == "Mined from GenBank, NCBI" &
       out1$insdc_acs == "" |
       out1$sequence_run_site == "Mined from GenBank, NCBI" &
       out1$insdc_acs == ""
-  )] =  Data.BOLD[which(
-    out1$inst == "Mined from GenBank, NCBI" &
-      out1$insdc_acs == "" |
-      out1$sequence_run_site == "Mined from GenBank, NCBI" &
-      out1$insdc_acs == ""
-  ), c("sampleid")]
+    )
+  ) > 0) {
+    out1$insdc_acs[which(
+      out1$inst == "Mined from GenBank, NCBI" &
+        out1$insdc_acs == "" |
+        out1$sequence_run_site == "Mined from GenBank, NCBI" &
+        out1$insdc_acs == ""
+    )] =  out1[which(
+      out1$inst == "Mined from GenBank, NCBI" &
+        out1$insdc_acs == "" |
+        out1$sequence_run_site == "Mined from GenBank, NCBI" &
+        out1$insdc_acs == ""
+    ), c("sampleid")]
   }
   
-  utils::write.table(out1, file = filename, sep = "\t", row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
+  # Properly reattribute the Genbank accession number present in the "sampleid" when wrong id are attributed in the "insdc_acs"
+  if (length(which(stringr::str_detect(out1$insdc_acs, "^[:upper:]{3,}") == TRUE) > 0)) {
+    out1$insdc_acs[which(stringr::str_detect(out1$insdc_acs, "^[:upper:]{3,}") == TRUE)] = out1[which(stringr::str_detect(out1$insdc_acs, "^[:upper:]{3,}") == TRUE), c("sampleid")]
+  }
+  
+  utils::write.table(out1,
+                     file = filename,
+                     sep = "\t",
+                     row.names = FALSE)  # export the table and overwrite the previous one.# export the table and overwrite the previous one.
   
   TabSum = data.frame(labels(table(out1$Species.names)), as.vector(table(out1$Species.names)))
   colnames(TabSum) = c("Species_Name", "Nb_Occ")
-  TabSum = merge(splist[,1], TabSum, by.x = 1, by.y = 1, all.x = T)
+  TabSum = merge(splist[, 1],
+                 TabSum,
+                 by.x = 1,
+                 by.y = 1,
+                 all.x = T)
   
   return(list(Summary.Table = TabSum, Full.Table = out1))  # Report a table with all the species listed in the list and the number of occurrences found in BOLD (Note that some of occurrences are not associated with a sequence and so the total number of occurrences may be different from the number of occurrences retained in the output table (Only those with DNA sequences are retained)).
 }  # End of the function.
